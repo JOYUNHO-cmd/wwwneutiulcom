@@ -218,7 +218,7 @@ const Navbar: React.FC = () => {
               aria-label="Toggle navigation menu"
             >
               {!isOpen && (
-                <span className="absolute -inset-0.5 rounded-2xl bg-primary/40 animate-ping pointer-events-none" />
+                <span className="absolute inset-2 rounded-2xl bg-primary/40 animate-ping pointer-events-none" />
               )}
               {isOpen ? <X size={26} /> : <Menu size={26} />}
             </m.button>

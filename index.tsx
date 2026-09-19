@@ -18,7 +18,7 @@ const handleNaverCallback = () => {
     
     if (accessToken) {
       if (window.opener) {
-        window.opener.postMessage({ type: 'NAVER_LOGIN_SUCCESS', access_token: accessToken }, '*');
+        window.opener.postMessage({ type: 'NAVER_LOGIN_SUCCESS', access_token: accessToken }, window.location.origin);
         // Give it a tiny bit of time to send before closing
         setTimeout(() => {
           try { window.close(); } catch (e) { console.error(e); }

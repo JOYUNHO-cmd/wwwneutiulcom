@@ -49,6 +49,7 @@ const Home: React.FC = () => {
   // requestAnimationFrame caps the work to once per frame regardless
   // of how many mousemove events fire in between.
   useEffect(() => {
+    if (!window.matchMedia("(min-width: 768px) and (hover: hover) and (prefers-reduced-motion: no-preference)").matches) return;
     let rafId: number | null = null;
     const handleMouseMove = (e: MouseEvent) => {
       if (rafId !== null) return;
@@ -74,56 +75,27 @@ const Home: React.FC = () => {
     <div className="flex flex-col bg-light text-textMain">
       {/* Hero Section */}
       <section className="relative min-h-[calc(100svh-6rem)] md:h-[90vh] flex flex-col justify-center items-center overflow-hidden bg-white">
-        {/* No manual preload link here on purpose: a prior version used two
-            <link rel="preload" media="..."> tags (one per breakpoint) to
-            avoid React Float's fetchPriority-driven double-preload, but
-            resource-timing showed both media-scoped preload links firing
-            on the same load regardless of viewport (initiatorType "link"
-            on both requests) — a duplicate-fetch bug one layer down from
-            the one they were meant to fix. Removing them cuts that
-            confirmed extra request. The <picture>/<source> pair below
-            still resolves to exactly one image once the viewport is
-            settled; very early in the load (before layout has a real
-            viewport width to test the media query against) the browser's
-            speculative preload scanner can still grab the <img> fallback
-            ahead of that, which is inherent to art-directed <picture>
-            elements and not something fixable from here. */}
-
-        {/* Mobile Background Image (Absolute full-bleed background on mobile for vertical image) */}
-        <div className="block md:hidden absolute inset-0 z-0">
+        {/* One art-directed picture serves the appropriate image at each width. */}
+        <div ref={heroParallaxRef} className="absolute inset-0 z-0 md:scale-[1.05] transition-transform duration-100 ease-out">
           <picture>
             <source media="(min-width: 768px)" srcSet={zelkovaHero} />
             <img
               src={zelkovaMobileHero}
               alt="느티울종합청소 느티나무 배경"
+              width={900}
+              height={1124}
+              loading="eager"
+              fetchPriority="high"
               className="w-full h-full object-cover object-center"
             />
           </picture>
-          {/* Elegant overlay that lets the image show through clearly and vividly, keeping the text readable */}
-          <div className="absolute inset-0 bg-white/50" />
-        </div>
-
-        {/* Desktop Background Image (Hidden on mobile, absolute overlay on PC) */}
-        <div
-          ref={heroParallaxRef}
-          className="hidden md:block absolute inset-0 z-0 transition-transform duration-100 ease-out"
-          style={{ transform: 'scale(1.05)' }}
-        >
-          <picture>
-            <source media="(min-width: 768px)" srcSet={zelkovaHero} />
-            <img
-              src={zelkovaMobileHero}
-              alt="느티울종합청소 느티나무 배경"
-              className="w-full h-full object-cover object-center"
-            />
-          </picture>
-          <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/50 to-white/30 md:bg-white/25" />
+          <div className="absolute inset-0 bg-white/50 md:bg-white/25 md:bg-gradient-to-r md:from-white/80 md:via-white/50 md:to-white/30" />
         </div>
 
         {/* Text and Buttons Container */}
         <div className="relative z-10 text-center px-4 max-w-7xl mx-auto w-full flex flex-col items-center justify-center py-10 md:py-0 -translate-y-10 md:translate-y-0">
           <m.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-3xl md:max-w-6xl mx-auto flex flex-col items-center justify-center"

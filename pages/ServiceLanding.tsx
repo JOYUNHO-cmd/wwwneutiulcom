@@ -1,3 +1,4 @@
+import NotFound from './NotFound';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
@@ -16,6 +17,7 @@ import ServiceBeforeAfterMarquee from '../components/ServiceBeforeAfterMarquee';
 import ReviewsSection from '../components/ReviewsSection';
 import CeoMessageSection from '../components/CeoMessageSection';
 import FAQSection from '../components/FAQSection';
+import ServiceRegions from '../components/ServiceRegions';
 import ServiceCaseBlogSection from '../components/ServiceCaseBlogSection';
 
 const certificationsData = [
@@ -111,18 +113,7 @@ const ServiceLanding: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  if (!service) {
-    return (
-      <div className="min-h-svh flex flex-col items-center justify-center bg-slate-50 p-6 text-center">
-        <Info size={48} className="text-slate-400 mb-4 animate-bounce" />
-        <h2 className="text-2xl font-extrabold text-slate-900 mb-2">원하시는 서비스를 찾을 수 없습니다</h2>
-        <p className="text-slate-500 mb-6 font-medium">잘못된 경로이거나 존재하지 않는 서비스입니다.</p>
-        <Link to="/" className="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primaryDark transition-all shadow-md">
-          홈으로 가기
-        </Link>
-      </div>
-    );
-  }
+  if (!service) return <NotFound />;
 
   // Handle Formspree submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -780,6 +771,7 @@ const ServiceLanding: React.FC = () => {
       </section>
 
       <FAQSection ctaPhone={cleanPhone} />
+      <ServiceRegions serviceId={service.id} serviceTitle={service.title} />
 
       {/* Embedded Real, Seamless Consultation Contact Formspree Area (No placeholders) */}
       <section className="py-16 md:py-24 bg-white border-t border-slate-200">
@@ -813,29 +805,29 @@ const ServiceLanding: React.FC = () => {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div>
-                   <label className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">성함 또는 단체명 <span className="text-red-500 font-bold">*</span></label>
-                  <input name="name" required type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="성함 기재" />
+                   <label htmlFor="service-quote-name" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">성함 또는 단체명 <span className="text-red-500 font-bold">*</span></label>
+                  <input id="service-quote-name" name="name" required type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="성함 기재" />
                 </div>
                 <div>
-                   <label className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">연락처 <span className="text-red-500 font-bold">*</span></label>
-                  <input name="phone" required type="tel" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 010-0000-0000" />
+                   <label htmlFor="service-quote-phone" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">연락처 <span className="text-red-500 font-bold">*</span></label>
+                  <input id="service-quote-phone" name="phone" required type="tel" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 010-0000-0000" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div>
-                   <label className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">시공 예정일 (희망 일정)</label>
-                  <input name="date" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 11월 중순 또는 일정 협의" />
+                   <label htmlFor="service-quote-date" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">시공 예정일 (희망 일정)</label>
+                  <input id="service-quote-date" name="date" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 11월 중순 또는 일정 협의" />
                 </div>
                 <div>
-                   <label className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">현장 위치 / 예상 평수</label>
-                  <input name="area_size" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 군포 도마교동 / 25평" />
+                   <label htmlFor="service-quote-area_size" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">현장 위치 / 예상 평수</label>
+                  <input id="service-quote-area_size" name="area_size" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 군포 도마교동 / 25평" />
                 </div>
               </div>
 
               <div>
-                 <label className="block text-xs sm:text-sm font-bold text-white mb-2">추가 문의 및 현장 요청사항 <span className="text-red-500 font-bold">*</span></label>
-                <textarea 
+                 <label htmlFor="service-quote-message" className="block text-xs sm:text-sm font-bold text-white mb-2">추가 문의 및 현장 요청사항 <span className="text-red-500 font-bold">*</span></label>
+                <textarea id="service-quote-message"
                   name="message" 
                   required 
                   rows={4} 

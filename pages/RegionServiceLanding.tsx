@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import NotFound from './NotFound';
 import { MapPin, CheckCircle2, HelpCircle, Award } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { getRegion, regionCoreTerm, titleMatchesRegion } from '../lib/regionData.mjs';
@@ -66,10 +67,9 @@ const RegionServiceLanding: React.FC = () => {
     setRegionItems(shuffle(filteredRegionItems));
   }, [filteredRegionItems]);
 
-  // Unknown region or a service that doesn't have region pages enabled yet —
-  // fall back to the regular service page rather than a dead end.
+  // Unknown routes must not silently become an indexable service page.
   if (!isEnabled || !region || !content) {
-    return <Navigate to={`/services/${serviceId || ''}`} replace />;
+    return <NotFound />;
   }
 
   const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');

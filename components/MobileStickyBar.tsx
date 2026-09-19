@@ -62,7 +62,7 @@ const MobileStickyBar: React.FC = () => {
         className="animate-float relative flex items-center justify-center"
       >
         <div className="side-fab-phone relative w-11 h-11 rounded-full flex items-center justify-center text-white shadow-[0_4px_14px_rgba(16,185,129,0.5)] border border-white/25 active:scale-95 transition-transform">
-          <span className="absolute -inset-0.5 rounded-full bg-emerald-500/35 animate-ping pointer-events-none" />
+          <span className="absolute inset-2 rounded-full bg-emerald-500/35 animate-ping pointer-events-none" />
           <Phone size={18} className="side-phone-icon shrink-0" />
         </div>
       </a>
@@ -79,7 +79,7 @@ const MobileStickyBar: React.FC = () => {
         }}
       >
         <div className="side-fab-kakao relative w-11 h-11 rounded-full flex items-center justify-center text-[#3C1E1E] shadow-[0_4px_14px_rgba(254,229,0,0.55)] border border-black/10 active:scale-95 transition-transform">
-          <span className="absolute -inset-0.5 rounded-full bg-[#FEE500]/50 animate-ping pointer-events-none" />
+          <span className="absolute inset-2 rounded-full bg-[#FEE500]/50 animate-ping pointer-events-none" />
           <MessageCircle size={17} className="side-bubble-icon fill-[#3C1E1E] shrink-0" />
         </div>
       </a>

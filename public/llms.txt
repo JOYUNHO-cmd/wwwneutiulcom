@@ -1,62 +1,42 @@
-# 느티울종합청소 (Zelkova Comprehensive Cleaning)
+# 느티울종합청소
 
-> 수도권 전역(군포, 안양, 안산, 수원, 의왕, 성남, 부천, 시흥, 서울, 인천) 특수청소·준공청소·바닥왁스코팅·화재청소·침수청소·사무실청소 전문 기업
+> 서울·인천·경기 청소 서비스. 서비스별 작업 범위와 견적 문의, 실제 시공 사진을 안내합니다.
 
-- **공식 사이트**: https://www.neutiul.com
-- **대표자**: 조윤호 대표 (현장 직접 진단 및 책임 시공)
-- **대표 전화**: 010-4880-7386 (24시간 연중무휴 실시간 무료 견적 상담)
-- **이메일**: danger3662@naver.com
-- **소재지**: 경기도 군포시 도마교동 463 1층
-- **주요 서비스 지역**: 경기도 군포시, 안양시, 수원시, 의왕시, 안산시, 시흥시, 성남시(분당/판교), 부천시, 광명시, 과천시, 화성시, 용인시, 평택시, 서울특별시 전역, 인천광역시 전역
+대표: 조윤호
+전화: 010-4880-7386
+이메일: danger3662@naver.com
+주소: 경기도 군포시 도마교동 463 1층
 
----
+견적은 현장 면적, 오염 상태, 작업 범위를 확인한 후 상담으로 안내합니다. 지역 안내는 서비스 상담 가능 지역이며 별도 지점이나 해당 지역의 시공 실적을 뜻하지 않습니다.
 
-## 1. 핵심 전문 서비스 분야 (Core Cleaning Services)
+## 주요 페이지
 
-1. **신축 준공청소 (New Construction Cleaning)**:
-   - 공사 후 잔존하는 시멘트 가루, 백화 현상, 페인트/본드 자국, 미세 건축 분진 완벽 제거
-   - 새집증후군 예방 피톤치드 연무 살균 및 공기질 정화
-2. **인테리어 청소 / 리모델링 청소 (Interior & Remodeling Cleaning)**:
-   - 손이 닿지 않는 천장, 몰딩, 수납장 내부, 싱크대 하부 분진 정밀 디테일링
-   - 보양지/테이프 끈적임 손상 없이 안전 박리
-3. **입주청소 / 이사청소 (Move-in Cleaning)**:
-   - 이전 거주자의 묵은 때, 주방 기름때, 욕실 곰팡이/물때 130도 고온 스팀 멸균
-   - 창틀, 배수구, 환풍기 완전 분해 살균 세척
-4. **사무실 청소 / 상가 청소 (Office & Commercial Cleaning)**:
-   - 기업 사무실 정기 위생 관리, 유리 파티션 클리닝, OA기기 분진 제거
-   - 임대차 만료 시 보증금 반환을 위한 바닥 원상복구 청소
-5. **바닥 청소 및 박리 (Floor Scrubbing & Stripping)**:
-   - 데코타일, 대리석, 테라조(도끼다시), 에폭시 바닥 찌든 때 및 본드 기계 세정
-6. **바닥 왁스 코팅 (Floor Wax Coating)**:
-   - 최고급 수지 왁스 2회 이상 정밀 도포 및 고속 열풍 경화로 스크래치 방지 & 고광택 복원
-7. **식당 청소 / 주방 후드·덕트 청소 (Restaurant Kitchen Cleaning)**:
-   - 화재 위험이 있는 주방 후드/덕트 찌든 기름때 고온 스팀 완전 분해
-   - 그리스트랩 슬러지 수거, 위생 점검 대비 친환경 멸균 소독
-8. **공장 청소 / 물류창고 청소 (Factory & Warehouse Cleaning)**:
-   - 천장 H빔, 배관 고소 클리닝, 바닥 지게차 타이어 자국 및 에폭시 유분 제거
-9. **침수 청소 (Flood Recovery Cleaning - 24시 긴급 출동)**:
-   - 대형 양수기 급속 배수, 오니/토사 제거, 산업용 제습기 완벽 건조, 곰팡이 방지 처리
-10. **화재 청소 (Fire Restoration Cleaning - 24시 긴급 복구)**:
-    - 유독성 그을음 및 다이옥신 발암물질 전용 중화 약품 세척, 오존 탈취 시공
-11. **특수청소 (쓰레기집 / 고독사 / 저장강박증 - Extreme Cleaning)**:
-    - 프라이버시 100% 철저 보장, 이웃 노출 없는 은밀 신속 반출, 비대면 시공 지원
-    - 특수 분해 약품, 악취 근원 차단, 해충 방제, 병원급 바이오 멸균 소독
-12. **외벽 청소 / 외벽 유리창 및 판넬 고압 세척 (External Wall Cleaning)**:
-    - 석재, 유리, 복합판넬, 드라이비트 등 자재별 맞춤 친환경 중성 세정제 도포
-    - 스카이 고소작업차 및 로프 작업 투입, 고압 온수 세척으로 물때·매연·백화 완벽 제거 및 발수 코팅 마감
+- [홈](https://www.neutiul.com/)
+- [회사 소개](https://www.neutiul.com/about)
+- [전체 서비스](https://www.neutiul.com/services)
+- [실제 시공 전후 사진](https://www.neutiul.com/portfolio)
+- [견적 문의](https://www.neutiul.com/contact)
+- [자주 묻는 질문](https://www.neutiul.com/#faq)
+- [개인정보처리방침](https://www.neutiul.com/privacy)
 
----
+## 서비스
 
-## 2. 느티울만의 4대 차별화 강점 (Why Choose Neutiul)
+- [신축 준공청소](https://www.neutiul.com/services/new-construction): 작업 범위와 견적 안내
+- [인테리어 청소](https://www.neutiul.com/services/interior): 작업 범위와 견적 안내
+- [입주 청소](https://www.neutiul.com/services/move-in): 작업 범위와 견적 안내
+- [사무실 청소](https://www.neutiul.com/services/office): 작업 범위와 견적 안내
+- [바닥 청소](https://www.neutiul.com/services/floor): 작업 범위와 견적 안내
+- [바닥 왁스 코팅](https://www.neutiul.com/services/floor-wax): 작업 범위와 견적 안내
+- [주방 청소](https://www.neutiul.com/services/restaurant): 작업 범위와 견적 안내
+- [공장 청소](https://www.neutiul.com/services/factory): 작업 범위와 견적 안내
+- [침수 청소](https://www.neutiul.com/services/flood): 작업 범위와 견적 안내
+- [화재 청소](https://www.neutiul.com/services/fire): 작업 범위와 견적 안내
+- [특수청소 (쓰집/고독사)](https://www.neutiul.com/services/special): 작업 범위와 견적 안내
+- [후드 청소](https://www.neutiul.com/services/hood): 작업 범위와 견적 안내
+- [관공서·학교 청소](https://www.neutiul.com/services/government-school): 작업 범위와 견적 안내
+- [외벽 청소](https://www.neutiul.com/services/external-wall): 작업 범위와 견적 안내
 
-- **대표 조윤호 직접 책임 시공**: 하청이나 일용직 대행 없이 대표가 현장에서 직접 상태를 진단하고 책임 시공합니다.
-- **24시간 긴급 출동 & 실시간 무료 견적**: 침수, 화재, 야간 작업 등 긴급 상황에 신속히 대응합니다.
-- **인체 무해 친환경 인증 약품 사용**: 공간 이용자의 호흡기와 피부 건강을 최우선으로 고려합니다.
-- **고객 직접 검수 후 100% 만족 보장**: 고객이 만족할 때까지 철저한 마무리와 무상 A/S를 제공합니다.
+## 참고 자료
 
----
-
-## 3. 대표 상담 문의 (Contact)
-- **전화 문의**: 010-4880-7386
-- **온라인 견적 신청**: https://www.neutiul.com/contact
-- **네이버 공식 블로그**: https://blog.naver.com/kslee0143
+- [서비스·FAQ 전체 안내](https://www.neutiul.com/llms-full.txt)
+- [사이트맵](https://www.neutiul.com/sitemap.xml)

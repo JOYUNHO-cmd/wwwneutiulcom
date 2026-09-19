@@ -28,6 +28,7 @@ import { buildMeta } from '../lib/seoData.mjs';
 import { SERVICES } from '../lib/servicesData.mjs';
 import { REGIONS } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
+import { buildLlmDocuments } from './generate-llms.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, '..');
@@ -55,7 +56,7 @@ const META_ONLY_ROUTES = ['/admin'];
 const RENDER_CONCURRENCY = 8;
 
 function injectRootHtml(html, rootHtml) {
-  return html.replace('<div id="root"></div>', `<div id="root">${rootHtml}</div>`);
+  return html.replace('<div id="root"></div>', () => `<div id="root">${rootHtml}</div>`);
 }
 
 // Only worth running on routes that actually have body content baked in
@@ -92,8 +93,7 @@ async function inlineCriticalCss(html) {
 async function renderContentByRoute(routes) {
   const rendered = new Map();
   if (!fsSync.existsSync(SSR_ENTRY)) {
-    console.warn('  ! dist-ssr/entry-server.js not found, skipping content prerender (meta-only for all routes)');
-    return rendered;
+    throw new Error('dist-ssr/entry-server.js is missing. Refusing to publish pages without their content.');
   }
   const { render } = await import(pathToFileURL(SSR_ENTRY).href);
 
@@ -129,25 +129,25 @@ function escapeHtml(str) {
 function setMetaByAttr(html, attr, key, content) {
   const re = new RegExp(`<meta\\s+${attr}="${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*>`, 'i');
   const tag = `<meta ${attr}="${key}" content="${escapeHtml(content)}" />`;
-  if (re.test(html)) return html.replace(re, tag);
+  if (re.test(html)) return html.replace(re, () => tag);
   return html.replace(/<\/head>/i, `  ${tag}\n</head>`);
 }
 
 function setTitle(html, title) {
-  return html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`);
+  return html.replace(/<title>[\s\S]*?<\/title>/i, () => `<title>${escapeHtml(title)}</title>`);
 }
 
 function setCanonical(html, href) {
   const re = /<link\s+rel="canonical"[^>]*>/i;
   const tag = `<link rel="canonical" href="${escapeHtml(href)}" />`;
-  if (re.test(html)) return html.replace(re, tag);
+  if (re.test(html)) return html.replace(re, () => tag);
   return html.replace(/<\/head>/i, `  ${tag}\n</head>`);
 }
 
 function setJsonLd(html, jsonLd) {
-  const script = `<script type="application/ld+json" id="aeo-geo-schema">\n${JSON.stringify(jsonLd)}\n</script>`;
+  const script = `<script type="application/ld+json" id="aeo-geo-schema">\n${JSON.stringify(jsonLd).replace(/</g, '\\u003c')}\n</script>`;
   const re = /<script type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/i;
-  if (re.test(html)) return html.replace(re, script);
+  if (re.test(html)) return html.replace(re, () => script);
   return html.replace(/<\/head>/i, `  ${script}\n</head>`);
 }
 
@@ -167,6 +167,7 @@ function applyMeta(templateHtml, meta, currentUrl) {
   html = setMetaByAttr(html, 'property', 'og:title', meta.title);
   html = setMetaByAttr(html, 'property', 'og:description', meta.description);
   html = setMetaByAttr(html, 'property', 'og:image', meta.image);
+  html = setMetaByAttr(html, 'property', 'og:image:alt', meta.title);
   html = setMetaByAttr(html, 'property', 'og:url', currentUrl);
   html = setMetaByAttr(html, 'property', 'og:type', meta.ogType);
   html = setMetaByAttr(html, 'name', 'twitter:title', meta.title);
@@ -276,16 +277,20 @@ async function main() {
 
   await writeSitemap(allRoutes);
   await writeRobotsTxt();
+  for (const [filename, content] of Object.entries(buildLlmDocuments(companyInfo))) {
+    await fs.writeFile(path.join(DIST_DIR, filename), content, 'utf-8');
+  }
 }
 
 async function writeSitemap(routes) {
-  const today = new Date().toISOString().slice(0, 10);
   const urls = routes
     .map((route) => {
       const loc = `${PRODUCTION_ORIGIN}${route === '/' ? '/' : route}`;
       const isRegionRoute = route.startsWith('/services/') && route.split('/services/')[1].split('/').filter(Boolean).length > 1;
       const priority = route === '/' ? '1.0' : isRegionRoute ? '0.7' : route.startsWith('/services/') ? '0.8' : '0.6';
-      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+      // A deployment date is not a content modification date. Omit the
+      // optional lastmod until a reliable per-page editorial date exists.
+      return `  <url>\n    <loc>${loc}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
     })
     .join('\n');
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;

@@ -27,7 +27,6 @@ const SEO: React.FC<SEOProps> = ({
 
   useEffect(() => {
     const pathname = normalizePathname(location.pathname);
-    const currentUrl = canonicalUrl || window.location.href;
 
     const meta = buildMeta({
       pathname,
@@ -35,8 +34,8 @@ const SEO: React.FC<SEOProps> = ({
       regionId: params.regionId,
       companyInfo: config.companyInfo,
       services: config.services || [],
-      currentUrl,
     });
+    const currentUrl = canonicalUrl || meta.canonicalUrl;
 
     // Custom prop overrides win over the computed defaults.
     const pageTitle = title || meta.title;
@@ -87,8 +86,6 @@ const SEO: React.FC<SEOProps> = ({
 
     setMetaTag('name', 'geo.region', 'KR-41;KR-11;KR-28');
     setMetaTag('name', 'geo.placename', '대한민국 수도권 (군포시, 서울특별시, 인천광역시, 경기도 전역)');
-    setMetaTag('name', 'geo.position', '37.3323;126.9037');
-    setMetaTag('name', 'ICBM', '37.3323, 126.9037');
     setMetaTag('name', 'DC.title', pageTitle);
     setMetaTag('name', 'DC.creator', '느티울종합청소 (대표 조윤호)');
     setMetaTag('name', 'DC.coverage', '서울, 인천, 경기 수도권 전지역');
@@ -96,6 +93,7 @@ const SEO: React.FC<SEOProps> = ({
     setMetaTag('property', 'og:title', pageTitle);
     setMetaTag('property', 'og:description', pageDescription);
     setMetaTag('property', 'og:image', pageImage);
+    setMetaTag('property', 'og:image:alt', pageTitle);
     setMetaTag('property', 'og:url', currentUrl);
     setMetaTag('property', 'og:type', meta.ogType);
     setMetaTag('property', 'og:site_name', '느티울종합청소');

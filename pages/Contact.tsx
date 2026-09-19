@@ -181,19 +181,19 @@ const Contact: React.FC = () => {
              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div>
-                    <label className="block text-sm md:text-base font-bold text-white mb-2.5">성함 (또는 업체명)</label>
-                    <input name="name" required type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="홍길동" />
+                    <label htmlFor="contact-name" className="block text-sm md:text-base font-bold text-white mb-2.5">성함 (또는 업체명)</label>
+                    <input id="contact-name" name="name" required type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="홍길동" />
                   </div>
                   <div>
-                    <label className="block text-sm md:text-base font-bold text-white mb-2.5">연락처</label>
-                    <input name="phone" required type="tel" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="010-0000-0000" />
+                    <label htmlFor="contact-phone" className="block text-sm md:text-base font-bold text-white mb-2.5">연락처</label>
+                    <input id="contact-phone" name="phone" required type="tel" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="010-0000-0000" />
                   </div>
                 </div>
                 
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div>
-                     <label className="block text-sm md:text-base font-bold text-white mb-2.5">청소 유형</label>
-                     <select name="service_type" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-755 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900">
+                     <label htmlFor="contact-service_type" className="block text-sm md:text-base font-bold text-white mb-2.5">청소 유형</label>
+                     <select id="contact-service_type" name="service_type" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-755 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900">
                        <option value="신축/상가 준공청소">신축/상가 준공청소</option>
                        <option value="사무실/상가 정기·대청소">사무실/상가 정기·대청소</option>
                        <option value="바닥 관리 & 왁스코팅/박리">바닥 관리 & 왁스코팅/박리</option>
@@ -206,10 +206,10 @@ const Contact: React.FC = () => {
                      </select>
                   </div>
                   <div>
-                     <label className="block text-sm md:text-base font-bold text-white mb-2.5">
+                     <label htmlFor="contact-location" className="block text-sm md:text-base font-bold text-white mb-2.5">
                        시공 지역 (서울·인천·경기 전역)
                      </label>
-                     <input 
+                     <input id="contact-location"
                        name="location" 
                        required 
                        type="text" 
@@ -221,18 +221,18 @@ const Contact: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div>
-                     <label className="block text-sm md:text-base font-bold text-white mb-2.5">현장 면적 (평수)</label>
-                     <input name="area_size" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 32평형 / 150평 등" />
+                     <label htmlFor="contact-area_size" className="block text-sm md:text-base font-bold text-white mb-2.5">현장 면적 (평수)</label>
+                     <input id="contact-area_size" name="area_size" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 32평형 / 150평 등" />
                   </div>
                   <div>
-                     <label className="block text-sm md:text-base font-bold text-white mb-2.5">희망 일정</label>
-                     <input name="target_date" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 즉시 / 다음 주 화요일 / 협의" />
+                     <label htmlFor="contact-target_date" className="block text-sm md:text-base font-bold text-white mb-2.5">희망 일정</label>
+                     <input id="contact-target_date" name="target_date" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 즉시 / 다음 주 화요일 / 협의" />
                   </div>
                 </div>
 
                 <div>
-                   <label className="block text-sm md:text-base font-bold text-white mb-2.5">문의 및 요청사항</label>
-                   <textarea 
+                   <label htmlFor="contact-message" className="block text-sm md:text-base font-bold text-white mb-2.5">문의 및 요청사항</label>
+                   <textarea id="contact-message"
                      name="message" 
                      required 
                      rows={4} 

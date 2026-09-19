@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, Suspense, lazy } from 'react';
-import { BrowserRouter, MemoryRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, LazyMotion, m } from 'motion/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,6 +13,7 @@ import { normalizePathname } from './lib/pathUtils';
 // element of a non-matching <Route>, so lazy-loading every other page below
 // is invisible to that render path but keeps them out of the initial bundle.
 import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 import { SiteProvider } from './context/SiteContext';
 
 // Loaded async so the ~25KB feature bundle (drag/layout/gesture logic —
@@ -81,6 +82,7 @@ const AnimatedRoutes: React.FC = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </ChunkErrorBoundary>

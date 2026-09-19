@@ -21,7 +21,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
   const [faqDropdownOpen, setFaqDropdownOpen] = useState(false);
 
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-br from-[#ebf7f4] via-[#f7fbf9] to-[#e6f4f1] relative overflow-hidden border-b border-slate-100/80">
+    <section id="faq" className="py-20 md:py-28 bg-gradient-to-br from-[#ebf7f4] via-[#f7fbf9] to-[#e6f4f1] relative overflow-hidden border-b border-slate-100/80">
       {/* Premium subtle dot pattern overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#22ba8b_0.8px,transparent_0.8px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-[0.06] pointer-events-none" />
 
@@ -43,6 +43,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
         <div className="block md:hidden relative mb-8 z-30">
           <button
             onClick={() => setFaqDropdownOpen(!faqDropdownOpen)}
+            aria-expanded={faqDropdownOpen}
             className="w-full flex items-center justify-between bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/90 border-2 border-emerald-500 rounded-2xl px-3.5 sm:px-5 py-3.5 text-sm font-extrabold text-slate-900 shadow-md shadow-emerald-500/10 active:scale-[0.99] transition-all duration-200"
           >
             <span className="flex items-center gap-2 overflow-hidden">
@@ -164,7 +165,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
         </div>
 
         {/* Interactive FAQ Accordion List */}
-        {activeFAQTab === null ? (
+        {activeFAQTab === null && (
           <div className="max-w-2xl mx-auto text-center py-10 md:py-14 px-6 rounded-2xl md:rounded-3xl border-2 border-dashed border-emerald-300/70 bg-white/60">
             <p className="text-slate-600 font-bold text-sm md:text-base mb-5 break-keep">
               위에서 궁금하신 카테고리를 선택하시면 질문을 확인하실 수 있어요.
@@ -189,9 +190,10 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
               </div>
             </div>
           </div>
-        ) : (
-        <div className="space-y-4 max-w-3xl mx-auto">
-          {FAQ_DATA.filter(cat => activeFAQTab === 'all' || cat.category === activeFAQTab)
+        )}
+        {/* Keep every answer in initial HTML, while preserving the category chooser. */}
+        <div hidden={activeFAQTab === null} className="space-y-4 max-w-3xl mx-auto">
+          {FAQ_DATA
             .flatMap((cat) => cat.qas.map((qa, index) => {
               const uniqueKey = `${cat.category}-${index}`;
               const isOpen = openFAQIdx === uniqueKey;
@@ -199,6 +201,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
               return (
                 <div
                   key={uniqueKey}
+                  hidden={activeFAQTab !== 'all' && activeFAQTab !== cat.category}
                   className={`bg-white border rounded-2xl md:rounded-3xl transition-all duration-300 overflow-hidden ${
                     isOpen
                       ? 'border-emerald-500 ring-2 ring-emerald-500/20 shadow-xl shadow-emerald-500/5'
@@ -208,6 +211,8 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                   {/* Header / Question Trigger */}
                   <button
                     onClick={() => setOpenFAQIdx(isOpen ? null : uniqueKey)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${uniqueKey}`}
                     className="w-full text-left p-5 sm:p-6 md:p-7 flex items-center justify-between gap-4 cursor-pointer group"
                   >
                     <div className="flex gap-3 sm:gap-4 items-center flex-1">
@@ -241,6 +246,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                       on every page site-wide, so it's the single
                       most-repeated instance of this pattern. */}
                   <div
+                    id={`faq-answer-${uniqueKey}`}
                     className="overflow-hidden transition-[max-height,opacity] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{ maxHeight: isOpen ? '600px' : '0px', opacity: isOpen ? 1 : 0 }}
                     inert={!isOpen}
@@ -260,7 +266,6 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
               );
             }))}
         </div>
-        )}
 
         {/* Bottom Trust Badge */}
         <div className="text-center mt-12 md:mt-16 p-6 sm:p-8 bg-gradient-to-r from-[#04a875] via-[#03855c] to-[#026344] text-white rounded-3xl max-w-2xl mx-auto shadow-xl shadow-emerald-950/20 border border-emerald-400/30 relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-4">

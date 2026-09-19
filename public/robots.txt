@@ -3,6 +3,22 @@ Allow: /
 Disallow: /admin
 
 # Modern AI & LLM Search Engine Bots (AEO/GEO Optimization)
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /admin
+
+User-agent: Claude-User
+Allow: /
+Disallow: /admin
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /admin
+
 User-agent: GPTBot
 Allow: /
 Disallow: /admin
