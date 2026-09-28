@@ -101,8 +101,8 @@ const Home: React.FC = () => {
             className="max-w-3xl md:max-w-6xl mx-auto flex flex-col items-center justify-center"
           >
             <h1 className="font-extrabold text-slate-900 mb-4 md:mb-8 leading-tight drop-shadow-sm break-keep text-center flex flex-col items-center">
-              <span className="block text-[13px] sm:text-sm md:text-2xl text-[#444a53] font-extrabold mb-1.5 md:mb-4 uppercase tracking-[0.2em]">
-                A FRESH AND PEACEFUL HAVEN
+              <span className="block whitespace-nowrap text-[13px] sm:text-sm md:text-2xl text-[#444a53] font-extrabold mb-1.5 md:mb-4 tracking-[0.1em]">
+                서울·인천·경기 특수·바닥·준공·인테리어청소 전문업체
               </span>
               <span className="text-[25px] sm:text-4xl md:text-7xl block mb-1 md:mb-3">
                 한결같은 <span className="text-[#0f9d6c] font-black">마음</span>으로
