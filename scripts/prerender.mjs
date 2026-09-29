@@ -28,7 +28,7 @@ import { buildMeta } from '../lib/seoData.mjs';
 import { SERVICES } from '../lib/servicesData.mjs';
 import { REGIONS } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
-import { REGION_CASES } from '../lib/regionCaseData.mjs';
+import { REGION_CASES, assertAllRegionCases } from '../lib/regionCaseData.mjs';
 import { buildLlmDocuments } from './generate-llms.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -240,6 +240,7 @@ async function main() {
     REGIONS.map((region) => `/services/${serviceId}/${region.id}`)
   );
   console.log(`  + ${regionRoutes.length} region-landing route(s) for service(s): ${REGION_LANDING_SERVICES.join(', ')}`);
+  assertAllRegionCases(); // fails the build loudly on a thin/malformed case article
   const caseRoutes = Object.entries(REGION_CASES).flatMap(([caseServiceId, byRegion]) =>
     Object.entries(byRegion).flatMap(([regionId, cases]) =>
       cases.map((c) => `/services/${caseServiceId}/${regionId}/${c.slug}`)

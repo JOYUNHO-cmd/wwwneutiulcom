@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 interface RegionCaseSummary {
   slug: string;
   heading: string;
-  lead: string;
+  teaser: string;
   thumbnail: string;
 }
 
@@ -43,7 +43,7 @@ const RegionCaseLinks: React.FC<RegionCaseLinksProps> = ({ serviceId, regionId, 
               <h3 className="font-bold text-slate-800 group-hover:text-primary transition-colors break-keep line-clamp-2">
                 {c.heading}
               </h3>
-              <p className="text-gray-500 text-sm mt-1 break-keep line-clamp-2">{c.lead}</p>
+              <p className="text-gray-500 text-sm mt-1 break-keep line-clamp-2">{c.teaser}</p>
             </div>
           </Link>
         ))}

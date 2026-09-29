@@ -47,7 +47,7 @@ const RegionCaseDetail: React.FC = () => {
         <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-4 leading-tight">
           {regionCase.heading}
         </h1>
-        <p className="text-gray-600 text-lg leading-relaxed break-keep">{regionCase.lead}</p>
+        <p className="text-gray-600 text-lg leading-relaxed break-keep">{regionCase.intro}</p>
         <a
           href={`tel:${cleanPhone}`}
           className="inline-flex items-center gap-2 mt-6 bg-primary text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-bold text-sm sm:text-base whitespace-nowrap shadow-lg shadow-primary/30 hover:bg-primaryDark transition-colors"
@@ -56,17 +56,31 @@ const RegionCaseDetail: React.FC = () => {
         </a>
       </section>
 
-      <RegionCaseSection regionCase={regionCase} showHeading={false} className="max-w-5xl mx-auto px-4 sm:px-6 py-6" />
+      {/* What was actually done, in prose — grounded in regionCase.facts */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+        {regionCase.sections.map((s, i) => (
+          <div key={i}>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">{s.heading}</h2>
+            <p className="text-gray-600 leading-relaxed break-keep">{s.body}</p>
+          </div>
+        ))}
+      </section>
+
+      <RegionCaseSection regionCase={regionCase} className="max-w-5xl mx-auto px-4 sm:px-6 py-6" />
 
       {/* This case's FAQ */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
-        <div className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
-          <h3 className="font-bold text-slate-800 mb-2 flex items-start gap-2">
-            <HelpCircle className="text-primary shrink-0 mt-0.5" size={18} />
-            <span className="break-keep">{regionCase.faq.q}</span>
-          </h3>
-          <p className="text-gray-600 text-base pl-6 break-keep">{regionCase.faq.a}</p>
+        <div className="space-y-4">
+          {regionCase.faq.map((faq, i) => (
+            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
+              <h3 className="font-bold text-slate-800 mb-2 flex items-start gap-2">
+                <HelpCircle className="text-primary shrink-0 mt-0.5" size={18} />
+                <span className="break-keep">{faq.q}</span>
+              </h3>
+              <p className="text-gray-600 text-base pl-6 break-keep">{faq.a}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -91,6 +105,7 @@ const RegionCaseDetail: React.FC = () => {
                   <h3 className="font-bold text-slate-800 group-hover:text-primary transition-colors break-keep line-clamp-2">
                     {c.heading}
                   </h3>
+                  <p className="text-gray-500 text-sm mt-1 break-keep line-clamp-2">{c.teaser}</p>
                 </div>
               </Link>
             ))}
