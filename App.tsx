@@ -28,6 +28,7 @@ const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const ServiceLanding = lazy(() => import('./pages/ServiceLanding'));
 const RegionServiceLanding = lazy(() => import('./pages/RegionServiceLanding'));
+const RegionCaseDetail = lazy(() => import('./pages/RegionCaseDetail'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
 const Contact = lazy(() => import('./pages/Contact'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -78,6 +79,7 @@ const AnimatedRoutes: React.FC = () => {
               <Route path="/services" element={<Services />} />
               <Route path="/services/:serviceId" element={<ServiceLanding />} />
               <Route path="/services/:serviceId/:regionId" element={<RegionServiceLanding />} />
+              <Route path="/services/:serviceId/:regionId/:caseId" element={<RegionCaseDetail />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />

@@ -28,6 +28,7 @@ import { buildMeta } from '../lib/seoData.mjs';
 import { SERVICES } from '../lib/servicesData.mjs';
 import { REGIONS } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
+import { REGION_CASES } from '../lib/regionCaseData.mjs';
 import { buildLlmDocuments } from './generate-llms.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -239,7 +240,13 @@ async function main() {
     REGIONS.map((region) => `/services/${serviceId}/${region.id}`)
   );
   console.log(`  + ${regionRoutes.length} region-landing route(s) for service(s): ${REGION_LANDING_SERVICES.join(', ')}`);
-  const allRoutes = [...STATIC_ROUTES, ...serviceRoutes, ...regionRoutes];
+  const caseRoutes = Object.entries(REGION_CASES).flatMap(([caseServiceId, byRegion]) =>
+    Object.entries(byRegion).flatMap(([regionId, cases]) =>
+      cases.map((c) => `/services/${caseServiceId}/${regionId}/${c.slug}`)
+    )
+  );
+  console.log(`  + ${caseRoutes.length} real field-case route(s)`);
+  const allRoutes = [...STATIC_ROUTES, ...serviceRoutes, ...regionRoutes, ...caseRoutes];
 
   // Every route gets real, hydratable content baked into <div id="root">
   // now (see entry-server.tsx) — not just '/'. A crawler that never

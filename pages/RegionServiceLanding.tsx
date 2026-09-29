@@ -5,8 +5,8 @@ import { MapPin, CheckCircle2, HelpCircle, Award } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { getRegion, regionCoreTerm, titleMatchesRegion } from '../lib/regionData.mjs';
 import { buildRegionServiceContent, REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
-import { getRegionCase } from '../lib/regionCaseData.mjs';
-import RegionCaseSection from '../components/RegionCaseSection';
+import { getRegionCases } from '../lib/regionCaseData.mjs';
+import RegionCaseLinks from '../components/RegionCaseLinks';
 import { breakIntoLines, groupIntoStanzas } from '../lib/mobileLineBreak.mjs';
 import { josa } from '../lib/korean.mjs';
 import { shuffle } from '../lib/shuffle.mjs';
@@ -39,8 +39,7 @@ const RegionServiceLanding: React.FC = () => {
   const content = region && serviceId ? buildRegionServiceContent(region, serviceId) : null;
   const service = config.services.find((s) => s.id === serviceId);
   const introStanzas = content ? groupIntoStanzas(breakIntoLines(content.intro)) : [];
-  const regionCase = serviceId && regionId ? getRegionCase(serviceId, regionId) : null;
-  const faqs = regionCase ? [regionCase.faq, ...(content?.faqs || [])] : content?.faqs || [];
+  const regionCases = serviceId && regionId ? getRegionCases(serviceId, regionId) : [];
 
   // Real photos taken in this specific region, for this specific service —
   // proof that isn't just "we work in your area" but "here's your area".
@@ -142,12 +141,16 @@ const RegionServiceLanding: React.FC = () => {
         <PortfolioLightbox item={openItem} onClose={() => setOpenItem(null)} />
       )}
 
-      {/* Real field case for this exact service+region, when one exists —
-          actual crew photos and confirmed facts from one job, distinct
-          from the shuffled portfolio proof above (see lib/regionCaseData.mjs). */}
-      {regionCase && (
-        <RegionCaseSection regionCase={regionCase} className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
-      )}
+      {/* Link-out cards to each real field-case article for this exact
+          service+region — its own page at /services/:serviceId/:regionId/:slug
+          (see pages/RegionCaseDetail.tsx), not inlined here. A region can
+          accumulate many separate case articles over time. */}
+      <RegionCaseLinks
+        serviceId={serviceId || ''}
+        regionId={regionId || ''}
+        cases={regionCases}
+        className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
+      />
 
       {/* "Want the full job, not just before/after photos?" — real blog
           posts for this service, right after the photos it refers back to
@@ -222,7 +225,7 @@ const RegionServiceLanding: React.FC = () => {
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-16">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
         <div className="space-y-4">
-          {faqs.map((faq, i) => (
+          {content.faqs.map((faq, i) => (
             <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
               <h3 className="font-bold text-slate-800 mb-2 flex items-start gap-2">
                 <HelpCircle className="text-primary shrink-0 mt-0.5" size={18} />

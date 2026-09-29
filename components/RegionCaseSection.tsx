@@ -30,17 +30,25 @@ interface RegionCase {
 interface RegionCaseSectionProps {
   regionCase: RegionCase;
   className?: string;
+  // The case detail page already shows heading+lead in its own <h1> hero;
+  // this only re-shows them (as an <h2>) for callers like the old inline
+  // embed that had no hero of their own. Defaults to true.
+  showHeading?: boolean;
 }
 
 // A single real job's before/after photos and facts, sourced from actual
 // crew photos (see lib/regionCaseData.mjs) — distinct from the generic
 // region+service template text and from the shuffled portfolio marquee
 // above it. Only renders when a case for this exact service+region exists.
-const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, className }) => {
+const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, className, showHeading = true }) => {
   return (
     <section className={className}>
-      <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{regionCase.heading}</h2>
-      <p className="text-gray-600 mb-6 break-keep">{regionCase.lead}</p>
+      {showHeading && (
+        <>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{regionCase.heading}</h2>
+          <p className="text-gray-600 mb-6 break-keep">{regionCase.lead}</p>
+        </>
+      )}
 
       <div className="grid sm:grid-cols-2 gap-3 mb-8">
         <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-sm sm:text-base text-gray-700">
