@@ -176,6 +176,10 @@ const Footer: React.FC = () => {
             수도권 전지역 24시간 실시간 상담 & 100% 무료 현장 방문 견적 지원
           </p>
         </div>
+        <p className="text-center text-[9px] md:text-[11px] text-gray-500 mt-4 leading-relaxed break-keep">
+          본 사이트에 게재된 글과 사진은 {config.companyInfo.name}이(가) 직접 촬영·작성한 저작물입니다.<br className="hidden md:block" />
+          출처 표기 없이 무단으로 복제·전재하여 사용하실 경우 저작권법에 따라 법적 조치가 진행될 수 있으니, 양해 부탁드립니다.
+        </p>
       </div>
     </footer>
   );
