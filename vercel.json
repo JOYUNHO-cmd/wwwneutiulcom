@@ -1,6 +1,13 @@
 {
   "buildCommand": "node scripts/generate-portfolio-highlights.mjs && vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/services/floor/ansan/안산공장바닥왁스코팅",
+      "destination": "/services/floor-wax/ansan/안산공장바닥왁스코팅",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

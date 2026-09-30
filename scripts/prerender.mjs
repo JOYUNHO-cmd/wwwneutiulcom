@@ -28,7 +28,7 @@ import { buildMeta } from '../lib/seoData.mjs';
 import { SERVICES } from '../lib/servicesData.mjs';
 import { REGIONS } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
-import { REGION_CASES, assertAllRegionCases } from '../lib/regionCaseData.mjs';
+import { REGION_CASES, assertAllRegionCases, getAllRegionCases } from '../lib/regionCaseData.mjs';
 import { buildLlmDocuments } from './generate-llms.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -256,6 +256,16 @@ async function main() {
   console.log(`Rendering initial HTML for all ${allRoutes.length} routes (this waits on each route's lazy chunk)...`);
   const contentByRoute = await renderContentByRoute(allRoutes);
   console.log(`  ✓ rendered ${contentByRoute.size}/${allRoutes.length} routes`);
+
+  const portfolioHtml = contentByRoute.get('/portfolio') || '';
+  const missingPortfolioCaseLinks = getAllRegionCases()
+    .map(({ url }) => url)
+    .filter((url) => !portfolioHtml.includes(`href="${url}"`));
+  if (missingPortfolioCaseLinks.length > 0) {
+    throw new Error(
+      `/portfolio SSR is missing ${missingPortfolioCaseLinks.length} field-case link(s): ${missingPortfolioCaseLinks.join(', ')}`
+    );
+  }
 
   console.log('Writing prerendered routes...');
 
