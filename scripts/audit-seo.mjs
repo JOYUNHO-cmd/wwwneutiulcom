@@ -6,6 +6,7 @@ import { buildMeta } from '../lib/seoData.mjs';
 import { SERVICES } from '../lib/servicesData.mjs';
 import { REGIONS } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
+import { REGION_CASES } from '../lib/regionCaseData.mjs';
 
 // No browser or form submissions. Run against built files, or a deployed
 // origin with --origin=https://www.neutiul.com (four concurrent GETs).
@@ -30,12 +31,18 @@ async function read(route) {
     const response = await fetch(new URL(route, origin), { signal: AbortSignal.timeout(30000) });
     return { status: response.status, body: await response.text(), type: response.headers.get('content-type') };
   }
-  const file = route.includes('.') ? route : `${route === '/' ? '' : route}/index.html`;
+  const decodedRoute = decodeURIComponent(route);
+  const file = decodedRoute.includes('.') ? decodedRoute : `${decodedRoute === '/' ? '' : decodedRoute}/index.html`;
   return { status: 200, body: await fs.readFile(path.join(dist, file), 'utf8') };
 }
 const sitemap = (await read('/sitemap.xml')).body;
 const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(x => x[1]);
-const expectedCount = 6 + SERVICES.length + REGIONS.length * REGION_LANDING_SERVICES.length;
+const caseCount = Object.values(REGION_CASES).reduce(
+  (serviceTotal, byRegion) =>
+    serviceTotal + Object.values(byRegion).reduce((regionTotal, cases) => regionTotal + cases.length, 0),
+  0,
+);
+const expectedCount = 6 + SERVICES.length + REGIONS.length * REGION_LANDING_SERVICES.length + caseCount;
 check(urls.length === expectedCount, 'sitemap-count', '/sitemap.xml', `${urls.length}/${expectedCount}`);
 check(new Set(urls).size === urls.length, 'duplicate-sitemap-url', '/sitemap.xml');
 const routes = new Set(urls.map(url => new URL(url).pathname.replace(/\/$/, '') || '/'));
