@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export interface PortfolioGalleryItem {
   id: string;
@@ -18,6 +19,7 @@ interface PortfolioSplitCardProps {
   onClick: () => void;
   size?: 'marquee' | 'marquee-lg' | 'grid';
   eager?: boolean;
+  detailHref?: string | null;
   // Marquee callers only: false while the marquee section has never
   // scrolled into view. A CSS-animated track keeps moving every item
   // through the browser's near-viewport lazy-load distance regardless of
@@ -37,15 +39,13 @@ interface PortfolioSplitCardProps {
 // 'marquee-lg' is double the width of 'marquee' — used only on service
 // landing pages (ServiceBeforeAfterMarquee); the homepage teaser and the
 // /portfolio grid stay on 'marquee'/'grid' untouched.
-const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, size = 'grid', eager = false, visible = true }) => {
+const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, size = 'grid', eager = false, visible = true, detailHref = null }) => {
   const isMarquee = size === 'marquee' || size === 'marquee-lg';
   const isMarqueeLg = size === 'marquee-lg';
   const canLoad = eager || visible;
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <div
       className={`text-left group ${
         isMarqueeLg
           ? 'shrink-0 w-[32rem] sm:w-[40rem] md:w-[48rem] mx-2 md:mx-3'
@@ -53,8 +53,13 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
           ? 'shrink-0 w-64 sm:w-80 md:w-96 mx-2 md:mx-3'
           : 'w-full'
       }`}
-      aria-label={`${item.title} 시공 전후 크게 보기`}
     >
+      <button
+        type="button"
+        onClick={onClick}
+        className="w-full text-left"
+        aria-label={`${item.title} 시공 전후 크게 보기`}
+      >
       <div className="rounded-xl md:rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm group-hover:shadow-lg group-hover:border-primary/40 transition-all bg-white">
         <div className="grid grid-cols-2">
           <div className="relative aspect-square bg-slate-100">
@@ -87,7 +92,16 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
           <p className={`text-slate-700 font-bold truncate ${isMarqueeLg ? 'text-base' : isMarquee ? 'text-[10px]' : 'text-xs md:text-sm'}`}>{item.title}</p>
         </div>
       </div>
-    </button>
+      </button>
+      {detailHref && !isMarquee && (
+        <Link
+          to={detailHref}
+          className="mt-2 inline-flex w-full items-center justify-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-extrabold text-primaryDark hover:border-primary hover:bg-emerald-100 transition-colors"
+        >
+          홈페이지 상세사례 보기
+        </Link>
+      )}
+    </div>
   );
 };
 

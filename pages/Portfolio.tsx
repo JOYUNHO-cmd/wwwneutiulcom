@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
 import { Sparkles, Calendar, ArrowUpRight, ExternalLink, Loader2, Rss, ChevronRight, ChevronDown } from 'lucide-react';
 import { m } from 'motion/react';
 import portfolioManifest from '../lib/portfolioManifest.json';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
+import { getAllRegionCases, getRegionCaseUrlByPortfolioItemId } from '../lib/regionCaseData.mjs';
+import { REGIONS } from '../lib/regionData.mjs';
 
 const galleryItems = portfolioManifest as PortfolioGalleryItem[];
 const GALLERY_CATEGORIES = Array.from(
@@ -66,6 +69,7 @@ export const Portfolio: React.FC = () => {
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [showAllInternalCases, setShowAllInternalCases] = useState(false);
   const [openItem, setOpenItem] = useState<PortfolioGalleryItem | null>(null);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
 
@@ -74,6 +78,7 @@ export const Portfolio: React.FC = () => {
     [activeCategory]
   );
   const visibleItems = filteredItems.slice(0, visibleCount);
+  const internalCases = useMemo(() => getAllRegionCases(), []);
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
@@ -362,6 +367,7 @@ export const Portfolio: React.FC = () => {
               item={item}
               eager={idx < 8}
               onClick={() => setOpenItem(item)}
+              detailHref={getRegionCaseUrlByPortfolioItemId(item.id)}
             />
           ))}
         </div>
@@ -384,6 +390,74 @@ export const Portfolio: React.FC = () => {
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+        {/* Internal field-case index: keep users and crawlers on the website
+            before offering the external Naver blog archive. */}
+        <section aria-labelledby="internal-case-title" className="mb-12 md:mb-16">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-6">
+            <div>
+              <p className="text-xs font-extrabold tracking-[0.18em] text-primary uppercase mb-2">Verified Field Cases</p>
+              <h2 id="internal-case-title" className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+                홈페이지에서 바로 보는 실제 현장사례
+              </h2>
+              <p className="mt-2 text-sm md:text-base text-slate-600 break-keep">
+                작업 사진과 현장 설명, 상담 전 확인사항을 자체 상세페이지에 정리했습니다.
+              </p>
+            </div>
+            <span className="text-sm font-bold text-slate-500">총 {internalCases.length}건</span>
+          </div>
+
+          <div id="internal-case-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {internalCases.map(({ serviceId, regionId, caseData, url }, index) => {
+              const serviceTitle = config.services.find(service => service.id === serviceId)?.title || serviceId;
+              const regionName = REGIONS.find(region => region.id === regionId)?.name || regionId;
+              return (
+                <Link
+                  key={url}
+                  to={url}
+                  className={`${index >= 12 && !showAllInternalCases ? 'hidden' : ''} group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-primary/40 hover:shadow-lg transition-all`}
+                >
+                  <div className="aspect-[16/9] overflow-hidden bg-slate-100">
+                    <img
+                      src={caseData.thumbnail}
+                      alt={`${caseData.heading} 대표 사진`}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-4 md:p-5">
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-extrabold text-primaryDark">{regionName}</span>
+                      <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{serviceTitle}</span>
+                    </div>
+                    <h3 className="font-black text-slate-900 leading-snug break-keep group-hover:text-primary transition-colors">
+                      {caseData.heading}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 line-clamp-2 break-keep">{caseData.teaser}</p>
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-extrabold text-primary">
+                      상세사례 보기 <ChevronRight size={16} />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {internalCases.length > 12 && (
+            <div className="mt-7 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowAllInternalCases(value => !value)}
+                aria-expanded={showAllInternalCases}
+                aria-controls="internal-case-grid"
+                className="rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-extrabold text-slate-700 shadow-sm hover:border-primary/40 hover:text-primary transition-all"
+              >
+                {showAllInternalCases ? '자체 사례 접기' : `자체 사례 ${internalCases.length - 12}건 더 보기`}
+              </button>
+            </div>
+          )}
+        </section>
 
         {/* Construction Channel Callout */}
         <m.div 

@@ -5,7 +5,7 @@ import { MapPin, CheckCircle2, HelpCircle, Award } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { getRegion, regionCoreTerm, titleMatchesRegion } from '../lib/regionData.mjs';
 import { buildRegionServiceContent, REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
-import { getRegionCases } from '../lib/regionCaseData.mjs';
+import { getRegionCases, getRegionCaseUrlByPortfolioItemId } from '../lib/regionCaseData.mjs';
 import RegionCaseLinks from '../components/RegionCaseLinks';
 import { breakIntoLines, groupIntoStanzas } from '../lib/mobileLineBreak.mjs';
 import { josa } from '../lib/korean.mjs';
@@ -131,7 +131,12 @@ const RegionServiceLanding: React.FC = () => {
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {regionItems.map((item) => (
-              <PortfolioSplitCard key={item.id} item={item} onClick={() => setOpenItem(item)} />
+              <PortfolioSplitCard
+                key={item.id}
+                item={item}
+                onClick={() => setOpenItem(item)}
+                detailHref={getRegionCaseUrlByPortfolioItemId(item.id)}
+              />
             ))}
           </div>
         </section>

@@ -28,7 +28,7 @@ import { buildMeta } from '../lib/seoData.mjs';
 import { SERVICES } from '../lib/servicesData.mjs';
 import { REGIONS } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
-import { REGION_CASES, assertAllRegionCases } from '../lib/regionCaseData.mjs';
+import { REGION_CASES, assertAllRegionCases, getAllRegionCases } from '../lib/regionCaseData.mjs';
 import { buildLlmDocuments } from './generate-llms.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -256,6 +256,34 @@ async function main() {
   console.log(`Rendering initial HTML for all ${allRoutes.length} routes (this waits on each route's lazy chunk)...`);
   const contentByRoute = await renderContentByRoute(allRoutes);
   console.log(`  ✓ rendered ${contentByRoute.size}/${allRoutes.length} routes`);
+
+  const caseTopologyErrors = [];
+  for (const { serviceId, regionId, url } of getAllRegionCases()) {
+    const serviceHubUrl = `/services/${serviceId}`;
+    const regionUrl = `${serviceHubUrl}/${regionId}`;
+    const serviceHubHtml = contentByRoute.get(serviceHubUrl) || '';
+    const regionHtml = contentByRoute.get(regionUrl) || '';
+    const caseHtml = contentByRoute.get(url) || '';
+    const portfolioHtml = contentByRoute.get('/portfolio') || '';
+
+    if (!serviceHubHtml.includes(`href="${regionUrl}"`)) {
+      caseTopologyErrors.push(`${serviceHubUrl} -> ${regionUrl}`);
+    }
+    if (!regionHtml.includes(`href="${url}"`)) {
+      caseTopologyErrors.push(`${regionUrl} -> ${url}`);
+    }
+    if (!caseHtml.includes(`href="${regionUrl}"`)) {
+      caseTopologyErrors.push(`${url} -> ${regionUrl}`);
+    }
+    if (!portfolioHtml.includes(`href="${url}"`)) {
+      caseTopologyErrors.push(`/portfolio -> ${url}`);
+    }
+  }
+  if (caseTopologyErrors.length > 0) {
+    throw new Error(
+      `Field-case link topology is missing ${caseTopologyErrors.length} edge(s): ${caseTopologyErrors.join(', ')}`
+    );
+  }
 
   console.log('Writing prerendered routes...');
 
