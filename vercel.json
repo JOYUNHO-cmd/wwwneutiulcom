@@ -3,8 +3,8 @@
   "outputDirectory": "dist",
   "redirects": [
     {
-      "source": "/services/floor/ansan/안산공장바닥왁스코팅",
-      "destination": "/services/floor-wax/ansan/안산공장바닥왁스코팅",
+      "source": "/services/floor/ansan/:slug",
+      "destination": "/services/floor-wax/ansan/:slug",
       "permanent": true
     }
   ],

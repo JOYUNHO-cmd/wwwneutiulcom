@@ -71,12 +71,12 @@ test('verified service regions are derived from actual case records', () => {
   assert.deepEqual(getVerifiedRegionsForService('external-wall'), []);
 });
 
-test('legacy Ansan floor URL redirects permanently to the floor-wax cluster', () => {
+test('legacy Ansan floor case URLs redirect permanently without relying on Unicode route matching', () => {
   const config = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
-  const redirect = config.redirects?.find((entry) => entry.source.includes('안산공장바닥왁스코팅'));
+  const redirect = config.redirects?.find((entry) => entry.source === '/services/floor/ansan/:slug');
   assert.deepEqual(redirect, {
-    source: '/services/floor/ansan/안산공장바닥왁스코팅',
-    destination: '/services/floor-wax/ansan/안산공장바닥왁스코팅',
+    source: '/services/floor/ansan/:slug',
+    destination: '/services/floor-wax/ansan/:slug',
     permanent: true,
   });
 });
