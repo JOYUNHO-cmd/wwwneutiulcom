@@ -78,14 +78,7 @@ export const Portfolio: React.FC = () => {
     [activeCategory]
   );
   const visibleItems = filteredItems.slice(0, visibleCount);
-  const internalCases = useMemo(() => {
-    return getAllRegionCases().sort((a, b) => {
-      const aPriority = a.serviceId === 'floor-wax' ? 0 : 1;
-      const bPriority = b.serviceId === 'floor-wax' ? 0 : 1;
-      if (aPriority !== bPriority) return aPriority - bPriority;
-      return a.url < b.url ? -1 : a.url > b.url ? 1 : 0;
-    });
-  }, []);
+  const internalCases = useMemo(() => getAllRegionCases(), []);
 
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);

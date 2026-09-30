@@ -257,13 +257,31 @@ async function main() {
   const contentByRoute = await renderContentByRoute(allRoutes);
   console.log(`  ✓ rendered ${contentByRoute.size}/${allRoutes.length} routes`);
 
-  const portfolioHtml = contentByRoute.get('/portfolio') || '';
-  const missingPortfolioCaseLinks = getAllRegionCases()
-    .map(({ url }) => url)
-    .filter((url) => !portfolioHtml.includes(`href="${url}"`));
-  if (missingPortfolioCaseLinks.length > 0) {
+  const caseTopologyErrors = [];
+  for (const { serviceId, regionId, url } of getAllRegionCases()) {
+    const serviceHubUrl = `/services/${serviceId}`;
+    const regionUrl = `${serviceHubUrl}/${regionId}`;
+    const serviceHubHtml = contentByRoute.get(serviceHubUrl) || '';
+    const regionHtml = contentByRoute.get(regionUrl) || '';
+    const caseHtml = contentByRoute.get(url) || '';
+    const portfolioHtml = contentByRoute.get('/portfolio') || '';
+
+    if (!serviceHubHtml.includes(`href="${regionUrl}"`)) {
+      caseTopologyErrors.push(`${serviceHubUrl} -> ${regionUrl}`);
+    }
+    if (!regionHtml.includes(`href="${url}"`)) {
+      caseTopologyErrors.push(`${regionUrl} -> ${url}`);
+    }
+    if (!caseHtml.includes(`href="${regionUrl}"`)) {
+      caseTopologyErrors.push(`${url} -> ${regionUrl}`);
+    }
+    if (!portfolioHtml.includes(`href="${url}"`)) {
+      caseTopologyErrors.push(`/portfolio -> ${url}`);
+    }
+  }
+  if (caseTopologyErrors.length > 0) {
     throw new Error(
-      `/portfolio SSR is missing ${missingPortfolioCaseLinks.length} field-case link(s): ${missingPortfolioCaseLinks.join(', ')}`
+      `Field-case link topology is missing ${caseTopologyErrors.length} edge(s): ${caseTopologyErrors.join(', ')}`
     );
   }
 
