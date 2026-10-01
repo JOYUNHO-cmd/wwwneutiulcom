@@ -43,8 +43,8 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 31);
-  assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 12);
+  assert.equal(cases.length, 36);
+  assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 14);
   assert.equal(new Set(urls).size, urls.length);
   assert.ok(cases.every((entry) => entry.serviceId && entry.regionId && entry.caseData?.heading));
 });
@@ -67,8 +67,14 @@ test('verified service regions are derived from actual case records', () => {
     ],
   );
   assert.equal(getVerifiedRegionsForService('office').length, 6);
-  assert.deepEqual(getVerifiedRegionsForService('flood'), []);
-  assert.deepEqual(getVerifiedRegionsForService('external-wall'), []);
+  assert.deepEqual(
+    getVerifiedRegionsForService('flood'),
+    [{ regionId: 'seocho', caseCount: 1, href: '/services/flood/seocho' }],
+  );
+  assert.deepEqual(
+    getVerifiedRegionsForService('external-wall'),
+    [{ regionId: 'seongsu', caseCount: 1, href: '/services/external-wall/seongsu' }],
+  );
 });
 
 test('legacy Ansan floor case URLs redirect permanently without relying on Unicode route matching', () => {
