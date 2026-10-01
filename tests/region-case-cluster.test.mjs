@@ -80,3 +80,38 @@ test('legacy Ansan floor case URLs redirect permanently without relying on Unico
     permanent: true,
   });
 });
+
+test('Uijeongbu hoarder-house preview uses verified phase labels and sanitized media', () => {
+  const regionCase = getRegionCase('special', 'uijeongbu', '의정부쓰레기집청소');
+  assert.ok(regionCase);
+  assert.equal(regionCase.heading, '의정부 쓰레기집 청소, 물건을 들어낸 뒤 바닥 상태까지 확인한 현장');
+  assert.doesNotMatch(regionCase.intro, /무료 방문 견적|다시 생활할 수 있는 상태|비밀보장|즉시 출동/);
+  assert.deepEqual(
+    regionCase.steps.map((step) => step.title),
+    ['작업 전 · 적치 상태 확인', '반출 후 · 바닥과 문 상태 확인', '부분 반출 후 · 남은 물품과 바닥 상태 확인'],
+  );
+
+  const media = regionCase.steps.flatMap((step) => step.media);
+  const video = media.find((item) => item.type === 'video');
+  assert.ok(video);
+  assert.ok(video.poster, 'video media must provide a privacy-reviewed poster image');
+  assert.ok(fs.existsSync(new URL(`../public${video.poster}`, import.meta.url)), `${video.poster} must exist`);
+  assert.ok(media.every((item) => !item.src.endsWith('uijeongbu-hoarder-house-01.webp')));
+  assert.ok(media.every((item) => !item.src.endsWith('uijeongbu-hoarder-house-02.webp')));
+  assert.ok(media.every((item) => !item.src.endsWith('uijeongbu-hoarder-house-08.webp')));
+  assert.ok(media.every((item) => !/작업 후|완료/.test(`${item.alt} ${item.caption}`)));
+
+  for (const item of media) {
+    const asset = new URL(`../public${item.src}`, import.meta.url);
+    assert.ok(fs.existsSync(asset), `${item.src} must exist in public assets`);
+  }
+});
+
+test('region case proof block renders video media without autoplay', () => {
+  const source = fs.readFileSync(new URL('../components/RegionCaseSection.tsx', import.meta.url), 'utf8');
+  assert.match(source, /m\.type === 'video'/);
+  assert.match(source, /<video/);
+  assert.match(source, /controls/);
+  assert.match(source, /muted/);
+  assert.doesNotMatch(source, /autoPlay/);
+});
