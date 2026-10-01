@@ -2,11 +2,13 @@ import React from 'react';
 import { MapPin, ClipboardList, Users2, Info } from 'lucide-react';
 
 interface CaseMedia {
+  type?: 'image' | 'video';
   src: string;
   width: number;
   height: number;
   alt: string;
   caption: string;
+  poster?: string;
 }
 
 interface CaseStep {
@@ -66,14 +68,29 @@ const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, class
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {step.media.map((m, mi) => (
                 <figure key={mi} className="rounded-xl overflow-hidden bg-gray-100">
-                  <img
-                    src={m.src}
-                    width={m.width}
-                    height={m.height}
-                    alt={m.alt}
-                    loading="lazy"
-                    className="w-full aspect-[3/4] object-cover"
-                  />
+                  {m.type === 'video' ? (
+                    <video
+                      src={m.src}
+                      poster={m.poster}
+                      width={m.width}
+                      height={m.height}
+                      aria-label={m.alt}
+                      controls
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="w-full aspect-[3/4] object-cover bg-slate-900"
+                    />
+                  ) : (
+                    <img
+                      src={m.src}
+                      width={m.width}
+                      height={m.height}
+                      alt={m.alt}
+                      loading="lazy"
+                      className="w-full aspect-[3/4] object-cover"
+                    />
+                  )}
                   <figcaption className="text-[11px] sm:text-xs text-gray-500 px-2 py-1.5 break-keep">
                     {m.caption}
                   </figcaption>
