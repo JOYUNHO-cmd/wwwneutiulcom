@@ -46,7 +46,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 36);
+  assert.equal(cases.length, 46);
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 14);
   assert.equal(new Set(urls).size, urls.length);
   assert.ok(cases.every((entry) => entry.serviceId && entry.regionId && entry.caseData?.heading));
@@ -66,7 +66,17 @@ test('verified service regions are derived from actual case records', () => {
     getVerifiedRegionsForService('floor-wax'),
     [
       { regionId: 'gangnam', caseCount: 1, href: '/services/floor-wax/gangnam' },
+      { regionId: 'gunpo', caseCount: 1, href: '/services/floor-wax/gunpo' },
+      { regionId: 'anyang', caseCount: 1, href: '/services/floor-wax/anyang' },
+      { regionId: 'suwon', caseCount: 1, href: '/services/floor-wax/suwon' },
+      { regionId: 'uiwang', caseCount: 1, href: '/services/floor-wax/uiwang' },
       { regionId: 'ansan', caseCount: 1, href: '/services/floor-wax/ansan' },
+      { regionId: 'gwacheon', caseCount: 1, href: '/services/floor-wax/gwacheon' },
+      { regionId: 'yongin', caseCount: 1, href: '/services/floor-wax/yongin' },
+      { regionId: 'paju', caseCount: 1, href: '/services/floor-wax/paju' },
+      { regionId: 'yeongjong', caseCount: 1, href: '/services/floor-wax/yeongjong' },
+      { regionId: 'seocho', caseCount: 1, href: '/services/floor-wax/seocho' },
+      { regionId: 'songpa', caseCount: 1, href: '/services/floor-wax/songpa' },
     ],
   );
   assert.equal(getVerifiedRegionsForService('office').length, 6);
