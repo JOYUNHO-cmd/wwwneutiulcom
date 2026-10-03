@@ -250,15 +250,15 @@ test('ten floor-wax field cases keep verified locations and conservative phase l
   assert.ok(yonginOffice.steps.flatMap((step) => step.media).every((item) => /yongin-office-floorwax/.test(item.src)));
 });
 
-test('unsupported legacy floor-wax slugs redirect permanently to neutral URLs', () => {
+test('unsupported legacy floor-wax slugs use encoded permanent redirects to neutral URLs', () => {
   const config = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
   assert.ok(config.redirects?.some((entry) =>
-    entry.source === '/services/floor-wax/songpa/송파박리후바닥왁스코팅' &&
+    entry.source === '/services/floor-wax/songpa/%EC%86%A1%ED%8C%8C%EB%B0%95%EB%A6%AC%ED%9B%84%EB%B0%94%EB%8B%A5%EC%99%81%EC%8A%A4%EC%BD%94%ED%8C%85' &&
     entry.destination === '/services/floor-wax/songpa/송파바닥세척도포작업' &&
     entry.permanent === true
   ));
   assert.ok(config.redirects?.some((entry) =>
-    entry.source === '/services/floor-wax/yongin/용인박리후마루코팅' &&
+    entry.source === '/services/floor-wax/yongin/%EC%9A%A9%EC%9D%B8%EB%B0%95%EB%A6%AC%ED%9B%84%EB%A7%88%EB%A3%A8%EC%BD%94%ED%8C%85' &&
     entry.destination === '/services/floor-wax/yongin/용인주택마루표면작업' &&
     entry.permanent === true
   ));
