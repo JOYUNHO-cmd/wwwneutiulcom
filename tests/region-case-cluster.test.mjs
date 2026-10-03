@@ -20,6 +20,11 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'new-construction-199': '/services/restaurant/gwanggyo/광교중식당준공청소',
   'suwon-hood-405': '/services/hood/suwon/수원갈비탕집후드청소',
   'seongsu-exterior-wall-241': '/services/external-wall/seongsu/성수동건물외벽내부청소',
+  'anyang-floor-wax-coating-131': '/services/floor-wax/anyang/안양상가바닥왁스코팅',
+  'paju-floor-wax-coating-143': '/services/floor-wax/paju/파주사무실바닥왁스코팅',
+  'floor-wax-coating-121': '/services/floor-wax/seocho/서초사무실시트지제거바닥왁스코팅',
+  'yongin-floor-wax-coating-137': '/services/floor-wax/yongin/용인사무실바닥왁스코팅',
+  'uiwang-floor-wood-coating-071': '/services/floor-wax/uiwang/의왕스포츠센터마루코팅',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -65,14 +70,13 @@ test('verified service regions are derived from actual case records', () => {
   assert.deepEqual(
     getVerifiedRegionsForService('floor-wax'),
     [
+      { regionId: 'yongin', caseCount: 2, href: '/services/floor-wax/yongin' },
       { regionId: 'gangnam', caseCount: 1, href: '/services/floor-wax/gangnam' },
       { regionId: 'gunpo', caseCount: 1, href: '/services/floor-wax/gunpo' },
       { regionId: 'anyang', caseCount: 1, href: '/services/floor-wax/anyang' },
-      { regionId: 'suwon', caseCount: 1, href: '/services/floor-wax/suwon' },
       { regionId: 'uiwang', caseCount: 1, href: '/services/floor-wax/uiwang' },
       { regionId: 'ansan', caseCount: 1, href: '/services/floor-wax/ansan' },
       { regionId: 'gwacheon', caseCount: 1, href: '/services/floor-wax/gwacheon' },
-      { regionId: 'yongin', caseCount: 1, href: '/services/floor-wax/yongin' },
       { regionId: 'paju', caseCount: 1, href: '/services/floor-wax/paju' },
       { regionId: 'yeongjong', caseCount: 1, href: '/services/floor-wax/yeongjong' },
       { regionId: 'seocho', caseCount: 1, href: '/services/floor-wax/seocho' },
@@ -185,6 +189,79 @@ test('six audited field cases keep conservative phases, sanitized media and veri
   const seongsuMedia = cases.seongsu.steps.flatMap((step) => step.media);
   assert.ok(seongsuMedia.some((item) => item.src.endsWith('seongsu-externalwall-09-after.webp')));
   assert.ok(seongsuMedia.every((item) => !item.src.endsWith('seongsu-externalwall-03.webp')));
+});
+
+test('ten floor-wax field cases keep verified locations and conservative phase labels', () => {
+  const cases = [
+    getRegionCase('floor-wax', 'anyang', '안양상가바닥왁스코팅'),
+    getRegionCase('floor-wax', 'gunpo', '군포지식산업센터바닥왁스코팅'),
+    getRegionCase('floor-wax', 'gwacheon', '과천주택마루코팅'),
+    getRegionCase('floor-wax', 'paju', '파주사무실바닥왁스코팅'),
+    getRegionCase('floor-wax', 'seocho', '서초사무실시트지제거바닥왁스코팅'),
+    getRegionCase('floor-wax', 'songpa', '송파바닥세척도포작업'),
+    getRegionCase('floor-wax', 'uiwang', '의왕스포츠센터마루코팅'),
+    getRegionCase('floor-wax', 'yeongjong', '영종도바닥왁스코팅'),
+    getRegionCase('floor-wax', 'yongin', '용인주택마루표면작업'),
+    getRegionCase('floor-wax', 'yongin', '용인사무실바닥왁스코팅'),
+  ];
+  assert.ok(cases.every(Boolean));
+  assert.equal(getRegionCase('floor-wax', 'suwon', '수원사무실바닥왁스코팅'), null);
+  assert.equal(getRegionCase('floor-wax', 'songpa', '송파박리후바닥왁스코팅'), null);
+  assert.equal(getRegionCase('floor-wax', 'yongin', '용인박리후마루코팅'), null);
+
+  for (const regionCase of cases) {
+    const text = JSON.stringify(regionCase);
+    assert.doesNotMatch(
+      text,
+      /무료 방문 견적|전 지역 출장|영업 전후 시간대로 조율해 작업|야간이나 주말 시간대로 조율해 작업|완전히 제거|균일한 광택|미끄럼 방지|내구성/,
+    );
+    for (const item of regionCase.steps.flatMap((step) => step.media)) {
+      assert.ok(fs.existsSync(new URL(`../public${item.src}`, import.meta.url)), `${item.src} must exist`);
+    }
+  }
+
+  const anyang = cases[0];
+  assert.equal(anyang.portfolioItemId, 'anyang-floor-wax-coating-131');
+  assert.match(anyang.steps[0].media[0].src, /anyang-floorwax-08\.webp$/);
+  assert.match(anyang.steps.at(-1).media[0].src, /anyang-floorwax-05\.webp$/);
+
+  const seocho = cases[4];
+  assert.equal(seocho.portfolioItemId, 'floor-wax-coating-121');
+  assert.match(JSON.stringify(seocho.steps), /seocho-floorwax-09-after\.webp/);
+  assert.doesNotMatch(JSON.stringify(seocho.steps), /seocho-floorwax-0[78]\.webp/);
+  assert.match(JSON.stringify(seocho.steps), /seocho-floorwax-0[34]-safe\.webp/);
+
+  const songpa = cases[5];
+  assert.doesNotMatch(songpa.steps.at(-1).title, /작업 후|완료/);
+
+  const uiwang = cases[6];
+  assert.equal(uiwang.portfolioItemId, 'uiwang-floor-wood-coating-071');
+  assert.doesNotMatch(JSON.stringify(uiwang.steps), /uiwang-floorwax-03\.webp/);
+
+  const yeongjong = cases[7];
+  assert.doesNotMatch(JSON.stringify(yeongjong.steps), /yeongjong-floorwax-08\.webp/);
+
+  const paju = cases[3];
+  assert.doesNotMatch(JSON.stringify(paju.steps), /paju-floorwax-0[34]\.webp/);
+  assert.match(JSON.stringify(paju.steps), /paju-floorwax-0[34]-safe\.webp/);
+
+  const yonginOffice = cases[9];
+  assert.equal(yonginOffice.portfolioItemId, 'yongin-floor-wax-coating-137');
+  assert.ok(yonginOffice.steps.flatMap((step) => step.media).every((item) => /yongin-office-floorwax/.test(item.src)));
+});
+
+test('unsupported legacy floor-wax slugs redirect permanently to neutral URLs', () => {
+  const config = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+  assert.ok(config.redirects?.some((entry) =>
+    entry.source === '/services/floor-wax/songpa/송파박리후바닥왁스코팅' &&
+    entry.destination === '/services/floor-wax/songpa/송파바닥세척도포작업' &&
+    entry.permanent === true
+  ));
+  assert.ok(config.redirects?.some((entry) =>
+    entry.source === '/services/floor-wax/yongin/용인박리후마루코팅' &&
+    entry.destination === '/services/floor-wax/yongin/용인주택마루표면작업' &&
+    entry.permanent === true
+  ));
 });
 
 test('region case proof block renders video media without autoplay', () => {

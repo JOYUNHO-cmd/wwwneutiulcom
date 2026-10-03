@@ -6,6 +6,16 @@
       "source": "/services/floor/ansan/:slug",
       "destination": "/services/floor-wax/ansan/:slug",
       "permanent": true
+    },
+    {
+      "source": "/services/floor-wax/songpa/송파박리후바닥왁스코팅",
+      "destination": "/services/floor-wax/songpa/송파바닥세척도포작업",
+      "permanent": true
+    },
+    {
+      "source": "/services/floor-wax/yongin/용인박리후마루코팅",
+      "destination": "/services/floor-wax/yongin/용인주택마루표면작업",
+      "permanent": true
     }
   ],
   "headers": [
