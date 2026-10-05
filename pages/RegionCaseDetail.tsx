@@ -6,6 +6,7 @@ import { getRegion } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { getRegionCase, getRegionCases } from '../lib/regionCaseData.mjs';
 import RegionCaseSection from '../components/RegionCaseSection';
+import RegionCaseArticle from '../components/RegionCaseArticle';
 import { HelpCircle } from 'lucide-react';
 
 // A single real field-case article, at /services/:serviceId/:regionId/:caseId —
@@ -56,7 +57,11 @@ const RegionCaseDetail: React.FC = () => {
         </a>
       </section>
 
-      {/* What was actually done, in prose — grounded in regionCase.facts */}
+      {regionCase.sections.every((s) => Array.isArray(s.stepIndexes)) ? (
+        <RegionCaseArticle regionCase={regionCase} />
+      ) : (
+        <>
+      {/* Legacy prose and proof block for cases without explicit section-step links. */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {regionCase.sections.map((s, i) => (
           <div key={i}>
@@ -67,6 +72,8 @@ const RegionCaseDetail: React.FC = () => {
       </section>
 
       <RegionCaseSection regionCase={regionCase} className="max-w-5xl mx-auto px-4 sm:px-6 py-6" />
+        </>
+      )}
 
       {/* This case's FAQ */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
