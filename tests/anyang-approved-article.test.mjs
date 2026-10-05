@@ -12,14 +12,15 @@ test('approved Anyang article preserves its title and three narrative sections',
   assert.equal(article.sections.length, 3);
   assert.deepEqual(article.sections.map((section) => section.heading), [
     '테이블과 의자가 놓여 있던 작업 전',
-    '물기와 거품이 보이는 세척 과정',
-    '작업 후 사진으로 확인하는 매장 바닥',
+    '약품을 이용한 오염 세척 과정',
+    '작업 후 확인하는 작업 과정 사진들',
   ]);
-  assert.match(article.intro, /매장 상호와 정확한 주소는 공개하지 않고/);
-  assert.match(article.sections[0].body, /기름때인지, 기존 코팅층의 문제인지까지 판단할 수는 없습니다/);
-  assert.match(article.sections[1].body, /사용한 약품이나 도포 횟수는 확인된 공개 기록이 없어 적지 않았습니다/);
-  assert.match(article.sections[2].body, /사진 한 장으로 전체 바닥의 상태나 코팅 지속 기간까지 설명하지는 않습니다/);
-  assert.match(article.note, /작업할 면적과 현재 바닥 사진, 원하는 작업 범위/);
+  assert.equal(article.intro, '이번 현장은 안양에 위치한 식당의 바닥왁스코팅 작업입니다. 세척 과정부터 코팅작업까지 공유하겠습니다');
+  assert.match(article.sections[0].body, /테이블과 의자.*통로/);
+  assert.match(article.sections[1].body, /저희.*약품.*세척/);
+  assert.match(article.sections[2].body, /작업 후.*바닥/);
+  assert.match(article.note, /저희에게.*면적.*현재 바닥 사진.*작업 범위/);
+  assert.doesNotMatch(JSON.stringify(article), /원기록|확인된 공개 기록|사진만으로 판단|소개하는 데 사용/);
   assert.equal(article.faq.length, 4);
   for (const keyword of ['비용', '견적', '추천']) assert.ok(article.description.includes(keyword));
 });
