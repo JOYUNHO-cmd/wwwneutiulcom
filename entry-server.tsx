@@ -40,6 +40,16 @@ export function render(path: string): Promise<string> {
     }, RENDER_TIMEOUT_MS);
 
     const { pipe, abort } = renderToPipeableStream(<App ssrPath={path} />, {
+      // Even after onAllReady, React outlines any Suspense boundary whose
+      // content exceeds progressiveChunkSize (12800 bytes by default): it
+      // ships the content in a <div hidden id="S:n"> plus an inline $RC
+      // script that swaps it into place on a later animation frame. On
+      // these static pages the client's hydrateRoot can win that race, so
+      // React client-renders the boundary and the hidden copy is never
+      // removed — every page ended up with its whole content twice in the
+      // DOM. Nothing here is streamed to a live client, so inline every
+      // completed boundary instead.
+      progressiveChunkSize: Number.POSITIVE_INFINITY,
       onAllReady() {
         clearTimeout(timeout);
         pipe(collector);
