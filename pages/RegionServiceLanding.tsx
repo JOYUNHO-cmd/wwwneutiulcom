@@ -10,7 +10,8 @@ import RegionCaseLinks from '../components/RegionCaseLinks';
 import { breakIntoLines, groupIntoStanzas } from '../lib/mobileLineBreak.mjs';
 import { josa } from '../lib/korean.mjs';
 import { shuffle } from '../lib/shuffle.mjs';
-import ServiceBeforeAfterMarquee, { SERVICE_CATEGORY_MAP } from '../components/ServiceBeforeAfterMarquee';
+import ServiceBeforeAfterMarquee from '../components/ServiceBeforeAfterMarquee';
+import { matchesServicePhoto } from '../lib/servicePhotoMatch.mjs';
 import ReviewsSection from '../components/ReviewsSection';
 import CeoMessageSection from '../components/CeoMessageSection';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
@@ -60,9 +61,8 @@ const RegionServiceLanding: React.FC = () => {
   // the reshuffle that follows is an ordinary post-mount state update.
   const filteredRegionItems = useMemo(() => {
     if (!region || !serviceId) return [];
-    const categories = SERVICE_CATEGORY_MAP[serviceId] || [];
     return allPortfolioItems.filter(
-      (item) => categories.includes(item.category) && titleMatchesRegion(item.title, regionCoreTerm(region))
+      (item) => matchesServicePhoto(serviceId, item) && titleMatchesRegion(item.title, regionCoreTerm(region))
     );
   }, [region, serviceId]);
   const [regionItems, setRegionItems] = useState(filteredRegionItems);

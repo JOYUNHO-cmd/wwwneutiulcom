@@ -448,6 +448,8 @@ const AdminDashboardInner: React.FC = () => {
                          <option value="사무실청소">사무실청소</option>
                          <option value="관공서청소">관공서청소</option>
                          <option value="특수청소">특수청소</option>
+                         <option value="쓰레기집청소">쓰레기집청소</option>
+                         <option value="고독사청소">고독사청소</option>
                          <option value="바닥코팅">바닥코팅</option>
                        </select>
                     </div>

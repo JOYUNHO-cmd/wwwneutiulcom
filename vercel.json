@@ -16,6 +16,11 @@
       "source": "/services/floor-wax/yongin/%EC%9A%A9%EC%9D%B8%EB%B0%95%EB%A6%AC%ED%9B%84%EB%A7%88%EB%A3%A8%EC%BD%94%ED%8C%85",
       "destination": "/services/floor-wax/yongin/용인주택마루표면작업",
       "permanent": true
+    },
+    {
+      "source": "/services/special/uijeongbu/%EC%9D%98%EC%A0%95%EB%B6%80%EC%93%B0%EB%A0%88%EA%B8%B0%EC%A7%91%EC%B2%AD%EC%86%8C",
+      "destination": "/services/trash-house/uijeongbu/의정부쓰레기집청소",
+      "permanent": true
     }
   ],
   "headers": [
