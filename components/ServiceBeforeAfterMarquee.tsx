@@ -3,41 +3,18 @@ import portfolioManifest from '../lib/portfolioManifest.json';
 import { shuffle } from '../lib/shuffle.mjs';
 import PortfolioSplitCard, { PortfolioGalleryItem } from './PortfolioSplitCard';
 import PortfolioLightbox from './PortfolioLightbox';
+import { SERVICE_CATEGORY_MAP, matchesServicePhoto } from '../lib/servicePhotoMatch.mjs';
 
 const allItems = portfolioManifest as PortfolioGalleryItem[];
 
-// Maps each of the 14 service landing pages to the portfolio-gallery
-// category slugs that belong on it. Several photo categories (마루코팅/
-// 왁스코팅 vs 본드제거/오일폴티스/콩자갈/타일작업) split across the two
-// "바닥" services rather than mapping 1:1, and a few categories with no
-// dedicated service page (매장·백화점청소, 시트지제거, 어닝청소,
-// 건물복원청소, 곰팡이제거, 기타청소) are folded into the closest-fit
-// service. 'factory' has no matching source photos, so it renders nothing.
-// 'hood' and 'government' used to be folded into restaurant/office
-// respectively before they got their own dedicated service pages.
-export const SERVICE_CATEGORY_MAP: Record<string, string[]> = {
-  'new-construction': ['new-construction'],
-  interior: ['interior', 'sheet-removal'],
-  'move-in': ['move-in'],
-  office: ['office', 'store-department'],
-  floor: ['floor-adhesive-removal', 'floor-oil-poultice', 'floor-pebble', 'floor-tile'],
-  'floor-wax': ['floor-wood-coating', 'floor-wax-coating'],
-  restaurant: ['kitchen'],
-  hood: ['hood'],
-  factory: [],
-  flood: ['flood'],
-  fire: ['fire'],
-  special: ['special', 'mold-removal', 'etc'],
-  'external-wall': ['exterior-wall', 'awning', 'building-restoration'],
-  'government-school': ['government'],
-};
+// Kept as re-exports so existing imports of these from this module still work.
+export { SERVICE_CATEGORY_MAP, matchesServicePhoto };
 
 interface Props {
   serviceId: string;
 }
 
 const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
-  const categories = SERVICE_CATEGORY_MAP[serviceId] || [];
   // portfolioManifest.json is generated one category folder at a time, so
   // an unshuffled filter shows long same-sub-category runs (e.g. every
   // floor-adhesive-removal shot before any floor-tile one) instead of a
@@ -52,7 +29,7 @@ const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
   // then runs once in an effect, which by definition never executes on the
   // server, so there's nothing for hydration to mismatch against.
   const filteredItems = useMemo(
-    () => allItems.filter((item) => categories.includes(item.category)),
+    () => allItems.filter((item) => matchesServicePhoto(serviceId, item)),
     [serviceId]
   );
   const [items, setItems] = useState(filteredItems);

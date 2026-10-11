@@ -79,6 +79,8 @@ const getCategoryMapping = (serviceId: string) => {
     case 'flood': return '침수청소';
     case 'fire': return '화재청소';
     case 'special': return '특수청소';
+    case 'trash-house': return '쓰레기집청소';
+    case 'lonely-death': return '고독사청소';
     case 'external-wall': return '외벽청소';
     case 'government-school': return '관공서청소';
     default: return '';
@@ -378,8 +380,8 @@ const ServiceLanding: React.FC = () => {
         </section>
       )}
 
-      {/* 5th Section: Special Cleaning Pricing & Transparency Guide (특수청소/쓰레기집 비용 및 투명 견적 안내) */}
-      {serviceId === 'special' && (
+      {/* 5th Section: Trash-house Cleaning Pricing & Transparency Guide (쓰레기집청소 비용 및 투명 견적 안내). The 특수청소 hub and 고독사청소 deliberately show no price table: the numbers below are 쓰레기집 figures. */}
+      {serviceId === 'trash-house' && (
         <section className="py-16 md:py-24 bg-slate-50/80 text-slate-900 relative overflow-hidden border-y border-slate-200/80">
           {/* Background Ambient Glows */}
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
@@ -426,7 +428,7 @@ const ServiceLanding: React.FC = () => {
                       <DollarSign className="w-5 h-5 stroke-[2.5]" />
                     </div>
                     <h4 className="text-base sm:text-xl font-bold text-slate-900 tracking-tight leading-snug text-center sm:text-left">
-                      쓰레기집 &amp; 특수청소 <br className="block sm:hidden" />평균 비용 안내
+                      쓰레기집 청소 <br className="block sm:hidden" />평균 비용 안내
                     </h4>
                   </div>
 
@@ -466,7 +468,7 @@ const ServiceLanding: React.FC = () => {
                         </span>
                       </div>
                       <p className="text-xs text-slate-600 leading-relaxed break-keep font-medium">
-                        고독사 · 부패 · 분뇨 · 해충 박멸 및 특수 탈취 소독 포함
+                        부패 · 분뇨 · 해충 박멸 및 특수 탈취 소독 포함
                       </p>
                     </div>
                   </div>
@@ -512,7 +514,7 @@ const ServiceLanding: React.FC = () => {
                             현장 맞춤 상담 후 견적
                           </td>
                           <td className="py-4 px-2 text-xs sm:text-sm text-slate-600 leading-normal">
-                            고독사 · 부패 · 분뇨 · 해충 박멸 및 특수 탈취 소독 포함
+                            부패 · 분뇨 · 해충 박멸 및 특수 탈취 소독 포함
                           </td>
                         </tr>
                       </tbody>

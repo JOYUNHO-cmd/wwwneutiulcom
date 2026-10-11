@@ -5,7 +5,7 @@ import {
   Sparkles, Building, Store, Layers, Utensils,
   Droplets, Flame, Waves, Building2, Paintbrush,
   Home, Briefcase, Eraser, Factory, Biohazard, CheckCircle2, ShieldCheck,
-  Wind, Landmark
+  Wind, Landmark, Trash2, HeartHandshake
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { m, AnimatePresence } from 'motion/react';
@@ -28,6 +28,8 @@ const iconMap: Record<string, React.ReactNode> = {
   Biohazard: <Biohazard size={20} />,
   Wind: <Wind size={20} />,
   Landmark: <Landmark size={20} />,
+  Trash2: <Trash2 size={20} />,
+  HeartHandshake: <HeartHandshake size={20} />,
 };
 
 const Services: React.FC = () => {
