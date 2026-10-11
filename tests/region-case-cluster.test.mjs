@@ -52,7 +52,9 @@ test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
   assert.equal(cases.length, 46);
-  assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 14);
+  // 15 = the 14 services that already had cases + trash-house, which took
+  // over the 의정부 쓰레기집 case from special.
+  assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
   assert.equal(new Set(urls).size, urls.length);
   assert.ok(cases.every((entry) => entry.serviceId && entry.regionId && entry.caseData?.heading));
 });
@@ -105,7 +107,7 @@ test('legacy Ansan floor case URLs redirect permanently without relying on Unico
 });
 
 test('Uijeongbu hoarder-house preview uses verified phase labels and sanitized media', () => {
-  const regionCase = getRegionCase('special', 'uijeongbu', '의정부쓰레기집청소');
+  const regionCase = getRegionCase('trash-house', 'uijeongbu', '의정부쓰레기집청소');
   assert.ok(regionCase);
   assert.equal(regionCase.heading, '의정부 쓰레기집 청소, 물건을 들어낸 뒤 바닥 상태까지 확인한 현장');
   assert.doesNotMatch(regionCase.intro, /무료 방문 견적|다시 생활할 수 있는 상태|비밀보장|즉시 출동/);
@@ -271,4 +273,14 @@ test('region case proof block renders video media without autoplay', () => {
   assert.match(source, /controls/);
   assert.match(source, /muted/);
   assert.doesNotMatch(source, /autoPlay/);
+});
+
+test('the Uijeongbu hoarder-house case moved to trash-house and its old special URL redirects permanently', () => {
+  assert.equal(getRegionCase('special', 'uijeongbu', '의정부쓰레기집청소'), null);
+  assert.ok(getRegionCase('trash-house', 'uijeongbu', '의정부쓰레기집청소'));
+  const config = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+  assert.ok(config.redirects?.some((entry) =>
+    entry.source === `/services/special/uijeongbu/${encodeURIComponent('의정부쓰레기집청소')}`
+    && entry.destination === '/services/trash-house/uijeongbu/의정부쓰레기집청소'
+    && entry.permanent === true));
 });
