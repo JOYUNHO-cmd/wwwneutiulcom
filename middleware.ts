@@ -27,6 +27,10 @@ export default function middleware(request: Request): Response | undefined {
   try {
     const refererHost = new URL(referer).hostname;
     if (ALLOWED_REFERER_HOSTS.has(refererHost)) return undefined;
+    // A page asking for an image on its own host is never hotlinking. This
+    // is what lets Vercel preview deployments (v-scode-*.vercel.app) show
+    // their photos — without it every preview rendered with broken images.
+    if (refererHost === new URL(request.url).hostname) return undefined;
   } catch {
     // Unparseable Referer — fall through to the block below.
   }
