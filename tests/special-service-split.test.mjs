@@ -6,6 +6,7 @@ import { SERVICES } from '../lib/servicesData.mjs';
 import { REGIONS } from '../lib/regionData.mjs';
 import { buildRegionServiceContent, REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { HOUSING_PROFILE_REGION_IDS, getHousingBridge } from '../lib/regionHousingProfile.mjs';
+import { RESIDENTIAL_STORIES } from '../lib/regionResidentialStory.mjs';
 import { getServiceBlogLinks } from '../lib/serviceBlogLinks.mjs';
 import { SERVICE_KEYWORDS_MAP, buildMeta } from '../lib/seoData.mjs';
 import { matchesServicePhoto } from '../lib/servicePhotoMatch.mjs';
@@ -43,8 +44,12 @@ test('each new service gets region pages with region-specific copy and a full FA
       assert.ok(content, `${serviceId}/${region.id}`);
       assert.equal(content.faqs.length, 4, `${serviceId}/${region.id} faq count`);
       assert.ok(content.intro.includes(region.name), `${serviceId}/${region.id} intro names the region`);
-      // Same regional ingredients as every other service's region page.
-      assert.ok(content.intro.includes(region.story), `${serviceId}/${region.id} intro carries the region's story`);
+      // Same regional ingredients as every other service's region page, with
+      // the housing-focused description instead of the business-demand story.
+      const residential = RESIDENTIAL_STORIES[region.id];
+      assert.ok(residential, `${region.id} needs a residential description`);
+      assert.ok(content.intro.includes(residential), `${serviceId}/${region.id} intro carries the residential description`);
+      assert.ok(!content.intro.includes(region.story), `${serviceId}/${region.id} intro should not reuse the business story`);
       assert.ok(content.faqs[0].a.includes(region.landmark), `${serviceId}/${region.id} first FAQ names the landmark`);
       assert.ok(JSON.stringify(content).includes(region.dongs[0]), `${serviceId}/${region.id} lists the region's dongs`);
       assert.doesNotMatch(JSON.stringify(content), /undefined|\[object/, `${serviceId}/${region.id}`);
@@ -68,6 +73,8 @@ test('the two new services do not borrow each other\'s subject matter', () => {
 test('region housing profiles only reference real regions', () => {
   const ids = new Set(REGIONS.map((r) => r.id));
   for (const id of HOUSING_PROFILE_REGION_IDS) assert.ok(ids.has(id), `unknown region id in housing profile: ${id}`);
+  for (const id of Object.keys(RESIDENTIAL_STORIES)) assert.ok(ids.has(id), `unknown region id in residential stories: ${id}`);
+  assert.equal(new Set(Object.values(RESIDENTIAL_STORIES)).size, Object.keys(RESIDENTIAL_STORIES).length, 'residential descriptions must be distinct');
   const withBridge = REGIONS.filter((r) => getHousingBridge(r));
   assert.ok(withBridge.length > 40, 'most regions should carry a housing-specific sentence');
   // a region without a profile gets no sentence, never a wrong one
