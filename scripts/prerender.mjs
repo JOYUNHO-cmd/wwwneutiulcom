@@ -264,7 +264,6 @@ async function main() {
     const serviceHubHtml = contentByRoute.get(serviceHubUrl) || '';
     const regionHtml = contentByRoute.get(regionUrl) || '';
     const caseHtml = contentByRoute.get(url) || '';
-    const portfolioHtml = contentByRoute.get('/portfolio') || '';
 
     if (!serviceHubHtml.includes(`href="${regionUrl}"`)) {
       caseTopologyErrors.push(`${serviceHubUrl} -> ${regionUrl}`);
@@ -275,9 +274,10 @@ async function main() {
     if (!caseHtml.includes(`href="${regionUrl}"`)) {
       caseTopologyErrors.push(`${url} -> ${regionUrl}`);
     }
-    if (!portfolioHtml.includes(`href="${url}"`)) {
-      caseTopologyErrors.push(`/portfolio -> ${url}`);
-    }
+    // No /portfolio -> case edge: the separate case index on /portfolio was
+    // removed (it duplicated the blog field-log section right below it).
+    // Cases are reached from their own service hub -> region page, and the
+    // gallery cards that have a case still link to it via detailHref.
   }
   if (caseTopologyErrors.length > 0) {
     throw new Error(
