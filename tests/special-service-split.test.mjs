@@ -43,9 +43,10 @@ test('each new service gets region pages with region-specific copy and a full FA
       assert.ok(content, `${serviceId}/${region.id}`);
       assert.equal(content.faqs.length, 4, `${serviceId}/${region.id} faq count`);
       assert.ok(content.intro.includes(region.name), `${serviceId}/${region.id} intro names the region`);
-      assert.ok(content.intro.includes(region.dongs[0]), `${serviceId}/${region.id} intro lists the region's dongs`);
-      // Business-district landmarks read wrong on a residential/sensitive job.
-      assert.ok(!content.intro.includes(region.landmark), `${serviceId}/${region.id} intro must not use the landmark`);
+      // Same regional ingredients as every other service's region page.
+      assert.ok(content.intro.includes(region.story), `${serviceId}/${region.id} intro carries the region's story`);
+      assert.ok(content.faqs[0].a.includes(region.landmark), `${serviceId}/${region.id} first FAQ names the landmark`);
+      assert.ok(JSON.stringify(content).includes(region.dongs[0]), `${serviceId}/${region.id} lists the region's dongs`);
       assert.doesNotMatch(JSON.stringify(content), /undefined|\[object/, `${serviceId}/${region.id}`);
       // These are residential/sensitive jobs: no blanket "we keep meeting
       // these sites in every region" experience claim.
