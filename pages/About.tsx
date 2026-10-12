@@ -49,8 +49,22 @@ const About: React.FC = () => {
     <div className="bg-slate-50 text-slate-800 min-h-svh">
       {/* Hero Header */}
       <section className="relative h-[65vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#334155]">
-        <div className="absolute inset-0 z-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-800/40 via-transparent to-slate-900/60" />
+        {/* Real crew briefing photo (회사소개.jpg). No fetchPriority="high":
+            inside <picture>, React's Float preload uses the fallback src
+            regardless of which <source> matches, causing a double fetch
+            (same reason as the /contact and /portfolio heroes). */}
+        <picture className="absolute inset-0 z-0">
+          <source media="(min-width: 768px)" srcSet="/images/about-hero.webp" />
+          <img
+            src="/images/about-hero-mobile.webp"
+            alt="현장 투입 전 작업 내용을 공유하는 느티울 시공팀"
+            width={1400}
+            height={1050}
+            decoding="async"
+            className="w-full h-full object-cover opacity-50"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/75" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <m.h1 
