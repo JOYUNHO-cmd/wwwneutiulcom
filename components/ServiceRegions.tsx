@@ -7,10 +7,13 @@ import { REGION_GROUPS, getCitiesInGroup, getChildRegions, getHotspots } from '.
 
 type Group = '서울' | '인천' | '경기';
 
-const GROUP_META: Record<Group, { en: string; unit: string }> = {
-  서울: { en: 'SEOUL', unit: '구' },
-  인천: { en: 'INCHEON', unit: '구·군' },
-  경기: { en: 'GYEONGGI', unit: '시·군' },
+// emoji: each 권역's best-known landmark — 남산(N서울)타워, 인천국제공항,
+// 수원화성. tint: soft pastel behind it on the unselected card. delay:
+// staggers the float animation so the three badges don't bob in sync.
+const GROUP_META: Record<Group, { en: string; unit: string; emoji: string; tint: string; delay: number }> = {
+  서울: { en: 'SEOUL', unit: '구', emoji: '🗼', tint: 'bg-rose-50', delay: 0 },
+  인천: { en: 'INCHEON', unit: '구·군', emoji: '✈️', tint: 'bg-sky-50', delay: 0.6 },
+  경기: { en: 'GYEONGGI', unit: '시·군', emoji: '🏯', tint: 'bg-amber-50', delay: 1.2 },
 };
 
 // Height-animated "curtain": collapses to 0 rows instead of unmounting, so
@@ -62,11 +65,25 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
     getCitiesInGroup(group).reduce((sum, city) => sum + cityCaseCount(city.id), 0);
   const regionHref = (regionId: string) => `/services/${serviceId}/${regionId}`;
 
-  const toggleGroup = (group: Group) => {
-    setOpenGroup((current) => (current === group ? null : group));
-    setOpenCity(null);
+  // After a panel opens, bring it into view — with 31 cities in 경기 the
+  // 동네 panel opens below the whole grid, out of sight on most screens.
+  // Waits for the curtain's 500ms height transition to finish before measuring.
+  const revealPanel = (panelId: string) => {
+    window.setTimeout(() => {
+      document.getElementById(panelId)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 520);
   };
-  const toggleCity = (cityId: string) => setOpenCity((current) => (current === cityId ? null : cityId));
+  const toggleGroup = (group: Group) => {
+    const opening = openGroup !== group;
+    setOpenGroup(opening ? group : null);
+    setOpenCity(null);
+    if (opening) revealPanel(`service-regions-group-${group}`);
+  };
+  const toggleCity = (cityId: string) => {
+    const opening = openCity !== cityId;
+    setOpenCity(opening ? cityId : null);
+    if (opening) revealPanel(`service-regions-city-${cityId}`);
+  };
 
   return (
     <section className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20" aria-labelledby="service-regions-title">
@@ -98,13 +115,19 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                   : 'bg-white text-slate-900 border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-lg hover:border-primary/40'
               }`}
             >
-              <MapPin
+              {/* Landmark emoji badge: in the flow above the name on narrow
+                  phones and tablets, pinned top-right from md up (narrower cards would
+                  overlap the big region name). */}
+              <span
                 aria-hidden="true"
-                className={`absolute -right-3 -bottom-3 w-16 h-16 sm:w-24 sm:h-24 transition-transform duration-500 group-hover:scale-110 ${
-                  selected ? 'text-white/15' : 'text-emerald-500/10'
+                style={{ animationDelay: `${GROUP_META[group].delay}s` }}
+                className={`mb-2 flex h-9 w-9 items-center justify-center rounded-full text-lg shadow-sm motion-safe:animate-float sm:h-11 sm:w-11 sm:text-2xl md:absolute md:right-5 md:top-5 md:mb-0 md:h-14 md:w-14 md:text-3xl ${
+                  selected ? 'bg-white/20 ring-1 ring-white/30' : `${GROUP_META[group].tint} ring-1 ring-white`
                 }`}
-              />
-              <span className={`block text-[10px] sm:text-xs font-extrabold tracking-[0.18em] ${selected ? 'text-emerald-100' : 'text-primary'}`}>
+              >
+                {GROUP_META[group].emoji}
+              </span>
+              <span className={`hidden sm:block text-xs font-extrabold tracking-[0.18em] ${selected ? 'text-emerald-100' : 'text-primary'}`}>
                 {GROUP_META[group].en}
               </span>
               <span className="mt-1 flex items-center gap-1 text-xl sm:text-4xl font-black tracking-tight">
@@ -116,8 +139,12 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
               </span>
               <span className={`mt-1.5 sm:mt-3 block text-[11px] sm:text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
                 {getCitiesInGroup(group).length}개 {GROUP_META[group].unit}
-                {cases > 0 && <span className="hidden sm:inline"> · 실제 사례 {cases}건</span>}
               </span>
+              {cases > 0 && (
+                <span className={`mt-0.5 hidden sm:block whitespace-nowrap text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
+                  실제 사례 {cases}건
+                </span>
+              )}
             </button>
           );
         })}
