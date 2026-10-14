@@ -7,14 +7,44 @@ import { REGION_GROUPS, getCitiesInGroup, getChildRegions, getHotspots } from '.
 
 type Group = '서울' | '인천' | '경기';
 
-// emoji: each 권역's best-known landmark — 남산(N서울)타워, 인천국제공항,
-// 수원화성. tint: soft pastel behind it on the unselected card. delay:
-// staggers the float animation so the three badges don't bob in sync.
-const GROUP_META: Record<Group, { en: string; unit: string; emoji: string; tint: string; delay: number }> = {
-  서울: { en: 'SEOUL', unit: '구', emoji: '🗼', tint: 'bg-rose-50', delay: 0 },
-  인천: { en: 'INCHEON', unit: '구·군', emoji: '✈️', tint: 'bg-sky-50', delay: 0.6 },
-  경기: { en: 'GYEONGGI', unit: '시·군', emoji: '🏯', tint: 'bg-amber-50', delay: 1.2 },
+const GROUP_META: Record<Group, { en: string; unit: string }> = {
+  서울: { en: 'SEOUL', unit: '구' },
+  인천: { en: 'INCHEON', unit: '구·군' },
+  경기: { en: 'GYEONGGI', unit: '시·군' },
 };
+
+// Simple 2D line icons for each 권역's best-known landmark, drawn on the same
+// 24px grid / round-cap stroke as the lucide icons used across the site:
+// 서울 = N서울타워 on 남산, 인천 = 인천국제공항 (plane), 경기 = 수원화성 팔달문.
+const GroupIcon: React.FC<{ group: Group; className?: string }> = ({ group, className }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className={className}>
+    {group === '서울' && (
+      <>
+        <path d="M12 2v3" />
+        <rect x="9" y="5" width="6" height="3.5" rx="1.75" />
+        <path d="M11 8.5 10.3 17" />
+        <path d="m13 8.5.7 8.5" />
+        <path d="M3 21c2.5-3 5.5-4 9-4s6.5 1 9 4" />
+      </>
+    )}
+    {group === '인천' && (
+      <>
+        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+      </>
+    )}
+    {group === '경기' && (
+      <>
+        <path d="M2.5 9.5C6 9.5 8.5 7 12 4.5c3.5 2.5 6 5 9.5 5" />
+        <path d="M5 9.5h14" />
+        <path d="M6 9.5V20" />
+        <path d="M18 9.5V20" />
+        <path d="M8 13h8" />
+        <path d="M10 20v-3.5a2 2 0 0 1 4 0V20" />
+        <path d="M3.5 20h17" />
+      </>
+    )}
+  </svg>
+);
 
 // Height-animated "curtain": collapses to 0 rows instead of unmounting, so
 // every region link stays in the prerendered HTML for crawlers while the
@@ -115,17 +145,15 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                   : 'bg-white text-slate-900 border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-lg hover:border-primary/40'
               }`}
             >
-              {/* Landmark emoji badge: in the flow above the name on narrow
-                  phones and tablets, pinned top-right from md up (narrower cards would
-                  overlap the big region name). */}
+              {/* Landmark icon tile, left-aligned on the same edge as the
+                  label and name below it — the same layout at every width. */}
               <span
                 aria-hidden="true"
-                style={{ animationDelay: `${GROUP_META[group].delay}s` }}
-                className={`mb-2 flex h-9 w-9 items-center justify-center rounded-full text-lg shadow-sm motion-safe:animate-float sm:h-11 sm:w-11 sm:text-2xl md:absolute md:right-5 md:top-5 md:mb-0 md:h-14 md:w-14 md:text-3xl ${
-                  selected ? 'bg-white/20 ring-1 ring-white/30' : `${GROUP_META[group].tint} ring-1 ring-white`
+                className={`mb-2.5 sm:mb-4 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl transition-colors duration-300 ${
+                  selected ? 'bg-white/15 text-white' : 'bg-emerald-50 text-primary group-hover:bg-emerald-100'
                 }`}
               >
-                {GROUP_META[group].emoji}
+                <GroupIcon group={group} className="h-5 w-5 sm:h-7 sm:w-7" />
               </span>
               <span className={`hidden sm:block text-xs font-extrabold tracking-[0.18em] ${selected ? 'text-emerald-100' : 'text-primary'}`}>
                 {GROUP_META[group].en}
