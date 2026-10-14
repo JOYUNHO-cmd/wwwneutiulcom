@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown, MapPin, Info } from 'lucide-react';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
-import { getVerifiedRegionsForService } from '../lib/serviceRegionPriority.mjs';
 import { REGION_GROUPS, getCitiesInGroup, getChildRegions, getHotspots } from '../lib/regionHierarchy.mjs';
 
 type Group = '서울' | '인천' | '경기';
@@ -34,7 +33,7 @@ const GroupIcon: React.FC<{ group: Group; className?: string }> = ({ group, clas
     )}
     {group === '인천' && (
       <>
-        <path d="M7 40a6 6 0 0 1 5.5-6 8.5 8.5 0 0 1 16-1.5A5.5 5.5 0 0 1 34 40z" fill="#e0f2fe" />
+        <path d="M7 40a6 6 0 0 1 5.5-6 8.5 8.5 0 0 1 16-1.5A5.5 5.5 0 0 1 34 40z" fill="#fff" />
         <g transform="rotate(-28 25 19)">
           <path d="M22 17 29 6h4.5l-3.2 11z" fill="#7dd3fc" />
           <path d="M11 17.5 8 11h3.5l5 6.5z" fill="#7dd3fc" />
@@ -80,19 +79,6 @@ const Curtain: React.FC<{ id: string; open: boolean; children: React.ReactNode }
   );
 };
 
-function CaseBadge({ count }: { count: number }) {
-  if (!count) return null;
-  return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-extrabold leading-none text-emerald-700">
-      <span className="relative flex h-1.5 w-1.5">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-      </span>
-      사례 {count}
-    </span>
-  );
-}
-
 export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId: string; serviceTitle: string }) {
   // Hooks run before the early return: this component stays mounted when the
   // route's serviceId changes, so the hook count must not depend on it.
@@ -100,13 +86,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
   const [openCity, setOpenCity] = useState<string | null>(null);
   if (!REGION_LANDING_SERVICES.includes(serviceId)) return null;
 
-  const caseCountByRegion = new Map(
-    getVerifiedRegionsForService(serviceId).map((entry) => [entry.regionId, entry.caseCount])
-  );
-  // A city's case count includes its sub-areas (군포시 + 산본 ...).
-  const cityCaseCount = (cityId: string) =>
-    (caseCountByRegion.get(cityId) || 0) +
-    getChildRegions(cityId).reduce((sum, child) => sum + (caseCountByRegion.get(child.id) || 0), 0);
   const regionHref = (regionId: string) => `/services/${serviceId}/${regionId}`;
 
   // After a panel opens, bring it into view — with 31 cities in 경기 the
@@ -226,7 +205,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                           {city.name}
                           <ChevronDown aria-hidden="true" className={`w-3.5 h-3.5 shrink-0 text-slate-400 transition-transform duration-300 ${selected ? 'rotate-180 text-primary' : ''}`} />
                         </span>
-                        <CaseBadge count={cityCaseCount(city.id)} />
                       </button>
                     );
                   })}
@@ -267,7 +245,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                                   >
                                     {child.name}
                                     <span className="sr-only"> {serviceTitle}</span>
-                                    <CaseBadge count={caseCountByRegion.get(child.id) || 0} />
                                     <ArrowRight aria-hidden="true" className="w-3.5 h-3.5 text-primary transition-transform group-hover:translate-x-0.5" />
                                   </Link>
                                 ))}
