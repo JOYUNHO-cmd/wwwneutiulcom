@@ -7,40 +7,56 @@ import { REGION_GROUPS, getCitiesInGroup, getChildRegions, getHotspots } from '.
 
 type Group = '서울' | '인천' | '경기';
 
-const GROUP_META: Record<Group, { en: string; unit: string }> = {
-  서울: { en: 'SEOUL', unit: '구' },
-  인천: { en: 'INCHEON', unit: '구·군' },
-  경기: { en: 'GYEONGGI', unit: '시·군' },
+// tile: soft pastel gradient behind each 권역's icon on an unselected card.
+const GROUP_META: Record<Group, { en: string; unit: string; tile: string }> = {
+  서울: { en: 'SEOUL', unit: '구', tile: 'from-rose-50 to-pink-100' },
+  인천: { en: 'INCHEON', unit: '구·군', tile: 'from-sky-50 to-sky-100' },
+  경기: { en: 'GYEONGGI', unit: '시·군', tile: 'from-amber-50 to-orange-100' },
 };
 
-// Simple 2D line icons for each 권역's best-known landmark, drawn on the same
-// 24px grid / round-cap stroke as the lucide icons used across the site:
-// 서울 = N서울타워 on 남산, 인천 = 인천국제공항 (plane), 경기 = 수원화성 팔달문.
+// Small flat 2D illustrations of each 권역's best-known landmark — rounded
+// shapes, a few soft colors, no outlines:
+// 서울 = N서울타워 on 남산, 인천 = a plane over a cloud (인천국제공항),
+// 경기 = 수원화성 팔달문 (tiled roof, red pillars, stone wall, arched gate).
 const GroupIcon: React.FC<{ group: Group; className?: string }> = ({ group, className }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className={className}>
+  <svg viewBox="0 0 48 48" className={className}>
     {group === '서울' && (
       <>
-        <path d="M12 2v3" />
-        <rect x="9" y="5" width="6" height="3.5" rx="1.75" />
-        <path d="M11 8.5 10.3 17" />
-        <path d="m13 8.5.7 8.5" />
-        <path d="M3 21c2.5-3 5.5-4 9-4s6.5 1 9 4" />
+        <circle cx="39" cy="10" r="3.5" fill="#fde68a" />
+        <path d="M2 46c5-10 13-14 22-14s17 4 22 14z" fill="#86efac" />
+        <path d="M10 46c4-6 9-8.5 14-8.5S34 40 38 46z" fill="#4ade80" />
+        <path d="M21.5 20h5l2.2 17h-9.4z" fill="#f8fafc" />
+        <path d="M24 20h2.5l2.2 17H24z" fill="#e2e8f0" />
+        <rect x="23" y="3" width="2" height="7" rx="1" fill="#f43f5e" />
+        <rect x="15.5" y="9.5" width="17" height="10.5" rx="5.25" fill="#fb7185" />
+        <rect x="18" y="13" width="12" height="3" rx="1.5" fill="#fff" fillOpacity="0.9" />
       </>
     )}
     {group === '인천' && (
       <>
-        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
+        <path d="M7 40a6 6 0 0 1 5.5-6 8.5 8.5 0 0 1 16-1.5A5.5 5.5 0 0 1 34 40z" fill="#e0f2fe" />
+        <g transform="rotate(-28 25 19)">
+          <path d="M22 17 29 6h4.5l-3.2 11z" fill="#7dd3fc" />
+          <path d="M11 17.5 8 11h3.5l5 6.5z" fill="#7dd3fc" />
+          <rect x="8" y="16" width="34" height="8" rx="4" fill="#0ea5e9" />
+          <path d="M22 23 29 34h4.5l-3.2-11z" fill="#38bdf8" />
+          <circle cx="31" cy="20" r="1.2" fill="#fff" />
+          <circle cx="34.5" cy="20" r="1.2" fill="#fff" />
+          <circle cx="38" cy="20" r="1.2" fill="#fff" />
+        </g>
       </>
     )}
     {group === '경기' && (
       <>
-        <path d="M2.5 9.5C6 9.5 8.5 7 12 4.5c3.5 2.5 6 5 9.5 5" />
-        <path d="M5 9.5h14" />
-        <path d="M6 9.5V20" />
-        <path d="M18 9.5V20" />
-        <path d="M8 13h8" />
-        <path d="M10 20v-3.5a2 2 0 0 1 4 0V20" />
-        <path d="M3.5 20h17" />
+        <rect x="7" y="28" width="34" height="16" rx="3" fill="#fcd9a8" />
+        <path d="M7 34h34M7 39h34M15 28v6M24 28v6M33 28v6M11 34v5M20 34v5M29 34v5M37 34v5" stroke="#f5b971" strokeWidth="1" />
+        <path d="M18.5 44v-6.5a5.5 5.5 0 0 1 11 0V44z" fill="#92400e" />
+        <rect x="12" y="20" width="24" height="8" fill="#fef3c7" />
+        <rect x="13" y="20" width="3" height="8" fill="#ef4444" />
+        <rect x="32" y="20" width="3" height="8" fill="#ef4444" />
+        <rect x="22.5" y="20" width="3" height="8" fill="#ef4444" />
+        <path d="M3 21c5 0 10-3.5 14-8h14c4 4.5 9 8 14 8v1.5H3z" fill="#334155" />
+        <path d="M15 13c2-3.5 5.5-5.5 9-5.5s7 2 9 5.5z" fill="#475569" />
       </>
     )}
   </svg>
@@ -91,8 +107,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
   const cityCaseCount = (cityId: string) =>
     (caseCountByRegion.get(cityId) || 0) +
     getChildRegions(cityId).reduce((sum, child) => sum + (caseCountByRegion.get(child.id) || 0), 0);
-  const groupCaseCount = (group: Group) =>
-    getCitiesInGroup(group).reduce((sum, city) => sum + cityCaseCount(city.id), 0);
   const regionHref = (regionId: string) => `/services/${serviceId}/${regionId}`;
 
   // After a panel opens, bring it into view — with 31 cities in 경기 the
@@ -131,7 +145,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
       <div className="grid grid-cols-3 gap-2.5 sm:gap-5">
         {(REGION_GROUPS as Group[]).map((group) => {
           const selected = openGroup === group;
-          const cases = groupCaseCount(group);
           return (
             <button
               key={group}
@@ -151,11 +164,11 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
               <span className="flex shrink-0 flex-col items-center gap-1.5">
                 <span
                   aria-hidden="true"
-                  className={`flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl transition-colors duration-300 ${
-                    selected ? 'bg-white/15 text-white' : 'bg-emerald-50 text-primary group-hover:bg-emerald-100'
+                  className={`flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-2xl ring-1 transition-all duration-300 group-hover:scale-105 ${
+                    selected ? 'bg-white ring-white/60 shadow-md' : `bg-gradient-to-br ${GROUP_META[group].tile} ring-white shadow-sm`
                   }`}
                 >
-                  <GroupIcon group={group} className="h-5 w-5 sm:h-7 sm:w-7" />
+                  <GroupIcon group={group} className="h-8 w-8 sm:h-10 sm:w-10" />
                 </span>
                 <span className={`hidden sm:block text-[10px] font-extrabold tracking-[0.18em] ${selected ? 'text-emerald-100' : 'text-primary'}`}>
                   {GROUP_META[group].en}
@@ -172,11 +185,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                 <span className={`mt-1.5 sm:mt-2.5 block whitespace-nowrap text-[11px] sm:text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
                   {getCitiesInGroup(group).length}개 {GROUP_META[group].unit}
                 </span>
-                {cases > 0 && (
-                  <span className={`mt-0.5 hidden sm:block whitespace-nowrap text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
-                    실제 사례 {cases}건
-                  </span>
-                )}
               </span>
             </button>
           );
