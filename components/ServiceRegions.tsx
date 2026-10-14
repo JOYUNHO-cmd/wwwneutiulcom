@@ -139,40 +139,45 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
               onClick={() => toggleGroup(group)}
               aria-expanded={selected}
               aria-controls={`service-regions-group-${group}`}
-              className={`group relative overflow-hidden rounded-2xl sm:rounded-3xl p-3.5 sm:p-7 text-left transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+              className={`group relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl sm:rounded-3xl px-2 py-4 text-center transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:flex-row md:gap-5 md:px-5 md:py-5 md:text-left ${
                 selected
                   ? 'bg-gradient-to-br from-emerald-600 to-teal-600 text-white shadow-xl shadow-emerald-900/20 -translate-y-1'
                   : 'bg-white text-slate-900 border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-lg hover:border-primary/40'
               }`}
             >
-              {/* Landmark icon tile, left-aligned on the same edge as the
-                  label and name below it — the same layout at every width. */}
-              <span
-                aria-hidden="true"
-                className={`mb-2.5 sm:mb-4 flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl transition-colors duration-300 ${
-                  selected ? 'bg-white/15 text-white' : 'bg-emerald-50 text-primary group-hover:bg-emerald-100'
-                }`}
-              >
-                <GroupIcon group={group} className="h-5 w-5 sm:h-7 sm:w-7" />
-              </span>
-              <span className={`hidden sm:block text-xs font-extrabold tracking-[0.18em] ${selected ? 'text-emerald-100' : 'text-primary'}`}>
-                {GROUP_META[group].en}
-              </span>
-              <span className="mt-1 flex items-center gap-1 text-xl sm:text-4xl font-black tracking-tight">
-                {group}
-                <ChevronDown
+              {/* Icon tile + English label as one unit on the left, name and
+                  counts on the right, the pair centered in the card. Stacked
+                  and centered below md, where the card is too narrow for a row. */}
+              <span className="flex shrink-0 flex-col items-center gap-1.5">
+                <span
                   aria-hidden="true"
-                  className={`w-4 h-4 sm:w-6 sm:h-6 transition-transform duration-300 ${selected ? 'rotate-180' : ''}`}
-                />
-              </span>
-              <span className={`mt-1.5 sm:mt-3 block text-[11px] sm:text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
-                {getCitiesInGroup(group).length}개 {GROUP_META[group].unit}
-              </span>
-              {cases > 0 && (
-                <span className={`mt-0.5 hidden sm:block whitespace-nowrap text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
-                  실제 사례 {cases}건
+                  className={`flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl transition-colors duration-300 ${
+                    selected ? 'bg-white/15 text-white' : 'bg-emerald-50 text-primary group-hover:bg-emerald-100'
+                  }`}
+                >
+                  <GroupIcon group={group} className="h-5 w-5 sm:h-7 sm:w-7" />
                 </span>
-              )}
+                <span className={`hidden sm:block text-[10px] font-extrabold tracking-[0.18em] ${selected ? 'text-emerald-100' : 'text-primary'}`}>
+                  {GROUP_META[group].en}
+                </span>
+              </span>
+              <span className="flex flex-col items-center md:items-start">
+                <span className="flex items-center gap-1 text-xl sm:text-3xl md:text-4xl font-black tracking-tight leading-none">
+                  {group}
+                  <ChevronDown
+                    aria-hidden="true"
+                    className={`w-4 h-4 sm:w-6 sm:h-6 transition-transform duration-300 ${selected ? 'rotate-180' : ''}`}
+                  />
+                </span>
+                <span className={`mt-1.5 sm:mt-2.5 block whitespace-nowrap text-[11px] sm:text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
+                  {getCitiesInGroup(group).length}개 {GROUP_META[group].unit}
+                </span>
+                {cases > 0 && (
+                  <span className={`mt-0.5 hidden sm:block whitespace-nowrap text-sm font-semibold ${selected ? 'text-emerald-50' : 'text-slate-500'}`}>
+                    실제 사례 {cases}건
+                  </span>
+                )}
+              </span>
             </button>
           );
         })}
