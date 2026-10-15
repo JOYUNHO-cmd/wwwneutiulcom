@@ -141,6 +141,22 @@ html {
 .nl-logo.is-playing .nl-piece-ring  { animation: nl-pop-ring 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.05s both; }
 .nl-logo.is-playing .nl-piece-fence { animation: nl-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.6s both; }
 .nl-logo.is-playing .nl-piece-name  { animation: nl-pop-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) 3.1s both; }
+/* Where two masks meet, each is only partly opaque on the boundary pixels, which
+   shows as a faint line. Once the tree has grown its three pieces swap for one
+   seamless piece, and once everything has landed the pieces swap for the
+   plain image. Without JS (not armed) only the plain image is shown. */
+.nl-logo .nl-parts,
+.nl-logo.is-armed .nl-whole,
+.nl-logo.is-armed .nl-piece-tree { opacity: 0; }
+.nl-logo.is-armed .nl-parts { opacity: 1; }
+.nl-logo.is-playing .nl-piece-hill,
+.nl-logo.is-playing .nl-piece-trunk,
+.nl-logo.is-playing .nl-piece-crown { animation: nl-off 0s 2.05s forwards; }
+.nl-logo.is-playing .nl-piece-tree { animation: nl-on 0s 2.05s forwards; }
+.nl-logo.is-playing .nl-parts { animation: nl-off 0s 3.7s forwards; }
+.nl-logo.is-playing .nl-whole { animation: nl-on 0s 3.7s forwards; }
+@keyframes nl-on { to { opacity: 1; } }
+@keyframes nl-off { to { opacity: 0; } }
 
 @keyframes nl-pop-ring {
   0%   { opacity: 0; transform: scale(0.82); }

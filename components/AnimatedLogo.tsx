@@ -42,7 +42,7 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
   const [armed, setArmed] = useState(false);
   const [playing, setPlaying] = useState(false);
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, '');
-  const mask = (stage: Stage) => `nl-${id}-${stage}`;
+  const mask = (stage: Stage | 'tree') => `nl-${id}-${stage}`;
   const fenceClip = `nl-${id}-fence-box`;
 
   useEffect(() => {
@@ -112,6 +112,15 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
           <circle cx={CX} cy={CY} r="613" fill="none" stroke="#000" strokeWidth="54" />
           <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#000" />
         </mask>
+        {/* 땅 + 기둥 + 나뭇잎 as one seamless region (everything that isn't
+            ring, fence or name), swapped in once the tree has grown */}
+        <mask id={mask('tree')} {...maskProps}>
+          <rect x="0" y="0" width={SIZE} height={SIZE} fill="#fff" />
+          {ringBand('#000')}
+          <rect x={FENCE_BOX.x} y={FENCE_BOX.y} width={FENCE_BOX.w} height={FENCE_BOX.h} fill="#000" />
+          <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#000" />
+          <path d={HILL} fill="#fff" />
+        </mask>
         {/* 느티울 */}
         <mask id={mask('name')} {...maskProps}>
           <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#fff" />
@@ -122,11 +131,18 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
       {/* The bounce transforms the masked group as a whole, mask included —
           like a cut-out sticker popping in — so even at full overshoot a piece
           never shows any pixel outside its own region. */}
-      {stages.map((stage) => (
-        <g key={stage} mask={`url(#${mask(stage)})`} className={`nl-piece nl-piece-${stage}`}>
+      <g className="nl-parts">
+        {stages.map((stage) => (
+          <g key={stage} mask={`url(#${mask(stage)})`} className={`nl-piece nl-piece-${stage}`}>
+            {image}
+          </g>
+        ))}
+        <g mask={`url(#${mask('tree')})`} className="nl-piece nl-piece-tree">
           {image}
         </g>
-      ))}
+      </g>
+      {/* The finished logo, shown on its own once the pieces have landed */}
+      <g className="nl-whole">{image}</g>
     </svg>
   );
 }
