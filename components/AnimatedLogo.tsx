@@ -59,13 +59,16 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
       className={`nl-logo ${armed ? 'is-armed' : ''} ${playing ? 'is-playing' : ''} ${className}`}
     >
       <defs>
-        {/* 땅 — the crescent hill under the tree, plus its two tips */}
+        {/* 땅 — the crescent hill under the tree. One curved band that
+            follows the crescent all the way to its tips: it used to be a
+            centre rectangle plus two tip rectangles, and the gap between
+            them left each tip showing as a separate dot until the name
+            stage filled it in. Checked against the source pixels: it holds
+            every hill pixel, stays above the letters (top of '느' ~y865,
+            '울' ~y850) and clear of the inner ring (r ≥ ~540), whose edge
+            otherwise showed as a dot just past each tip. */}
         <mask id={mask('hill')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
-          <g className="nl-m nl-m-hill">
-            <rect x="150" y="755" width="960" height="85" fill="#fff" />
-            <rect x="150" y="820" width="185" height="80" fill="#fff" />
-            <rect x="925" y="820" width="185" height="80" fill="#fff" />
-          </g>
+          <path className="nl-m nl-m-hill" d="M170 865 Q627 640 1084 865 L1084 893 Q627 771 170 893 Z" fill="#fff" />
         </mask>
         {/* 기둥 — trunk and the foot of the house, growing up from the ground */}
         <mask id={mask('trunk')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
