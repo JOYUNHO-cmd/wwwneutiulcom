@@ -35,15 +35,16 @@ const HILL = 'M170 865 Q627 640 1084 865 L1084 893 Q627 771 170 893 Z';
 const FENCE_BOX = { x: 200, y: 1000, w: 854, h: 254 };
 const NAME_BOX = { x: 330, y: 840, w: 610, h: 270 };
 
-type Stage = 'hill' | 'trunk' | 'crown' | 'ring' | 'fence' | 'name';
+type Stage = 'tree' | 'ring' | 'fence' | 'name';
 
 export default function AnimatedLogo({ className = '', alt = '느티울종합청소 로고' }: { className?: string; alt?: string }) {
   const ref = useRef<SVGSVGElement>(null);
   const [armed, setArmed] = useState(false);
   const [playing, setPlaying] = useState(false);
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, '');
-  const mask = (stage: Stage | 'tree') => `nl-${id}-${stage}`;
+  const mask = (stage: Stage) => `nl-${id}-${stage}`;
   const fenceClip = `nl-${id}-fence-box`;
+  const crownClip = `nl-${id}-crown-box`;
 
   useEffect(() => {
     const el = ref.current;
@@ -64,7 +65,7 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
   }, []);
 
   const image = <image href="/images/logo-full.webp" width={SIZE} height={SIZE} />;
-  const stages: Stage[] = ['hill', 'trunk', 'crown', 'ring', 'fence', 'name'];
+  const stages: Stage[] = ['tree', 'ring', 'fence', 'name'];
   const maskProps = { maskUnits: 'userSpaceOnUse' as const, x: 0, y: 0, width: SIZE, height: SIZE };
   // Both rings: an annulus from r≈520 to r≈636 around the centre (the rings
   // sit slightly off-centre, so the band is wider than the strokes look).
@@ -85,20 +86,24 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
           <rect x={FENCE_BOX.x} y={FENCE_BOX.y} width={FENCE_BOX.w} height={FENCE_BOX.h} />
         </clipPath>
 
-        {/* 땅 */}
-        <mask id={mask('hill')} {...maskProps}>
-          <path className="nl-m nl-m-hill" d={HILL} fill="#fff" />
-        </mask>
-        {/* 기둥 — trunk and the foot of the house, between the crown and the hill */}
-        <mask id={mask('trunk')} {...maskProps}>
-          <rect className="nl-m nl-m-trunk" x="430" y="700" width="390" height="100" fill="#fff" />
-          <path d={HILL} fill="#000" />
-        </mask>
-        {/* 나뭇잎 + 집 — everything above y700 inside the rings */}
-        <mask id={mask('crown')} {...maskProps}>
-          <circle className="nl-m nl-m-crown" cx={CX} cy="560" r="480" fill="#fff" />
-          <rect x="0" y="700" width={SIZE} height={SIZE - 700} fill="#000" />
+        <clipPath id={crownClip}>
+          <rect x="0" y="0" width={SIZE} height="706" />
+        </clipPath>
+
+        {/* 땅 + 기둥 + 나뭇잎·집 — one mask, so the growing shapes overlap
+            inside it instead of meeting edge to edge (two half-covered edge
+            pixels show as a faint line). The hill spreads out, the trunk
+            (and the foot of the house) grows up from it, and the crown —
+            everything above y≈700 inside the rings — leafs out last. */}
+        <mask id={mask('tree')} {...maskProps}>
+          <rect className="nl-m nl-m-trunk" x="430" y="690" width="390" height="110" fill="#fff" />
+          <g clipPath={`url(#${crownClip})`}>
+            <circle className="nl-m nl-m-crown" cx={CX} cy="560" r="480" fill="#fff" />
+          </g>
           {ringBand('#000')}
+          <rect x={FENCE_BOX.x} y={FENCE_BOX.y} width={FENCE_BOX.w} height={FENCE_BOX.h} fill="#000" />
+          <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#000" />
+          <path className="nl-m nl-m-hill" d={HILL} fill="#fff" />
         </mask>
         {/* 원 — both rings, except the inner part of the band inside the fence
             box, which is the fence's rails rather than ring */}
@@ -111,15 +116,6 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
           <rect x={FENCE_BOX.x} y={FENCE_BOX.y} width={FENCE_BOX.w} height={FENCE_BOX.h} fill="#fff" />
           <circle cx={CX} cy={CY} r="613" fill="none" stroke="#000" strokeWidth="54" />
           <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#000" />
-        </mask>
-        {/* 땅 + 기둥 + 나뭇잎 as one seamless region (everything that isn't
-            ring, fence or name), swapped in once the tree has grown */}
-        <mask id={mask('tree')} {...maskProps}>
-          <rect x="0" y="0" width={SIZE} height={SIZE} fill="#fff" />
-          {ringBand('#000')}
-          <rect x={FENCE_BOX.x} y={FENCE_BOX.y} width={FENCE_BOX.w} height={FENCE_BOX.h} fill="#000" />
-          <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#000" />
-          <path d={HILL} fill="#fff" />
         </mask>
         {/* 느티울 */}
         <mask id={mask('name')} {...maskProps}>
@@ -137,9 +133,6 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
             {image}
           </g>
         ))}
-        <g mask={`url(#${mask('tree')})`} className="nl-piece nl-piece-tree">
-          {image}
-        </g>
       </g>
       {/* The finished logo, shown on its own once the pieces have landed */}
       <g className="nl-whole">{image}</g>
