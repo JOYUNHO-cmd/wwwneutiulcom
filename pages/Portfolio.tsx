@@ -92,11 +92,10 @@ export const Portfolio: React.FC = () => {
         setRssLoading(true);
         setRssError(null);
         
-        const rssUrl1 = "https://rss.blog.naver.com/kslee0143.xml";
-        const rssUrl2 = "https://rss.blog.naver.com/decline11731.xml";
-        
-        const proxyUrl1 = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl1)}`;
-        const proxyUrl2 = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl2)}`;
+        // Our own Vercel function (api/naver-rss.js) — the third-party
+        // api.rss2json.com proxy this used to call started returning errors.
+        const proxyUrl1 = "/api/naver-rss?blog=kslee0143";
+        const proxyUrl2 = "/api/naver-rss?blog=decline11731";
         
         const [res1, res2] = await Promise.all([
           fetch(proxyUrl1).then(r => r.ok ? r.json() : null).catch(() => null),
