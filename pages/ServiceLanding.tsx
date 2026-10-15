@@ -164,9 +164,14 @@ const ServiceLanding: React.FC = () => {
         
         {/* Background Responsive Image */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={service.image} 
-            alt={service.title} 
+          {/* The page's LCP element. A single <img> (not a <picture>), so
+              fetchPriority="high" is safe here — the double-download issue
+              only affects <img> inside <picture> (see Home.tsx). */}
+          <img
+            src={service.image}
+            alt={service.title}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover opacity-70 scale-105"
             referrerPolicy="no-referrer"
           />
@@ -253,7 +258,7 @@ const ServiceLanding: React.FC = () => {
             {certificationsData.map((cert) => (
               <div key={cert.id} className="group relative">
                 <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg group-hover:border-primary/50 group-hover:shadow-2xl transition-all duration-500">
-                  <img 
+                  <img loading="lazy" decoding="async" 
                     src={cert.image} 
                     alt={cert.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"

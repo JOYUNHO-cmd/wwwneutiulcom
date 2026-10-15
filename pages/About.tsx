@@ -152,7 +152,7 @@ const About: React.FC = () => {
                   className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-start gap-4 transition-all hover:bg-slate-100/70 hover:shadow-md cursor-default"
                 >
                   <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-md flex items-center justify-center bg-white border border-slate-100">
-                    <img 
+                    <img loading="lazy" decoding="async" 
                       src="/images/about/icon-neuti-tree.png" 
                       alt="느티" 
                       className="w-full h-full object-cover"
@@ -181,7 +181,7 @@ const About: React.FC = () => {
                   className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-start gap-4 transition-all hover:bg-slate-100/70 hover:shadow-md cursor-default"
                 >
                   <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-md flex items-center justify-center bg-white border border-slate-100">
-                    <img 
+                    <img loading="lazy" decoding="async" 
                       src="/images/about/icon-ul-fence.png" 
                       alt="울" 
                       className="w-full h-full object-cover"
@@ -355,7 +355,7 @@ const About: React.FC = () => {
                       whileHover={{ scale: 1.03, rotate: 0 }}
                       className="relative w-full max-w-sm aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border-[12px] border-slate-50 bg-slate-200 transform md:rotate-3 transition-transform duration-500"
                     >
-                       <img 
+                       <img loading="lazy" decoding="async" 
                          src="/images/about/ceo-message.webp" alt="CEO 조윤호" className="w-full h-full object-cover" 
                         />
                         {/* 대표 표기 배지 및 오버레이 (모바일/PC 최적화) */}
@@ -448,7 +448,7 @@ const About: React.FC = () => {
                 className="group relative cursor-default"
               >
                 <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg group-hover:border-primary/50 group-hover:shadow-2xl transition-all duration-500">
-                  <img 
+                  <img loading="lazy" decoding="async" 
                     src={cert.image} 
                     alt={cert.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"

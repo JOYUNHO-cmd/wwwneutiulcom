@@ -152,6 +152,27 @@ function setJsonLd(html, jsonLd) {
   return html.replace(/<\/head>/i, `  ${script}\n</head>`);
 }
 
+// Hero (LCP) images on routes that use a <picture> with separate mobile and
+// desktop files. fetchPriority can't go on the <img> inside a <picture> (React
+// Float would preload the mobile fallback on desktop too — see Home.tsx), so
+// each route gets one preload per breakpoint instead: the browser starts the
+// right file for its width at top priority, straight from the HTML.
+const HERO_PRELOADS = {
+  '/': 'hero-tree-family',
+  '/about': 'about-hero',
+  '/portfolio': 'portfolio-hero',
+  '/contact': 'contact-hero',
+};
+
+function injectHeroPreload(html, route) {
+  const name = HERO_PRELOADS[route];
+  if (!name) return html;
+  const links =
+    `<link rel="preload" as="image" href="/images/${name}-mobile.webp" media="(max-width: 767px)" fetchpriority="high" />\n` +
+    `  <link rel="preload" as="image" href="/images/${name}.webp" media="(min-width: 768px)" fetchpriority="high" />`;
+  return html.replace(/<\/head>/i, () => `  ${links}\n</head>`);
+}
+
 function applyMeta(templateHtml, meta, currentUrl) {
   let html = templateHtml;
   html = setTitle(html, meta.title);
@@ -293,7 +314,7 @@ async function main() {
     const regionId = parts[1];
     const currentUrl = `${PRODUCTION_ORIGIN}${route === '/' ? '/' : route}`;
     const meta = buildMeta({ pathname: route, serviceId, regionId, companyInfo, services, currentUrl });
-    let html = applyMeta(template, meta, currentUrl);
+    let html = injectHeroPreload(applyMeta(template, meta, currentUrl), route);
     if (contentByRoute.has(route)) {
       html = injectRootHtml(html, contentByRoute.get(route));
       html = await inlineCriticalCss(html);

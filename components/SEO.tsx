@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useSite } from '../context/SiteContext';
-import { buildMeta } from '../lib/seoData.mjs';
 import { normalizePathname } from '../lib/pathUtils';
+// lib/seoData.mjs is loaded on demand (see the effect): it pulls in every
+// region, keyword list and field-case article (~450KB), and the prerendered
+// HTML already carries each page's tags — they're only recomputed here after
+// client-side navigation. Importing it statically put all of that into the
+// main bundle every first visit had to download and run.
+const loadSeoData = () => import('../lib/seoData.mjs');
 
 export interface SEOProps {
   title?: string;
@@ -26,6 +31,9 @@ const SEO: React.FC<SEOProps> = ({
   const { config } = useSite();
 
   useEffect(() => {
+    let cancelled = false;
+    loadSeoData().then(({ buildMeta }) => {
+    if (cancelled) return;
     const pathname = normalizePathname(location.pathname);
 
     const meta = buildMeta({
@@ -112,6 +120,10 @@ const SEO: React.FC<SEOProps> = ({
       document.head.appendChild(scriptTag);
     }
     scriptTag.text = JSON.stringify(meta.jsonLd);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [location.pathname, params.serviceId, params.regionId, config, title, description, keywords, ogImage, canonicalUrl, noindex]);
 
   return null;

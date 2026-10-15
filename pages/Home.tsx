@@ -85,7 +85,10 @@ const Home: React.FC = () => {
               width={900}
               height={1124}
               loading="eager"
-              fetchPriority="high"
+              // No fetchPriority here: inside <picture>, React's Float preloads
+              // the fallback (mobile) src even on desktop — a double download.
+              // Priority comes from width-matched <link rel="preload"> tags
+              // that scripts/prerender.mjs adds to this route's <head>.
               className="w-full h-full object-cover object-center"
             />
           </picture>

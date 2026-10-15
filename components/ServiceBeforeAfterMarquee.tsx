@@ -50,15 +50,31 @@ const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
     const el = trackRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        el.classList.toggle('is-paused', !entry.isIntersecting);
-        if (entry.isIntersecting) setEverVisible(true);
-      },
+    // Pause the animation whenever the strip is actually off screen...
+    const pauseObserver = new IntersectionObserver(
+      ([entry]) => el.classList.toggle('is-paused', !entry.isIntersecting),
       { threshold: 0 }
     );
-    observer.observe(el);
-    return () => observer.disconnect();
+    // ...but start loading its photos a little before it scrolls in, so the
+    // cards are filled by the time they're seen. Nothing loads with the page
+    // itself any more: the strip sits right under the hero, and its first
+    // cards used to be fetched eagerly, competing with the hero photo (the
+    // page's LCP element) for bandwidth on mobile.
+    const loadObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setEverVisible(true);
+          loadObserver.disconnect();
+        }
+      },
+      { rootMargin: '400px 0px' }
+    );
+    pauseObserver.observe(el);
+    loadObserver.observe(el);
+    return () => {
+      pauseObserver.disconnect();
+      loadObserver.disconnect();
+    };
   }, []);
 
   if (items.length === 0) return null;
@@ -87,7 +103,6 @@ const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
               key={`${item.id}-${idx}`}
               item={item}
               size="marquee-lg"
-              eager={idx < 4}
               visible={everVisible}
               onClick={() => setOpenItem(item)}
             />

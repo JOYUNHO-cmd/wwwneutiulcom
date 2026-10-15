@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { m } from 'motion/react';
 import { getServiceBlogLinks } from '../lib/serviceBlogLinks.mjs';
+import BLOG_THUMBS from '../lib/blogThumbs.json';
 
 interface ServiceCaseBlogSectionProps {
   serviceId: string;
@@ -65,10 +66,15 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
             {/* Thumbnail Image */}
             <div className="relative aspect-[4/3] overflow-hidden w-full bg-slate-100 border-b border-slate-100">
               <img
-                src={blog.image}
+                // Card-sized local copy (scripts/cache-blog-thumbnails.mjs);
+                // falls back to Naver's original for a post not cached yet.
+                src={(BLOG_THUMBS as Record<string, string>)[blog.image] || blog.image}
                 alt={blog.title}
+                width={600}
+                height={450}
                 referrerPolicy="no-referrer"
                 loading="lazy"
+                decoding="async"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&auto=format&fit=crop&q=80';
                 }}

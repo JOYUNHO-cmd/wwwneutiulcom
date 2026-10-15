@@ -31,7 +31,7 @@ const CeoMessageSection: React.FC = () => {
 
           <div className="w-full md:w-1/2 shrink-0 flex justify-center md:justify-end order-1 md:order-2 relative z-10">
             <div className="relative w-full max-w-md md:max-w-xl overflow-hidden rounded-2xl md:rounded-3xl shadow-xl">
-              <img
+              <img loading="lazy" decoding="async"
                 src="/images/professional-cleaning.webp"
                 alt="느티울 대표 조윤호"
                 className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500 rounded-2xl md:rounded-3xl"
