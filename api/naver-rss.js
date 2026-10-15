@@ -8,7 +8,7 @@ import { ALLOWED_NAVER_BLOGS, parseNaverRss } from '../lib/naverRss.mjs';
 
 export const config = { runtime: 'edge' };
 
-const MAX_ITEMS = 10;
+const MAX_ITEMS = 50;
 
 const json = (body, status, cacheControl) =>
   new Response(JSON.stringify(body), {
@@ -33,8 +33,8 @@ export default async function handler(request) {
       return json({ status: 'error', message: `naver ${upstream.status}` }, 502, 'no-store');
     }
     const payload = parseNaverRss(await upstream.text());
-    // The feed carries the latest 50 posts; rss2json's free tier returned 10,
-    // which is what the page's card grid was laid out for.
+    // Naver's feed carries each blog's latest 50 posts — all of them are
+    // returned; the page reveals them a page at a time with 더 보기.
     payload.items = payload.items.slice(0, MAX_ITEMS);
     return json(payload, 200, 'public, s-maxage=1800, stale-while-revalidate=86400');
   } catch (err) {

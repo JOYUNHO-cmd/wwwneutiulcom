@@ -12,6 +12,30 @@ const GALLERY_CATEGORIES = Array.from(
   new Map(galleryItems.map((item) => [item.category, item.categoryLabel])).entries()
 );
 const PAGE_SIZE = 24;
+// Field-log cards revealed per 더 보기 — 12 fills whole rows in both the
+// 2-column (mobile) and 3-column (desktop) grids.
+const LOG_PAGE_SIZE = 12;
+
+// Shared, eye-catching 더 보기 for the gallery and the field-log grid. Shows
+// how many are on screen out of the total so visitors know there's more.
+const LoadMoreButton: React.FC<{ shown: number; total: number; onClick: () => void }> = ({ shown, total, onClick }) => {
+  if (shown >= total) return null;
+  return (
+    <div className="flex flex-col items-center gap-2 mt-8 md:mt-12">
+      <button
+        type="button"
+        onClick={onClick}
+        className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 md:px-10 md:py-[18px] text-base md:text-lg font-extrabold text-white shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/40 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+      >
+        더 보기
+        <ChevronDown aria-hidden="true" className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-0.5 motion-safe:animate-bounce" />
+      </button>
+      <span className="text-xs md:text-sm font-semibold text-slate-400">
+        {shown} / {total}
+      </span>
+    </div>
+  );
+};
 
 // The manifest is grouped category-by-category (conversion order), so
 // showing it as-is under "전체" reads as long same-category runs. Round-
@@ -67,6 +91,7 @@ export const Portfolio: React.FC = () => {
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [visibleLogCount, setVisibleLogCount] = useState(LOG_PAGE_SIZE);
   const [openItem, setOpenItem] = useState<PortfolioGalleryItem | null>(null);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
 
@@ -367,17 +392,11 @@ export const Portfolio: React.FC = () => {
           ))}
         </div>
 
-        {visibleCount < filteredItems.length && (
-          <div className="flex justify-center mt-8 md:mt-10">
-            <button
-              type="button"
-              onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-              className="px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-sm hover:border-primary/40 hover:text-primary transition-all shadow-sm"
-            >
-              더 보기
-            </button>
-          </div>
-        )}
+        <LoadMoreButton
+          shown={visibleItems.length}
+          total={filteredItems.length}
+          onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
+        />
       </div>
 
       {openItem && (
@@ -470,8 +489,9 @@ export const Portfolio: React.FC = () => {
             </div>
           </div>
         ) : (
+          <>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-8">
-            {rssItems.map((item, index) => {
+            {rssItems.slice(0, visibleLogCount).map((item, index) => {
               const coverImage = getPostCoverImage(item, index);
               const isSecondBlog = item.blogCode === 'decline11731';
               return (
@@ -480,7 +500,7 @@ export const Portfolio: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: Math.min(index * 0.05, 0.4) }}
+                  transition={{ duration: 0.35, delay: Math.min((index % LOG_PAGE_SIZE) * 0.05, 0.4) }}
                   whileHover={{ y: -6, transition: { duration: 0.2 } }}
                   href={item.link}
                   target="_blank"
@@ -526,6 +546,12 @@ export const Portfolio: React.FC = () => {
               );
             })}
           </div>
+          <LoadMoreButton
+            shown={Math.min(visibleLogCount, rssItems.length)}
+            total={rssItems.length}
+            onClick={() => setVisibleLogCount((c) => c + LOG_PAGE_SIZE)}
+          />
+          </>
         )}
 
       </div>
