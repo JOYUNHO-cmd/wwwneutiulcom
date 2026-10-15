@@ -75,6 +75,10 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
         <mask id={mask('crown')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
           <circle className="nl-m nl-m-crown" cx={CX} cy="560" r="480" fill="#fff" />
           <rect x="0" y="700" width={SIZE} height={SIZE - 700} fill="#000" />
+          {/* Keep the ring band out of this stage: the crown's springy
+              overshoot (scale > 1) used to reach the top of the rings and
+              flash a half-moon arc there before the ring stage drew it. */}
+          <circle cx={CX} cy={CY} r="586" fill="none" stroke="#000" strokeWidth="96" />
         </mask>
         {/* 원 — both rings, drawn from the top down both sides */}
         <mask id={mask('ring')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
