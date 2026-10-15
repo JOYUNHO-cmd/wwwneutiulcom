@@ -17,7 +17,9 @@ const GROUP_META: Record<Group, { en: string; unit: string; tile: string }> = {
 // shapes, a few soft colors, no outlines:
 // 서울 = N서울타워 on 남산, 인천 = a plane over a cloud (인천국제공항),
 // 경기 = 수원화성 팔달문 (tiled roof, red pillars, stone wall, arched gate).
-const GroupIcon: React.FC<{ group: Group; className?: string }> = ({ group, className }) => (
+// The cloud is white on the sky-blue tile and turns sky blue once the card is
+// selected (the tile turns white there).
+const GroupIcon: React.FC<{ group: Group; selected?: boolean; className?: string }> = ({ group, selected = false, className }) => (
   <svg viewBox="0 0 48 48" className={className}>
     {group === '서울' && (
       <>
@@ -33,7 +35,7 @@ const GroupIcon: React.FC<{ group: Group; className?: string }> = ({ group, clas
     )}
     {group === '인천' && (
       <>
-        <path d="M7 40a6 6 0 0 1 5.5-6 8.5 8.5 0 0 1 16-1.5A5.5 5.5 0 0 1 34 40z" fill="#fff" />
+        <path d="M7 40a6 6 0 0 1 5.5-6 8.5 8.5 0 0 1 16-1.5A5.5 5.5 0 0 1 34 40z" fill={selected ? "#bae6fd" : "#fff"} />
         <g transform="rotate(-28 25 19)">
           <path d="M22 17 29 6h4.5l-3.2 11z" fill="#7dd3fc" />
           <path d="M11 17.5 8 11h3.5l5 6.5z" fill="#7dd3fc" />
@@ -147,7 +149,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                     selected ? 'bg-white ring-white/60 shadow-md' : `bg-gradient-to-br ${GROUP_META[group].tile} ring-white shadow-sm`
                   }`}
                 >
-                  <GroupIcon group={group} className="h-8 w-8 sm:h-10 sm:w-10" />
+                  <GroupIcon group={group} selected={selected} className="h-8 w-8 sm:h-10 sm:w-10" />
                 </span>
                 <span className={`hidden sm:block text-[10px] font-extrabold tracking-[0.18em] ${selected ? 'text-emerald-100' : 'text-primary'}`}>
                   {GROUP_META[group].en}
