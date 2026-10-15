@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Calendar, Loader2 } from 'lucide-react';
 import { m } from 'motion/react';
+import { fetchNaverFieldLogs } from '../../lib/naverFeedClient';
 
 interface NaverRssItem {
   title: string;
@@ -67,32 +68,7 @@ const LiveWorkFeedSection: React.FC = () => {
     const fetchNaverRss = async () => {
       try {
         setRssLoading(true);
-        const rssUrl1 = "https://rss.blog.naver.com/kslee0143.xml";
-        const rssUrl2 = "https://rss.blog.naver.com/decline11731.xml";
-
-        const proxyUrl1 = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl1)}`;
-        const proxyUrl2 = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl2)}`;
-
-        const [res1, res2] = await Promise.all([
-          fetch(proxyUrl1).then(r => r.ok ? r.json() : null).catch(() => null),
-          fetch(proxyUrl2).then(r => r.ok ? r.json() : null).catch(() => null)
-        ]);
-
-        const items1 = (res1 && res1.status === 'ok' && res1.items) ? res1.items.map((item: any) => ({
-          ...item,
-          blogName: "현장 일지 1",
-          blogCode: "kslee0143"
-        })) : [];
-
-        const items2 = (res2 && res2.status === 'ok' && res2.items) ? res2.items.map((item: any) => ({
-          ...item,
-          blogName: "현장 일지 2",
-          blogCode: "decline11731"
-        })) : [];
-
-        const combined = [...items1, ...items2];
-        combined.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
-
+        const combined = await fetchNaverFieldLogs<NaverRssItem>();
         setRssItems(combined.slice(0, 3));
       } catch (err) {
         console.error("Home Naver RSS fetch error:", err);

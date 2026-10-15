@@ -6,6 +6,7 @@ import portfolioManifest from '../lib/portfolioManifest.json';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import { getRegionCaseUrlByPortfolioItemId } from '../lib/regionCaseData.mjs';
+import { fetchNaverFieldLogs } from '../lib/naverFeedClient';
 
 const galleryItems = portfolioManifest as PortfolioGalleryItem[];
 const GALLERY_CATEGORIES = Array.from(
@@ -117,58 +118,14 @@ export const Portfolio: React.FC = () => {
         setRssLoading(true);
         setRssError(null);
         
-        // Our own Vercel function (api/naver-rss.js) — the third-party
-        // api.rss2json.com proxy this used to call started returning errors.
-        const proxyUrl1 = "/api/naver-rss?blog=kslee0143";
-        const proxyUrl2 = "/api/naver-rss?blog=decline11731";
-        
-        // One automatic retry per blog: a single dropped request on a flaky
-        // mobile connection shouldn't land visitors on the error notice.
-        const fetchFeed = async (url: string) => {
-          for (let attempt = 0; attempt < 2; attempt++) {
-            try {
-              const res = await fetch(url);
-              if (res.ok) {
-                const data = await res.json();
-                if (data && data.status === 'ok') return data;
-              }
-            } catch {
-              // fall through to the retry
-            }
-            if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 1200));
-          }
-          return null;
-        };
-        const [res1, res2] = await Promise.all([
-          fetchFeed(proxyUrl1),
-          fetchFeed(proxyUrl2)
-        ]);
-        
-        const items1 = (res1 && res1.status === 'ok' && res1.items) ? res1.items.map((item: any) => ({
-          ...item,
-          blogName: "현장 일지 1",
-          blogCode: "kslee0143"
-        })) : [];
-        
-        const items2 = (res2 && res2.status === 'ok' && res2.items) ? res2.items.map((item: any) => ({
-          ...item,
-          blogName: "현장 일지 2",
-          blogCode: "decline11731"
-        })) : [];
-        
-        const combined = [...items1, ...items2];
-        
+        // Shared loader (lib/naverFeedClient.ts): our own api/naver-rss.js
+        // function with one automatic retry, newest posts first.
+        const combined = await fetchNaverFieldLogs<NaverRssItem>();
+
         if (combined.length === 0) {
           throw new Error('시공 사례 소식을 실시간으로 불러오는데 실패하였습니다.');
         }
-        
-        // Sort by publication date desc
-        combined.sort((a, b) => {
-          const dateA = new Date(a.pubDate).getTime();
-          const dateB = new Date(b.pubDate).getTime();
-          return dateB - dateA;
-        });
-        
+
         setRssItems(combined);
       } catch (err) {
         console.error("Naver RSS fetch error:", err);

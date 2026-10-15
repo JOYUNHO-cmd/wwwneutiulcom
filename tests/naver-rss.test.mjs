@@ -28,3 +28,19 @@ test('the function only proxies the two allow-listed blogs', async () => {
     assert.equal(res.status, 400, blog);
   }
 });
+
+test('no page calls the broken api.rss2json.com service directly anymore', () => {
+  // The home page kept a second copy of the old fetch after /portfolio was
+  // fixed, so the home "현장 일지" section stayed broken. Both now go through
+  // lib/naverFeedClient.ts -> api/naver-rss.js.
+  const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const p = new URL(`${entry.name}${entry.isDirectory() ? '/' : ''}`, dir);
+    return entry.isDirectory() ? walk(p) : [p];
+  });
+  const sources = ['../components/', '../pages/']
+    .flatMap((d) => walk(new URL(d, import.meta.url)))
+    .filter((p) => /\.(tsx?|mjs)$/.test(p.pathname));
+  for (const file of sources) {
+    assert.doesNotMatch(fs.readFileSync(file, 'utf8'), /api\.rss2json\.com\/v1/, file.pathname);
+  }
+});
