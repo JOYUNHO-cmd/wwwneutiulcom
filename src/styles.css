@@ -84,10 +84,11 @@ html {
 }
 /* Rating stars: a soft glow/scale pulse, staggered per star (via
    animation-delay inline) so they twinkle in sequence rather than in
-   unison. Cheap — transform + filter only, no layout impact. */
+   unison. Transform only: it also used to animate filter: drop-shadow,
+   which forced a repaint of every star on every frame. */
 @keyframes star-twinkle {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(251,191,36,0)); }
-  50% { transform: scale(1.18); filter: drop-shadow(0 0 6px rgba(251,191,36,0.85)); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
 }
 .animate-star-twinkle {
   animation: star-twinkle 2.2s ease-in-out infinite;
@@ -137,3 +138,20 @@ html {
 @keyframes nl-leaf-out { to { transform: scale(1); } }
 @keyframes nl-draw { to { stroke-dashoffset: 0; } }
 @keyframes nl-fade { to { opacity: 1; } }
+
+/* ── Looping "look down / look here" nudges ─────────────────────────────────
+   These used to be motion `animate` loops with repeat: Infinity, which run
+   in JS and touch the DOM every frame for as long as the page is open
+   (Lighthouse: tens of seconds of main-thread work on service pages). The
+   same movement as CSS transform keyframes runs on the compositor instead. */
+@keyframes nudge-y-8 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+@keyframes nudge-y-5 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@keyframes nudge-y-up-6 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes tracer-y { from { transform: translateY(-24px); } to { transform: translateY(48px); } }
+.anim-nudge-down { animation: nudge-y-8 1.2s ease-in-out infinite; }
+.anim-nudge-down-sm { animation: nudge-y-5 1.4s ease-in-out infinite; }
+.anim-nudge-up { animation: nudge-y-up-6 1.4s ease-in-out infinite; }
+.anim-tracer { animation: tracer-y 1.5s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .anim-nudge-down, .anim-nudge-down-sm, .anim-nudge-up, .anim-tracer { animation: none; }
+}

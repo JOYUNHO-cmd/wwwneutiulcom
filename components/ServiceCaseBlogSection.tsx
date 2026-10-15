@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
-import { m } from 'motion/react';
 import { getServiceBlogLinks } from '../lib/serviceBlogLinks.mjs';
 import BLOG_THUMBS from '../lib/blogThumbs.json';
 
@@ -36,14 +35,10 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
             전체 작업 과정들이 궁금하시다면??
           </p>
           <div className="flex flex-col items-center mt-2">
-            <m.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-              className="flex flex-col items-center -space-y-3.5 text-primary"
-            >
+            <div className="anim-nudge-down flex flex-col items-center -space-y-3.5 text-primary">
               <ChevronDown className="w-8 h-8 sm:w-11 sm:h-11 stroke-[3.5]" />
               <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 opacity-60 stroke-[3.5]" />
-            </m.div>
+            </div>
           </div>
         </div>
       </div>

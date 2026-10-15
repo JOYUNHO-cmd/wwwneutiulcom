@@ -167,13 +167,9 @@ const Home: React.FC = () => {
           <p className="text-slate-500 text-sm md:text-base mt-2">
             실제 시공 현장의 전/후 비교 사진입니다.
           </p>
-          <m.span
-            animate={{ y: [0, -6, 0] }}
-            transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
-            className="inline-flex items-center gap-1.5 mt-3 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primaryDark text-xs md:text-sm font-bold shadow-sm"
-          >
+          <span className="anim-nudge-up inline-flex items-center gap-1.5 mt-3 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primaryDark text-xs md:text-sm font-bold shadow-sm">
             🔍 사진을 누르면 크게 볼 수 있어요
-          </m.span>
+          </span>
         </div>
         <PortfolioMarquee />
         <div className="flex justify-center mt-6 md:mt-8 relative z-10">

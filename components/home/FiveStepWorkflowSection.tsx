@@ -118,21 +118,13 @@ const FiveStepWorkflowSection: React.FC = () => {
                 <div className="my-5 sm:my-8 flex flex-col items-center justify-center relative">
                   {/* Glowing flow line with moving light tracer */}
                   <div className="w-[3px] h-8 sm:h-12 bg-gradient-to-b from-[#0f9d6c]/40 via-[#0f9d6c] to-[#0f9d6c]/40 rounded-full relative overflow-hidden shadow-[0_0_12px_rgba(34,186,139,0.4)]">
-                    <m.div
-                      animate={{ y: [-24, 48] }}
-                      transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                      className="w-full h-5 bg-white rounded-full opacity-90 blur-[0.5px]"
-                    />
+                    <div className="anim-tracer w-full h-5 bg-white rounded-full opacity-90 blur-[0.5px]" />
                   </div>
 
                   {/* Floating bouncing animated circle badge with bold downward chevron */}
-                  <m.div
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
-                    className="mt-1 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-b from-[#0f9d6c] to-emerald-600 text-white shadow-[0_4px_18px_rgba(34,186,139,0.45)] border-2 border-white ring-4 ring-[#0f9d6c]/15"
-                  >
+                  <div className="anim-nudge-down-sm mt-1 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-b from-[#0f9d6c] to-emerald-600 text-white shadow-[0_4px_18px_rgba(34,186,139,0.45)] border-2 border-white ring-4 ring-[#0f9d6c]/15">
                     <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[3]" />
-                  </m.div>
+                  </div>
                 </div>
               )}
             </div>

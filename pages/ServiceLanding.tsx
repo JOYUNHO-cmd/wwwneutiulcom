@@ -184,7 +184,7 @@ const ServiceLanding: React.FC = () => {
 
         {/* Decorative Floating Particle Lights */}
         <div className="absolute top-0 left-0 w-full h-full opacity-15 pointer-events-none z-10">
-          <div className="absolute top-1/4 left-10 w-48 h-48 bg-primary rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-1/4 left-10 w-48 h-48 bg-primary rounded-full blur-[100px]" />
           <div className="absolute bottom-1/4 right-10 w-60 h-60 bg-emerald-300 rounded-full blur-[120px]" />
         </div>
 

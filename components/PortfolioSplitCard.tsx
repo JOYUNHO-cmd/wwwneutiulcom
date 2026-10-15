@@ -34,7 +34,9 @@ interface PortfolioSplitCardProps {
 // Side-by-side 전/후 split card — both photos visible at once (no tap
 // needed to compare), so a strip or grid of these reads as proof at a
 // glance rather than a guessing game. Tapping opens the full-size pair
-// in a lightbox. Renders the full real-photo gallery in
+// in a lightbox. Cards show the 400px thumbnails from
+// scripts/generate-portfolio-thumbs.mjs; the lightbox shows the originals.
+// Renders the full real-photo gallery in
 // lib/portfolioManifest.json.
 // 'marquee-lg' is double the width of 'marquee' — used only on service
 // landing pages (ServiceBeforeAfterMarquee); the homepage teaser and the
@@ -64,7 +66,7 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
         <div className="grid grid-cols-2">
           <div className="relative aspect-square bg-slate-100">
             <img
-              src={canLoad ? `/images/portfolio-gallery/${item.before}` : undefined}
+              src={canLoad ? `/images/portfolio-gallery/thumbs/${item.before}` : undefined}
               alt={`${item.title} 시공 전`}
               width={item.beforeWidth}
               height={item.beforeHeight}
@@ -76,7 +78,7 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
           </div>
           <div className="relative aspect-square bg-slate-100 border-l border-white">
             <img
-              src={canLoad ? `/images/portfolio-gallery/${item.after}` : undefined}
+              src={canLoad ? `/images/portfolio-gallery/thumbs/${item.after}` : undefined}
               alt={`${item.title} 시공 후`}
               width={item.afterWidth}
               height={item.afterHeight}
