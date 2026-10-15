@@ -122,9 +122,26 @@ export const Portfolio: React.FC = () => {
         const proxyUrl1 = "/api/naver-rss?blog=kslee0143";
         const proxyUrl2 = "/api/naver-rss?blog=decline11731";
         
+        // One automatic retry per blog: a single dropped request on a flaky
+        // mobile connection shouldn't land visitors on the error notice.
+        const fetchFeed = async (url: string) => {
+          for (let attempt = 0; attempt < 2; attempt++) {
+            try {
+              const res = await fetch(url);
+              if (res.ok) {
+                const data = await res.json();
+                if (data && data.status === 'ok') return data;
+              }
+            } catch {
+              // fall through to the retry
+            }
+            if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 1200));
+          }
+          return null;
+        };
         const [res1, res2] = await Promise.all([
-          fetch(proxyUrl1).then(r => r.ok ? r.json() : null).catch(() => null),
-          fetch(proxyUrl2).then(r => r.ok ? r.json() : null).catch(() => null)
+          fetchFeed(proxyUrl1),
+          fetchFeed(proxyUrl2)
         ]);
         
         const items1 = (res1 && res1.status === 'ok' && res1.items) ? res1.items.map((item: any) => ({
