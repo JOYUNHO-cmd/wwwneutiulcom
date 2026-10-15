@@ -1,24 +1,38 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 
-// The 느티울 logo drawn in the order its name tells it: 느티(나무) + 울(타리).
-// The ground spreads out, the trunk grows up from it, the crown leafs out
-// around the house, the circle wraps around them, the fence goes up, and the
-// name appears last.
+// The 느티울 logo assembling itself in the order its name tells it:
+// 느티(나무) + 울(타리). The ground pops up, then the trunk, the crown with the
+// house under it, the circle around them, the fence springing up from below
+// the circle, and finally the name — each piece popping in on its own beat
+// with a little bounce rather than all of it flowing continuously.
 //
-// Nothing is redrawn: every stage shows the real logo image through its own
-// animated mask, so the finished frame is pixel-identical to the logo. Mask
-// regions are in the source image's 1254x1254 coordinate space (the web copy
-// is a downscale of it; see scripts/convert-logo-full.mjs). The logo's inside
-// and its house are transparent, so place it on a light background.
+// Nothing is redrawn: each stage is the real logo image seen through a fixed
+// mask, and the masked piece itself is what bounces. The masks are disjoint,
+// so no pixel belongs to two pieces (a shared pixel would show as a second,
+// differently-moving copy), and together they cover the whole logo (checked by
+// rasterising them against the source: ~10 anti-aliased edge pixels of 615k
+// differ), so the finished frame is the logo as-is. Mask regions are in the source
+// image's 1254x1254 coordinate space (the web copy is a downscale; see
+// scripts/convert-logo-full.mjs). The logo's inside and its house are
+// transparent, so place it on a light background.
 //
-// Server render and no-JS show the complete logo; the masks only hide the
-// pieces once the client has mounted ("is-armed"), and the animation starts
-// when the logo scrolls into view ("is-playing"). Users who prefer reduced
-// motion get the static logo.
+// Server render and no-JS show the complete logo; pieces are only hidden
+// once the client has mounted ("is-armed"), and the animation starts when the
+// logo scrolls into view ("is-playing"). Users who prefer reduced motion get
+// the static logo. Timings live in src/styles.css (.nl-piece-*).
 
 const SIZE = 1254;
 const CX = 627; // circle centre
 const CY = 627;
+
+// The crescent hill under the tree. Checked against the source pixels: it
+// holds every hill pixel, stays above the letters (top of '느' ~y865, '울'
+// ~y850) and clear of the inner ring (r ≥ ~540).
+const HILL = 'M170 865 Q627 640 1084 865 L1084 893 Q627 771 170 893 Z';
+// The fence sits in the gap at the bottom of the inner ring; below y1000 and
+// between these x bounds, everything inside the outer ring is fence.
+const FENCE_BOX = { x: 200, y: 1000, w: 854, h: 254 };
+const NAME_BOX = { x: 330, y: 840, w: 610, h: 270 };
 
 type Stage = 'hill' | 'trunk' | 'crown' | 'ring' | 'fence' | 'name';
 
@@ -28,6 +42,7 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
   const [playing, setPlaying] = useState(false);
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const mask = (stage: Stage) => `nl-${id}-${stage}`;
+  const fenceClip = `nl-${id}-fence-box`;
 
   useEffect(() => {
     const el = ref.current;
@@ -49,6 +64,12 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
 
   const image = <image href="/images/logo-full.webp" width={SIZE} height={SIZE} />;
   const stages: Stage[] = ['hill', 'trunk', 'crown', 'ring', 'fence', 'name'];
+  const maskProps = { maskUnits: 'userSpaceOnUse' as const, x: 0, y: 0, width: SIZE, height: SIZE };
+  // Both rings: an annulus from r≈520 to r≈636 around the centre (the rings
+  // sit slightly off-centre, so the band is wider than the strokes look).
+  const ringBand = (color: string) => (
+    <circle cx={CX} cy={CY} r="578" fill="none" stroke={color} strokeWidth="116" />
+  );
 
   return (
     <svg
@@ -59,46 +80,47 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
       className={`nl-logo ${armed ? 'is-armed' : ''} ${playing ? 'is-playing' : ''} ${className}`}
     >
       <defs>
-        {/* 땅 — the crescent hill under the tree. One curved band that
-            follows the crescent all the way to its tips: it used to be a
-            centre rectangle plus two tip rectangles, and the gap between
-            them left each tip showing as a separate dot until the name
-            stage filled it in. Checked against the source pixels: it holds
-            every hill pixel, stays above the letters (top of '느' ~y865,
-            '울' ~y850) and clear of the inner ring (r ≥ ~540), whose edge
-            otherwise showed as a dot just past each tip. */}
-        <mask id={mask('hill')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
-          <path className="nl-m nl-m-hill" d="M170 865 Q627 640 1084 865 L1084 893 Q627 771 170 893 Z" fill="#fff" />
+        <clipPath id={fenceClip}>
+          <rect x={FENCE_BOX.x} y={FENCE_BOX.y} width={FENCE_BOX.w} height={FENCE_BOX.h} />
+        </clipPath>
+
+        {/* 땅 */}
+        <mask id={mask('hill')} {...maskProps}>
+          <path d={HILL} fill="#fff" />
         </mask>
-        {/* 기둥 — trunk and the foot of the house, growing up from the ground */}
-        <mask id={mask('trunk')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
-          <rect className="nl-m nl-m-trunk" x="430" y="620" width="390" height="180" fill="#fff" />
+        {/* 기둥 — trunk and the foot of the house, between the crown and the hill */}
+        <mask id={mask('trunk')} {...maskProps}>
+          <rect x="430" y="700" width="390" height="100" fill="#fff" />
+          <path d={HILL} fill="#000" />
         </mask>
-        {/* 나뭇잎 — the crown leafing out from the top of the trunk */}
-        <mask id={mask('crown')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
-          <circle className="nl-m nl-m-crown" cx={CX} cy="560" r="480" fill="#fff" />
+        {/* 나뭇잎 + 집 — everything above y700 inside the rings */}
+        <mask id={mask('crown')} {...maskProps}>
+          <circle cx={CX} cy="560" r="480" fill="#fff" />
           <rect x="0" y="700" width={SIZE} height={SIZE - 700} fill="#000" />
-          {/* Keep the ring band out of this stage: the crown's springy
-              overshoot (scale > 1) used to reach the top of the rings and
-              flash a half-moon arc there before the ring stage drew it. */}
-          <circle cx={CX} cy={CY} r="586" fill="none" stroke="#000" strokeWidth="96" />
+          {ringBand('#000')}
         </mask>
-        {/* 원 — both rings, drawn from the top down both sides */}
-        <mask id={mask('ring')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
-          <circle className="nl-m nl-m-ring" cx={CX} cy={CY} r="586" fill="none" stroke="#fff" strokeWidth="96" pathLength={100} />
-          <circle className="nl-m nl-m-ring nl-m-ring-mirror" cx={CX} cy={CY} r="586" fill="none" stroke="#fff" strokeWidth="96" pathLength={100} />
+        {/* 원 — both rings, except the inner part of the band inside the fence
+            box, which is the fence's rails rather than ring */}
+        <mask id={mask('ring')} {...maskProps}>
+          {ringBand('#fff')}
+          <circle cx={CX} cy={CY} r="553" fill="none" stroke="#000" strokeWidth="66" clipPath={`url(#${fenceClip})`} />
         </mask>
-        {/* 울타리 — fence posts going up from the middle outwards */}
-        <mask id={mask('fence')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
-          <rect className="nl-m nl-m-fence" x="200" y="1000" width="854" height="240" fill="#fff" />
-          <rect x="330" y="840" width="610" height="270" fill="#000" />
+        {/* 울타리 — the fence box, minus the outer ring and the name */}
+        <mask id={mask('fence')} {...maskProps}>
+          <rect x={FENCE_BOX.x} y={FENCE_BOX.y} width={FENCE_BOX.w} height={FENCE_BOX.h} fill="#fff" />
+          <circle cx={CX} cy={CY} r="613" fill="none" stroke="#000" strokeWidth="54" />
+          <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#000" />
         </mask>
-        {/* 느티울 — the name */}
-        <mask id={mask('name')} maskUnits="userSpaceOnUse" x="0" y="0" width={SIZE} height={SIZE}>
-          <rect className="nl-m nl-m-name" x="330" y="840" width="610" height="270" fill="#fff" />
+        {/* 느티울 */}
+        <mask id={mask('name')} {...maskProps}>
+          <rect x={NAME_BOX.x} y={NAME_BOX.y} width={NAME_BOX.w} height={NAME_BOX.h} fill="#fff" />
+          <path d={HILL} fill="#000" />
         </mask>
       </defs>
 
+      {/* The bounce transforms the masked group as a whole, mask included —
+          like a cut-out sticker popping in — so even at full overshoot a piece
+          never shows any pixel outside its own region. */}
       {stages.map((stage) => (
         <g key={stage} mask={`url(#${mask(stage)})`} className={`nl-piece nl-piece-${stage}`}>
           {image}

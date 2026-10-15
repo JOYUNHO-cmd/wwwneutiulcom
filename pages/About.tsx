@@ -219,7 +219,7 @@ const About: React.FC = () => {
               className="lg:col-span-7 flex flex-col justify-center px-1 sm:px-4 py-6"
             >
               {/* The logo drawing itself in the order of its name:
-                  ground → 느티나무 → 집 → 울타리 → 느티울 — sized to the quote
+                  ground → 느티나무 → 집 → 원 → 울타리 → 느티울 — sized to the quote
                   below (w-fit) so it sits over the quote's own centre. */}
               <div className="mb-8 flex w-fit max-w-full flex-col items-center">
                 <AnimatedLogo className="mb-6 w-40 h-40 sm:w-52 sm:h-52" />
