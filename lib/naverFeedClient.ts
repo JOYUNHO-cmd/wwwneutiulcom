@@ -29,6 +29,33 @@ async function fetchFeed(blogCode: string): Promise<any[]> {
   return [];
 }
 
+// Naver only serves its post thumbnails as PNG: ~200KB at 365px (?type=s3),
+// 0.6–0.9MB at 743px (?type=w2) — six of those made /portfolio ~4MB heavier.
+// Vercel Image Optimization (configured under "images" in vercel.json) resizes
+// and re-encodes them to a ~384px WebP at the edge and caches the result.
+const NAVER_IMAGE = /^https:\/\/(blogthumb|postfiles)\.pstatic\.net\//;
+const CARD_WIDTH = 384; // must be one of vercel.json images.sizes
+
+export function optimizedNaverThumb(url: string): string {
+  if (!NAVER_IMAGE.test(url)) return url;
+  return `/_vercel/image?url=${encodeURIComponent(url)}&w=${CARD_WIDTH}&q=70`;
+}
+
+// If the optimizer is unavailable (e.g. local dev), fall back once to Naver's
+// own small thumbnail, loaded without a Referer (Naver blocks other sites').
+export function naverThumbFallback(event: { currentTarget: HTMLImageElement }) {
+  const img = event.currentTarget;
+  const fallback = img.dataset.fallback;
+  if (fallback && img.src !== fallback) {
+    img.removeAttribute('data-fallback');
+    img.src = fallback;
+  }
+}
+
+export function smallNaverThumb(url: string): string {
+  return NAVER_IMAGE.test(url) ? url.replace(/\?type=[^&]*$/, '?type=s3') : url;
+}
+
 /** Posts from both blogs, newest first, each tagged with blogName/blogCode. */
 export async function fetchNaverFieldLogs<T = any>(): Promise<T[]> {
   const perBlog = await Promise.all(

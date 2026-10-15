@@ -6,7 +6,7 @@ import portfolioManifest from '../lib/portfolioManifest.json';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import { getRegionCaseUrlByPortfolioItemId } from '../lib/regionCaseData.mjs';
-import { fetchNaverFieldLogs } from '../lib/naverFeedClient';
+import { fetchNaverFieldLogs, optimizedNaverThumb, smallNaverThumb, naverThumbFallback } from '../lib/naverFeedClient';
 
 const galleryItems = portfolioManifest as PortfolioGalleryItem[];
 const GALLERY_CATEGORIES = Array.from(
@@ -483,10 +483,13 @@ export const Portfolio: React.FC = () => {
                 >
                   {/* Blog Cover Image */}
                   <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                    <img 
-                      src={coverImage} 
-                      alt="Work Thumbnail" 
+                    <img
+                      src={optimizedNaverThumb(coverImage)}
+                      data-fallback={smallNaverThumb(coverImage)}
+                      onError={naverThumbFallback}
+                      alt="Work Thumbnail"
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       referrerPolicy="no-referrer"
                     />

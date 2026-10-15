@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Calendar, Loader2 } from 'lucide-react';
 import { m } from 'motion/react';
-import { fetchNaverFieldLogs } from '../../lib/naverFeedClient';
+import { fetchNaverFieldLogs, optimizedNaverThumb, smallNaverThumb, naverThumbFallback } from '../../lib/naverFeedClient';
 
 interface NaverRssItem {
   title: string;
@@ -149,9 +149,12 @@ const LiveWorkFeedSection: React.FC = () => {
                 >
                   <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
                     <img
-                      src={coverImage}
+                      src={optimizedNaverThumb(coverImage)}
+                      data-fallback={smallNaverThumb(coverImage)}
+                      onError={naverThumbFallback}
                       alt="Work Thumbnail"
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       referrerPolicy="no-referrer"
                     />

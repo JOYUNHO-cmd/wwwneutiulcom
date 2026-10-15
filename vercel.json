@@ -1,6 +1,15 @@
 {
   "buildCommand": "node scripts/generate-portfolio-highlights.mjs && vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
   "outputDirectory": "dist",
+  "images": {
+    "sizes": [384],
+    "formats": ["image/webp"],
+    "minimumCacheTTL": 2592000,
+    "remotePatterns": [
+      { "protocol": "https", "hostname": "blogthumb.pstatic.net" },
+      { "protocol": "https", "hostname": "postfiles.pstatic.net" }
+    ]
+  },
   "redirects": [
     {
       "source": "/services/floor/ansan/:slug",
