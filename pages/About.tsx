@@ -2,6 +2,7 @@ import React from 'react';
 import { useSite } from '../context/SiteContext';
 import { Target, Users, Award, Quote, Sparkles, CheckCircle, Leaf } from 'lucide-react';
 import { m } from 'motion/react';
+import AnimatedLogo from '../components/AnimatedLogo';
 
 const About: React.FC = () => {
   const { config } = useSite();
@@ -217,6 +218,9 @@ const About: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="lg:col-span-7 flex flex-col justify-center px-1 sm:px-4 py-6"
             >
+              {/* The logo drawing itself in the order of its name:
+                  ground → 느티나무 → 집 → 울타리 → 느티울 */}
+              <AnimatedLogo className="mx-auto lg:mx-0 mb-8 w-40 h-40 sm:w-52 sm:h-52" />
               <div className="mb-8">
                 <p className="text-[#0f9d6c] font-black text-[18px] sm:text-[22px] md:text-[24px] leading-snug tracking-wide break-keep">
                   "언제나 한자리에 서서 이웃을 품다"
