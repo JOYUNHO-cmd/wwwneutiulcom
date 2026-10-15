@@ -104,49 +104,44 @@ html {
   }
 }
 
-/* ── 느티울 logo pop-in (components/AnimatedLogo.tsx) ──────────────────────
-   Each masked piece pops in on its own beat with a bounce (overshoot, small
-   settle) instead of the stages flowing into each other. Pieces are hidden
-   only once the client arms the logo, and play when it scrolls into view.
-   Transform origins are in the logo's 1254px viewBox units.
-     땅 0s → 기둥 0.4s → 나뭇잎·집 0.8s → 원 1.45s → 울타리 2.05s (rises from
-     below, after the circle) → 느티울 2.55s, done at ~3.1s. */
+/* ── 느티울 logo animation (components/AnimatedLogo.tsx) ───────────────────
+   Two moods: the ground and the tree arrive smoothly — the hill spreads from
+   the middle, the trunk grows up from it, the crown leafs out around the
+   house — by growing each piece's mask. Then the circle, the fence (rising
+   from below, after the circle) and the name pop in one beat at a time with
+   a bounce. Pieces/masks are hidden only once the client arms the logo, and
+   play when it scrolls into view. Origins are in 1254px viewBox units.
+     땅 0s → 기둥 0.4s → 나뭇잎·집 0.95s → 원 2.05s → 울타리 2.6s → 느티울 3.1s */
+.nl-logo .nl-m,
 .nl-logo .nl-piece { transform-box: view-box; }
-.nl-logo .nl-piece-hill  { transform-origin: 627px 880px; }
-.nl-logo .nl-piece-trunk { transform-origin: 627px 800px; }
-.nl-logo .nl-piece-crown { transform-origin: 627px 700px; }
+
+/* smooth: ground, trunk, crown (masks grow) */
+.nl-logo .nl-m-hill  { transform-origin: 627px 830px; }
+.nl-logo .nl-m-trunk { transform-origin: 627px 800px; }
+.nl-logo .nl-m-crown { transform-origin: 627px 650px; }
+.nl-logo.is-armed .nl-m-hill  { transform: scaleX(0); }
+.nl-logo.is-armed .nl-m-trunk { transform: scaleY(0); }
+.nl-logo.is-armed .nl-m-crown { transform: scale(0); }
+.nl-logo.is-playing .nl-m-hill  { animation: nl-grow-x 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0s forwards; }
+.nl-logo.is-playing .nl-m-trunk { animation: nl-grow-y 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards; }
+/* the crown mask is clipped by fixed black regions (below y700, ring band),
+   so its gentle overshoot can't reveal anything outside the crown */
+.nl-logo.is-playing .nl-m-crown { animation: nl-leaf-out 1.1s cubic-bezier(0.34, 1.4, 0.64, 1) 0.95s forwards; }
+@keyframes nl-grow-x { to { transform: scaleX(1); } }
+@keyframes nl-grow-y { to { transform: scaleY(1); } }
+@keyframes nl-leaf-out { to { transform: scale(1); } }
+
+/* pop: ring, fence, name (whole masked piece bounces, like a sticker) */
 .nl-logo .nl-piece-ring  { transform-origin: 627px 627px; }
 .nl-logo .nl-piece-fence { transform-origin: 627px 1230px; }
 .nl-logo .nl-piece-name  { transform-origin: 627px 1110px; }
+.nl-logo.is-armed .nl-piece-ring,
+.nl-logo.is-armed .nl-piece-fence,
+.nl-logo.is-armed .nl-piece-name { opacity: 0; }
+.nl-logo.is-playing .nl-piece-ring  { animation: nl-pop-ring 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.05s both; }
+.nl-logo.is-playing .nl-piece-fence { animation: nl-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.6s both; }
+.nl-logo.is-playing .nl-piece-name  { animation: nl-pop-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) 3.1s both; }
 
-.nl-logo.is-armed .nl-piece { opacity: 0; }
-
-.nl-logo.is-playing .nl-piece-hill  { animation: nl-pop-wide 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0s both; }
-.nl-logo.is-playing .nl-piece-trunk { animation: nl-pop-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both; }
-.nl-logo.is-playing .nl-piece-crown { animation: nl-pop 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both; }
-.nl-logo.is-playing .nl-piece-ring  { animation: nl-pop-ring 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.45s both; }
-.nl-logo.is-playing .nl-piece-fence { animation: nl-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.05s both; }
-.nl-logo.is-playing .nl-piece-name  { animation: nl-pop-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) 2.55s both; }
-
-/* pop: start small, overshoot, settle */
-@keyframes nl-pop {
-  0%   { opacity: 0; transform: scale(0.3); }
-  55%  { opacity: 1; transform: scale(1.1); }
-  78%  { transform: scale(0.96); }
-  100% { opacity: 1; transform: scale(1); }
-}
-@keyframes nl-pop-wide {
-  0%   { opacity: 0; transform: scale(0.2, 0.6); }
-  55%  { opacity: 1; transform: scale(1.08, 1.12); }
-  78%  { transform: scale(0.98, 0.96); }
-  100% { opacity: 1; transform: scale(1); }
-}
-@keyframes nl-pop-up {
-  0%   { opacity: 0; transform: translateY(40px) scale(0.5); }
-  55%  { opacity: 1; transform: translateY(-8px) scale(1.08); }
-  78%  { transform: translateY(2px) scale(0.97); }
-  100% { opacity: 1; transform: none; }
-}
 @keyframes nl-pop-ring {
   0%   { opacity: 0; transform: scale(0.82); }
   55%  { opacity: 1; transform: scale(1.04); }
@@ -158,6 +153,12 @@ html {
   0%   { opacity: 0; transform: translateY(110px) scaleY(0.3); }
   55%  { opacity: 1; transform: translateY(-12px) scaleY(1.08); }
   78%  { transform: translateY(3px) scaleY(0.97); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes nl-pop-up {
+  0%   { opacity: 0; transform: translateY(40px) scale(0.5); }
+  55%  { opacity: 1; transform: translateY(-8px) scale(1.08); }
+  78%  { transform: translateY(2px) scale(0.97); }
   100% { opacity: 1; transform: none; }
 }
 

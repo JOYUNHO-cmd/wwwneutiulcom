@@ -1,13 +1,14 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 
 // The 느티울 logo assembling itself in the order its name tells it:
-// 느티(나무) + 울(타리). The ground pops up, then the trunk, the crown with the
-// house under it, the circle around them, the fence springing up from below
-// the circle, and finally the name — each piece popping in on its own beat
-// with a little bounce rather than all of it flowing continuously.
+// 느티(나무) + 울(타리). The ground and the tree arrive smoothly — the hill
+// spreads out, the trunk grows up from it, the crown leafs out around the
+// house — then the circle, the fence (springing up from below the circle)
+// and the name pop in one beat at a time with a little bounce.
 //
-// Nothing is redrawn: each stage is the real logo image seen through a fixed
-// mask, and the masked piece itself is what bounces. The masks are disjoint,
+// Nothing is redrawn: each stage is the real logo image seen through its own
+// mask. The smooth stages grow their mask's white shape (classes nl-m-*); the
+// pop stages bounce the masked piece as a whole. The mask regions are disjoint,
 // so no pixel belongs to two pieces (a shared pixel would show as a second,
 // differently-moving copy), and together they cover the whole logo (checked by
 // rasterising them against the source: ~10 anti-aliased edge pixels of 615k
@@ -19,7 +20,7 @@ import React, { useEffect, useId, useRef, useState } from 'react';
 // Server render and no-JS show the complete logo; pieces are only hidden
 // once the client has mounted ("is-armed"), and the animation starts when the
 // logo scrolls into view ("is-playing"). Users who prefer reduced motion get
-// the static logo. Timings live in src/styles.css (.nl-piece-*).
+// the static logo. Timings live in src/styles.css (.nl-m-*, .nl-piece-*).
 
 const SIZE = 1254;
 const CX = 627; // circle centre
@@ -86,16 +87,16 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
 
         {/* 땅 */}
         <mask id={mask('hill')} {...maskProps}>
-          <path d={HILL} fill="#fff" />
+          <path className="nl-m nl-m-hill" d={HILL} fill="#fff" />
         </mask>
         {/* 기둥 — trunk and the foot of the house, between the crown and the hill */}
         <mask id={mask('trunk')} {...maskProps}>
-          <rect x="430" y="700" width="390" height="100" fill="#fff" />
+          <rect className="nl-m nl-m-trunk" x="430" y="700" width="390" height="100" fill="#fff" />
           <path d={HILL} fill="#000" />
         </mask>
         {/* 나뭇잎 + 집 — everything above y700 inside the rings */}
         <mask id={mask('crown')} {...maskProps}>
-          <circle cx={CX} cy="560" r="480" fill="#fff" />
+          <circle className="nl-m nl-m-crown" cx={CX} cy="560" r="480" fill="#fff" />
           <rect x="0" y="700" width={SIZE} height={SIZE - 700} fill="#000" />
           {ringBand('#000')}
         </mask>
