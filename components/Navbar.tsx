@@ -54,14 +54,15 @@ const Navbar: React.FC = () => {
               title="느티울 홈으로 이동 및 최상단 스크롤"
             >
                {config.companyInfo.logo && (
-                 <m.img
-                   whileHover={{ scale: 1.05, rotate: 2 }}
-                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                 // group-hover: hovering anywhere on the link — the logo or the
+                 // '느티울' name beside it — gives the logo the same springy
+                 // tilt (overshoot easing stands in for the old motion spring).
+                 <img
                    src={config.companyInfo.logo}
                    alt={`${config.companyInfo.name} Logo`}
                    width={90}
                    height={90}
-                   className="h-20"
+                   className="h-20 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-105 group-hover:rotate-2"
                  />
                )}
                <div className="flex flex-col items-start justify-center leading-none py-1">

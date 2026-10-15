@@ -6,7 +6,6 @@ import { trackEvent } from '../../lib/analytics';
 
 const CTASection: React.FC = () => {
   const { config } = useSite();
-  const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');
 
   return (
     <section className="py-24 bg-primary relative overflow-hidden">
@@ -30,18 +29,14 @@ const CTASection: React.FC = () => {
           무료 방문 견적을 통해 합리적인 가격과 맞춤형 청소 계획을 제안해 드립니다.
         </m.p>
         <div className="flex flex-col sm:flex-row gap-5 justify-center">
-           <m.a
-             whileHover={{ scale: 1.04, y: -2 }}
-             whileTap={{ scale: 0.96 }}
-             href={`tel:${cleanPhone}`}
-             onClick={() => trackEvent('contact_click', { method: 'phone', location: 'home_bottom_cta' })}
-             className="px-6 py-4 md:px-10 md:py-5 bg-white text-primaryDark text-[16px] md:text-xl font-extrabold rounded-xl hover:bg-slate-50 transition-all shadow-lg whitespace-nowrap"
-           >
+           {/* Phone number shown as plain text on purpose — not a tel: link
+               and no hover/tap reaction; the button beside it is the action. */}
+           <div className="px-6 py-4 md:px-10 md:py-5 bg-white text-primaryDark text-[16px] md:text-xl font-extrabold rounded-xl shadow-lg whitespace-nowrap cursor-default select-text">
              전화 상담 {config.companyInfo.phone}
-           </m.a>
+           </div>
            <m.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.96 }}>
              <Link to="/contact" onClick={() => trackEvent('contact_click', { method: 'quote', location: 'home_bottom_cta' })} className="block px-6 py-4 md:px-10 md:py-5 bg-primaryDark text-white text-[16px] md:text-xl font-extrabold rounded-xl hover:bg-[#12b47e] transition-all shadow-lg border border-white/20 whitespace-nowrap">
-               온라인 견적 문의
+               무료 상담 신청
              </Link>
            </m.div>
         </div>

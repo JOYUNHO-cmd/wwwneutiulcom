@@ -220,7 +220,7 @@ const About: React.FC = () => {
             >
               {/* The logo drawing itself in the order of its name:
                   ground → 느티나무 → 집 → 울타리 → 느티울 */}
-              <AnimatedLogo className="mx-auto lg:mx-0 mb-8 w-40 h-40 sm:w-52 sm:h-52" />
+              <AnimatedLogo className="mx-auto mb-8 w-40 h-40 sm:w-52 sm:h-52" />
               <div className="mb-8">
                 <p className="text-[#0f9d6c] font-black text-[18px] sm:text-[22px] md:text-[24px] leading-snug tracking-wide break-keep">
                   "언제나 한자리에 서서 이웃을 품다"
