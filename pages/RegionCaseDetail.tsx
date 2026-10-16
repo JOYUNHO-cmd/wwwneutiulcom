@@ -7,7 +7,8 @@ import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { getRegionCase, getRegionCases } from '../lib/regionCaseData.mjs';
 import RegionCaseSection from '../components/RegionCaseSection';
 import SentenceText from '../components/SentenceText';
-import { HelpCircle, ListOrdered } from 'lucide-react';
+import BackToTocButton, { prefersReducedMotion } from '../components/BackToTocButton';
+import { HelpCircle, ListOrdered, ArrowDown } from 'lucide-react';
 
 // A single real field-case article, at /services/:serviceId/:regionId/:caseId —
 // its own indexable page, separate from the region+service landing page
@@ -37,13 +38,18 @@ const RegionCaseDetail: React.FC = () => {
     { id: 'case-record', label: '현장 기록' },
     { id: 'case-faq', label: '자주 묻는 질문' },
   ];
+  // Headings carry tabIndex={-1} so focus can follow the jump: keyboard
+  // users continue reading (and tabbing) from the section they picked.
   const jumpTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
     e.preventDefault();
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+    el.focus({ preventScroll: true });
     window.history.replaceState(null, '', `#${id}`);
   };
+  // Clears the sticky navbar (≈97px) when a heading is scrolled into view.
+  const anchorClass = 'scroll-mt-28 focus:outline-none';
 
   return (
     <div className="w-full flex-grow">
@@ -76,22 +82,25 @@ const RegionCaseDetail: React.FC = () => {
       </section>
 
       {/* Table of contents */}
-      <nav aria-label="목차" className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
-        <div className="max-w-2xl bg-gray-50 border border-gray-100 rounded-2xl p-4 sm:p-5">
-          <p className="flex items-center gap-2 text-sm font-bold text-slate-800 mb-2">
-            <ListOrdered className="text-primary" size={18} />
+      <nav id="case-toc" aria-labelledby="case-toc-title" className="max-w-5xl mx-auto px-4 sm:px-6 py-4 scroll-mt-28">
+        <div className="max-w-2xl bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
+          <p id="case-toc-title" className="flex items-center gap-2 text-base font-bold text-slate-800 mb-3">
+            <ListOrdered className="text-primary" size={18} aria-hidden="true" />
             목차
           </p>
-          <ol className="space-y-1.5 text-[15px] sm:text-base">
+          <ol className="grid gap-2 sm:grid-cols-2">
             {toc.map((t, i) => (
               <li key={t.id}>
                 <a
                   href={`#${t.id}`}
                   onClick={(e) => jumpTo(e, t.id)}
-                  className="flex gap-2 text-gray-700 hover:text-primary break-keep"
+                  className="group flex items-center gap-3 min-h-[3rem] h-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-[15px] sm:text-base text-slate-800 shadow-sm transition-colors hover:border-primary/50 hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
-                  <span className="text-primary font-bold tabular-nums shrink-0">{i + 1}.</span>
-                  <span>{t.label}</span>
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-bold tabular-nums shrink-0">
+                    {i + 1}
+                  </span>
+                  <span className="flex-1 break-keep leading-snug">{t.label}</span>
+                  <ArrowDown size={16} aria-hidden="true" className="text-primary shrink-0" />
                 </a>
               </li>
             ))}
@@ -106,31 +115,40 @@ const RegionCaseDetail: React.FC = () => {
             <div key={i}>
               <h2
                 id={`case-section-${i + 1}`}
-                className="scroll-mt-24 text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep"
+                tabIndex={-1}
+                className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep`}
               >
                 {s.heading}
               </h2>
               <SentenceText text={s.body} className="text-gray-700 text-[17px] sm:text-lg leading-[1.8]" />
+              <BackToTocButton tocId="case-toc" fromId={`case-section-${i + 1}`} />
             </div>
           ))}
         </div>
       </section>
 
-      <RegionCaseSection regionCase={regionCase} className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-6" />
+      <RegionCaseSection
+        regionCase={regionCase}
+        className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-6"
+        headingId="case-record"
+        headingClassName={anchorClass}
+        footer={<BackToTocButton tocId="case-toc" fromId="case-record" />}
+      />
 
       {/* This case's FAQ */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-10">
-        <h2 id="case-faq" className="scroll-mt-24 text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
+        <h2 id="case-faq" tabIndex={-1} className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-5`}>자주 묻는 질문</h2>
         <div className="space-y-4 max-w-2xl">
           {regionCase.faq.map((faq, i) => (
             <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
               <h3 className="font-bold text-slate-800 text-[17px] sm:text-lg mb-2 flex items-start gap-2">
-                <HelpCircle className="text-primary shrink-0 mt-1" size={18} />
+                <HelpCircle className="text-primary shrink-0 mt-1" size={18} aria-hidden="true" />
                 <span className="break-keep">{faq.q}</span>
               </h3>
               <SentenceText text={faq.a} className="text-gray-700 text-base sm:text-[17px] leading-[1.75] pl-6" />
             </div>
           ))}
+          <BackToTocButton tocId="case-toc" fromId="case-faq" />
         </div>
       </section>
 
@@ -176,7 +194,7 @@ const RegionCaseDetail: React.FC = () => {
       {/* CTA */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
         <div className="bg-gray-900 rounded-2xl p-6 sm:p-10 text-center">
-          <h2 className="text-white text-sm sm:text-2xl font-bold mb-3 whitespace-nowrap">
+          <h2 className="text-white text-base sm:text-2xl font-bold mb-3 break-keep">
             {region.name} {service?.title} 무료 상담 접수
           </h2>
           <p className="text-gray-300 mb-6 break-keep">

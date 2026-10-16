@@ -10,7 +10,7 @@ interface SentenceTextProps {
 // wrap right before a "·", starting a line with the dot. Each "word·" is kept
 // together and followed by a <wbr>, so lines break after the dot instead.
 // The text itself is unchanged.
-function withDotBreaks(sentence: string): React.ReactNode {
+export function withDotBreaks(sentence: string): React.ReactNode {
   const parts = sentence.split('·');
   return parts.map((part, i) => {
     if (i === parts.length - 1) return <React.Fragment key={i}>{part}</React.Fragment>;
