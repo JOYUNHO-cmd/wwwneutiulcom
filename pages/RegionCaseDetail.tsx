@@ -5,8 +5,10 @@ import { useSite } from '../context/SiteContext';
 import { getRegion } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { getRegionCase, getRegionCases } from '../lib/regionCaseData.mjs';
-import RegionCaseSection from '../components/RegionCaseSection';
-import { HelpCircle } from 'lucide-react';
+import RegionCaseSection, { CaseStepGroup } from '../components/RegionCaseSection';
+import SentenceText from '../components/SentenceText';
+import BackToTocButton, { prefersReducedMotion } from '../components/BackToTocButton';
+import { HelpCircle, ListOrdered, ArrowDown } from 'lucide-react';
 
 // A single real field-case article, at /services/:serviceId/:regionId/:caseId —
 // its own indexable page, separate from the region+service landing page
@@ -29,10 +31,44 @@ const RegionCaseDetail: React.FC = () => {
 
   const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');
 
+  // A section may list the photo steps it talks about (stepIndexes); those
+  // photos render right under that section's text so the reader sees each
+  // scene next to its description. Unlisted steps stay in 현장 기록.
+  const sectionSteps = (s: { stepIndexes?: number[] }) =>
+    (s.stepIndexes ?? []).filter((si) => regionCase.steps[si]);
+  const placedSteps = new Set<number>(regionCase.sections.flatMap(sectionSteps));
+
+  // Optional pre-work checklist ("작업 전 준비사항"), shown above the FAQ.
+  const prep: Array<{ heading: string; body: string }> = regionCase.prep ?? [];
+
+  // In-page table of contents — three parts, each pointing at a heading
+  // that is already on the page: the field record together with the work
+  // steps and photos, the pre-work checklist (when the case has one), FAQ.
+  const toc = [
+    { id: 'case-record', label: '현장 기록 · 작업 내용과 사진' },
+    ...(prep.length > 0 ? [{ id: 'case-prep', label: '작업 전 준비사항' }] : []),
+    { id: 'case-faq', label: '자주 묻는 질문' },
+  ];
+  // Headings carry tabIndex={-1} so focus can follow the jump: keyboard
+  // users continue reading (and tabbing) from the section they picked.
+  const jumpTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+    el.focus({ preventScroll: true });
+    window.history.replaceState(null, '', `#${id}`);
+  };
+  // Clears the sticky navbar (≈97px) when a heading is scrolled into view.
+  const anchorClass = 'scroll-mt-28 focus:outline-none';
+
   return (
     <div className="w-full flex-grow">
+      {/* From lg up every block below shares one centered max-w-3xl column,
+          so the article reads down the middle of a wide screen instead of
+          hugging the left edge of the wider layout. */}
       {/* Breadcrumb */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 text-sm text-gray-500 flex items-center gap-2 flex-wrap">
+      <div className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-6 text-sm text-gray-500 flex items-center gap-2 flex-wrap">
         <Link to="/services" className="hover:text-primary">서비스</Link>
         <span>/</span>
         <Link to={`/services/${serviceId}`} className="hover:text-primary">{service?.title || serviceId}</Link>
@@ -43,11 +79,14 @@ const RegionCaseDetail: React.FC = () => {
       </div>
 
       {/* Hero */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-4">
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-4 leading-tight">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-6 pb-4">
+        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-5 leading-snug break-keep max-w-2xl lg:max-w-none">
           {regionCase.heading}
         </h1>
-        <p className="text-gray-600 text-lg leading-relaxed break-keep">{regionCase.intro}</p>
+        <SentenceText
+          text={regionCase.intro}
+          className="text-gray-700 text-[17px] sm:text-lg leading-[1.8] max-w-2xl lg:max-w-none"
+        />
         <a
           href={`tel:${cleanPhone}`}
           className="inline-flex items-center gap-2 mt-6 bg-primary text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-bold text-sm sm:text-base whitespace-nowrap shadow-lg shadow-primary/30 hover:bg-primaryDark transition-colors"
@@ -56,37 +95,112 @@ const RegionCaseDetail: React.FC = () => {
         </a>
       </section>
 
-      {/* What was actually done, in prose — grounded in regionCase.facts */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-        {regionCase.sections.map((s, i) => (
-          <div key={i}>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">{s.heading}</h2>
-            <p className="text-gray-600 leading-relaxed break-keep">{s.body}</p>
-          </div>
-        ))}
-      </section>
+      {/* Table of contents */}
+      <nav id="case-toc" aria-labelledby="case-toc-title" className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 py-4 scroll-mt-28">
+        <div className="max-w-2xl lg:max-w-none bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
+          <p id="case-toc-title" className="flex items-center gap-2 text-base font-bold text-slate-800 mb-3">
+            <ListOrdered className="text-primary" size={18} aria-hidden="true" />
+            목차
+          </p>
+          <ol className="grid gap-2 sm:grid-cols-2">
+            {toc.map((t, i) => (
+              <li key={t.id}>
+                <a
+                  href={`#${t.id}`}
+                  onClick={(e) => jumpTo(e, t.id)}
+                  className="group flex items-center gap-3 min-h-[3rem] h-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-[15px] sm:text-base text-slate-800 shadow-sm transition-colors hover:border-primary/50 hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-bold tabular-nums shrink-0">
+                    {i + 1}
+                  </span>
+                  <span className="flex-1 break-keep leading-snug">{t.label}</span>
+                  <ArrowDown size={16} aria-hidden="true" className="text-primary shrink-0" />
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </nav>
 
-      <RegionCaseSection regionCase={regionCase} className="max-w-5xl mx-auto px-4 sm:px-6 py-6" />
+      {/* Part 1 — field record (facts), then each section's text with its
+          photos directly underneath. */}
+      <RegionCaseSection
+        regionCase={regionCase}
+        className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-8 pb-2"
+        part="facts"
+        headingId="case-record"
+        headingClassName={anchorClass}
+      />
 
-      {/* This case's FAQ */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
-        <div className="space-y-4">
-          {regionCase.faq.map((faq, i) => (
-            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
-              <h3 className="font-bold text-slate-800 mb-2 flex items-start gap-2">
-                <HelpCircle className="text-primary shrink-0 mt-0.5" size={18} />
-                <span className="break-keep">{faq.q}</span>
-              </h3>
-              <p className="text-gray-600 text-base pl-6 break-keep">{faq.a}</p>
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-2xl lg:max-w-none space-y-12">
+          {regionCase.sections.map((s, i) => (
+            <div key={i}>
+              <h2
+                id={`case-section-${i + 1}`}
+                className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep"
+              >
+                {s.heading}
+              </h2>
+              <SentenceText text={s.body} className="text-gray-700 text-[17px] sm:text-lg leading-[1.8]" />
+              {sectionSteps(s).length > 0 && (
+                <div className="mt-6 space-y-6">
+                  {sectionSteps(s).map((si) => (
+                    <CaseStepGroup key={si} step={regionCase.steps[si]} si={si} className="pt-1" />
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
       </section>
 
+      <RegionCaseSection
+        regionCase={regionCase}
+        className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-4"
+        placedSteps={placedSteps}
+        part="rest"
+        footer={<BackToTocButton tocId="case-toc" fromId="case-record" />}
+      />
+
+      {/* Part 2 — what to prepare before the work */}
+      {prep.length > 0 && (
+        <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-4">
+          <h2 id="case-prep" tabIndex={-1} className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-6`}>
+            작업 전 준비사항
+          </h2>
+          <ol className="max-w-2xl lg:max-w-none space-y-7">
+            {prep.map((item, i) => (
+              <li key={i} className="border-l-4 border-primary/40 pl-4">
+                <h3 className="font-bold text-slate-900 text-[17px] sm:text-lg mb-1.5 break-keep">{item.heading}</h3>
+                <SentenceText text={item.body} className="text-gray-700 text-base sm:text-[17px] leading-[1.8]" />
+              </li>
+            ))}
+          </ol>
+          <BackToTocButton tocId="case-toc" fromId="case-prep" />
+        </section>
+      )}
+
+      {/* Part 3 — this case's FAQ */}
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-10">
+        <h2 id="case-faq" tabIndex={-1} className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-5`}>자주 묻는 질문</h2>
+        <div className="space-y-4 max-w-2xl lg:max-w-none">
+          {regionCase.faq.map((faq, i) => (
+            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
+              <h3 className="font-bold text-slate-800 text-[17px] sm:text-lg mb-2 flex items-start gap-2">
+                <HelpCircle className="text-primary shrink-0 mt-1" size={18} aria-hidden="true" />
+                <span className="break-keep">{faq.q}</span>
+              </h3>
+              <SentenceText text={faq.a} className="text-gray-700 text-base sm:text-[17px] leading-[1.75] pl-6" />
+            </div>
+          ))}
+          <BackToTocButton tocId="case-toc" fromId="case-faq" />
+        </div>
+      </section>
+
       {/* Other cases in the same region+service */}
       {otherCases.length > 0 && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10">
+        <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-10">
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">{region.name}의 다른 현장 사례</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {otherCases.map((c) => (
@@ -114,7 +228,7 @@ const RegionCaseDetail: React.FC = () => {
       )}
 
       {/* Back to the region+service landing page */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-16">
         <Link
           to={`/services/${serviceId}/${regionId}`}
           className="text-primary font-bold hover:underline"
@@ -124,9 +238,9 @@ const RegionCaseDetail: React.FC = () => {
       </section>
 
       {/* CTA */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-16">
         <div className="bg-gray-900 rounded-2xl p-6 sm:p-10 text-center">
-          <h2 className="text-white text-sm sm:text-2xl font-bold mb-3 whitespace-nowrap">
+          <h2 className="text-white text-base sm:text-2xl font-bold mb-3 break-keep">
             {region.name} {service?.title} 무료 상담 접수
           </h2>
           <p className="text-gray-300 mb-6 break-keep">

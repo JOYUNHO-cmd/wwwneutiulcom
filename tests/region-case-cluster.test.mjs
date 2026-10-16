@@ -25,6 +25,7 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'floor-wax-coating-121': '/services/floor-wax/seocho/서초사무실시트지제거바닥왁스코팅',
   'yongin-floor-wax-coating-137': '/services/floor-wax/yongin/용인사무실바닥왁스코팅',
   'uiwang-floor-wood-coating-071': '/services/floor-wax/uiwang/의왕스포츠센터마루코팅',
+  'floor-wax-coating-116': '/services/floor-wax/bupyeong/부평사무실바닥왁스코팅',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -51,7 +52,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 46);
+  assert.equal(cases.length, 47);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -81,6 +82,7 @@ test('verified service regions are derived from actual case records', () => {
       { regionId: 'gwacheon', caseCount: 1, href: '/services/floor-wax/gwacheon' },
       { regionId: 'paju', caseCount: 1, href: '/services/floor-wax/paju' },
       { regionId: 'yeongjong', caseCount: 1, href: '/services/floor-wax/yeongjong' },
+      { regionId: 'bupyeong', caseCount: 1, href: '/services/floor-wax/bupyeong' },
       { regionId: 'seocho', caseCount: 1, href: '/services/floor-wax/seocho' },
       { regionId: 'songpa', caseCount: 1, href: '/services/floor-wax/songpa' },
     ],
@@ -283,4 +285,19 @@ test('the Uijeongbu hoarder-house case moved to trash-house and its old special 
     entry.source === `/services/special/uijeongbu/${encodeURIComponent('의정부쓰레기집청소')}`
     && entry.destination === '/services/trash-house/uijeongbu/의정부쓰레기집청소'
     && entry.permanent === true));
+});
+
+test('Bupyeong floor-wax case leads with its keyword and shows every photo under its section', () => {
+  const regionCase = getRegionCase('floor-wax', 'bupyeong', '부평사무실바닥왁스코팅');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('부평 바닥왁스코팅'));
+  assert.ok(regionCase.description.startsWith('부평 바닥왁스코팅 전문업체'));
+  assert.match(regionCase.heading, /부평 바닥왁스코팅/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.doesNotMatch(
+    JSON.stringify(regionCase.prep),
+    /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽/,
+  );
 });
