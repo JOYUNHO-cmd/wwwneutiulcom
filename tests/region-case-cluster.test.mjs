@@ -343,3 +343,17 @@ test('Anyang office floor-wax case leads with its keyword and shows every photo 
   assert.ok(regionCase.prep.length >= 3);
   assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개|BIZ/);
 });
+
+test('Gunpo office case leads with its keyword and shows every photo under its section', () => {
+  const regionCase = getRegionCase('office', 'gunpo', '군포사무실청소당동');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('군포 사무실청소'));
+  assert.ok(regionCase.description.startsWith('군포 사무실청소 전문업체'));
+  assert.match(regionCase.heading, /군포 사무실청소/);
+  assert.match(regionCase.intro, /전 지역 출장/);
+  assert.match(regionCase.intro, /무료 방문 견적/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개/);
+});
