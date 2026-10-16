@@ -239,6 +239,13 @@
   },
   {
     "serviceId": "floor-wax",
+    "regionId": "anyang",
+    "heading": "안양 바닥왁스코팅 현장 후기 | 고층 빈 사무실 바닥 청소부터 왁스 마무리까지",
+    "thumbnail": "/images/regional/anyang-office-floorwax-09.webp",
+    "url": "/services/floor-wax/anyang/안양사무실바닥왁스코팅"
+  },
+  {
+    "serviceId": "floor-wax",
     "regionId": "uiwang",
     "heading": "의왕 스포츠센터 마루 재코팅 현장 기록",
     "thumbnail": "/images/regional/uiwang-floorwax-08.webp",

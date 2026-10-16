@@ -27,6 +27,7 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'uiwang-floor-wood-coating-071': '/services/floor-wax/uiwang/의왕스포츠센터마루코팅',
   'floor-wax-coating-116': '/services/floor-wax/bupyeong/부평사무실바닥왁스코팅',
   'interior-286': '/services/new-construction/incheon-jung/인천중구매장준공청소',
+  'anyang-floor-wax-coating-132': '/services/floor-wax/anyang/안양사무실바닥왁스코팅',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -53,7 +54,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 49);
+  assert.equal(cases.length, 50);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -75,9 +76,9 @@ test('verified service regions are derived from actual case records', () => {
     getVerifiedRegionsForService('floor-wax'),
     [
       { regionId: 'gangnam', caseCount: 2, href: '/services/floor-wax/gangnam' },
+      { regionId: 'anyang', caseCount: 2, href: '/services/floor-wax/anyang' },
       { regionId: 'yongin', caseCount: 2, href: '/services/floor-wax/yongin' },
       { regionId: 'gunpo', caseCount: 1, href: '/services/floor-wax/gunpo' },
-      { regionId: 'anyang', caseCount: 1, href: '/services/floor-wax/anyang' },
       { regionId: 'uiwang', caseCount: 1, href: '/services/floor-wax/uiwang' },
       { regionId: 'ansan', caseCount: 1, href: '/services/floor-wax/ansan' },
       { regionId: 'gwacheon', caseCount: 1, href: '/services/floor-wax/gwacheon' },
@@ -327,4 +328,18 @@ test('Gangnam school floor-wax case leads with its keyword and shows every photo
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
   assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개|서초/);
+});
+
+test('Anyang office floor-wax case leads with its keyword and shows every photo under its section', () => {
+  const regionCase = getRegionCase('floor-wax', 'anyang', '안양사무실바닥왁스코팅');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('안양 바닥왁스코팅'));
+  assert.ok(regionCase.description.startsWith('안양 바닥왁스코팅 전문업체'));
+  assert.match(regionCase.heading, /안양 바닥왁스코팅/);
+  assert.match(regionCase.intro, /전 지역 출장/);
+  assert.match(regionCase.intro, /무료 방문 견적/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개|BIZ/);
 });
