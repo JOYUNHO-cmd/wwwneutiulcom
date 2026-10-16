@@ -702,7 +702,7 @@ const ServiceLanding: React.FC = () => {
             <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300">
               <ShieldCheck className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">대표 직접 성실 관리</h4>
+            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">대표 직접 성실 관리</h4>
             <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm leading-relaxed font-semibold text-center space-y-4">
               <p>
                 하청이나 외주팀에 일을<br />
@@ -730,7 +730,7 @@ const ServiceLanding: React.FC = () => {
             <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300">
               <Star className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">추가없는 투명한 견적 약속</h4>
+            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">추가없는 투명한 견적 약속</h4>
             <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm leading-relaxed font-semibold text-center space-y-4">
               <p>
                 애매한 견적서, 숨겨진 추가비용<br />
@@ -758,7 +758,7 @@ const ServiceLanding: React.FC = () => {
             <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300">
               <Sparkles className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl md:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">100% 고객 만족 정직 시공</h4>
+            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">100% 고객 만족 정직 시공</h4>
             <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm leading-relaxed font-semibold text-center space-y-4">
               <p>
                 고객님이 현장을 함께 확인하시고<br />

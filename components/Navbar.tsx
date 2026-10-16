@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
             <Link 
               to="/" 
               onClick={handleLogoClick}
-              className="flex items-center gap-4 cursor-pointer group"
+              className="flex items-center gap-2.5 min-[400px]:gap-4 cursor-pointer group"
               title="느티울 홈으로 이동 및 최상단 스크롤"
             >
                {config.companyInfo.logo && (
@@ -62,25 +62,23 @@ const Navbar: React.FC = () => {
                    alt={`${config.companyInfo.name} Logo`}
                    width={90}
                    height={90}
-                   className="h-20 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-105 group-hover:rotate-2"
+                   className="h-16 w-auto min-[400px]:h-20 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-105 group-hover:rotate-2"
                  />
                )}
                <div className="flex flex-col items-start justify-center leading-none py-1">
                  <span 
-                   className="text-slate-900 font-bold tracking-wide whitespace-nowrap group-hover:text-primary transition-colors duration-200"
+                   className="text-slate-900 font-bold tracking-wide whitespace-nowrap group-hover:text-primary transition-colors duration-200 text-[34px] min-[400px]:text-[42px]"
                    style={{
                      fontFamily: "'Gowun Batang', serif",
-                     fontSize: '42px',
                      lineHeight: '1.05'
                    }}
                  >
                    느티울
                  </span>
                  <span 
-                   className="text-[#0b7a54] font-extrabold tracking-[0.2em] whitespace-nowrap uppercase"
+                   className="text-[#0b7a54] font-extrabold tracking-[0.2em] whitespace-nowrap uppercase text-[12px] min-[400px]:text-[14px]"
                    style={{
                      fontFamily: "'Cinzel', serif",
-                     fontSize: '14px',
                      lineHeight: '1',
                      marginTop: '4px'
                    }}
@@ -92,13 +90,13 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex space-x-4 items-center">
+          <div className="hidden lg:flex space-x-1 xl:space-x-4 items-center">
             {navLinks.map((link, idx) => {
               const isCurrent = isActive(link.path);
               const isHovered = hoveredIdx === idx;
+              // Size comes from the lg/xl classes below (19px → 25px) so the
+              // whole row fits on one line from 1024px up.
               const customStyle: React.CSSProperties = {
-                fontSize: '25px',
-                lineHeight: '32px',
                 color: isCurrent || isHovered ? '#0b7a54' : '#000000',
               };
               if (idx === 2) {
@@ -116,7 +114,7 @@ const Navbar: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setServicesOpen((v) => !v)}
-                      className={`relative px-3 py-2 text-lg font-bold transition-all duration-200 inline-flex items-center gap-1 ${
+                      className={`relative px-2.5 xl:px-3 py-2 text-[19px] leading-7 xl:text-[25px] xl:leading-8 whitespace-nowrap font-bold transition-all duration-200 inline-flex items-center gap-1 ${
                         isCurrent
                           ? 'text-primaryDark'
                           : 'text-gray-600 hover:text-primary'
@@ -170,7 +168,7 @@ const Navbar: React.FC = () => {
                   to={link.path}
                   onMouseEnter={() => setHoveredIdx(idx)}
                   onMouseLeave={() => setHoveredIdx(null)}
-                  className={`relative px-3 py-2 text-lg font-bold transition-all duration-200 ${
+                  className={`relative px-2.5 xl:px-3 py-2 text-[19px] leading-7 xl:text-[25px] xl:leading-8 whitespace-nowrap font-bold transition-all duration-200 ${
                     isCurrent
                       ? 'text-primaryDark'
                       : 'text-gray-600 hover:text-primary'
@@ -193,7 +191,7 @@ const Navbar: React.FC = () => {
               whileTap={{ scale: 0.96 }}
               href={`tel:${cleanPhone}`}
               onClick={() => trackEvent('contact_click', { method: 'phone', location: 'navbar' })}
-              className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full hover:bg-primaryDark transition-all shadow-lg shadow-primary/30 text-lg font-bold group cursor-pointer"
+              className="flex items-center gap-2 bg-primary text-white px-4 xl:px-6 py-3 rounded-full hover:bg-primaryDark transition-all shadow-lg shadow-primary/30 text-base xl:text-lg font-bold whitespace-nowrap group cursor-pointer"
             >
               <Phone size={20} className="group-hover:rotate-12 transition-transform duration-300" />
               {config.companyInfo.phone}
@@ -208,7 +206,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-1 min-[400px]:gap-2">
              <Link to="/admin" aria-label="관리자 페이지" className={`p-2 rounded-full hover:bg-gray-100 transition ${isEditable ? 'text-red-500' : 'text-gray-400'}`}>
                 <UserCog size={24} />
             </Link>
@@ -236,7 +234,7 @@ const Navbar: React.FC = () => {
           via max-height:0 + inert rather than AnimatePresence unmounting
           it, so there's no exit-animation bookkeeping either. */}
       <div
-        className="md:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl overflow-hidden left-0 right-0 z-50 transition-[max-height] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+        className="lg:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl overflow-hidden left-0 right-0 z-50 transition-[max-height] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
         style={{ backgroundColor: '#ffffff', maxHeight: isOpen ? '1000px' : '0px' }}
         inert={!isOpen}
       >
