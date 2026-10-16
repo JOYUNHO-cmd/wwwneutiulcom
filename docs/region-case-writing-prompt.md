@@ -14,7 +14,7 @@ www.neutiul.com(저장소 JOYUNHO-cmd/wwwneutiulcom)에 {서비스명} 현장 �
 메인 키워드: {지역} {서비스명}  (예: 부평 바닥왁스코팅)
 
 먼저 docs/region-case-writing-prompt.md 를 읽고, 거기 적힌 규칙을 전부 지켜 줘.
-작업이 끝나면 main에서 새 브랜치로 PR을 열고, 머지는 하지 마(Hermes가 검수 후 머지).
+작업이 끝나면 main에서 새 브랜치로 PR을 열고 미리보기를 보여 줘. 내가 배포하라고 하면 네가 직접 main에 머지해서 배포해 줘(Hermes 검수 단계 없음).
 ```
 
 ---
@@ -120,5 +120,5 @@ www.neutiul.com(저장소 JOYUNHO-cmd/wwwneutiulcom)에 {서비스명} 현장 �
 4. 임시 스크립트(`scripts/_tmp_*`)는 지우고 커밋합니다.
 5. main에서 새 브랜치를 만들어 PR을 엽니다.
    - PR 본문에 사진 출처, 크롭·제외한 사진, 검증 결과를 적습니다.
-   - **머지는 하지 않습니다**(Hermes 검수).
+   - 대표님이 배포하라고 하면 직접 main에 머지해 배포합니다(Hermes 검수 단계 없음). PR을 여러 개 쌓았다면 아래 PR부터 차례로 머지합니다.
 6. 모바일(390px)·PC(1280px) 화면을 캡처해서 보여줍니다.
