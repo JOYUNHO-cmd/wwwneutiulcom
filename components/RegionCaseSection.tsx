@@ -25,7 +25,7 @@ interface RegionCase {
     staff: string;
   };
   steps: CaseStep[];
-  note: string;
+  note?: string;
 }
 
 interface RegionCaseSectionProps {
@@ -34,6 +34,9 @@ interface RegionCaseSectionProps {
   headingId?: string;
   headingClassName?: string;
   footer?: React.ReactNode;
+  // Steps already shown under their section text (RegionCaseDetail renders
+  // them via CaseStepGroup); only the remaining steps are listed here.
+  placedSteps?: ReadonlySet<number>;
 }
 
 // Captions start with a phase label ("작업 전 · …"). The label is shown as a
@@ -59,6 +62,46 @@ const CaseCaption: React.FC<{ caption: string }> = ({ caption }) => {
   );
 };
 
+// One step's title and photos, kept together as a group. Used both inside
+// this section and directly under the matching section text on the page.
+export const CaseStepGroup: React.FC<{ step: CaseStep; si: number; className?: string }> = ({ step, si, className }) => (
+  <div role="group" aria-labelledby={`case-step-${si + 1}`} className={className ?? 'border-t border-gray-200 pt-5'}>
+    <h3 id={`case-step-${si + 1}`} className="font-bold text-slate-800 text-[17px] sm:text-lg mb-3 break-keep">{step.title}</h3>
+    <div className="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 gap-3">
+      {step.media.map((m, mi) => (
+        <figure key={mi} className="rounded-xl overflow-hidden bg-white border border-gray-200">
+          {m.type === 'video' ? (
+            <video
+              src={m.src}
+              poster={m.poster}
+              width={m.width}
+              height={m.height}
+              aria-label={m.alt}
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              className="w-full aspect-[3/4] object-cover bg-slate-900"
+            />
+          ) : (
+            <img
+              src={m.src}
+              width={m.width}
+              height={m.height}
+              alt={m.alt}
+              loading="lazy"
+              className="w-full aspect-[3/4] object-cover"
+            />
+          )}
+          <figcaption className="text-[13px] sm:text-sm leading-snug text-gray-700 px-2.5 py-2 break-keep">
+            <CaseCaption caption={m.caption} />
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+);
+
 const FactLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <>
     <strong className="block text-slate-900 mb-0.5">{children}</strong>
@@ -71,7 +114,8 @@ const FactLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 // confirmed facts (see lib/regionCaseData.mjs). The article's own heading
 // and intro live in pages/RegionCaseDetail.tsx; this only renders what
 // comes after them.
-const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, className, headingId, headingClassName, footer }) => {
+const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, className, headingId, headingClassName, footer, placedSteps }) => {
+  const remainingSteps = regionCase.steps.map((step, si) => ({ step, si })).filter(({ si }) => !placedSteps?.has(si));
   return (
     <section className={className}>
       <h2
@@ -101,50 +145,20 @@ const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, class
         </div>
       </div>
 
-      <div className="space-y-8">
-        {regionCase.steps.map((step, si) => (
-          <div key={si} role="group" aria-labelledby={`case-step-${si + 1}`} className="border-t border-gray-200 pt-5">
-            <h3 id={`case-step-${si + 1}`} className="font-bold text-slate-800 text-[17px] sm:text-lg mb-3 break-keep">{step.title}</h3>
-            <div className="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 gap-3">
-              {step.media.map((m, mi) => (
-                <figure key={mi} className="rounded-xl overflow-hidden bg-white border border-gray-200">
-                  {m.type === 'video' ? (
-                    <video
-                      src={m.src}
-                      poster={m.poster}
-                      width={m.width}
-                      height={m.height}
-                      aria-label={m.alt}
-                      controls
-                      muted
-                      playsInline
-                      preload="metadata"
-                      className="w-full aspect-[3/4] object-cover bg-slate-900"
-                    />
-                  ) : (
-                    <img
-                      src={m.src}
-                      width={m.width}
-                      height={m.height}
-                      alt={m.alt}
-                      loading="lazy"
-                      className="w-full aspect-[3/4] object-cover"
-                    />
-                  )}
-                  <figcaption className="text-[13px] sm:text-sm leading-snug text-gray-700 px-2.5 py-2 break-keep">
-                    <CaseCaption caption={m.caption} />
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+      {remainingSteps.length > 0 && (
+        <div className="space-y-8">
+          {remainingSteps.map(({ step, si }) => (
+            <CaseStepGroup key={si} step={step} si={si} />
+          ))}
+        </div>
+      )}
 
-      <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 border-l-4 border-l-amber-500 rounded-xl p-4 sm:p-5 mt-8 text-[15px] sm:text-base text-amber-950">
-        <Info className="text-amber-600 shrink-0 mt-1" size={18} aria-hidden="true" />
-        <SentenceText as="span" text={regionCase.note} className="block leading-[1.7]" />
-      </div>
+      {regionCase.note && (
+        <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 border-l-4 border-l-amber-500 rounded-xl p-4 sm:p-5 mt-8 text-[15px] sm:text-base text-amber-950">
+          <Info className="text-amber-600 shrink-0 mt-1" size={18} aria-hidden="true" />
+          <SentenceText as="span" text={regionCase.note} className="block leading-[1.7]" />
+        </div>
+      )}
       {footer}
     </section>
   );

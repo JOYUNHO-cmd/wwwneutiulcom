@@ -5,7 +5,7 @@ import { useSite } from '../context/SiteContext';
 import { getRegion } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { getRegionCase, getRegionCases } from '../lib/regionCaseData.mjs';
-import RegionCaseSection from '../components/RegionCaseSection';
+import RegionCaseSection, { CaseStepGroup } from '../components/RegionCaseSection';
 import SentenceText from '../components/SentenceText';
 import BackToTocButton, { prefersReducedMotion } from '../components/BackToTocButton';
 import { HelpCircle, ListOrdered, ArrowDown } from 'lucide-react';
@@ -30,6 +30,13 @@ const RegionCaseDetail: React.FC = () => {
   }
 
   const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');
+
+  // A section may list the photo steps it talks about (stepIndexes); those
+  // photos render right under that section's text so the reader sees each
+  // scene next to its description. Unlisted steps stay in 현장 기록.
+  const sectionSteps = (s: { stepIndexes?: number[] }) =>
+    (s.stepIndexes ?? []).filter((si) => regionCase.steps[si]);
+  const placedSteps = new Set<number>(regionCase.sections.flatMap(sectionSteps));
 
   // In-page table of contents — every entry points at a heading that is
   // already on the page, so nothing is hidden or reordered.
@@ -124,6 +131,13 @@ const RegionCaseDetail: React.FC = () => {
                 {s.heading}
               </h2>
               <SentenceText text={s.body} className="text-gray-700 text-[17px] sm:text-lg leading-[1.8]" />
+              {sectionSteps(s).length > 0 && (
+                <div className="mt-6 space-y-6">
+                  {sectionSteps(s).map((si) => (
+                    <CaseStepGroup key={si} step={regionCase.steps[si]} si={si} className="pt-1" />
+                  ))}
+                </div>
+              )}
               <BackToTocButton tocId="case-toc" fromId={`case-section-${i + 1}`} />
             </div>
           ))}
@@ -133,6 +147,7 @@ const RegionCaseDetail: React.FC = () => {
       <RegionCaseSection
         regionCase={regionCase}
         className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-6"
+        placedSteps={placedSteps}
         headingId="case-record"
         headingClassName={anchorClass}
         footer={<BackToTocButton tocId="case-toc" fromId="case-record" />}

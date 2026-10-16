@@ -286,3 +286,13 @@ test('the Uijeongbu hoarder-house case moved to trash-house and its old special 
     && entry.destination === '/services/trash-house/uijeongbu/의정부쓰레기집청소'
     && entry.permanent === true));
 });
+
+test('Bupyeong floor-wax case leads with its keyword and shows every photo under its section', () => {
+  const regionCase = getRegionCase('floor-wax', 'bupyeong', '부평사무실바닥왁스코팅');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('부평 바닥왁스코팅'));
+  assert.ok(regionCase.description.startsWith('부평 바닥왁스코팅 전문업체'));
+  assert.match(regionCase.heading, /부평 바닥왁스코팅/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+});
