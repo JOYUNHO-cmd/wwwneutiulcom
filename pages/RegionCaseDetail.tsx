@@ -53,8 +53,11 @@ const RegionCaseDetail: React.FC = () => {
 
   return (
     <div className="w-full flex-grow">
+      {/* From lg up every block below shares one centered max-w-3xl column,
+          so the article reads down the middle of a wide screen instead of
+          hugging the left edge of the wider layout. */}
       {/* Breadcrumb */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 text-sm text-gray-500 flex items-center gap-2 flex-wrap">
+      <div className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-6 text-sm text-gray-500 flex items-center gap-2 flex-wrap">
         <Link to="/services" className="hover:text-primary">서비스</Link>
         <span>/</span>
         <Link to={`/services/${serviceId}`} className="hover:text-primary">{service?.title || serviceId}</Link>
@@ -65,13 +68,13 @@ const RegionCaseDetail: React.FC = () => {
       </div>
 
       {/* Hero */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-4">
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-5 leading-snug break-keep max-w-2xl">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-6 pb-4">
+        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-5 leading-snug break-keep max-w-2xl lg:max-w-none">
           {regionCase.heading}
         </h1>
         <SentenceText
           text={regionCase.intro}
-          className="text-gray-700 text-[17px] sm:text-lg leading-[1.8] max-w-2xl"
+          className="text-gray-700 text-[17px] sm:text-lg leading-[1.8] max-w-2xl lg:max-w-none"
         />
         <a
           href={`tel:${cleanPhone}`}
@@ -82,8 +85,8 @@ const RegionCaseDetail: React.FC = () => {
       </section>
 
       {/* Table of contents */}
-      <nav id="case-toc" aria-labelledby="case-toc-title" className="max-w-5xl mx-auto px-4 sm:px-6 py-4 scroll-mt-28">
-        <div className="max-w-2xl bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
+      <nav id="case-toc" aria-labelledby="case-toc-title" className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 py-4 scroll-mt-28">
+        <div className="max-w-2xl lg:max-w-none bg-gray-50 border border-gray-200 rounded-2xl p-4 sm:p-5">
           <p id="case-toc-title" className="flex items-center gap-2 text-base font-bold text-slate-800 mb-3">
             <ListOrdered className="text-primary" size={18} aria-hidden="true" />
             목차
@@ -109,8 +112,8 @@ const RegionCaseDetail: React.FC = () => {
       </nav>
 
       {/* What was actually done, in prose — grounded in regionCase.facts */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
-        <div className="max-w-2xl space-y-10">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-2xl lg:max-w-none space-y-10">
           {regionCase.sections.map((s, i) => (
             <div key={i}>
               <h2
@@ -129,16 +132,16 @@ const RegionCaseDetail: React.FC = () => {
 
       <RegionCaseSection
         regionCase={regionCase}
-        className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-6"
+        className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-6"
         headingId="case-record"
         headingClassName={anchorClass}
         footer={<BackToTocButton tocId="case-toc" fromId="case-record" />}
       />
 
       {/* This case's FAQ */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-10">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-10">
         <h2 id="case-faq" tabIndex={-1} className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-5`}>자주 묻는 질문</h2>
-        <div className="space-y-4 max-w-2xl">
+        <div className="space-y-4 max-w-2xl lg:max-w-none">
           {regionCase.faq.map((faq, i) => (
             <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
               <h3 className="font-bold text-slate-800 text-[17px] sm:text-lg mb-2 flex items-start gap-2">
@@ -154,7 +157,7 @@ const RegionCaseDetail: React.FC = () => {
 
       {/* Other cases in the same region+service */}
       {otherCases.length > 0 && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10">
+        <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-10">
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">{region.name}의 다른 현장 사례</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {otherCases.map((c) => (
@@ -182,7 +185,7 @@ const RegionCaseDetail: React.FC = () => {
       )}
 
       {/* Back to the region+service landing page */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-16">
         <Link
           to={`/services/${serviceId}/${regionId}`}
           className="text-primary font-bold hover:underline"
@@ -192,7 +195,7 @@ const RegionCaseDetail: React.FC = () => {
       </section>
 
       {/* CTA */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
+      <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-16">
         <div className="bg-gray-900 rounded-2xl p-6 sm:p-10 text-center">
           <h2 className="text-white text-base sm:text-2xl font-bold mb-3 break-keep">
             {region.name} {service?.title} 무료 상담 접수
