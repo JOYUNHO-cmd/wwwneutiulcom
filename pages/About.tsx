@@ -72,7 +72,7 @@ const About: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="text-white leading-[1.3] drop-shadow-2xl break-keep px-4 flex flex-col items-center"
+            className="text-white leading-[1.3] drop-shadow-2xl break-keep px-0 sm:px-4 flex flex-col items-center"
           >
             <span className="block mb-2 md:mb-3 font-bold tracking-tight text-[15px] sm:text-lg md:text-4xl opacity-90">
               <span className="hidden md:inline">
@@ -216,7 +216,7 @@ const About: React.FC = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="lg:col-span-7 flex flex-col justify-center px-1 sm:px-4 py-6"
+              className="lg:col-span-7 min-w-0 flex flex-col justify-center px-1 sm:px-4 py-6"
             >
               {/* The logo drawing itself in the order of its name:
                   ground → 느티나무 → 집 → 원 → 울타리 → 느티울 — sized to the quote
@@ -431,8 +431,8 @@ const About: React.FC = () => {
           >
             <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6">전문 자격증 보유 현황</h2>
             <p className="text-slate-500 max-w-3xl mx-auto leading-relaxed break-keep font-medium">
-              <span className="block text-[12px] whitespace-nowrap sm:text-xl sm:whitespace-normal">느티울은 검증된 전문 자격을 갖춘 대표가 직접 시공합니다.</span>
-              <span className="block text-[12px] whitespace-nowrap sm:text-xl sm:whitespace-normal">전문성과 기술력을 바탕으로 신뢰할 수 있는 서비스를 제공합니다.</span>
+              <span className="block text-[12px] whitespace-normal min-[400px]:whitespace-nowrap sm:text-xl sm:whitespace-normal">느티울은 검증된 전문 자격을 갖춘 대표가 직접 시공합니다.</span>
+              <span className="block text-[12px] whitespace-normal min-[400px]:whitespace-nowrap sm:text-xl sm:whitespace-normal">전문성과 기술력을 바탕으로 신뢰할 수 있는 서비스를 제공합니다.</span>
             </p>
           </m.div>
 
