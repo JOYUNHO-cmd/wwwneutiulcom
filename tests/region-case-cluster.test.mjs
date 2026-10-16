@@ -54,7 +54,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 50);
+  assert.equal(cases.length, 51);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -89,7 +89,7 @@ test('verified service regions are derived from actual case records', () => {
       { regionId: 'songpa', caseCount: 1, href: '/services/floor-wax/songpa' },
     ],
   );
-  assert.equal(getVerifiedRegionsForService('office').length, 6);
+  assert.equal(getVerifiedRegionsForService('office').length, 7);
   assert.deepEqual(
     getVerifiedRegionsForService('flood'),
     [{ regionId: 'seocho', caseCount: 1, href: '/services/flood/seocho' }],
@@ -350,6 +350,20 @@ test('Gunpo office case leads with its keyword and shows every photo under its s
   assert.ok(regionCase.title.startsWith('군포 사무실청소'));
   assert.ok(regionCase.description.startsWith('군포 사무실청소 전문업체'));
   assert.match(regionCase.heading, /군포 사무실청소/);
+  assert.match(regionCase.intro, /전 지역 출장/);
+  assert.match(regionCase.intro, /무료 방문 견적/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개/);
+});
+
+test('Suwon office case leads with its keyword and shows every photo under its section', () => {
+  const regionCase = getRegionCase('office', 'suwon', '수원사무실청소');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('수원 사무실청소'));
+  assert.ok(regionCase.description.startsWith('수원 사무실청소 전문업체'));
+  assert.match(regionCase.heading, /수원 사무실청소/);
   assert.match(regionCase.intro, /전 지역 출장/);
   assert.match(regionCase.intro, /무료 방문 견적/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
