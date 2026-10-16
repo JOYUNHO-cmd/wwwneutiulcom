@@ -110,19 +110,21 @@ test('legacy Ansan floor case URLs redirect permanently without relying on Unico
   });
 });
 
-test('Uijeongbu hoarder-house preview uses verified phase labels and sanitized media', () => {
+test('Uijeongbu hoarder-house case follows the field-case format and keeps sanitized media', () => {
   const regionCase = getRegionCase('trash-house', 'uijeongbu', '의정부쓰레기집청소');
   assert.ok(regionCase);
-  assert.equal(regionCase.heading, '의정부 쓰레기집 청소, 물건을 들어낸 뒤 바닥 상태까지 확인한 현장');
-  assert.doesNotMatch(regionCase.intro, /무료 방문 견적|다시 생활할 수 있는 상태|비밀보장|즉시 출동/);
+  assert.ok(regionCase.title.startsWith('의정부 쓰레기집 청소'));
+  assert.ok(regionCase.description.startsWith('의정부 쓰레기집 청소 전문업체'));
+  assert.match(regionCase.heading, /의정부 쓰레기집 청소/);
+  assert.match(regionCase.intro, /전 지역 출장/);
+  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.doesNotMatch(regionCase.intro, /다시 생활할 수 있는 상태|비밀보장|즉시 출동/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
   assert.deepEqual(
     regionCase.steps.map((step) => step.title),
-    [
-      '작업 전 · 적치 상태 확인',
-      '부분 반출 후 · 바닥 상태 확인',
-      '작업 중 · 문과 문틀 상태 확인',
-      '부분 반출 후 · 남은 물품과 바닥 상태 확인',
-    ],
+    ['작업 전 물건이 쌓인 상태', '물건을 들어내며 드러난 바닥', '문과 문틀 닦기', '물건을 비운 뒤'],
   );
 
   const media = regionCase.steps.flatMap((step) => step.media);
@@ -134,7 +136,7 @@ test('Uijeongbu hoarder-house preview uses verified phase labels and sanitized m
   assert.ok(media.every((item) => !item.src.endsWith('uijeongbu-hoarder-house-02.webp')));
   assert.ok(media.every((item) => !item.src.endsWith('uijeongbu-hoarder-house-08.webp')));
   assert.ok(media.every((item) => !/작업 후|완료/.test(`${item.alt} ${item.caption}`)));
-  const doorWorkStep = regionCase.steps.find((step) => step.title.startsWith('작업 중'));
+  const doorWorkStep = regionCase.steps.find((step) => step.title === '문과 문틀 닦기');
   assert.deepEqual(
     doorWorkStep?.media.map((item) => item.src),
     ['/images/regional/uijeongbu-hoarder-house-04.webp', '/videos/uijeongbu-door-condition-v003-muted.mp4'],
