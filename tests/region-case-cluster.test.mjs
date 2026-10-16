@@ -26,6 +26,7 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'yongin-floor-wax-coating-137': '/services/floor-wax/yongin/용인사무실바닥왁스코팅',
   'uiwang-floor-wood-coating-071': '/services/floor-wax/uiwang/의왕스포츠센터마루코팅',
   'floor-wax-coating-116': '/services/floor-wax/bupyeong/부평사무실바닥왁스코팅',
+  'interior-286': '/services/new-construction/incheon-jung/인천중구매장준공청소',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -52,7 +53,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 47);
+  assert.equal(cases.length, 48);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -300,4 +301,16 @@ test('Bupyeong floor-wax case leads with its keyword and shows every photo under
     JSON.stringify(regionCase.prep),
     /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽/,
   );
+});
+
+test('Incheon Jung-gu new-construction case leads with its keyword and shows every photo under its section', () => {
+  const regionCase = getRegionCase('new-construction', 'incheon-jung', '인천중구매장준공청소');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('인천 중구 준공청소'));
+  assert.ok(regionCase.description.startsWith('인천 중구 준공청소 전문업체'));
+  assert.match(regionCase.heading, /인천 중구 준공청소/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|개점 가능한|비공개/);
 });

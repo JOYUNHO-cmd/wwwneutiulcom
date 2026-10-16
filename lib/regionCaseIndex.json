@@ -210,6 +210,13 @@
     "url": "/services/new-construction/suwon/수원사무실준공청소"
   },
   {
+    "serviceId": "new-construction",
+    "regionId": "incheon-jung",
+    "heading": "인천 중구 준공청소 현장 후기 | 신포동 매장 공사 먼지부터 유리창까지",
+    "thumbnail": "/images/regional/incheon-jung-newconstruction-12.webp",
+    "url": "/services/new-construction/incheon-jung/인천중구매장준공청소"
+  },
+  {
     "serviceId": "floor-wax",
     "regionId": "gangnam",
     "heading": "강남구 매장 바닥 왁스코팅 상담 현장",
