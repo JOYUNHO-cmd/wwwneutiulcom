@@ -48,7 +48,7 @@ interface RegionCaseSectionProps {
 const PHASE_STYLES: Array<[RegExp, string]> = [
   [/^작업 전/, 'bg-slate-100 text-slate-700 border-slate-300'],
   [/^작업 중/, 'bg-amber-50 text-amber-800 border-amber-300'],
-  [/^(작업 후|마무리)/, 'bg-primary/10 text-primaryDark border-primary/40'],
+  [/^(작업 후|작업 완료|마무리)/, 'bg-primary/10 text-primaryDark border-primary/40'],
 ];
 const CaseCaption: React.FC<{ caption: string }> = ({ caption }) => {
   const at = caption.indexOf(' · ');
