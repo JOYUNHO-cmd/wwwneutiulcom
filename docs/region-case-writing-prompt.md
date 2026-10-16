@@ -41,6 +41,19 @@ www.neutiul.com(저장소 JOYUNHO-cmd/wwwneutiulcom)에 {서비스명} 현장 �
    - 도구나 물기가 보이면 "작업 중"입니다.
    - 완료 사진이라고 대표님이 확인해 주면 "작업 완료"로 씁니다.
 
+## 1-1. 영상 쓰기 (의정부 쓰레기집 청소 글 방식)
+
+드라이브 폴더에 쓸 만한 영상(mp4)이 있으면 사진처럼 글에 넣습니다.
+- 받을 수 있는 크기(약 5MB 이하)만 받습니다.
+- 몇 장면을 캡처해서 얼굴·간판·차량 번호판·다른 업체 이름이 나오는지 확인합니다. 나오면 그 구간을 자르거나 쓰지 않습니다.
+- 소리는 지우고(`-an`), 가로 720px 정도로 줄여 H.264로 다시 저장합니다(`-crf 28 -movflags +faststart`). ffmpeg는 `pip install imageio-ffmpeg`로 받은 실행 파일을 씁니다.
+- 파일 이름은 `public/videos/{regionId}-{서비스}-NN.mp4`로 짓습니다.
+- `steps`의 해당 단계 `media`에 `{ type: 'video', src, poster, width, height, alt, caption }`로 넣습니다.
+  - `poster`는 같은 장면의 사진(webp)을 씁니다.
+  - alt에는 "…소리 없는 영상"이라고 적습니다.
+  - caption도 사진처럼 "작업 중 · …" 식으로 씁니다.
+- 영상도 사진 개수(8~12장)에 포함됩니다.
+
 ## 2. SEO · GEO 규칙
 
 | 항목 | 규칙 | 부평 예시 |
