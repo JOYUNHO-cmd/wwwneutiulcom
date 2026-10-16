@@ -6,7 +6,8 @@ import { getRegion } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { getRegionCase, getRegionCases } from '../lib/regionCaseData.mjs';
 import RegionCaseSection from '../components/RegionCaseSection';
-import { HelpCircle } from 'lucide-react';
+import SentenceText from '../components/SentenceText';
+import { HelpCircle, ListOrdered } from 'lucide-react';
 
 // A single real field-case article, at /services/:serviceId/:regionId/:caseId —
 // its own indexable page, separate from the region+service landing page
@@ -29,6 +30,21 @@ const RegionCaseDetail: React.FC = () => {
 
   const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');
 
+  // In-page table of contents — every entry points at a heading that is
+  // already on the page, so nothing is hidden or reordered.
+  const toc = [
+    ...regionCase.sections.map((s, i) => ({ id: `case-section-${i + 1}`, label: s.heading })),
+    { id: 'case-record', label: '현장 기록' },
+    { id: 'case-faq', label: '자주 묻는 질문' },
+  ];
+  const jumpTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.history.replaceState(null, '', `#${id}`);
+  };
+
   return (
     <div className="w-full flex-grow">
       {/* Breadcrumb */}
@@ -44,10 +60,13 @@ const RegionCaseDetail: React.FC = () => {
 
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-4">
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-4 leading-tight">
+        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-5 leading-snug break-keep max-w-2xl">
           {regionCase.heading}
         </h1>
-        <p className="text-gray-600 text-lg leading-relaxed break-keep">{regionCase.intro}</p>
+        <SentenceText
+          text={regionCase.intro}
+          className="text-gray-700 text-[17px] sm:text-lg leading-[1.8] max-w-2xl"
+        />
         <a
           href={`tel:${cleanPhone}`}
           className="inline-flex items-center gap-2 mt-6 bg-primary text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full font-bold text-sm sm:text-base whitespace-nowrap shadow-lg shadow-primary/30 hover:bg-primaryDark transition-colors"
@@ -56,29 +75,60 @@ const RegionCaseDetail: React.FC = () => {
         </a>
       </section>
 
+      {/* Table of contents */}
+      <nav aria-label="목차" className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-2xl bg-gray-50 border border-gray-100 rounded-2xl p-4 sm:p-5">
+          <p className="flex items-center gap-2 text-sm font-bold text-slate-800 mb-2">
+            <ListOrdered className="text-primary" size={18} />
+            목차
+          </p>
+          <ol className="space-y-1.5 text-[15px] sm:text-base">
+            {toc.map((t, i) => (
+              <li key={t.id}>
+                <a
+                  href={`#${t.id}`}
+                  onClick={(e) => jumpTo(e, t.id)}
+                  className="flex gap-2 text-gray-700 hover:text-primary break-keep"
+                >
+                  <span className="text-primary font-bold tabular-nums shrink-0">{i + 1}.</span>
+                  <span>{t.label}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </nav>
+
       {/* What was actually done, in prose — grounded in regionCase.facts */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-        {regionCase.sections.map((s, i) => (
-          <div key={i}>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">{s.heading}</h2>
-            <p className="text-gray-600 leading-relaxed break-keep">{s.body}</p>
-          </div>
-        ))}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
+        <div className="max-w-2xl space-y-10">
+          {regionCase.sections.map((s, i) => (
+            <div key={i}>
+              <h2
+                id={`case-section-${i + 1}`}
+                className="scroll-mt-24 text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep"
+              >
+                {s.heading}
+              </h2>
+              <SentenceText text={s.body} className="text-gray-700 text-[17px] sm:text-lg leading-[1.8]" />
+            </div>
+          ))}
+        </div>
       </section>
 
-      <RegionCaseSection regionCase={regionCase} className="max-w-5xl mx-auto px-4 sm:px-6 py-6" />
+      <RegionCaseSection regionCase={regionCase} className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-6" />
 
       {/* This case's FAQ */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
-        <div className="space-y-4">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 pb-10">
+        <h2 id="case-faq" className="scroll-mt-24 text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
+        <div className="space-y-4 max-w-2xl">
           {regionCase.faq.map((faq, i) => (
             <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
-              <h3 className="font-bold text-slate-800 mb-2 flex items-start gap-2">
-                <HelpCircle className="text-primary shrink-0 mt-0.5" size={18} />
+              <h3 className="font-bold text-slate-800 text-[17px] sm:text-lg mb-2 flex items-start gap-2">
+                <HelpCircle className="text-primary shrink-0 mt-1" size={18} />
                 <span className="break-keep">{faq.q}</span>
               </h3>
-              <p className="text-gray-600 text-base pl-6 break-keep">{faq.a}</p>
+              <SentenceText text={faq.a} className="text-gray-700 text-base sm:text-[17px] leading-[1.75] pl-6" />
             </div>
           ))}
         </div>

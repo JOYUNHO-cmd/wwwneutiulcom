@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, ClipboardList, Users2, Info } from 'lucide-react';
+import SentenceText from './SentenceText';
 
 interface CaseMedia {
   type?: 'image' | 'video';
@@ -40,22 +41,22 @@ interface RegionCaseSectionProps {
 const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, className }) => {
   return (
     <section className={className}>
-      <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">현장 기록</h2>
+      <h2 id="case-record" className="scroll-mt-24 text-xl sm:text-2xl font-bold text-slate-900 mb-5">현장 기록</h2>
 
       <div className="grid sm:grid-cols-2 gap-3 mb-8">
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-sm sm:text-base text-gray-700">
+        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
           <MapPin className="text-primary shrink-0 mt-0.5" size={18} />
           <span className="break-keep"><strong className="text-slate-800">위치</strong> · {regionCase.facts.location}</span>
         </div>
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-sm sm:text-base text-gray-700">
+        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
           <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} />
           <span className="break-keep"><strong className="text-slate-800">작업 전 상태</strong> · {regionCase.facts.before}</span>
         </div>
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-sm sm:text-base text-gray-700">
+        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
           <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} />
           <span className="break-keep"><strong className="text-slate-800">작업 순서</strong> · {regionCase.facts.process}</span>
         </div>
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-sm sm:text-base text-gray-700">
+        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
           <Users2 className="text-primary shrink-0 mt-0.5" size={18} />
           <span className="break-keep"><strong className="text-slate-800">인원·시간</strong> · {regionCase.facts.staff}</span>
         </div>
@@ -103,7 +104,7 @@ const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, class
 
       <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-100 rounded-xl p-4 mt-8 text-sm sm:text-base text-amber-900">
         <Info className="text-amber-600 shrink-0 mt-0.5" size={18} />
-        <span className="break-keep">{regionCase.note}</span>
+        <SentenceText as="span" text={regionCase.note} className="block leading-[1.7]" />
       </div>
     </section>
   );
