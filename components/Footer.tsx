@@ -112,7 +112,7 @@ const Footer: React.FC = () => {
                 <a
                   href={`mailto:${config.companyInfo.email}`}
                   onClick={() => trackEvent('contact_click', { method: 'email', location: 'footer' })}
-                  className="hover:text-white text-gray-300 font-medium pl-5 md:pl-8 text-[11px] md:text-base truncate transition-colors"
+                  className="hover:text-white text-gray-300 font-medium pl-5 md:pl-8 text-[11px] md:text-base break-all transition-colors"
                 >
                   {config.companyInfo.email}
                 </a>

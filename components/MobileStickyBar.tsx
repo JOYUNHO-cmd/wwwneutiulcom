@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Phone, MessageCircle } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 import KakaoConfirmModal from './KakaoConfirmModal';
@@ -15,9 +15,35 @@ const MobileStickyBar: React.FC = () => {
   const phoneNumber = '01048807386';
   const kakaoUrl = 'https://open.kakao.com/o/srNJGmpg';
   const [showKakaoConfirm, setShowKakaoConfirm] = useState(false);
+  // Slides the buttons off the right edge while the reader scrolls down (so
+  // they don't sit on top of the text being read) and brings them back on
+  // any upward scroll or once scrolling pauses.
+  const [tucked, setTucked] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let idle: number | undefined;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY + 4 && y > 120) setTucked(true);
+      else if (y < lastY - 4) setTucked(false);
+      lastY = y;
+      window.clearTimeout(idle);
+      idle = window.setTimeout(() => setTucked(false), 900);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(idle);
+    };
+  }, []);
 
   return (
-    <div className="md:hidden fixed right-3 bottom-6 z-50 flex flex-col gap-2.5 select-none pointer-events-auto">
+    <div
+      className={`md:hidden fixed right-3 bottom-6 z-50 flex flex-col gap-2.5 select-none pointer-events-auto transition-transform duration-300 ease-out motion-reduce:transition-none ${
+        tucked ? 'translate-x-[calc(100%+1rem)]' : 'translate-x-0'
+      }`}
+    >
       <style>{`
         @keyframes side-phone-ring {
           0%, 82%, 100% { transform: rotate(0deg) scale(1); }
