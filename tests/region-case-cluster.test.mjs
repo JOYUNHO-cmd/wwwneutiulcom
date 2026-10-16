@@ -53,7 +53,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 48);
+  assert.equal(cases.length, 49);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -74,8 +74,8 @@ test('verified service regions are derived from actual case records', () => {
   assert.deepEqual(
     getVerifiedRegionsForService('floor-wax'),
     [
+      { regionId: 'gangnam', caseCount: 2, href: '/services/floor-wax/gangnam' },
       { regionId: 'yongin', caseCount: 2, href: '/services/floor-wax/yongin' },
-      { regionId: 'gangnam', caseCount: 1, href: '/services/floor-wax/gangnam' },
       { regionId: 'gunpo', caseCount: 1, href: '/services/floor-wax/gunpo' },
       { regionId: 'anyang', caseCount: 1, href: '/services/floor-wax/anyang' },
       { regionId: 'uiwang', caseCount: 1, href: '/services/floor-wax/uiwang' },
@@ -313,4 +313,18 @@ test('Incheon Jung-gu new-construction case leads with its keyword and shows eve
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
   assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|개점 가능한|비공개/);
+});
+
+test('Gangnam school floor-wax case leads with its keyword and shows every photo under its section', () => {
+  const regionCase = getRegionCase('floor-wax', 'gangnam', '강남학교바닥왁스코팅');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('강남 바닥왁스코팅'));
+  assert.ok(regionCase.description.startsWith('강남 바닥왁스코팅 전문업체'));
+  assert.match(regionCase.heading, /강남 바닥왁스코팅/);
+  assert.match(regionCase.intro, /전 지역 출장/);
+  assert.match(regionCase.intro, /무료 방문 견적/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개|서초/);
 });

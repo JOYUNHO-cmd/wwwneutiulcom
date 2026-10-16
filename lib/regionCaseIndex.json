@@ -225,6 +225,13 @@
   },
   {
     "serviceId": "floor-wax",
+    "regionId": "gangnam",
+    "heading": "강남 바닥왁스코팅 현장 후기 | 학교 교실과 복도 바닥 청소부터 왁스 마무리까지",
+    "thumbnail": "/images/regional/gangnam-school-floorwax-07.webp",
+    "url": "/services/floor-wax/gangnam/강남학교바닥왁스코팅"
+  },
+  {
+    "serviceId": "floor-wax",
     "regionId": "anyang",
     "heading": "안양시 식당 바닥 왁스코팅 현장 기록",
     "thumbnail": "/images/regional/anyang-floorwax-05.webp",
