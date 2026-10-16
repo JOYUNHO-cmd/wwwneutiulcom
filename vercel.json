@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node scripts/generate-portfolio-highlights.mjs && vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
+  "buildCommand": "node scripts/generate-portfolio-highlights.mjs && node scripts/generate-region-case-index.mjs && vite build && vite build --ssr entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
   "outputDirectory": "dist",
   "images": {
     "sizes": [384],

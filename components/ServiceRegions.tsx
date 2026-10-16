@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown, MapPin, Info } from 'lucide-react';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { REGION_GROUPS, getCitiesInGroup, getChildRegions, getHotspots } from '../lib/regionHierarchy.mjs';
+// Headings/thumbnails/URLs only — generated from lib/regionCaseData.mjs by
+// scripts/generate-region-case-index.mjs to keep the article text out of this page.
+import regionCaseIndex from '../lib/regionCaseIndex.json';
+
+type RegionCaseIndexItem = { serviceId: string; regionId: string; heading: string; thumbnail: string; url: string };
+const REGION_CASE_INDEX = regionCaseIndex as RegionCaseIndexItem[];
 
 type Group = '서울' | '인천' | '경기';
 
@@ -89,6 +95,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
   if (!REGION_LANDING_SERVICES.includes(serviceId)) return null;
 
   const regionHref = (regionId: string) => `/services/${serviceId}/${regionId}`;
+  const serviceCases = REGION_CASE_INDEX.filter((item) => item.serviceId === serviceId);
 
   // After a panel opens, bring it into view — with 31 cities in 경기 the
   // 동네 panel opens below the whole grid, out of sight on most screens.
@@ -215,6 +222,11 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                 {cities.map((city) => {
                   const children = getChildRegions(city.id);
                   const hotspots = getHotspots(city.id);
+                  // This service's field cases in the city and its sub-areas.
+                  const cases = serviceCases.filter(
+                    (item) => item.regionId === city.id || children.some((child) => child.id === item.regionId)
+                  );
+                  const regionName = (regionId: string) => children.find((child) => child.id === regionId)?.name ?? city.name;
                   return (
                     <Curtain key={city.id} id={`service-regions-city-${city.id}`} open={groupOpen && openCity === city.id}>
                       <div className="pt-4">
@@ -234,6 +246,45 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                               <ArrowRight aria-hidden="true" className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                             </Link>
                           </div>
+
+                          {cases.length > 0 && (
+                            <div className="mb-5">
+                              <p className="mb-2 text-xs font-bold text-slate-500">실제 현장 사례</p>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                                {cases.map((item) => (
+                                  <Link
+                                    key={item.url}
+                                    to={item.url}
+                                    className="group flex items-center gap-3 rounded-2xl border border-emerald-100 bg-white p-2.5 pr-3 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md"
+                                  >
+                                    <span className="h-16 w-20 sm:h-[4.5rem] sm:w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+                                      <img
+                                        src={item.thumbnail}
+                                        alt=""
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                      />
+                                    </span>
+                                    <span className="min-w-0 flex-1">
+                                      {item.regionId !== city.id && (
+                                        <span className="mb-1 inline-block rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-extrabold text-primaryDark">
+                                          {regionName(item.regionId)}
+                                        </span>
+                                      )}
+                                      <span className="block text-[13px] sm:text-sm font-extrabold leading-snug text-slate-800 line-clamp-2 break-keep group-hover:text-primaryDark">
+                                        {item.heading}
+                                      </span>
+                                      <span className="mt-1 inline-flex items-center gap-1 text-xs font-bold text-primary">
+                                        사례 보기
+                                        <ArrowRight aria-hidden="true" className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                                      </span>
+                                    </span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          )}
 
                           {children.length > 0 && (
                             <div className="mb-4">
