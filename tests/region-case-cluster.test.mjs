@@ -295,4 +295,9 @@ test('Bupyeong floor-wax case leads with its keyword and shows every photo under
   assert.match(regionCase.heading, /부평 바닥왁스코팅/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.doesNotMatch(
+    JSON.stringify(regionCase.prep),
+    /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽/,
+  );
 });

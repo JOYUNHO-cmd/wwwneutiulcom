@@ -38,11 +38,15 @@ const RegionCaseDetail: React.FC = () => {
     (s.stepIndexes ?? []).filter((si) => regionCase.steps[si]);
   const placedSteps = new Set<number>(regionCase.sections.flatMap(sectionSteps));
 
-  // In-page table of contents — every entry points at a heading that is
-  // already on the page, so nothing is hidden or reordered.
+  // Optional pre-work checklist ("작업 전 준비사항"), shown above the FAQ.
+  const prep: Array<{ heading: string; body: string }> = regionCase.prep ?? [];
+
+  // In-page table of contents — three parts, each pointing at a heading
+  // that is already on the page: the field record together with the work
+  // steps and photos, the pre-work checklist (when the case has one), FAQ.
   const toc = [
-    ...regionCase.sections.map((s, i) => ({ id: `case-section-${i + 1}`, label: s.heading })),
-    { id: 'case-record', label: '현장 기록' },
+    { id: 'case-record', label: '현장 기록 · 작업 내용과 사진' },
+    ...(prep.length > 0 ? [{ id: 'case-prep', label: '작업 전 준비사항' }] : []),
     { id: 'case-faq', label: '자주 묻는 질문' },
   ];
   // Headings carry tabIndex={-1} so focus can follow the jump: keyboard
@@ -118,15 +122,23 @@ const RegionCaseDetail: React.FC = () => {
         </div>
       </nav>
 
-      {/* What was actually done, in prose — grounded in regionCase.facts */}
+      {/* Part 1 — field record (facts), then each section's text with its
+          photos directly underneath. */}
+      <RegionCaseSection
+        regionCase={regionCase}
+        className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-8 pb-2"
+        part="facts"
+        headingId="case-record"
+        headingClassName={anchorClass}
+      />
+
       <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 py-4">
-        <div className="max-w-2xl lg:max-w-none space-y-10">
+        <div className="max-w-2xl lg:max-w-none space-y-12">
           {regionCase.sections.map((s, i) => (
             <div key={i}>
               <h2
                 id={`case-section-${i + 1}`}
-                tabIndex={-1}
-                className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep`}
+                className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep"
               >
                 {s.heading}
               </h2>
@@ -138,7 +150,6 @@ const RegionCaseDetail: React.FC = () => {
                   ))}
                 </div>
               )}
-              <BackToTocButton tocId="case-toc" fromId={`case-section-${i + 1}`} />
             </div>
           ))}
         </div>
@@ -146,14 +157,31 @@ const RegionCaseDetail: React.FC = () => {
 
       <RegionCaseSection
         regionCase={regionCase}
-        className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-6"
+        className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pb-4"
         placedSteps={placedSteps}
-        headingId="case-record"
-        headingClassName={anchorClass}
+        part="rest"
         footer={<BackToTocButton tocId="case-toc" fromId="case-record" />}
       />
 
-      {/* This case's FAQ */}
+      {/* Part 2 — what to prepare before the work */}
+      {prep.length > 0 && (
+        <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-4">
+          <h2 id="case-prep" tabIndex={-1} className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-6`}>
+            작업 전 준비사항
+          </h2>
+          <ol className="max-w-2xl lg:max-w-none space-y-7">
+            {prep.map((item, i) => (
+              <li key={i} className="border-l-4 border-primary/40 pl-4">
+                <h3 className="font-bold text-slate-900 text-[17px] sm:text-lg mb-1.5 break-keep">{item.heading}</h3>
+                <SentenceText text={item.body} className="text-gray-700 text-base sm:text-[17px] leading-[1.8]" />
+              </li>
+            ))}
+          </ol>
+          <BackToTocButton tocId="case-toc" fromId="case-prep" />
+        </section>
+      )}
+
+      {/* Part 3 — this case's FAQ */}
       <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-12 pb-10">
         <h2 id="case-faq" tabIndex={-1} className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-5`}>자주 묻는 질문</h2>
         <div className="space-y-4 max-w-2xl lg:max-w-none">

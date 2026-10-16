@@ -37,6 +37,9 @@ interface RegionCaseSectionProps {
   // Steps already shown under their section text (RegionCaseDetail renders
   // them via CaseStepGroup); only the remaining steps are listed here.
   placedSteps?: ReadonlySet<number>;
+  // 'facts' renders the heading and facts grid only; 'rest' renders the
+  // remaining photo steps and the note (shown after the article text).
+  part?: 'all' | 'facts' | 'rest';
 }
 
 // Captions start with a phase label ("작업 전 · …"). The label is shown as a
@@ -114,38 +117,45 @@ const FactLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 // confirmed facts (see lib/regionCaseData.mjs). The article's own heading
 // and intro live in pages/RegionCaseDetail.tsx; this only renders what
 // comes after them.
-const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, className, headingId, headingClassName, footer, placedSteps }) => {
+const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, className, headingId, headingClassName, footer, placedSteps, part = 'all' }) => {
   const remainingSteps = regionCase.steps.map((step, si) => ({ step, si })).filter(({ si }) => !placedSteps?.has(si));
+  const showFacts = part !== 'rest';
+  const showRest = part !== 'facts';
+  if (!showFacts && remainingSteps.length === 0 && !regionCase.note && !footer) return null;
   return (
     <section className={className}>
-      <h2
-        id={headingId}
-        tabIndex={headingId ? -1 : undefined}
-        className={`${headingClassName ?? ''} text-xl sm:text-2xl font-bold text-slate-900 mb-5`}
-      >
-        현장 기록
-      </h2>
+      {showFacts && (
+        <>
+          <h2
+            id={headingId}
+            tabIndex={headingId ? -1 : undefined}
+            className={`${headingClassName ?? ''} text-xl sm:text-2xl font-bold text-slate-900 mb-5`}
+          >
+            현장 기록
+          </h2>
 
-      <div className="grid sm:grid-cols-2 gap-3 mb-8">
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
-          <MapPin className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
-          <span className="break-keep"><FactLabel>위치</FactLabel>{withDotBreaks(regionCase.facts.location)}</span>
-        </div>
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
-          <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
-          <span className="break-keep"><FactLabel>작업 전 상태</FactLabel>{withDotBreaks(regionCase.facts.before)}</span>
-        </div>
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
-          <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
-          <span className="break-keep"><FactLabel>작업 순서</FactLabel>{withDotBreaks(regionCase.facts.process)}</span>
-        </div>
-        <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
-          <Users2 className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
-          <span className="break-keep"><FactLabel>인원·시간</FactLabel>{withDotBreaks(regionCase.facts.staff)}</span>
-        </div>
-      </div>
+          <div className="grid sm:grid-cols-2 gap-3 mb-8">
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+              <MapPin className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
+              <span className="break-keep"><FactLabel>위치</FactLabel>{withDotBreaks(regionCase.facts.location)}</span>
+            </div>
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+              <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
+              <span className="break-keep"><FactLabel>작업 전 상태</FactLabel>{withDotBreaks(regionCase.facts.before)}</span>
+            </div>
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+              <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
+              <span className="break-keep"><FactLabel>작업 순서</FactLabel>{withDotBreaks(regionCase.facts.process)}</span>
+            </div>
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+              <Users2 className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
+              <span className="break-keep"><FactLabel>인원·시간</FactLabel>{withDotBreaks(regionCase.facts.staff)}</span>
+            </div>
+          </div>
+        </>
+      )}
 
-      {remainingSteps.length > 0 && (
+      {showRest && remainingSteps.length > 0 && (
         <div className="space-y-8">
           {remainingSteps.map(({ step, si }) => (
             <CaseStepGroup key={si} step={step} si={si} />
@@ -153,7 +163,7 @@ const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, class
         </div>
       )}
 
-      {regionCase.note && (
+      {showRest && regionCase.note && (
         <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 border-l-4 border-l-amber-500 rounded-xl p-4 sm:p-5 mt-8 text-[15px] sm:text-base text-amber-950">
           <Info className="text-amber-600 shrink-0 mt-1" size={18} aria-hidden="true" />
           <SentenceText as="span" text={regionCase.note} className="block leading-[1.7]" />
