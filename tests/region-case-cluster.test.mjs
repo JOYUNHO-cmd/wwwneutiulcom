@@ -54,7 +54,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 54);
+  assert.equal(cases.length, 59);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -196,6 +196,45 @@ test('Suwon hoarder-house case follows the field-case format and keeps sanitized
   for (const item of media) {
     const asset = new URL(`../public${item.src}`, import.meta.url);
     assert.ok(fs.existsSync(asset), `${item.src} must exist in public assets`);
+  }
+});
+
+test('new trash-house cases follow the field-case format and keep sanitized media', () => {
+  const expected = [
+    ['uiwang', '의왕쓰레기집청소', '의왕', 0],
+    ['bucheon', '부천쓰레기집청소', '부천', 0],
+    ['ansan', '안산바퀴벌레쓰레기집청소', '안산', 0],
+    ['ansan', '안산날파리쓰레기집청소', '안산', 0],
+    ['ansan', '안산사무실쓰레기집청소', '안산', 1],
+  ];
+  for (const [regionId, slug, name, videoCount] of expected) {
+    const regionCase = getRegionCase('trash-house', regionId, slug);
+    assert.ok(regionCase, slug);
+    assert.ok(regionCase.title.startsWith(`${name} 쓰레기집 청소`));
+    assert.ok(regionCase.description.startsWith(`${name} 쓰레기집 청소 전문업체 느티울의`));
+    assert.match(regionCase.description, /업체 추천/);
+    assert.match(regionCase.description, /비용·견적/);
+    assert.match(regionCase.intro, /전 지역 출장/);
+    assert.match(regionCase.intro, /무료 방문 견적/);
+    const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+    assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+    assert.equal(regionCase.prep.length, 4);
+    assert.equal(regionCase.faq.length, 4);
+    assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개/);
+
+    const media = regionCase.steps.flatMap((step) => step.media);
+    assert.ok(media.length >= 8 && media.length <= 12, slug);
+    assert.equal(new Set(media.map((item) => item.src)).size, media.length);
+    assert.ok(media.every((item) => /^작업 (전|중|완료) · /.test(item.caption)));
+    const videos = media.filter((item) => item.type === 'video');
+    assert.equal(videos.length, videoCount);
+    for (const video of videos) {
+      assert.match(video.alt, /소리 없는 영상/);
+      assert.ok(fs.existsSync(new URL(`../public${video.poster}`, import.meta.url)), `${video.poster} must exist`);
+    }
+    for (const item of media) {
+      assert.ok(fs.existsSync(new URL(`../public${item.src}`, import.meta.url)), `${item.src} must exist in public assets`);
+    }
   }
 });
 
