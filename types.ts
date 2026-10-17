@@ -1,6 +1,9 @@
 export interface ServiceItem {
   id: string;
   title: string;
+  seoTitle?: string; // /services/{id} only
+  seoDescription?: string; // /services/{id} only
+  heroLead?: string; // /services/{id} only — line under the H1
   description: string;
   details: string[]; // Added for detailed work scope
   icon: string; // Lucide icon name placeholder

@@ -205,7 +205,7 @@ const ServiceLanding: React.FC = () => {
 
           {/* Slogan Descriptive paragraph */}
           <div className="text-slate-200 text-sm sm:text-base md:text-lg max-w-3xl mx-auto font-medium tracking-tight break-keep leading-relaxed opacity-95 px-4 flex flex-col gap-3 sm:gap-4">
-            <p className="md:text-[25.25px] md:font-normal">보여주기식 청소는 절대 하지 않습니다.</p>
+            <p className="md:text-[25.25px] md:font-normal">{service.heroLead || '보여주기식 청소는 절대 하지 않습니다.'}</p>
           </div>
 
           {/* Navigation/Call to actions in Hero */}
