@@ -104,8 +104,8 @@ const Home: React.FC = () => {
             className="max-w-3xl md:max-w-6xl mx-auto flex flex-col items-center justify-center"
           >
             <h1 className="font-extrabold text-slate-900 mb-4 md:mb-8 leading-tight drop-shadow-sm break-keep text-center flex flex-col items-center">
-              <span className="block whitespace-nowrap text-[13px] sm:text-sm md:text-2xl text-[#444a53] font-extrabold mb-1.5 md:mb-4 tracking-[0.1em]">
-                서울·인천·경기 "특수, 바닥, 준공, 인테리어청소 전문업체"
+              <span className="block whitespace-nowrap text-[11.5px] min-[360px]:text-[13px] sm:text-sm md:text-2xl text-[#444a53] font-extrabold mb-1.5 md:mb-4 tracking-[0.02em] md:tracking-[0.1em]">
+                서울·인천·경기 쓰레기집·침수·화재 특수청소 전문업체
               </span>
               <span className="text-[25px] sm:text-4xl md:text-7xl block mb-1 md:mb-3">
                 한결같은 <span className="text-[#0f9d6c] font-black">마음</span>으로
@@ -115,13 +115,15 @@ const Home: React.FC = () => {
               </span>
             </h1>
 
-            <div className="text-[18px] md:text-xl text-[#000000] mb-5 md:mb-10 leading-[26px] md:leading-relaxed font-bold max-w-2xl md:max-w-3xl mx-auto break-keep text-center">
+            <div className="text-[18px] md:text-xl text-[#000000] mb-5 md:mb-10 leading-[26px] md:leading-relaxed font-bold max-w-2xl md:max-w-4xl mx-auto break-keep text-center">
               <p className="mb-4 md:mb-6 md:text-[25.5px] md:leading-relaxed">
-                느티울은 날림 청소나 눈속임식<br />
-                요금 유도를 과감히 배제합니다.
+                서울·인천·경기 쓰레기집·침수·화재 특수청소 전문업체 느티울은<br className="hidden md:inline" />{' '}
+                날림 청소나 눈속임식 요금 유도를 과감히 배제합니다.
               </p>
               <p className="md:text-[25.5px] md:leading-relaxed">
-                정직하게 흘린 땀만큼 가치를 증명하는<br />
+                대표가 직접 현장을 맡아,<br className="md:hidden" />{' '}
+                정직하게 흘린 땀만큼<br className="hidden md:inline" />{' '}
+                가치를 증명하는<br className="md:hidden" />{' '}
                 청소의 본질을 지킵니다.
               </p>
             </div>
