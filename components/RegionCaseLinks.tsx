@@ -34,19 +34,19 @@ const RegionCaseLinks: React.FC<RegionCaseLinksProps> = ({ serviceId, regionId, 
   if (!cases || cases.length === 0) return null;
 
   const hiddenCount = Math.max(0, cases.length - INITIAL_VISIBLE);
-  // Same two-up mobile grid as the blog cards above (ServiceCaseBlogSection).
+  // Same grid as the blog cards above (ServiceCaseBlogSection): two per row
+  // on mobile, three per row on PC. With fewer cards than a full row they
+  // keep the same card width and sit centered.
   const gridClass = cases.length === 1
-    ? 'grid-cols-1 max-w-xs mx-auto'
+    ? 'grid-cols-1 w-1/2 md:w-1/3 mx-auto'
     : cases.length === 2
-    ? 'grid-cols-2 max-w-2xl mx-auto'
-    : cases.length === 3
-    ? 'grid-cols-2 md:grid-cols-3'
-    : 'grid-cols-2 md:grid-cols-4';
+    ? 'grid-cols-2 md:w-2/3 mx-auto'
+    : 'grid-cols-2 md:grid-cols-3';
 
   return (
     <section className={className}>
       <h2 className={hideHeading ? 'sr-only' : 'text-xl sm:text-2xl font-bold text-slate-900 mb-5'}>실제 작업 사례</h2>
-      <div className={`grid gap-3 sm:gap-5 ${gridClass}`}>
+      <div className={`grid gap-3 sm:gap-6 lg:gap-8 ${gridClass}`}>
         {cases.map((c, i) => (
           <Link
             key={c.slug}

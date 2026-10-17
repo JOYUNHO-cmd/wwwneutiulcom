@@ -451,7 +451,7 @@ test('region case cards show four before a 더보기 button and keep every link 
   const src = fs.readFileSync(new URL('../components/RegionCaseLinks.tsx', import.meta.url), 'utf8');
   assert.match(src, /const INITIAL_VISIBLE = 4;/);
   assert.match(src, /현장 후기 더보기/);
-  assert.match(src, /grid-cols-2 md:grid-cols-4/);
+  assert.match(src, /'grid-cols-2 md:grid-cols-3'/);
   // Hidden cards are hidden with CSS, not dropped, so crawlers still see every case link.
   assert.match(src, /i >= INITIAL_VISIBLE && !expanded \? 'hidden'/);
 });
