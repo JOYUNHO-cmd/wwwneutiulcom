@@ -17,6 +17,7 @@ import CeoMessageSection from '../components/CeoMessageSection';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import ServiceCaseBlogSection from '../components/ServiceCaseBlogSection';
+import { getServiceBlogLinks } from '../lib/serviceBlogLinks.mjs';
 import portfolioManifest from '../lib/portfolioManifest.json';
 
 const allPortfolioItems = portfolioManifest as PortfolioGalleryItem[];
@@ -41,6 +42,7 @@ const RegionServiceLanding: React.FC = () => {
   const service = config.services.find((s) => s.id === serviceId);
   const introStanzas = content ? groupIntoStanzas(breakIntoLines(content.intro)) : [];
   const regionCases = serviceId && regionId ? getRegionCases(serviceId, regionId) : [];
+  const hasServiceBlogs = (getServiceBlogLinks(serviceId || '') ?? []).length > 0;
 
   // Real photos taken in this specific region, for this specific service —
   // proof that isn't just "we work in your area" but "here's your area".
@@ -146,24 +148,27 @@ const RegionServiceLanding: React.FC = () => {
         <PortfolioLightbox item={openItem} onClose={() => setOpenItem(null)} />
       )}
 
-      {/* Link-out cards to each real field-case article for this exact
-          service+region — its own page at /services/:serviceId/:regionId/:slug
-          (see pages/RegionCaseDetail.tsx), not inlined here. A region can
-          accumulate many separate case articles over time. */}
-      <RegionCaseLinks
-        serviceId={serviceId || ''}
-        regionId={regionId || ''}
-        cases={regionCases}
-        className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
-      />
-
       {/* "Want the full job, not just before/after photos?" — real blog
           posts for this service, right after the photos it refers back to
           (its own heading text says "위에 보여드린 사진들") and before the
           page moves on to situations/FAQ. Same component + curated links
           as the /services/:id page (lib/serviceBlogLinks.mjs), just laid
           out at this page's narrower max-w-5xl width. */}
-      <ServiceCaseBlogSection serviceId={serviceId || ''} className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
+      <ServiceCaseBlogSection serviceId={serviceId || ''} className="max-w-5xl mx-auto px-4 sm:px-6 pb-6" />
+
+      {/* Link-out cards to each real field-case article for this exact
+          service+region — its own page at /services/:serviceId/:regionId/:slug
+          (see pages/RegionCaseDetail.tsx), not inlined here. A region can
+          accumulate many separate case articles over time. They follow the
+          blog cards, whose "전체 작업 과정들이 궁금하시다면??" box already
+          introduces them, so their own heading is hidden when blogs exist. */}
+      <RegionCaseLinks
+        serviceId={serviceId || ''}
+        regionId={regionId || ''}
+        cases={regionCases}
+        hideHeading={hasServiceBlogs}
+        className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
+      />
 
       {/* Situations */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10">
