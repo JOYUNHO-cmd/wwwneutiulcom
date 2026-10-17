@@ -7,6 +7,13 @@
     "url": "/services/trash-house/uijeongbu/의정부쓰레기집청소"
   },
   {
+    "serviceId": "trash-house",
+    "regionId": "ansan",
+    "heading": "안산 쓰레기집 청소 현장 후기 | 쥐 배설물과 쌓인 물건 정리부터 바닥 청소까지",
+    "thumbnail": "/images/regional/ansan-trash-house-02.webp",
+    "url": "/services/trash-house/ansan/안산쓰레기집청소"
+  },
+  {
     "serviceId": "special",
     "regionId": "ansan",
     "heading": "안산시 유품정리",
