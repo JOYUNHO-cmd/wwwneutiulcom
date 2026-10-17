@@ -50,3 +50,24 @@ test('every service has distinct title and canonical, absolute social image, and
   }
   assert.equal(titles.size, SERVICES.length);
 });
+
+test('service main landing pages use their own SEO copy, region pages do not', () => {
+  const URGENT = ['flood', 'fire', 'special', 'trash-house', 'lonely-death'];
+  for (const service of SERVICES) {
+    assert.ok(service.seoTitle && service.seoDescription && service.heroLead, `${service.id} needs landing copy`);
+    const keyword = service.seoDescription.split(' 전문업체')[0];
+    assert.ok(service.seoTitle.startsWith(keyword), `${service.id} title leads with its keyword`);
+    assert.ok(service.heroLead.startsWith(service.title), `${service.id} hero line leads with the service name`);
+    assert.match(service.seoDescription, /비용과 견적/);
+    assert.doesNotMatch(`${service.seoTitle} ${service.seoDescription} ${service.heroLead}`, /완벽|내구성|세계적/);
+    assert.equal(/24시간 상담/.test(service.seoDescription), URGENT.includes(service.id), `${service.id} 24시간 상담`);
+
+    const landing = meta(`/services/${service.id}`);
+    assert.equal(landing.title, service.seoTitle);
+    assert.equal(landing.description, service.seoDescription);
+
+    const region = meta(`/services/${service.id}/gangnam`);
+    assert.notEqual(region.title, service.seoTitle);
+    assert.notEqual(region.description, service.seoDescription);
+  }
+});
