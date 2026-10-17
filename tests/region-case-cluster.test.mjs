@@ -54,7 +54,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 59);
+  assert.equal(cases.length, 63);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -206,6 +206,10 @@ test('new trash-house cases follow the field-case format and keep sanitized medi
     ['ansan', '안산바퀴벌레쓰레기집청소', '안산', 0],
     ['ansan', '안산날파리쓰레기집청소', '안산', 0],
     ['ansan', '안산사무실쓰레기집청소', '안산', 1],
+    ['anyang', '안양쓰레기집청소', '안양', 0],
+    ['gwangju-gg', '경기광주쓰레기집청소', '경기 광주', 0],
+    ['gunpo', '군포쓰레기집청소', '군포', 0],
+    ['pyeongchon', '평촌쓰레기집청소', '평촌', 0],
   ];
   for (const [regionId, slug, name, videoCount] of expected) {
     const regionCase = getRegionCase('trash-house', regionId, slug);
