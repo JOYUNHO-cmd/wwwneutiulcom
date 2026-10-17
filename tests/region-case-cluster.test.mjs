@@ -54,7 +54,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 67);
+  assert.equal(cases.length, 69);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -89,7 +89,7 @@ test('verified service regions are derived from actual case records', () => {
       { regionId: 'songpa', caseCount: 1, href: '/services/floor-wax/songpa' },
     ],
   );
-  assert.equal(getVerifiedRegionsForService('office').length, 11);
+  assert.equal(getVerifiedRegionsForService('office').length, 13);
   assert.deepEqual(
     getVerifiedRegionsForService('flood'),
     [{ regionId: 'seocho', caseCount: 1, href: '/services/flood/seocho' }],
@@ -248,6 +248,8 @@ test('new office cases follow the field-case format and keep sanitized media', (
     ['gangnam', '강남사무실청소논현동', '강남'],
     ['yongsan', '용산사무실청소한남동', '용산'],
     ['cheongna', '청라사무실청소', '청라'],
+    ['seongnam', '성남사무실청소', '성남'],
+    ['gwanggyo', '광교사무실청소', '광교'],
   ];
   for (const [regionId, slug, name] of expected) {
     const regionCase = getRegionCase('office', regionId, slug);
