@@ -117,7 +117,7 @@ const Home: React.FC = () => {
 
             <div className="text-[18px] md:text-xl text-[#000000] mb-5 md:mb-10 leading-[26px] md:leading-relaxed font-bold max-w-2xl md:max-w-4xl mx-auto break-keep text-center">
               <p className="mb-4 md:mb-6 md:text-[25.5px] md:leading-relaxed">
-                서울·인천·경기 쓰레기집·침수·화재 특수청소 전문업체 느티울은<br className="hidden md:inline" />{' '}
+                특수청소 전문업체 느티울은<br className="hidden md:inline" />{' '}
                 날림 청소나 눈속임식 요금 유도를 과감히 배제합니다.
               </p>
               <p className="md:text-[25.5px] md:leading-relaxed">
