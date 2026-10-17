@@ -15,6 +15,41 @@
   },
   {
     "serviceId": "trash-house",
+    "regionId": "ansan",
+    "heading": "안산 쓰레기집 청소 현장 후기 | 바퀴벌레 흔적이 남은 주방·냉장고와 곰팡이 창틀 청소",
+    "thumbnail": "/images/regional/ansan-roach-house-02.webp",
+    "url": "/services/trash-house/ansan/안산바퀴벌레쓰레기집청소"
+  },
+  {
+    "serviceId": "trash-house",
+    "regionId": "ansan",
+    "heading": "안산 쓰레기집 청소 현장 후기 | 날벌레 사체와 상자가 쌓인 집 정리부터 방·주방 청소까지",
+    "thumbnail": "/images/regional/ansan-fly-house-01.webp",
+    "url": "/services/trash-house/ansan/안산날파리쓰레기집청소"
+  },
+  {
+    "serviceId": "trash-house",
+    "regionId": "ansan",
+    "heading": "안산 쓰레기집 청소 현장 후기 | 생활 쓰레기가 쌓인 사무 공간 정리부터 바닥 청소까지",
+    "thumbnail": "/images/regional/ansan-office-trash-house-03.webp",
+    "url": "/services/trash-house/ansan/안산사무실쓰레기집청소"
+  },
+  {
+    "serviceId": "trash-house",
+    "regionId": "uiwang",
+    "heading": "의왕 쓰레기집 청소 현장 후기 | 상자와 봉지가 덮은 방 정리부터 욕실·싱크대 청소까지",
+    "thumbnail": "/images/regional/uiwang-trash-house-01.webp",
+    "url": "/services/trash-house/uiwang/의왕쓰레기집청소"
+  },
+  {
+    "serviceId": "trash-house",
+    "regionId": "bucheon",
+    "heading": "부천 쓰레기집 청소 현장 후기 | 빈 병과 쓰레기가 쌓인 원룸 반출부터 바닥·주방·욕실 청소까지",
+    "thumbnail": "/images/regional/bucheon-trash-house-01.webp",
+    "url": "/services/trash-house/bucheon/부천쓰레기집청소"
+  },
+  {
+    "serviceId": "trash-house",
     "regionId": "suwon",
     "heading": "수원 쓰레기집 청소 현장 후기 | 방바닥을 덮은 쓰레기 반출부터 욕실·바닥 청소까지",
     "thumbnail": "/images/regional/suwon-trash-house-01.webp",
