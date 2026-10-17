@@ -54,7 +54,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 53);
+  assert.equal(cases.length, 54);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -171,6 +171,28 @@ test('Ansan hoarder-house case follows the field-case format and keeps sanitized
     assert.ok(video.poster, 'video media must provide a privacy-reviewed poster image');
     assert.ok(fs.existsSync(new URL(`../public${video.poster}`, import.meta.url)), `${video.poster} must exist`);
   }
+  for (const item of media) {
+    const asset = new URL(`../public${item.src}`, import.meta.url);
+    assert.ok(fs.existsSync(asset), `${item.src} must exist in public assets`);
+  }
+});
+
+test('Suwon hoarder-house case follows the field-case format and keeps sanitized media', () => {
+  const regionCase = getRegionCase('trash-house', 'suwon', '수원쓰레기집청소');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('수원 쓰레기집 청소'));
+  assert.ok(regionCase.description.startsWith('수원 쓰레기집 청소 전문업체'));
+  assert.match(regionCase.heading, /수원 쓰레기집 청소/);
+  assert.match(regionCase.intro, /전 지역 출장/);
+  assert.match(regionCase.intro, /무료 방문 견적/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.ok(regionCase.prep.length >= 3);
+  assert.equal(regionCase.faq.length, 4);
+
+  const media = regionCase.steps.flatMap((step) => step.media);
+  assert.ok(media.length >= 8 && media.length <= 12);
+  assert.ok(media.every((item) => /^작업 (전|중|완료) · /.test(item.caption)));
   for (const item of media) {
     const asset = new URL(`../public${item.src}`, import.meta.url);
     assert.ok(fs.existsSync(asset), `${item.src} must exist in public assets`);

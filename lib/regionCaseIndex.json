@@ -14,6 +14,13 @@
     "url": "/services/trash-house/ansan/안산쓰레기집청소"
   },
   {
+    "serviceId": "trash-house",
+    "regionId": "suwon",
+    "heading": "수원 쓰레기집 청소 현장 후기 | 방바닥을 덮은 쓰레기 반출부터 욕실·바닥 청소까지",
+    "thumbnail": "/images/regional/suwon-trash-house-01.webp",
+    "url": "/services/trash-house/suwon/수원쓰레기집청소"
+  },
+  {
     "serviceId": "special",
     "regionId": "ansan",
     "heading": "안산시 유품정리",
