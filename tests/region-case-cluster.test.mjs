@@ -446,3 +446,12 @@ test('region+service landing shows field-case cards right under the blog section
   assert.ok(blog > 0 && cases > blog, 'case cards follow the blog section');
   assert.match(page.slice(cases, page.indexOf('/>', cases)), /hideHeading=\{hasServiceBlogs\}/);
 });
+
+test('region case cards show four before a 더보기 button and keep every link in the markup', () => {
+  const src = fs.readFileSync(new URL('../components/RegionCaseLinks.tsx', import.meta.url), 'utf8');
+  assert.match(src, /const INITIAL_VISIBLE = 4;/);
+  assert.match(src, /현장 후기 더보기/);
+  assert.match(src, /grid-cols-2 md:grid-cols-4/);
+  // Hidden cards are hidden with CSS, not dropped, so crawlers still see every case link.
+  assert.match(src, /i >= INITIAL_VISIBLE && !expanded \? 'hidden'/);
+});
