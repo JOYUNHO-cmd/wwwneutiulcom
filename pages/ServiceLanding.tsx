@@ -204,8 +204,15 @@ const ServiceLanding: React.FC = () => {
           </h1>
 
           {/* Slogan Descriptive paragraph */}
-          <div className="text-slate-200 text-sm sm:text-base md:text-lg max-w-3xl mx-auto font-medium tracking-tight break-keep leading-relaxed opacity-95 px-4 flex flex-col gap-3 sm:gap-4">
-            <p className="md:text-[25.25px] md:font-normal">{service.heroLead || '보여주기식 청소는 절대 하지 않습니다.'}</p>
+          <div className="text-slate-200 text-sm sm:text-base md:text-lg max-w-3xl lg:max-w-5xl mx-auto font-medium tracking-tight break-keep leading-relaxed opacity-95 px-4 flex flex-col gap-3 sm:gap-4">
+            <p className="md:text-[25.25px] md:font-normal">
+              {(service.heroLead || '보여주기식 청소는 절대 하지 않습니다.').split('\n').map((line, i) => (
+                <React.Fragment key={i}>
+                  {i > 0 && <>{' '}<br className="hidden lg:inline" /></>}
+                  {line}
+                </React.Fragment>
+              ))}
+            </p>
           </div>
 
           {/* Navigation/Call to actions in Hero */}

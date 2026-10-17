@@ -58,6 +58,7 @@ test('service main landing pages use their own SEO copy, region pages do not', (
     const keyword = service.seoDescription.split(' 전문업체')[0];
     assert.ok(service.seoTitle.startsWith(keyword), `${service.id} title leads with its keyword`);
     assert.ok(service.heroLead.startsWith(service.title), `${service.id} hero line leads with the service name`);
+    assert.equal(service.heroLead.split('\n').length, 2, `${service.id} hero line breaks into two lines on PC`);
     assert.match(service.seoDescription, /비용과 견적/);
     assert.doesNotMatch(`${service.seoTitle} ${service.seoDescription} ${service.heroLead}`, /완벽|내구성|세계적/);
     assert.equal(/24시간 상담/.test(service.seoDescription), URGENT.includes(service.id), `${service.id} 24시간 상담`);
