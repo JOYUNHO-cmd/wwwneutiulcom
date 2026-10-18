@@ -37,6 +37,8 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'new-construction-208': '/services/new-construction/gangnam/강남대치동학원준공청소',
   'dongtan-new-construction-209': '/services/new-construction/dongtan/동탄아파트놀이터준공청소',
   'bucheon-special-368': '/services/lonely-death/bucheon/부천아파트고독사청소',
+  'guro-digital-sheet-removal-189': '/services/interior/guro-digital/구로디지털단지사무실시트지제거청소',
+  'suwon-sheet-removal-193': '/services/government-school/suwon/수원학교급식실시트지제거청소',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -63,7 +65,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 83);
+  assert.equal(cases.length, 93);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -96,6 +98,7 @@ test('verified service regions are derived from actual case records', () => {
       { regionId: 'bupyeong', caseCount: 1, href: '/services/floor-wax/bupyeong' },
       { regionId: 'seocho', caseCount: 1, href: '/services/floor-wax/seocho' },
       { regionId: 'songpa', caseCount: 1, href: '/services/floor-wax/songpa' },
+      { regionId: 'yangcheon', caseCount: 1, href: '/services/floor-wax/yangcheon' },
       { regionId: 'bundang', caseCount: 1, href: '/services/floor-wax/bundang' },
     ],
   );
@@ -306,6 +309,16 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['lonely-death', 'michuhol', '미추홀구고독사청소', '미추홀구 고독사청소'],
     ['lonely-death', 'bucheon', '부천아파트고독사청소', '부천 고독사청소'],
     ['lonely-death', 'dobong', '도봉구원룸고독사청소', '도봉구 고독사청소'],
+    ['move-in', 'bupyeong', '부평아파트입주청소', '부평 입주청소'],
+    ['move-in', 'pyeongchon', '평촌아파트입주청소', '평촌 입주청소'],
+    ['move-in', 'bucheon', '부천원룸입주청소', '부천 입주청소'],
+    ['move-in', 'songpa', '잠실분리형원룸입주청소', '잠실 입주청소'],
+    ['move-in', 'yeongdeungpo', '영등포고층세대입주청소', '영등포 입주청소'],
+    ['move-in', 'suwon', '수원영통원룸입주청소', '수원 입주청소'],
+    ['special', 'ilsan', '일산니코틴제거특수청소', '일산 특수청소'],
+    ['interior', 'guro-digital', '구로디지털단지사무실시트지제거청소', '구로디지털단지 인테리어청소'],
+    ['floor-wax', 'yangcheon', '목동복층마루코팅', '목동 마루코팅'],
+    ['government-school', 'suwon', '수원학교급식실시트지제거청소', '수원 학교청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);
