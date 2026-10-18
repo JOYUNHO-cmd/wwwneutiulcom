@@ -43,6 +43,12 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'hood-403': '/services/hood/seocho/서초배달음식점후드청소',
   'hood-402': '/services/hood/mapo/마포어린이집후드청소',
   'uijeongbu-floor-adhesive-removal-092': '/services/floor/uijeongbu/의정부계단본드제거',
+  'suwon-hood-406': '/services/hood/suwon/수원어린이집후드청소',
+  'yongin-hood-412': '/services/hood/yongin/용인유치원후드청소',
+  'move-in-310': '/services/interior/seocho/서초리모델링인테리어청소',
+  'government-018': '/services/government-school/yangcheon/양천공공회관인테리어청소',
+  'government-029': '/services/government-school/hanam/하남학교복도분진청소',
+  'ansan-government-017': '/services/government-school/ansan/안산학교바닥왁스청소',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -69,7 +75,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 103);
+  assert.equal(cases.length, 113);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -333,6 +339,16 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['interior', 'bucheon', '부천거주세대인테리어청소', '부천 인테리어청소'],
     ['interior', 'gangnam', '청담인테리어청소', '청담 인테리어청소'],
     ['floor', 'uijeongbu', '의정부계단본드제거', '의정부 본드제거'],
+    ['hood', 'suwon', '수원어린이집후드청소', '수원 후드청소'],
+    ['hood', 'yongin', '용인유치원후드청소', '용인 후드청소'],
+    ['restaurant', 'suwon', '수원음식점주방청소', '수원 주방청소'],
+    ['interior', 'seocho', '서초리모델링인테리어청소', '서초 인테리어청소'],
+    ['government-school', 'yangcheon', '양천공공회관인테리어청소', '양천 관공서청소'],
+    ['government-school', 'hanam', '하남학교복도분진청소', '하남 학교청소'],
+    ['interior', 'suwon', '수원아파트인테리어청소', '수원 인테리어청소'],
+    ['government-school', 'yongin', '용인학교과학실청소', '용인 학교청소'],
+    ['government-school', 'ansan', '안산학교바닥왁스청소', '안산 학교청소'],
+    ['interior', 'yongin', '용인원룸인테리어청소', '용인 인테리어청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);
