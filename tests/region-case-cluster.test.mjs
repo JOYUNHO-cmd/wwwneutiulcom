@@ -32,6 +32,11 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'fire-392': '/services/fire/bundang/분당사무실화재그을음청소',
   'anyang-flood-358': '/services/flood/anyang/안양지하주차장침수청소',
   'anyang-flood-357': '/services/flood/anyang/안양싱크대역류청소',
+  'new-construction-212': '/services/new-construction/wirye/위례치과준공청소',
+  'dongtan-interior-258': '/services/interior/dongtan/동탄미용실인테리어청소',
+  'new-construction-208': '/services/new-construction/gangnam/강남대치동학원준공청소',
+  'dongtan-new-construction-209': '/services/new-construction/dongtan/동탄아파트놀이터준공청소',
+  'bucheon-special-368': '/services/lonely-death/bucheon/부천아파트고독사청소',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -58,10 +63,10 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 73);
-  // 15 = the 14 services that already had cases + trash-house, which took
-  // over the 의정부 쓰레기집 case from special.
-  assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
+  assert.equal(cases.length, 83);
+  // 16 = the 14 services that already had cases + trash-house, which took
+  // over the 의정부 쓰레기집 case from special, + lonely-death.
+  assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
   assert.equal(new Set(urls).size, urls.length);
   assert.ok(cases.every((entry) => entry.serviceId && entry.regionId && entry.caseData?.heading));
 });
@@ -99,6 +104,8 @@ test('verified service regions are derived from actual case records', () => {
     getVerifiedRegionsForService('flood'),
     [
       { regionId: 'anyang', caseCount: 2, href: '/services/flood/anyang' },
+      { regionId: 'namdong', caseCount: 1, href: '/services/flood/namdong' },
+      { regionId: 'bucheon', caseCount: 1, href: '/services/flood/bucheon' },
       { regionId: 'seocho', caseCount: 1, href: '/services/flood/seocho' },
     ],
   );
@@ -284,11 +291,21 @@ test('new office cases follow the field-case format and keep sanitized media', (
   }
 });
 
-test('new fire and flood cases follow the field-case format and keep sanitized media', () => {
+test('new fire, flood, construction, interior and lonely-death cases follow the field-case format and keep sanitized media', () => {
   const expected = [
     ['fire', 'bundang', '분당사무실화재그을음청소', '분당 화재청소'],
     ['flood', 'anyang', '안양지하주차장침수청소', '안양 침수청소'],
     ['flood', 'anyang', '안양싱크대역류청소', '안양 침수청소'],
+    ['flood', 'bucheon', '부천지하1층침수청소', '부천 침수청소'],
+    ['flood', 'namdong', '남동공단공장오수침수청소', '남동공단 침수청소'],
+    ['new-construction', 'wirye', '위례치과준공청소', '위례 준공청소'],
+    ['interior', 'dongtan', '동탄미용실인테리어청소', '동탄 인테리어청소'],
+    ['new-construction', 'gangnam', '강남대치동학원준공청소', '강남 준공청소'],
+    ['interior', 'suwon', '수원사무실복원청소', '수원 인테리어청소'],
+    ['new-construction', 'dongtan', '동탄아파트놀이터준공청소', '동탄 준공청소'],
+    ['lonely-death', 'michuhol', '미추홀구고독사청소', '미추홀구 고독사청소'],
+    ['lonely-death', 'bucheon', '부천아파트고독사청소', '부천 고독사청소'],
+    ['lonely-death', 'dobong', '도봉구원룸고독사청소', '도봉구 고독사청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);
