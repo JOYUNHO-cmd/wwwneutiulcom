@@ -260,6 +260,13 @@
   },
   {
     "serviceId": "fire",
+    "regionId": "bundang",
+    "heading": "분당 화재청소 현장 후기 | 건물 화재로 그을음이 번진 사무실 바닥·집기 청소",
+    "thumbnail": "/images/regional/bundang-fire-10.webp",
+    "url": "/services/fire/bundang/분당사무실화재그을음청소"
+  },
+  {
+    "serviceId": "fire",
     "regionId": "geomdan",
     "heading": "인천 검단신도시 화재청소",
     "thumbnail": "/images/regional/geomdan-fire-03.webp",

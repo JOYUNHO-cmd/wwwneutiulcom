@@ -29,6 +29,7 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'interior-286': '/services/new-construction/incheon-jung/인천중구매장준공청소',
   'anyang-floor-wax-coating-132': '/services/floor-wax/anyang/안양사무실바닥왁스코팅',
   'floor-wax-coating-118': '/services/floor-wax/bundang/분당연구실바닥왁스코팅',
+  'fire-392': '/services/fire/bundang/분당사무실화재그을음청소',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -55,7 +56,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 70);
+  assert.equal(cases.length, 71);
   // 15 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 15);
@@ -275,6 +276,28 @@ test('new office cases follow the field-case format and keep sanitized media', (
     for (const item of media) {
       assert.ok(fs.existsSync(new URL(`../public${item.src}`, import.meta.url)), `${item.src} must exist in public assets`);
     }
+  }
+});
+
+test('Bundang fire case follows the field-case format and keeps sanitized media', () => {
+  const regionCase = getRegionCase('fire', 'bundang', '분당사무실화재그을음청소');
+  assert.ok(regionCase);
+  assert.ok(regionCase.title.startsWith('분당 화재청소'));
+  assert.ok(regionCase.description.startsWith('분당 화재청소 전문업체 느티울의'));
+  assert.match(regionCase.description, /업체 추천/);
+  assert.match(regionCase.description, /비용·견적/);
+  assert.match(regionCase.intro, /전 지역 출장/);
+  assert.match(regionCase.intro, /무료 방문 견적/);
+  const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
+  assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
+  assert.equal(regionCase.prep.length, 4);
+  assert.equal(regionCase.faq.length, 4);
+  assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개/);
+  const media = regionCase.steps.flatMap((step) => step.media);
+  assert.ok(media.length >= 8 && media.length <= 12);
+  assert.ok(media.every((item) => /^작업 (전|중|완료) · /.test(item.caption)));
+  for (const item of media) {
+    assert.ok(fs.existsSync(new URL(`../public${item.src}`, import.meta.url)), `${item.src} must exist in public assets`);
   }
 });
 
