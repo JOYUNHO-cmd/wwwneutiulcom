@@ -484,6 +484,20 @@
   },
   {
     "serviceId": "flood",
+    "regionId": "anyang",
+    "heading": "안양 침수청소 현장 후기 | 흙탕물이 들어온 지하 주차장 바닥 세척",
+    "thumbnail": "/images/regional/anyang-flood-parking-08.webp",
+    "url": "/services/flood/anyang/안양지하주차장침수청소"
+  },
+  {
+    "serviceId": "flood",
+    "regionId": "anyang",
+    "heading": "안양 침수청소 현장 후기 | 싱크대 배수 역류로 오수가 번진 주방 하부장 청소",
+    "thumbnail": "/images/regional/anyang-flood-sink-09.webp",
+    "url": "/services/flood/anyang/안양싱크대역류청소"
+  },
+  {
+    "serviceId": "flood",
     "regionId": "seocho",
     "heading": "서초 잠원동 지하 술집 누수·침수 정리 과정",
     "thumbnail": "/images/regional/seocho-flood-01.webp",
