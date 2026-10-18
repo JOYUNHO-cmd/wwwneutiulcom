@@ -351,6 +351,13 @@
   },
   {
     "serviceId": "floor-wax",
+    "regionId": "bundang",
+    "heading": "분당 바닥왁스코팅 현장 후기 | 실험대가 놓인 연구실 바닥 기계 세척부터 광택 마무리까지",
+    "thumbnail": "/images/regional/bundang-floor-wax-12.webp",
+    "url": "/services/floor-wax/bundang/분당연구실바닥왁스코팅"
+  },
+  {
+    "serviceId": "floor-wax",
     "regionId": "gangnam",
     "heading": "강남구 매장 바닥 왁스코팅 상담 현장",
     "thumbnail": "/images/regional/gangnam-floorwax-05.webp",
