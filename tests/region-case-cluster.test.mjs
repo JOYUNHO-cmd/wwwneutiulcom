@@ -39,6 +39,10 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'bucheon-special-368': '/services/lonely-death/bucheon/부천아파트고독사청소',
   'guro-digital-sheet-removal-189': '/services/interior/guro-digital/구로디지털단지사무실시트지제거청소',
   'suwon-sheet-removal-193': '/services/government-school/suwon/수원학교급식실시트지제거청소',
+  'gunpo-hood-400': '/services/hood/gunpo/군포순대국집후드청소',
+  'hood-403': '/services/hood/seocho/서초배달음식점후드청소',
+  'hood-402': '/services/hood/mapo/마포어린이집후드청소',
+  'uijeongbu-floor-adhesive-removal-092': '/services/floor/uijeongbu/의정부계단본드제거',
 };
 
 test('Ansan factory floor-wax case belongs to the floor-wax cluster', () => {
@@ -65,7 +69,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 93);
+  assert.equal(cases.length, 103);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -319,6 +323,16 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['interior', 'guro-digital', '구로디지털단지사무실시트지제거청소', '구로디지털단지 인테리어청소'],
     ['floor-wax', 'yangcheon', '목동복층마루코팅', '목동 마루코팅'],
     ['government-school', 'suwon', '수원학교급식실시트지제거청소', '수원 학교청소'],
+    ['hood', 'gunpo', '군포순대국집후드청소', '군포 후드청소'],
+    ['hood', 'seocho', '서초배달음식점후드청소', '서초 후드청소'],
+    ['hood', 'mapo', '마포어린이집후드청소', '마포 후드청소'],
+    ['restaurant', 'hwaseong', '화성고기집주방청소', '화성 주방청소'],
+    ['restaurant', 'uijeongbu', '의정부대형주방청소', '의정부 주방청소'],
+    ['restaurant', 'yeongdeungpo', '대림동음식점퇴거청소', '영등포 주방청소'],
+    ['interior', 'yongsan', '용산48평인테리어청소', '용산 인테리어청소'],
+    ['interior', 'bucheon', '부천거주세대인테리어청소', '부천 인테리어청소'],
+    ['interior', 'gangnam', '청담인테리어청소', '청담 인테리어청소'],
+    ['floor', 'uijeongbu', '의정부계단본드제거', '의정부 본드제거'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);
