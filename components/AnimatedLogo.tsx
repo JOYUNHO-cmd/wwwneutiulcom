@@ -19,7 +19,7 @@ import React, { useEffect, useId, useRef, useState } from 'react';
 //
 // Server render and no-JS show the complete logo; pieces are only hidden
 // once the client has mounted ("is-armed"), and the animation starts when the
-// logo scrolls into view ("is-playing"). Users who prefer reduced motion get
+// logo is well into view ("is-playing"). Users who prefer reduced motion get
 // the static logo. Timings live in src/styles.css (.nl-m-*, .nl-piece-*).
 
 const SIZE = 1254;
@@ -58,7 +58,11 @@ export default function AnimatedLogo({ className = '', alt = '느티울종합청
           observer.disconnect();
         }
       },
-      { threshold: 0.45 }
+      // Start only once the whole logo is in the upper 70% of the screen —
+      // i.e. the visitor has actually arrived at this section. Starting as
+      // soon as it peeked in at the bottom edge meant the logo was mostly
+      // built by the time the section was in front of them.
+      { threshold: 1, rootMargin: '0px 0px -30% 0px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
