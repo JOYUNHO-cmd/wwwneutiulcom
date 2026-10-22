@@ -46,9 +46,8 @@ const RegionServiceLanding: React.FC = () => {
 
   // Real photos taken in this specific region, for this specific service —
   // proof that isn't just "we work in your area" but "here's your area".
-  // Requires at least 2 matches so the section never renders with a single
-  // token photo; below that it stays silent and the service-wide marquee
-  // above still carries the visual proof.
+  // A single verified job still provides useful local before/after evidence;
+  // keep it visible instead of falling back to service-wide photos only.
   //
   // Shuffle order lives in state, seeded from the unshuffled filter and
   // reshuffled only in an effect (see the matching comment in
@@ -126,12 +125,12 @@ const RegionServiceLanding: React.FC = () => {
       <ServiceBeforeAfterMarquee serviceId={serviceId || ''} />
 
       {/* Region-specific before/after proof, only when we actually have it */}
-      {regionItems.length >= 2 && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">
-            {region.name}에서 직접 진행한 시공 사례
+      {regionItems.length > 0 && (
+        <section aria-labelledby="region-work-photos-title" className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+          <h2 id="region-work-photos-title" className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">
+            {region.name}에서 직접 진행한 시공 사진
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className={`grid gap-4 ${regionItems.length === 1 ? 'grid-cols-1 max-w-md mx-auto sm:mx-0' : 'grid-cols-2 sm:grid-cols-3'}`}>
             {regionItems.map((item) => (
               <PortfolioSplitCard
                 key={item.id}
