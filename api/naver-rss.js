@@ -1,43 +1,63 @@
-// api/naver-rss.js — Vercel Edge Function
-//
-// GET /api/naver-rss?blog=kslee0143  ->  rss2json-compatible JSON
-// Replaces the third-party api.rss2json.com proxy the /portfolio page used
-// (see lib/naverRss.mjs). Only allow-listed blogs are fetched, and the result
-// is cached at the edge so Naver is hit at most every 30 minutes per blog.
 import { ALLOWED_NAVER_BLOGS, parseNaverRss } from '../lib/naverRss.mjs';
-
 export const config = { runtime: 'edge' };
-
 const MAX_ITEMS = 50;
+const MAX_BYTES = 2 * 1024 * 1024;
+const json = (body, status, cacheControl) => new Response(JSON.stringify(body), {
+  status,
+  headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': cacheControl, 'X-Content-Type-Options': 'nosniff' },
+});
 
-const json = (body, status, cacheControl) =>
-  new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': cacheControl,
-    },
-  });
+async function readBounded(response) {
+  if (Number(response.headers.get('content-length')) > MAX_BYTES) throw new Error('Feed too large');
+  if (!response.body) throw new Error('Empty feed');
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let text = '';
+  let bytes = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      if (bytes > MAX_BYTES) throw new Error('Feed too large');
+      text += decoder.decode(value, { stream: true });
+    }
+    return text + decoder.decode();
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+}
 
 export default async function handler(request) {
-  const blog = new URL(request.url).searchParams.get('blog');
-  if (!ALLOWED_NAVER_BLOGS.includes(blog)) {
+  if (request.method !== 'GET') {
+    const response = json({ status: 'error', message: 'method not allowed' }, 405, 'no-store');
+    response.headers.set('Allow', 'GET');
+    return response;
+  }
+  const blogs = new URL(request.url).searchParams.getAll('blog');
+  const blog = blogs[0];
+  if (blogs.length !== 1 || !ALLOWED_NAVER_BLOGS.includes(blog)) {
     return json({ status: 'error', message: 'unknown blog' }, 400, 'no-store');
   }
-
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
   try {
-    const upstream = await fetch(`https://rss.blog.naver.com/${blog}.xml`, {
+    const upstream = await fetch('https://rss.blog.naver.com/' + blog + '.xml', {
       headers: { 'User-Agent': 'neutiul.com field-log feed' },
+      redirect: 'error',
+      signal: controller.signal,
     });
     if (!upstream.ok) {
-      return json({ status: 'error', message: `naver ${upstream.status}` }, 502, 'no-store');
+      await upstream.body?.cancel();
+      return json({ status: 'error', message: 'upstream unavailable' }, 502, 'no-store');
     }
-    const payload = parseNaverRss(await upstream.text());
-    // Naver's feed carries each blog's latest 50 posts — all of them are
-    // returned; the page reveals them a page at a time with 더 보기.
+    const payload = parseNaverRss(await readBounded(upstream));
     payload.items = payload.items.slice(0, MAX_ITEMS);
     return json(payload, 200, 'public, s-maxage=1800, stale-while-revalidate=86400');
-  } catch (err) {
+  } catch {
     return json({ status: 'error', message: 'fetch failed' }, 502, 'no-store');
+  } finally {
+    clearTimeout(timeout);
   }
 }

@@ -63,12 +63,21 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ label, value, onChange, i
       return;
     }
 
+    if (file.size > 10 * 1024 * 1024) {
+      setError('10MB 이하의 이미지를 선택해 주세요.');
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
 
     try {
       // Compress the image to maintain fast loads and fit in Firestore database safely
       const compressedBase64 = await compressImage(file);
+      if (compressedBase64.length > 350000) {
+        setError('이미지가 너무 큽니다. 더 작은 사진이나 이미지 URL을 사용해 주세요.');
+        return;
+      }
       onChange(compressedBase64);
     } catch (err) {
       console.error(err);
