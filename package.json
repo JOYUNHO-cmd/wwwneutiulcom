@@ -24,7 +24,7 @@
     "@firebase/eslint-plugin-security-rules": "^0.0.2",
     "@firebase/rules-unit-testing": "^5.0.2",
     "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^22.14.0",
+    "@types/node": "^26.6.5",
     "@vitejs/plugin-react": "^5.0.0",
     "beasties": "^0.4.3",
     "node-html-parser": "7.0.1",
