@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useId, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { MessageCircle, X } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 
@@ -15,19 +16,70 @@ interface KakaoConfirmModalProps {
 // actual confirm (not on opening the modal), so it reflects real
 // hand-offs to KakaoTalk rather than button taps that get cancelled.
 const KakaoConfirmModal: React.FC<KakaoConfirmModalProps> = ({ kakaoUrl, location, onClose }) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef(onClose);
+  const titleId = useId();
+  const descriptionId = useId();
+
+  useEffect(() => { closeRef.current = onClose; }, [onClose]);
+
+  useEffect(() => {
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialogRef.current?.querySelector<HTMLButtonElement>('button')?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeRef.current();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+      const buttons = Array.from(dialogRef.current.querySelectorAll<HTMLButtonElement>('button:not([disabled])')) as HTMLButtonElement[];
+      const first = buttons[0];
+      const last = buttons[buttons.length - 1];
+      if (!first || !last) return;
+      if (!dialogRef.current.contains(document.activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      } else if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
+    };
+  }, []);
+
   const handleConfirm = () => {
     trackEvent('contact_click', { method: 'kakao', location });
     window.open(kakaoUrl, '_blank', 'noopener,noreferrer');
     onClose();
   };
 
-  return (
+  // Keep the overlay outside the floating button's translated container.
+  // A transformed ancestor otherwise makes fixed positioning use its tiny box.
+  if (typeof document === 'undefined') return null;
+  return createPortal(
     <div
       className="fixed inset-0 z-100 bg-black/60 backdrop-blur-xs flex items-center justify-center p-6"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-xs bg-white rounded-3xl shadow-2xl p-6 text-center"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
+        className="relative w-full max-w-xs max-h-[calc(100dvh-3rem)] overflow-y-auto bg-white rounded-3xl shadow-2xl p-6 text-center"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -43,8 +95,8 @@ const KakaoConfirmModal: React.FC<KakaoConfirmModalProps> = ({ kakaoUrl, locatio
           <MessageCircle size={26} className="fill-[#3C1E1E] text-[#3C1E1E]" />
         </div>
 
-        <p className="text-slate-900 font-black text-base mb-1.5">카카오톡으로 이동할까요?</p>
-        <p className="text-slate-500 text-sm leading-relaxed mb-6 break-keep">
+        <p id={titleId} className="text-slate-900 font-black text-base mb-1.5">카카오톡으로 이동할까요?</p>
+        <p id={descriptionId} className="text-slate-500 text-sm leading-relaxed mb-6 break-keep">
           느티울 카카오톡 채팅방이 새 창으로 열려요.
         </p>
 
@@ -65,7 +117,8 @@ const KakaoConfirmModal: React.FC<KakaoConfirmModalProps> = ({ kakaoUrl, locatio
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

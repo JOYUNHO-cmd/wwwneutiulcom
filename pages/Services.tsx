@@ -127,7 +127,7 @@ const Services: React.FC = () => {
                 {/* Hero Section */}
                 <div className="relative h-48 md:h-[400px] w-full overflow-hidden">
                    <img 
-                     src={activeService.image} 
+                     src={activeService.image || '/images/logo.webp'} 
                      alt={activeService.title} 
                      className="w-full h-full object-cover"
                    />

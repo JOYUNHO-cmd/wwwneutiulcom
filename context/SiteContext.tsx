@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { SiteConfig, SiteContextType, CompanyInfo } from '../types';
 import { INITIAL_CONFIG } from '../constants';
+import { mergeServiceOverrides } from '../lib/serviceOverrides.mjs';
 
 const SiteContext = createContext<SiteContextType | undefined>(undefined);
 
@@ -34,22 +35,25 @@ export const SiteProvider = ({ children }: { children?: ReactNode }) => {
       if (cancelled) return;
       (async () => {
         try {
-          const { getCompanyInfo } = await import('../lib/firebaseServicePublic');
-          const info = await getCompanyInfo();
-          if (cancelled || !info) return;
+          const { getCompanyInfo, getServiceOverrides } = await import('../lib/firebaseServicePublic');
+          const [company, services] = await Promise.all([getCompanyInfo(), getServiceOverrides()]);
+          const info = company || {};
+          if (cancelled) return;
           setConfig((prev) => ({
             ...prev,
+            services: mergeServiceOverrides(prev.services, services),
             companyInfo: {
               ...prev.companyInfo,
               name: info.name === '느티울종합청소' ? '느티울' : (info.name || prev.companyInfo.name),
               phone: info.phone || prev.companyInfo.phone,
               logo: info.logo || prev.companyInfo.logo,
-              slogan: info.slogan || prev.companyInfo.slogan,
-              description: info.description || prev.companyInfo.description,
+              slogan: typeof info.slogan === 'string' ? info.slogan : prev.companyInfo.slogan,
+              description: typeof info.description === 'string' ? info.description : prev.companyInfo.description,
               email: info.email || prev.companyInfo.email,
               address: info.address || prev.companyInfo.address,
               instagram: info.instagram || prev.companyInfo.instagram,
               blog: info.blog || prev.companyInfo.blog,
+              blog2: info.blog2 || prev.companyInfo.blog2,
               youtube: info.youtube || prev.companyInfo.youtube,
             },
           }));

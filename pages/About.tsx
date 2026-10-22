@@ -134,6 +134,7 @@ const About: React.FC = () => {
               <h2 className="text-[16px] xs:text-[18px] sm:text-2xl sm:leading-[2rem] md:text-3xl md:leading-[2.5rem] lg:text-[32px] font-black text-slate-900 leading-tight mb-6 whitespace-nowrap text-center lg:text-left">
                 '느티울' 이라는 이름에 담긴 <span className="text-primary font-black border-b-4 border-primary/20">소중한 약속</span>
               </h2>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed whitespace-pre-line break-words mb-6">{config.companyInfo.description}</p>
               
               <p className="text-slate-500 text-xs sm:text-sm sm:leading-[1.25rem] md:text-base md:leading-[1.5rem] leading-relaxed mb-8 break-keep text-center lg:text-left">
                 <span className="block md:whitespace-nowrap font-bold" style={{ fontWeight: 'bold' }}>
