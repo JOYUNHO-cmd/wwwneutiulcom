@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider, signOut, onIdTokenChanged } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, signOut, onIdTokenChanged } from 'firebase/auth';
 import { getFirebaseAuth } from '../lib/firebase';
 import { isVerifiedAdmin } from '../lib/adminPolicy.mjs';
 
@@ -8,7 +8,6 @@ interface AuthContextType {
   user: AdminUser | null;
   isAdmin: boolean;
   loading: boolean;
-  loginWithCredentials: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   login: () => Promise<void>;
 }
@@ -40,31 +39,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     return () => { cancelled = true; unsubscribe?.(); };
   }, []);
-  const authenticate = async (email?: string, password?: string) => {
+  const authenticate = async () => {
     setLoading(true);
     setUser(null);
     try {
       const auth = await getFirebaseAuth();
       if (!auth) throw new Error('인증 서비스를 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.');
-      const result = email !== undefined
-        ? await signInWithEmailAndPassword(auth, email.trim(), password || '')
-        : await signInWithPopup(auth, new GoogleAuthProvider());
+      const result = await signInWithPopup(auth, new GoogleAuthProvider());
       if (!isVerifiedAdmin(result.user)) {
         await signOut(auth);
         throw new Error('인증된 관리자 계정으로 로그인해 주세요.');
       }
     } finally { setLoading(false); }
   };
-  const loginWithCredentials = async (email: string, password: string) => {
-    try { await authenticate(email, password); return true; }
-    catch { return false; }
-  };
   const logout = async () => {
     setUser(null);
     const auth = await getFirebaseAuth();
     if (auth) await signOut(auth);
   };
-  return <AuthContext.Provider value={{ user, isAdmin: user !== null, loading, loginWithCredentials, logout, login: () => authenticate() }}>
+  return <AuthContext.Provider value={{ user, isAdmin: user !== null, loading, logout, login: () => authenticate() }}>
     {children}
   </AuthContext.Provider>;
 };

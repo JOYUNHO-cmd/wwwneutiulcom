@@ -29,28 +29,13 @@ import { PortfolioItem } from '../types';
 import ImageUploader from '../components/ImageUploader';
 
 const AdminDashboardInner: React.FC = () => {
-  const { user, isAdmin, loading: authLoading, loginWithCredentials, logout, login: loginWithGoogle } = useAuth();
+  const { user, isAdmin, loading: authLoading, logout, login: loginWithGoogle } = useAuth();
   const { config, updateCompanyInfo } = useSite();
   const [activeTab, setActiveTab] = useState<'general' | 'services' | 'portfolio'>('general');
   const navigate = useNavigate();
 
-  // Login Credentials state
-  const [adminId, setAdminId] = useState('');
-  const [adminPw, setAdminPw] = useState('');
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-  const handleCredentialLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoginError('');
-    setIsLoggingIn(true);
-    
-    const success = await loginWithCredentials(adminId, adminPw);
-    if (!success) {
-      setLoginError('로그인에 실패했습니다. 등록된 관리자 이메일과 비밀번호를 확인하세요.');
-    }
-    setIsLoggingIn(false);
-  };
 
   const handleGoogleLogin = async () => {
     setLoginError('');
@@ -171,65 +156,9 @@ const AdminDashboardInner: React.FC = () => {
             </div>
           </div>
           <h2 className="text-2xl font-black text-center text-gray-900 mb-1 tracking-tight">느티울종합청소 관리자</h2>
-          <p className="text-gray-500 text-center mb-8 text-sm font-medium">등록된 관리자 이메일 또는 Google 계정으로 로그인하세요.</p>
+          <p className="text-gray-500 text-center mb-8 text-sm font-medium">등록된 관리자 Google 계정으로 로그인하세요.</p>
           
-          <form onSubmit={handleCredentialLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">관리자 이메일</label>
-              <input
-                type="email"
-                autoComplete="username"
-                required
-                value={adminId}
-                onChange={(e) => setAdminId(e.target.value)}
-                placeholder="관리자 이메일을 입력하세요"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none text-sm transition-all text-gray-800"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">비밀번호</label>
-              <input
-                type="password"
-                autoComplete="current-password"
-                required
-                value={adminPw}
-                onChange={(e) => setAdminPw(e.target.value)}
-                placeholder="비밀번호를 입력하세요"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none text-sm transition-all text-gray-800"
-              />
-            </div>
-
-            {loginError && (
-              <p className="text-xs text-red-500 font-bold bg-red-50 p-3 rounded-xl flex items-center gap-2">
-                <span>⚠️</span> {loginError}
-              </p>
-            )}
-
-            <button
-              type="submit"
-              disabled={isLoggingIn}
-              className="w-full bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-primaryDark transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/25 disabled:opacity-50 text-sm mt-6"
-            >
-              {isLoggingIn ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  로그인 중...
-                </>
-              ) : (
-                '관리자 로그인'
-              )}
-            </button>
-          </form>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-gray-400 font-bold">또는 (추천)</span>
-            </div>
-          </div>
+          {loginError && <p className="text-sm text-red-600 mb-4" role="alert">{loginError}</p>}
 
           <button
             type="button"
@@ -248,7 +177,7 @@ const AdminDashboardInner: React.FC = () => {
 
           <div className="mt-8 pt-6 border-t border-gray-100 bg-gray-50/50 -mx-8 -mb-10 px-8 py-6 rounded-b-3xl">
              <p className="text-[11px] text-gray-400 font-medium leading-relaxed">
-               ※ 이메일 인증이 완료된 관리자 계정만 사용할 수 있습니다. 기존 자체 아이디 로그인은 더 이상 지원되지 않습니다.
+               ※ 등록된 관리자 Google 계정만 사용할 수 있습니다. 기존 자체 아이디와 비밀번호 로그인은 폐기되었습니다.
              </p>
           </div>
         </div>

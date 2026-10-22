@@ -40,3 +40,6 @@
 Firestore 권한은 클라이언트 UI와 독립적이다. 기존 UI 우회가 실제 운영 DB 쓰기까지 가능했다는 증거는 확인하지 않았다.
 App Check/서비스별 할당량은 콘솔 접근과 실제 트래픽을 바탕으로 별도 설정할 수 있다.
 참고: https://firebase.google.com/docs/firestore/security/rules-fields
+## 운영 반영 기록 — 2026-10-22
+Firebase 콘솔에서 지정 관리자 Google 계정, Google 공급자 활성화, neutiul.com 및 www.neutiul.com 승인 도메인을 확인했다. 운영 공급자에 맞춰 관리자 UI는 Google 로그인만 제공한다.
+운영의 명명된 데이터베이스에 보안 규칙을 게시했으며, 콘솔 게시 이력의 새 활성 버전을 확인했다. 편집기 원문이 저장소 규칙과 일치하는지 게시 전에 비교했다.
