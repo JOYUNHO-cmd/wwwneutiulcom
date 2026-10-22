@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from 'firebase/firestore/lite';
+import { doc, getDoc } from 'firebase/firestore/lite';
 import { dbLite, isMockFirebase } from './firebaseLite';
 
 // Read-only functions for public pages (SiteContext etc.) only. Admin CRUD
@@ -34,8 +34,6 @@ export async function getCompanyInfo() {
       const data = d.data();
       if (data && (data.logo === oldLogo1 || data.logo === oldLogo2 || !data.logo)) {
         data.logo = newLogo;
-        // Logo migration runs in the background — failure doesn't affect the page.
-        updateDoc(docRef, { logo: newLogo }).catch(e => console.error("Error migrating remote logo:", e));
       }
       return data;
     }

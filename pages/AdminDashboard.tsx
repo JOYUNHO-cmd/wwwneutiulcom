@@ -47,7 +47,7 @@ const AdminDashboardInner: React.FC = () => {
     
     const success = await loginWithCredentials(adminId, adminPw);
     if (!success) {
-      setLoginError('아이디 또는 비밀번호가 올바르지 않습니다.');
+      setLoginError('로그인에 실패했습니다. 등록된 관리자 이메일과 비밀번호를 확인하세요.');
     }
     setIsLoggingIn(false);
   };
@@ -136,7 +136,8 @@ const AdminDashboardInner: React.FC = () => {
 
   const handleEditItem = (item: PortfolioItem) => {
     setEditingItemId(item.id);
-    setItemForm(item);
+    const { title, category, beforeImage, afterImage, description, date } = item;
+    setItemForm({ title, category, beforeImage, afterImage, description, date });
     setIsAddingPortfolio(true);
   };
 
@@ -170,17 +171,18 @@ const AdminDashboardInner: React.FC = () => {
             </div>
           </div>
           <h2 className="text-2xl font-black text-center text-gray-900 mb-1 tracking-tight">느티울종합청소 관리자</h2>
-          <p className="text-gray-500 text-center mb-8 text-sm font-medium">자체 계정 아이디와 비밀번호로 로그인하세요.</p>
+          <p className="text-gray-500 text-center mb-8 text-sm font-medium">등록된 관리자 이메일 또는 Google 계정으로 로그인하세요.</p>
           
           <form onSubmit={handleCredentialLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">관리자 아이디</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">관리자 이메일</label>
               <input
-                type="text"
+                type="email"
+                autoComplete="username"
                 required
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
-                placeholder="아이디를 입력하세요 (기본: admin)"
+                placeholder="관리자 이메일을 입력하세요"
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none text-sm transition-all text-gray-800"
               />
             </div>
@@ -189,6 +191,7 @@ const AdminDashboardInner: React.FC = () => {
               <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">비밀번호</label>
               <input
                 type="password"
+                autoComplete="current-password"
                 required
                 value={adminPw}
                 onChange={(e) => setAdminPw(e.target.value)}
@@ -245,7 +248,7 @@ const AdminDashboardInner: React.FC = () => {
 
           <div className="mt-8 pt-6 border-t border-gray-100 bg-gray-50/50 -mx-8 -mb-10 px-8 py-6 rounded-b-3xl">
              <p className="text-[11px] text-gray-400 font-medium leading-relaxed">
-               ※ 네이버/구글 로그인 중단으로 인하여 404 및 연동 오류를 해결하기 위해 <b>자체 ID/Password 로그인 시스템</b>으로 즉각 교체되었습니다.
+               ※ 이메일 인증이 완료된 관리자 계정만 사용할 수 있습니다. 기존 자체 아이디 로그인은 더 이상 지원되지 않습니다.
              </p>
           </div>
         </div>
