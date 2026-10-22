@@ -39,17 +39,17 @@
     },
     {
       "source": "/services/floor-wax/songpa/%EC%86%A1%ED%8C%8C%EB%B0%95%EB%A6%AC%ED%9B%84%EB%B0%94%EB%8B%A5%EC%99%81%EC%8A%A4%EC%BD%94%ED%8C%85",
-      "destination": "/services/floor-wax/songpa/송파바닥세척도포작업",
+      "destination": "/services/floor-wax/songpa/%EC%86%A1%ED%8C%8C%EB%B0%94%EB%8B%A5%EC%84%B8%EC%B2%99%EB%8F%84%ED%8F%AC%EC%9E%91%EC%97%85",
       "permanent": true
     },
     {
       "source": "/services/floor-wax/yongin/%EC%9A%A9%EC%9D%B8%EB%B0%95%EB%A6%AC%ED%9B%84%EB%A7%88%EB%A3%A8%EC%BD%94%ED%8C%85",
-      "destination": "/services/floor-wax/yongin/용인주택마루표면작업",
+      "destination": "/services/floor-wax/yongin/%EC%9A%A9%EC%9D%B8%EC%A3%BC%ED%83%9D%EB%A7%88%EB%A3%A8%ED%91%9C%EB%A9%B4%EC%9E%91%EC%97%85",
       "permanent": true
     },
     {
       "source": "/services/special/uijeongbu/%EC%9D%98%EC%A0%95%EB%B6%80%EC%93%B0%EB%A0%88%EA%B8%B0%EC%A7%91%EC%B2%AD%EC%86%8C",
-      "destination": "/services/trash-house/uijeongbu/의정부쓰레기집청소",
+      "destination": "/services/trash-house/uijeongbu/%EC%9D%98%EC%A0%95%EB%B6%80%EC%93%B0%EB%A0%88%EA%B8%B0%EC%A7%91%EC%B2%AD%EC%86%8C",
       "permanent": true
     }
   ],

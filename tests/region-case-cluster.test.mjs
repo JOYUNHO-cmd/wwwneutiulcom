@@ -487,12 +487,12 @@ test('unsupported legacy floor-wax slugs use encoded permanent redirects to neut
   const config = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
   assert.ok(config.redirects?.some((entry) =>
     entry.source === '/services/floor-wax/songpa/%EC%86%A1%ED%8C%8C%EB%B0%95%EB%A6%AC%ED%9B%84%EB%B0%94%EB%8B%A5%EC%99%81%EC%8A%A4%EC%BD%94%ED%8C%85' &&
-    entry.destination === '/services/floor-wax/songpa/송파바닥세척도포작업' &&
+    entry.destination === encodeURI('/services/floor-wax/songpa/송파바닥세척도포작업') &&
     entry.permanent === true
   ));
   assert.ok(config.redirects?.some((entry) =>
     entry.source === '/services/floor-wax/yongin/%EC%9A%A9%EC%9D%B8%EB%B0%95%EB%A6%AC%ED%9B%84%EB%A7%88%EB%A3%A8%EC%BD%94%ED%8C%85' &&
-    entry.destination === '/services/floor-wax/yongin/용인주택마루표면작업' &&
+    entry.destination === encodeURI('/services/floor-wax/yongin/용인주택마루표면작업') &&
     entry.permanent === true
   ));
 });
@@ -512,7 +512,7 @@ test('the Uijeongbu hoarder-house case moved to trash-house and its old special 
   const config = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
   assert.ok(config.redirects?.some((entry) =>
     entry.source === `/services/special/uijeongbu/${encodeURIComponent('의정부쓰레기집청소')}`
-    && entry.destination === '/services/trash-house/uijeongbu/의정부쓰레기집청소'
+    && entry.destination === encodeURI('/services/trash-house/uijeongbu/의정부쓰레기집청소')
     && entry.permanent === true));
 });
 

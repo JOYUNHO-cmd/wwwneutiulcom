@@ -43,6 +43,17 @@ test('trailing slashes use the same no-slash convention as canonicals and histor
   }
 });
 
+test('literal Korean redirect destinations are URI-encoded for browser-safe Location headers', () => {
+  for (const [source, destination] of oldCaseRoutes.slice(1)) {
+    const rule = config.redirects.find(candidate => candidate.source === encodeURI(source));
+    assert.ok(rule, source);
+    assert.equal(rule.destination, encodeURI(destination), source);
+    assert.match(rule.destination, /^[\x21-\x7E]+$/, source);
+    assert.equal(decodeURIComponent(rule.destination), destination, source);
+    assert.equal(rule.permanent, true, source);
+  }
+});
+
 // These opt-in checks exercise Vercel itself, not a local imitation of its
 // routing engine. Set SEO_REDIRECT_ORIGIN to a preview or production URL.
 test('deployed index-file and slash aliases reach the canonical page without a loop', { skip: !origin }, async () => {
@@ -68,6 +79,15 @@ test('deployed index-file and slash aliases reach the canonical page without a l
 
 test('deployed historical case URLs also resolve with trailing slashes', { skip: !origin }, async () => {
   for (const [source, destination] of oldCaseRoutes) {
+    // Automatic Node fetch redirects can repair raw UTF-8 header bytes that
+    // Chrome interprets differently. Check the actual Location bytes as well.
+    const initial = await fetch(new URL(source, origin), { redirect: 'manual', signal: AbortSignal.timeout(15000) });
+    assert.equal(initial.status, 308, source);
+    const location = initial.headers.get('location');
+    assert.ok(location, source);
+    assert.match(location, /^[\x21-\x7E]+$/, `Location must contain only URI-encoded ASCII: ${source}`);
+    assert.equal(decodeURIComponent(new URL(location, origin).pathname), destination, source);
+    await initial.arrayBuffer();
     const result = await fetch(new URL(`${source}/`, origin), { signal: AbortSignal.timeout(15000) });
     assert.equal(result.status, 200, source);
     assert.equal(decodeURIComponent(new URL(result.url).pathname), destination, source);
