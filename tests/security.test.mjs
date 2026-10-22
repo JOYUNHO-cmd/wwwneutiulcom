@@ -27,7 +27,7 @@ test('RSS rejects methods, duplicate blogs and proxy targets without fetching', 
 test('RSS fetch uses fixed origin, rejects redirects and carries an abort signal', async t => {
   t.mock.method(globalThis, 'fetch', async (url, options) => {
     assert.equal(url,'https://rss.blog.naver.com/kslee0143.xml');
-    assert.equal(options.redirect,'error');
+    assert.equal(options.redirect,'manual');
     assert.ok(options.signal instanceof AbortSignal);
     return new Response('<rss><channel><item><title>OK</title></item></channel></rss>');
   });
@@ -55,4 +55,14 @@ test('RSS deadline aborts a stalled upstream and returns an uncacheable error', 
   assert.equal(res.status,502);
   assert.equal(res.headers.get('cache-control'),'no-store');
   assert.equal((await res.json()).message,'fetch failed');
+});
+
+test('RSS rejects upstream redirects without following their target', async t => {
+  const mock=t.mock.method(globalThis,'fetch', async (_url, options) => {
+    assert.equal(options.redirect,'manual');
+    return new Response(null,{status:302,headers:{Location:'http://127.0.0.1/private'}});
+  });
+  const response=await handler(new Request('https://example.com/api/naver-rss?blog=kslee0143'));
+  assert.equal(response.status,502);
+  assert.equal(mock.mock.callCount(),1);
 });
