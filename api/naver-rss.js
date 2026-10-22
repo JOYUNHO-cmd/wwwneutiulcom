@@ -45,7 +45,7 @@ export default async function handler(request) {
   try {
     const upstream = await fetch('https://rss.blog.naver.com/' + blog + '.xml', {
       headers: { 'User-Agent': 'neutiul.com field-log feed' },
-      redirect: 'error',
+      redirect: 'manual',
       signal: controller.signal,
     });
     if (!upstream.ok) {
