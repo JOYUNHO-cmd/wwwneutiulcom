@@ -22,5 +22,7 @@ jobs:
           node-version: '22'
       - run: npm ci --ignore-scripts
       - run: npm audit --audit-level=low
+      - run: node scripts/generate-portfolio-highlights.mjs
+      - run: node scripts/generate-region-case-index.mjs
       - run: npm run lint
       - run: npm test
