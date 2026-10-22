@@ -177,8 +177,8 @@ const ServiceLanding: React.FC = () => {
           />
           {/* Layered Advanced Gradients & Film Grain */}
           <div className="absolute inset-0 bg-slate-950/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-slate-950/40 z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-emerald-400/5" />
+          <div className="absolute inset-0 bg-linear-to-t/srgb from-transparent via-transparent to-slate-950/40 z-10" />
+          <div className="absolute inset-0 bg-linear-to-r/srgb from-primary/10 via-transparent to-emerald-400/5" />
           <div className="absolute inset-0 opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         </div>
 
@@ -192,19 +192,19 @@ const ServiceLanding: React.FC = () => {
         <div className="relative z-20 max-w-7xl mx-auto px-4 text-center mt-2 sm:mt-4 md:mt-2 flex flex-col items-center justify-center">
           
           {/* Subtitle Accent */}
-          <h2 className="text-slate-400 text-xs sm:text-sm md:text-[23.25px] md:leading-[30px] font-bold tracking-tight uppercase mb-2 md:mb-4.5 break-keep leading-snug">
+          <h2 className="text-slate-400 text-xs sm:text-sm sm:leading-[1.25rem] md:text-[23.25px] md:leading-[30px] font-bold tracking-tight uppercase mb-2 md:mb-4.5 break-keep leading-snug">
             상담부터 마감까지
             <br />
             대표가 책임지고 직접 관리하는
           </h2>
 
           {/* Main Display Title */}
-          <h1 className="text-2xl sm:text-4xl md:text-6xl font-black text-white mb-4 sm:mb-6 leading-[1.2] tracking-tight drop-shadow-2xl">
+          <h1 className="text-2xl sm:text-4xl sm:leading-[2.5rem] md:text-6xl md:leading-[1] font-black text-white mb-4 sm:mb-6 leading-[1.2] tracking-tight drop-shadow-2xl">
             {service.title}
           </h1>
 
           {/* Slogan Descriptive paragraph */}
-          <div className="text-slate-200 text-sm sm:text-base md:text-lg max-w-3xl lg:max-w-5xl mx-auto font-medium tracking-tight break-keep leading-relaxed opacity-95 px-4 flex flex-col gap-3 sm:gap-4">
+          <div className="text-slate-200 text-sm sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] max-w-3xl lg:max-w-5xl mx-auto font-medium tracking-tight break-keep leading-relaxed opacity-95 px-4 flex flex-col gap-3 sm:gap-4">
             <p className="md:text-[25.25px] md:font-normal">
               {(service.heroLead || '보여주기식 청소는 절대 하지 않습니다.').split('\n').map((line, i) => (
                 <React.Fragment key={i}>
@@ -255,7 +255,7 @@ const ServiceLanding: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-[31.75px] md:text-5xl font-extrabold text-slate-900 mb-6">전문 자격증 보유 현황</h2>
-            <p className="text-slate-500 text-[11px] font-bold leading-[18px] sm:text-[15px] md:text-xl sm:font-medium sm:leading-relaxed max-w-3xl mx-auto break-keep">
+            <p className="text-slate-500 text-[11px] font-bold leading-[18px] sm:text-[15px] md:text-xl md:leading-[1.75rem] sm:font-medium sm:leading-relaxed max-w-3xl mx-auto break-keep">
               느티울은 검증된 전문 자격을 갖춘 대표가 직접 시공합니다.<br />
               전문성과 기술력을 바탕으로 신뢰할 수 있는 서비스를 제공합니다.
             </p>
@@ -264,19 +264,19 @@ const ServiceLanding: React.FC = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 sm:gap-6 md:gap-8 px-1 md:px-0">
             {certificationsData.map((cert) => (
               <div key={cert.id} className="group relative">
-                <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg group-hover:border-primary/50 group-hover:shadow-2xl transition-all duration-500">
+                <div className="aspect-3/4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg group-hover:border-primary/50 group-hover:shadow-2xl transition-all duration-500">
                   <img loading="lazy" decoding="async" 
                     src={cert.image} 
                     alt={cert.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-linear-to-t/srgb from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="absolute bottom-4 left-0 w-full px-4 transform translate-y-4 group-hover:translate-y-0 transition-transform opacity-0 group-hover:opacity-100">
                      <p className="text-white text-[8px] md:text-[10px] font-bold uppercase tracking-wider">{cert.issuer}</p>
                   </div>
                 </div>
                 <div className="mt-3 md:mt-5 text-center px-1">
-                  <h4 className="text-xs sm:text-base md:text-[17px] font-bold text-slate-800 mb-1 group-hover:text-primaryDark transition-colors leading-tight break-keep">
+                  <h4 className="text-xs sm:text-base sm:leading-[1.5rem] md:text-[17px] font-bold text-slate-800 mb-1 group-hover:text-primaryDark transition-colors leading-tight break-keep">
                     {cert.title}
                   </h4>
                 </div>
@@ -293,7 +293,7 @@ const ServiceLanding: React.FC = () => {
             
             {/* Main Header */}
             <div className="text-center mb-10 sm:mb-14">
-              <h3 className="text-lg sm:text-3xl md:text-[38px] md:leading-[50px] font-extrabold text-slate-900 tracking-tight leading-snug">
+              <h3 className="text-lg sm:text-3xl sm:leading-[2.5rem] md:text-[38px] md:leading-[50px] font-extrabold text-slate-900 tracking-tight leading-snug">
                 <span className="block sm:inline">닦아도 닦아도 지저분해지는 이유,</span>{" "}
                 <span className="block sm:inline">알고 나면 해결이 보입니다</span>
               </h3>
@@ -301,21 +301,21 @@ const ServiceLanding: React.FC = () => {
 
             {/* Intro & Core Problem Card */}
             <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] mb-10 md:mb-12 space-y-6 sm:space-y-8">
-              <p className="text-slate-800 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed font-bold tracking-tight sm:tracking-normal">
+              <p className="text-slate-800 text-xs sm:text-sm sm:leading-[1.25rem] md:text-base md:leading-[1.5rem] lg:text-lg lg:leading-[1.75rem] leading-relaxed font-bold tracking-tight sm:tracking-normal">
                 <span className="block sm:inline text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap sm:whitespace-normal">아무리 쓸고 닦아도 어느순간 바닥이 얼룩지고</span>{" "}
                 <span className="block sm:inline text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap sm:whitespace-normal">오염이 번져가는 현상을 겪으셨을 것입니다.</span>
               </p>
               
               <div className="p-6 sm:p-8 md:p-9 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 space-y-3.5">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-sm">
+                  <div className="w-7 h-7 rounded-lg bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Info className="w-4 h-4 stroke-[2.5]" />
                   </div>
                   <h4 className="text-emerald-950 font-extrabold text-base sm:text-lg md:text-xl">
                     이유는 간단합니다.
                   </h4>
                 </div>
-                <p className="text-slate-800 text-xs sm:text-base leading-relaxed font-medium space-y-0.5 sm:space-y-0">
+                <p className="text-slate-800 text-xs sm:text-base sm:leading-[1.5rem] leading-relaxed font-medium space-y-0.5 sm:space-y-0">
                   <span className="block sm:inline">타일 표면에는 눈에 보이지 않는</span>{" "}
                   <span className="block sm:inline">미세한 기공과 패턴이 있어,</span>{" "}
                   <span className="block sm:inline">오염물이 표면이 아니라</span>{" "}
@@ -332,7 +332,7 @@ const ServiceLanding: React.FC = () => {
                 <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
                   <AlertTriangle className="w-5 h-5 stroke-[2.5]" />
                 </div>
-                <h4 className="text-[16.5px] leading-[22px] sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                <h4 className="text-[16.5px] leading-[22px] sm:text-2xl sm:leading-[2rem] font-extrabold text-slate-900 tracking-tight">
                   왜 일반 청소로는 해결되지 않을까요?
                 </h4>
               </div>
@@ -344,11 +344,11 @@ const ServiceLanding: React.FC = () => {
                     <span className="inline-block px-3 py-1 rounded-lg text-xs font-black bg-amber-50 text-amber-800 border border-amber-200 mb-3.5">
                       원인 ①
                     </span>
-                    <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base md:text-lg mb-2.5 leading-snug">
+                    <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mb-2.5 leading-snug">
                       <span className="block sm:inline whitespace-nowrap sm:whitespace-normal">타일(기공,패턴)속에 굳어버린 오염,</span>{" "}
                       <span className="block sm:inline whitespace-nowrap sm:whitespace-normal">단순한 세정으로 해결 불가</span>
                     </h5>
-                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed break-keep font-normal">
+                    <p className="text-slate-600 text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed break-keep font-normal">
                       오염이 깊이 스며들어 경화되면, 표면만 닦는 세정으로는 절대 제거되지 않습니다.
                     </p>
                   </div>
@@ -360,10 +360,10 @@ const ServiceLanding: React.FC = () => {
                     <span className="inline-block px-3 py-1 rounded-lg text-xs font-black bg-amber-50 text-amber-800 border border-amber-200 mb-3.5">
                       원인 ②
                     </span>
-                    <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base md:text-lg mb-2.5 leading-snug whitespace-nowrap sm:whitespace-normal tracking-tight sm:tracking-normal">
+                    <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mb-2.5 leading-snug whitespace-nowrap sm:whitespace-normal tracking-tight sm:tracking-normal">
                       억지로 오염을 닦아내면 오히려 확산
                     </h5>
-                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed break-keep font-normal">
+                    <p className="text-slate-600 text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed break-keep font-normal">
                       세제로 때를 불려도 그대로 닦아내면, 불려진 오염수가 옆으로 퍼지면서 다시 스며듭니다. 결국 얼룩의 위치만 이동할 뿐, 근본적으로는 사라지지 않습니다.
                     </p>
                   </div>
@@ -375,10 +375,10 @@ const ServiceLanding: React.FC = () => {
                     <span className="inline-block px-3 py-1 rounded-lg text-xs font-black bg-amber-50 text-amber-800 border border-amber-200 mb-3.5">
                       원인 ③
                     </span>
-                    <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base md:text-lg mb-2.5 break-keep leading-snug">
+                    <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mb-2.5 break-keep leading-snug">
                       잔류 세제로 인한 2차 오염
                     </h5>
-                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed break-keep font-normal">
+                    <p className="text-slate-600 text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed break-keep font-normal">
                       세제 사용 후 충분히 헹구지 않으면 잔류 세제가 남아 끈적임, 광택 저하, 먼지 흡착을 유발하고 오염이 반복되는 악순환이 시작됩니다.
                     </p>
                   </div>
@@ -403,24 +403,24 @@ const ServiceLanding: React.FC = () => {
             
             {/* Header Badge & Title */}
             <div className="text-center mb-12 md:mb-16">
-              <h3 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-snug break-keep">
+              <h3 className="text-2xl sm:text-4xl sm:leading-[2.5rem] md:text-5xl md:leading-[1] font-extrabold text-slate-900 tracking-tight leading-snug break-keep">
                 투명하고 합리적인 <br className="block sm:hidden" /><span className="text-emerald-600">맞춤 비용 산정 가이드</span>
               </h3>
-              <p className="text-slate-600 text-xs sm:text-base md:text-lg mt-3 font-medium leading-relaxed max-w-3xl mx-auto break-keep">
+              <p className="text-slate-600 text-xs sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mt-3 font-medium leading-relaxed max-w-3xl mx-auto break-keep">
                 과잉 청구나 무단 추가금 우려 없이, <br className="block sm:hidden" />정직하고 세심한 기준으로 가격을 제시합니다.
               </p>
             </div>
 
             {/* Top Important Notice Banner */}
-            <div className="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-5 sm:p-7 mb-10 md:mb-12 shadow-sm flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
-              <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-sm">
+            <div className="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-5 sm:p-7 mb-10 md:mb-12 shadow-xs flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-xs">
                 <Info className="w-6 h-6 stroke-[2.5]" />
               </div>
               <div className="flex-1">
                 <h4 className="text-emerald-950 font-extrabold text-sm sm:text-base md:text-lg mb-3 sm:mb-4 flex items-center justify-center sm:justify-start gap-2">
                   <span>정확한 비용은 현장 기준으로 <br className="block sm:hidden" />세심하게 산정됩니다</span>
                 </h4>
-                <p className="text-slate-800 text-[11px] xs:text-xs sm:text-sm md:text-base leading-relaxed sm:leading-loose tracking-tighter sm:tracking-normal font-medium">
+                <p className="text-slate-800 text-[11px] xs:text-xs sm:text-sm md:text-base md:leading-[1.5rem] leading-relaxed sm:leading-loose tracking-tighter sm:tracking-normal font-medium">
                   <span className="block sm:inline">쓰레기 적치량 · 오염도 · 투입 인원 · 작업 시간</span>{" "}
                   <span className="block sm:inline">층수 및 엘리베이터 동선 등에 따라 맞춤 견적이</span>{" "}
                   <span className="block sm:inline">산정되며, 사진 전송 시 <strong className="text-emerald-700 font-bold">10분 이내에 빠르게</strong></span>{" "}
@@ -439,14 +439,14 @@ const ServiceLanding: React.FC = () => {
                     <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
                       <DollarSign className="w-5 h-5 stroke-[2.5]" />
                     </div>
-                    <h4 className="text-base sm:text-xl font-bold text-slate-900 tracking-tight leading-snug text-center sm:text-left">
+                    <h4 className="text-base sm:text-xl sm:leading-[1.75rem] font-bold text-slate-900 tracking-tight leading-snug text-center sm:text-left">
                       쓰레기집 청소 <br className="block sm:hidden" />평균 비용 안내
                     </h4>
                   </div>
 
                   {/* Mobile Card View (block sm:hidden) */}
                   <div className="block sm:hidden space-y-3">
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-sm">
+                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-xs">
                       <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/80">
                         <span className="text-sm font-extrabold text-slate-900">원룸 · 소형</span>
                         <span className="text-sm font-black text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-200">
@@ -458,7 +458,7 @@ const ServiceLanding: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-sm">
+                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-xs">
                       <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/80">
                         <span className="text-sm font-extrabold text-slate-900">빌라 · 아파트</span>
                         <span className="text-sm font-black text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-200">
@@ -470,7 +470,7 @@ const ServiceLanding: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-sm">
+                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-xs">
                       <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/80">
                         <span className="text-sm font-extrabold text-slate-900 leading-tight">
                           심각한<br />특수 현장
@@ -503,7 +503,7 @@ const ServiceLanding: React.FC = () => {
                           <td className="py-4 px-2 font-extrabold text-emerald-700 text-sm sm:text-base">
                             30만 원 ~
                           </td>
-                          <td className="py-4 px-2 text-xs sm:text-sm text-slate-600 leading-normal">
+                          <td className="py-4 px-2 text-xs sm:text-sm sm:leading-[1.25rem] text-slate-600 leading-normal">
                             쓰레기 적치량 및 오염 수준에 따라 유연하게 책정
                           </td>
                         </tr>
@@ -514,7 +514,7 @@ const ServiceLanding: React.FC = () => {
                           <td className="py-4 px-2 font-extrabold text-emerald-700 text-sm sm:text-base">
                             70만 원 ~
                           </td>
-                          <td className="py-4 px-2 text-xs sm:text-sm text-slate-600 leading-normal">
+                          <td className="py-4 px-2 text-xs sm:text-sm sm:leading-[1.25rem] text-slate-600 leading-normal">
                             작업 인원 · 소요 시간 · 층수 및 운반 동선 반영
                           </td>
                         </tr>
@@ -525,7 +525,7 @@ const ServiceLanding: React.FC = () => {
                           <td className="py-4 px-2 font-extrabold text-amber-700 text-xs sm:text-sm">
                             현장 맞춤 상담 후 견적
                           </td>
-                          <td className="py-4 px-2 text-xs sm:text-sm text-slate-600 leading-normal">
+                          <td className="py-4 px-2 text-xs sm:text-sm sm:leading-[1.25rem] text-slate-600 leading-normal">
                             부패 · 분뇨 · 해충 박멸 및 특수 탈취 소독 포함
                           </td>
                         </tr>
@@ -534,7 +534,7 @@ const ServiceLanding: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-200/80 text-slate-500 text-[11px] sm:text-xs leading-relaxed">
+                <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-200/80 text-slate-500 text-[11px] sm:text-xs sm:leading-[1rem] leading-relaxed">
                   * 정확한 금액은 폐기물의 최종 무게(톤) 및 특수 약품/소독 범위에 따라 사전 상의 후 확정됩니다.
                 </div>
               </div>
@@ -553,7 +553,7 @@ const ServiceLanding: React.FC = () => {
                     </h4>
                   </div>
 
-                  <p className="text-[12.5px] sm:text-sm text-slate-600 mb-6 leading-relaxed">
+                  <p className="text-[12.5px] sm:text-sm sm:leading-[1.25rem] text-slate-600 mb-6 leading-relaxed">
                     폐기물량, 오염도, 청소 범위를 기준으로<br />
                     불필요한 거품 없이 합리적이고 정직하게<br />
                     책정하여 고객님께 말씀드립니다.
@@ -609,11 +609,11 @@ const ServiceLanding: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4">
           
           <div className="text-center mb-10 sm:mb-14">
-            <h3 className="text-xl sm:text-4xl md:text-[41.5px] md:leading-[54px] font-extrabold text-slate-900 tracking-tight leading-snug">
+            <h3 className="text-xl sm:text-4xl sm:leading-[2.5rem] md:text-[41.5px] md:leading-[54px] font-extrabold text-slate-900 tracking-tight leading-snug">
               <span className="block sm:inline">{service.title}</span>{" "}
               <span className="block sm:inline text-emerald-700">작업 범위 및 정밀 프로세스</span>
             </h3>
-            <p className="text-slate-600 text-[13px] sm:text-base md:text-lg mt-3 font-medium leading-relaxed max-w-2xl mx-auto break-keep">
+            <p className="text-slate-600 text-[13px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mt-3 font-medium leading-relaxed max-w-2xl mx-auto break-keep">
               <span className="block sm:inline">체계적인 단계별 클리닝과 대표 직접 검수로</span>{" "}
               <span className="block sm:inline">완성하는 프리미엄 서비스입니다.</span>
             </p>
@@ -638,10 +638,10 @@ const ServiceLanding: React.FC = () => {
                 return (
                   <div 
                     key={index} 
-                    className="relative bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-emerald-400/60 transition-all duration-300 flex flex-col justify-between group overflow-hidden"
+                    className="relative bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-400/60 transition-all duration-300 flex flex-col justify-between group overflow-hidden"
                   >
                     {/* Subtle top accent bar on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r/srgb from-emerald-400 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     <div>
                       <div className="flex items-center justify-between mb-3.5">
@@ -649,7 +649,7 @@ const ServiceLanding: React.FC = () => {
                           STEP {stepNum}
                         </span>
                         <div className="w-7 h-7 rounded-full bg-slate-100 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
-                          <Check className="w-4 h-4 stroke-[3]" />
+                          <Check className="w-4 h-4 stroke-3" />
                         </div>
                       </div>
 
@@ -659,7 +659,7 @@ const ServiceLanding: React.FC = () => {
                         </h4>
                       )}
                       
-                      <p className="text-slate-600 text-xs sm:text-sm md:text-[18px] md:leading-[25px] md:font-bold leading-relaxed break-keep font-medium">
+                      <p className="text-slate-600 text-xs sm:text-sm sm:leading-[1.25rem] md:text-[18px] md:leading-[25px] md:font-bold leading-relaxed break-keep font-medium">
                         {desc}
                       </p>
                     </div>
@@ -710,7 +710,7 @@ const ServiceLanding: React.FC = () => {
               <ShieldCheck className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
             <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">대표 직접 성실 관리</h4>
-            <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm leading-relaxed font-semibold text-center space-y-4">
+            <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm md:leading-[1.25rem] leading-relaxed font-semibold text-center space-y-4">
               <p>
                 하청이나 외주팀에 일을<br />
                 넘겨주는 행위는 절대 없습니다.
@@ -738,7 +738,7 @@ const ServiceLanding: React.FC = () => {
               <Star className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
             <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">추가없는 투명한 견적 약속</h4>
-            <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm leading-relaxed font-semibold text-center space-y-4">
+            <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm md:leading-[1.25rem] leading-relaxed font-semibold text-center space-y-4">
               <p>
                 애매한 견적서, 숨겨진 추가비용<br />
                 저희와 거리가 먼 얘기입니다.
@@ -766,7 +766,7 @@ const ServiceLanding: React.FC = () => {
               <Sparkles className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
             <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">100% 고객 만족 정직 시공</h4>
-            <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm leading-relaxed font-semibold text-center space-y-4">
+            <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm md:leading-[1.25rem] leading-relaxed font-semibold text-center space-y-4">
               <p>
                 고객님이 현장을 함께 확인하시고<br />
                 만족할 때까지 책임을 다합니다.
@@ -796,12 +796,12 @@ const ServiceLanding: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-900 rounded-[2rem] border border-white/10 shadow-xl shadow-black/20 p-6 sm:p-12 md:p-16 relative"
+            className="bg-gray-900 rounded-4xl border border-white/10 shadow-xl shadow-black/20 p-6 sm:p-12 md:p-16 relative"
           >
             <div className="absolute top-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
             
             <div className="text-center mb-10">
-              <h3 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight mb-2 leading-tight">
+              <h3 className="text-xl sm:text-3xl sm:leading-[2.5rem] font-extrabold text-white tracking-tight mb-2 leading-tight">
                 {service.title}
                 <br />
                 무료 견적 신청
@@ -820,22 +820,22 @@ const ServiceLanding: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div>
                    <label htmlFor="service-quote-name" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">성함 또는 단체명 <span className="text-red-500 font-bold">*</span></label>
-                  <input id="service-quote-name" name="name" required type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="성함 기재" />
+                  <input id="service-quote-name" name="name" required type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="성함 기재" />
                 </div>
                 <div>
                    <label htmlFor="service-quote-phone" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">연락처 <span className="text-red-500 font-bold">*</span></label>
-                  <input id="service-quote-phone" name="phone" required type="tel" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 010-0000-0000" />
+                  <input id="service-quote-phone" name="phone" required type="tel" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 010-0000-0000" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 <div>
                    <label htmlFor="service-quote-date" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">시공 예정일 (희망 일정)</label>
-                  <input id="service-quote-date" name="date" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 11월 중순 또는 일정 협의" />
+                  <input id="service-quote-date" name="date" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 11월 중순 또는 일정 협의" />
                 </div>
                 <div>
                    <label htmlFor="service-quote-area_size" className="block text-xs sm:text-sm font-bold text-white mb-2 font-black">현장 위치 / 예상 평수</label>
-                  <input id="service-quote-area_size" name="area_size" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 군포 도마교동 / 25평" />
+                  <input id="service-quote-area_size" name="area_size" type="text" className="w-full px-4.5 py-3 sm:py-4 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-slate-400 focus:border-slate-500 outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 군포 도마교동 / 25평" />
                 </div>
               </div>
 
@@ -845,14 +845,14 @@ const ServiceLanding: React.FC = () => {
                   name="message" 
                   required 
                   rows={4} 
-                  className="w-full px-4.5 py-3.5 text-xs sm:text-base rounded-xl border border-slate-700 focus:ring-2 focus:ring-white/20 focus:border-white outline-none transition bg-white text-slate-900 placeholder-slate-400 resize-none leading-relaxed" 
+                  className="w-full px-4.5 py-3.5 text-xs sm:text-base sm:leading-[1.5rem] rounded-xl border border-slate-700 focus:ring-2 focus:ring-white/20 focus:border-white outline-hidden transition bg-white text-slate-900 placeholder-slate-400 resize-none leading-relaxed"
                   placeholder="예: 실리콘 그을음 제거 필수, 인테리어 수납 마감 먼지 케어 요청, 찌든기름때 제거 등 희망하시는 세심한 요구조건을 자유롭게 적어주세요."
                 ></textarea>
               </div>
 
               <div className="flex items-start gap-2.5">
                 <input id="privacy-consent-service" name="privacy_consent" type="checkbox" required className="mt-1 w-4 h-4 accent-primary shrink-0" />
-                <label htmlFor="privacy-consent-service" className="text-xs md:text-sm text-slate-300 leading-relaxed break-keep">
+                <label htmlFor="privacy-consent-service" className="text-xs md:text-sm md:leading-[1.25rem] text-slate-300 leading-relaxed break-keep">
                   (필수) 견적 상담을 위한 개인정보 수집·이용에 동의합니다.{' '}
                   <Link to="/privacy" target="_blank" rel="noreferrer" className="underline text-slate-200 hover:text-primary">개인정보처리방침 보기</Link>
                 </label>

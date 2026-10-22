@@ -10,7 +10,7 @@ interface PortfolioLightboxProps {
 const PortfolioLightbox: React.FC<PortfolioLightboxProps> = ({ item, onClose }) => {
   return (
     <div
-      className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:p-10"
+      className="fixed inset-0 z-100 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4 md:p-10"
       onClick={onClose}
     >
       <button

@@ -26,7 +26,7 @@ const LoadMoreButton: React.FC<{ shown: number; total: number; onClick: () => vo
       <button
         type="button"
         onClick={onClick}
-        className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 md:px-10 md:py-[18px] text-base md:text-lg font-extrabold text-white shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/40 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        className="group inline-flex items-center gap-2.5 rounded-full bg-linear-to-r/srgb from-emerald-500 to-teal-500 px-8 py-4 md:px-10 md:py-[18px] text-base md:text-lg font-extrabold text-white shadow-lg shadow-emerald-500/30 ring-4 ring-emerald-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/40 active:scale-95 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
       >
         더 보기
         <ChevronDown aria-hidden="true" className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-0.5 motion-safe:animate-bounce" />
@@ -205,8 +205,8 @@ export const Portfolio: React.FC = () => {
             />
           </picture>
           <div className="absolute inset-0 bg-slate-950/60" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-950/30 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/15 via-transparent to-primary/10" />
+          <div className="absolute inset-0 bg-linear-to-t/srgb from-slate-900 via-slate-950/30 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-br/srgb from-emerald-600/15 via-transparent to-primary/10" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 text-center pb-6 md:pb-10">
@@ -214,7 +214,7 @@ export const Portfolio: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 leading-tight drop-shadow-md tracking-tight"
+            className="text-3xl md:text-6xl md:leading-[1] font-black text-white mb-4 md:mb-6 leading-tight drop-shadow-md tracking-tight"
           >
             실시간 <span className="text-primary font-bold">작업 현장 공유</span>
           </m.h1>
@@ -223,7 +223,7 @@ export const Portfolio: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-slate-300 text-[14px] sm:text-base md:text-lg lg:text-xl xl:text-2xl max-w-4xl mx-auto font-medium leading-relaxed md:leading-loose lg:leading-[1.7] opacity-90 break-keep px-4"
+            className="text-slate-300 text-[14px] sm:text-base sm:leading-[1.5rem] md:text-lg lg:text-xl xl:text-2xl xl:leading-[2rem] max-w-4xl mx-auto font-medium leading-relaxed md:leading-loose lg:leading-[1.7] opacity-90 break-keep px-4"
           >
             <span className="block md:inline">실시간으로 공유되는 느티울의</span>{' '}
             <br className="hidden md:block" />
@@ -233,7 +233,7 @@ export const Portfolio: React.FC = () => {
         </div>
 
         {/* Smooth bottom transition without black line */}
-        <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-slate-50 to-transparent pointer-events-none z-20"></div>
+        <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-linear-to-t/srgb from-slate-50 to-transparent pointer-events-none z-20"></div>
       </section>
 
       {/* Before/After Gallery */}
@@ -252,7 +252,7 @@ export const Portfolio: React.FC = () => {
           <button
             type="button"
             onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
-            className="w-full flex items-center justify-between bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/90 border-2 border-emerald-500 rounded-2xl px-3.5 sm:px-5 py-3.5 text-sm font-extrabold text-slate-900 shadow-md shadow-emerald-500/10 active:scale-[0.99] transition-all duration-200"
+            className="w-full flex items-center justify-between bg-linear-to-r/srgb from-emerald-50 via-teal-50 to-emerald-50/90 border-2 border-emerald-500 rounded-2xl px-3.5 sm:px-5 py-3.5 text-sm font-extrabold text-slate-900 shadow-md shadow-emerald-500/10 active:scale-[0.99] transition-all duration-200"
           >
             <span className="flex items-center gap-1.5 min-[380px]:gap-2 overflow-hidden">
               <span className="relative flex h-3 w-3 shrink-0">
@@ -261,7 +261,7 @@ export const Portfolio: React.FC = () => {
               </span>
               {activeCategory === 'all' ? (
                 <span className="flex items-center gap-1.5 min-[380px]:gap-2 whitespace-nowrap overflow-hidden">
-                  <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-sm shrink-0">
+                  <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-xs shrink-0">
                     전체
                   </span>
                   <span className="text-[11.5px] min-[360px]:text-xs min-[400px]:text-[13px] text-emerald-950 font-extrabold tracking-tight whitespace-nowrap">
@@ -269,12 +269,12 @@ export const Portfolio: React.FC = () => {
                   </span>
                 </span>
               ) : (
-                <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-sm truncate">
+                <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-xs truncate">
                   {GALLERY_CATEGORIES.find(([slug]) => slug === activeCategory)?.[1]}
                 </span>
               )}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm ml-1">
+            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs ml-1">
               <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${categoryDropdownOpen ? 'rotate-180' : ''}`} />
             </div>
           </button>
@@ -341,7 +341,7 @@ export const Portfolio: React.FC = () => {
                 key={slug}
                 type="button"
                 onClick={() => handleCategoryChange(slug)}
-                className={`px-3 py-2.5 rounded-xl text-xs lg:text-sm font-bold text-center leading-snug transition-all ${
+                className={`px-3 py-2.5 rounded-xl text-xs lg:text-sm lg:leading-[1.25rem] font-bold text-center leading-snug transition-all ${
                   activeCategory === slug
                     ? 'bg-primary text-white shadow-md shadow-primary/25'
                     : 'bg-white text-slate-600 border border-slate-200 hover:border-primary/40 hover:text-primary'
@@ -385,7 +385,7 @@ export const Portfolio: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="relative overflow-hidden bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 rounded-3xl p-6 md:p-10 text-white shadow-xl shadow-emerald-900/10 mb-12"
+          className="relative overflow-hidden bg-linear-to-r/srgb from-emerald-600 via-emerald-700 to-teal-800 rounded-3xl p-6 md:p-10 text-white shadow-xl shadow-emerald-900/10 mb-12"
         >
           {/* Subtle Decorative Elements */}
           <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
@@ -432,7 +432,7 @@ export const Portfolio: React.FC = () => {
 
         {/* 1. Live Blog Feed */}
         {rssLoading ? (
-          <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-slate-100 shadow-sm">
+          <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border border-slate-100 shadow-xs">
             <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
             <p className="text-slate-500 font-bold tracking-tight">현장 시공 소식을 가져오는 중입니다...</p>
           </div>
@@ -479,7 +479,7 @@ export const Portfolio: React.FC = () => {
                   href={item.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="group bg-white rounded-xl md:rounded-3xl overflow-hidden shadow-sm border border-slate-200 hover:border-primary/40 hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+                  className="group bg-white rounded-xl md:rounded-3xl overflow-hidden shadow-xs border border-slate-200 hover:border-primary/40 hover:shadow-xl transition-all duration-300 flex flex-col h-full"
                 >
                   {/* Blog Cover Image */}
                   <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
@@ -493,24 +493,24 @@ export const Portfolio: React.FC = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       referrerPolicy="no-referrer"
                     />
-                    <div className={`absolute top-1.5 left-1.5 md:top-3 md:left-3 text-white text-[7px] md:text-[10px] font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded shadow-md uppercase tracking-wider flex items-center gap-0.5 md:gap-1 ${isSecondBlog ? 'bg-indigo-600' : 'bg-emerald-500'}`}>
+                    <div className={`absolute top-1.5 left-1.5 md:top-3 md:left-3 text-white text-[7px] md:text-[10px] font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded-sm shadow-md uppercase tracking-wider flex items-center gap-0.5 md:gap-1 ${isSecondBlog ? 'bg-indigo-600' : 'bg-emerald-500'}`}>
                       <span className="w-1 h-1 md:w-1.5 md:h-1.5 bg-white rounded-full animate-ping"></span>
                       {item.blogName || '시공 사례'}
                     </div>
                   </div>
 
                   {/* Blog Content */}
-                  <div className="p-2.5 sm:p-5 md:p-6 flex flex-col flex-grow">
+                  <div className="p-2.5 sm:p-5 md:p-6 flex flex-col grow">
                     <div className="flex items-center gap-1 text-slate-400 text-[8px] sm:text-[10px] md:text-xs font-medium mb-1.5 sm:mb-3">
                       <Calendar className="w-2.5 h-2.5 md:w-3.5 md:h-3.5" />
                       <span>{formatDateString(item.pubDate)}</span>
                     </div>
                     
-                    <h3 className="text-[11px] sm:text-base md:text-xl font-bold text-slate-900 mb-1.5 sm:mb-3 leading-tight md:leading-snug group-hover:text-primary transition-colors line-clamp-2 break-all tracking-tight">
+                    <h3 className="text-[11px] sm:text-base sm:leading-[1.5rem] md:text-xl font-bold text-slate-900 mb-1.5 sm:mb-3 leading-tight md:leading-snug group-hover:text-primary transition-colors line-clamp-2 break-all tracking-tight">
                       {item.title}
                     </h3>
                     
-                    <p className="text-slate-500 text-[10px] sm:text-xs md:text-sm line-clamp-1 sm:line-clamp-3 leading-relaxed mb-2 md:mb-4 flex-grow break-all pr-1 hidden sm:block">
+                    <p className="text-slate-500 text-[10px] sm:text-xs sm:leading-[1rem] md:text-sm md:leading-[1.25rem] line-clamp-1 sm:line-clamp-3 leading-relaxed mb-2 md:mb-4 grow break-all pr-1 hidden sm:block">
                       {cleanDescription(item.description || item.content || '')}
                     </p>
 

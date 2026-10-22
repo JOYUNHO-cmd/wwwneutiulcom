@@ -55,7 +55,7 @@ const RegionCaseLinks: React.FC<RegionCaseLinksProps> = ({ serviceId, regionId, 
               i >= INITIAL_VISIBLE && !expanded ? 'hidden' : 'flex'
             }`}
           >
-            <div className="relative aspect-[4/3] overflow-hidden w-full bg-slate-100 border-b border-slate-100">
+            <div className="relative aspect-4/3 overflow-hidden w-full bg-slate-100 border-b border-slate-100">
               <img
                 src={c.thumbnail}
                 alt={c.heading}
@@ -63,7 +63,7 @@ const RegionCaseLinks: React.FC<RegionCaseLinksProps> = ({ serviceId, regionId, 
                 decoding="async"
                 className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
               />
-              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-primary text-white text-[8px] sm:text-[9px] font-black px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded shadow-md">
+              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-primary text-white text-[8px] sm:text-[9px] font-black px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-sm shadow-md">
                 현장 후기
               </span>
             </div>

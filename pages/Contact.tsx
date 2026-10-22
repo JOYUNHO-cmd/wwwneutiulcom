@@ -64,8 +64,8 @@ const Contact: React.FC = () => {
             />
           </picture>
           {/* Layered Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/50 to-slate-900/90" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10" />
+          <div className="absolute inset-0 bg-linear-to-b/srgb from-slate-900/80 via-slate-900/50 to-slate-900/90" />
+          <div className="absolute inset-0 bg-linear-to-r/srgb from-primary/10 via-transparent to-primary/10" />
         </div>
 
         {/* Decorative Elements */}
@@ -87,7 +87,7 @@ const Contact: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-slate-300 text-[14px] sm:text-[16px] md:text-2xl lg:text-3xl font-medium max-w-3xl mx-auto px-4 break-keep leading-relaxed opacity-90 mt-4 md:mt-6"
+            className="text-slate-300 text-[14px] sm:text-[16px] md:text-2xl md:leading-[2rem] lg:text-3xl lg:leading-[2.5rem] font-medium max-w-3xl mx-auto px-4 break-keep leading-relaxed opacity-90 mt-4 md:mt-6"
           >
             <span className="block">공간의 가치를 높이는 느티울이</span>
             <span className="block">정직하고 투명한 견적을 약속드립니다.</span>
@@ -95,7 +95,7 @@ const Contact: React.FC = () => {
         </div>
 
         {/* Smooth bottom transition without black line */}
-        <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-slate-50 to-transparent pointer-events-none z-10"></div>
+        <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-linear-to-t/srgb from-slate-50 to-transparent pointer-events-none z-10"></div>
       </section>
 
       {/* Main Content Area */}
@@ -104,7 +104,7 @@ const Contact: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-[2rem] shadow-2xl shadow-slate-200/80 overflow-hidden flex flex-col md:flex-row border border-slate-100 backdrop-blur-sm"
+          className="bg-white rounded-4xl shadow-2xl shadow-slate-200/80 overflow-hidden flex flex-col md:flex-row border border-slate-100 backdrop-blur-xs"
         >
           {/* Contact Info Sidebar */}
           <div className="bg-slate-50 border-r border-slate-100 p-8 md:p-14 md:w-2/5 flex flex-col justify-between relative overflow-hidden">
@@ -116,7 +116,7 @@ const Contact: React.FC = () => {
                 <span className="w-1.5 h-8 bg-primary rounded-full"></span>
                 Contact Info
               </h3>
-              <p className="text-slate-600 mt-8 mb-16 leading-[1.8] text-[12px] sm:text-[15px] md:text-lg break-keep font-medium">
+              <p className="text-slate-600 mt-8 mb-16 leading-[1.8] text-[12px] sm:text-[15px] md:text-lg md:leading-[1.75rem] break-keep font-medium">
                 현장 방문 견적은 <span className="text-primary font-bold">100% 무료</span>입니다.
                 <br />
                 직접 방문하여 공간의 특성을 진단하고
@@ -159,7 +159,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div className="overflow-hidden">
                     <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest">Office</p>
-                    <p className="font-extrabold text-[11px] sm:text-sm md:text-lg mt-0.5 text-slate-900 leading-tight whitespace-nowrap group-hover:text-primary transition-colors">{config.companyInfo.address}</p>
+                    <p className="font-extrabold text-[11px] sm:text-sm sm:leading-[1.25rem] md:text-lg md:leading-[1.75rem] mt-0.5 text-slate-900 leading-tight whitespace-nowrap group-hover:text-primary transition-colors">{config.companyInfo.address}</p>
                   </div>
                 </m.div>
               </div>
@@ -182,18 +182,18 @@ const Contact: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div>
                     <label htmlFor="contact-name" className="block text-sm md:text-base font-bold text-white mb-2.5">성함 (또는 업체명)</label>
-                    <input id="contact-name" name="name" required type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="홍길동" />
+                    <input id="contact-name" name="name" required type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="홍길동" />
                   </div>
                   <div>
                     <label htmlFor="contact-phone" className="block text-sm md:text-base font-bold text-white mb-2.5">연락처</label>
-                    <input id="contact-phone" name="phone" required type="tel" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="010-0000-0000" />
+                    <input id="contact-phone" name="phone" required type="tel" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="010-0000-0000" />
                   </div>
                 </div>
                 
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div>
                      <label htmlFor="contact-service_type" className="block text-sm md:text-base font-bold text-white mb-2.5">청소 유형</label>
-                     <select id="contact-service_type" name="service_type" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-755 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900">
+                     <select id="contact-service_type" name="service_type" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-755 focus:ring-2 focus:ring-primary focus:border-primary outline-hidden transition bg-white text-slate-900">
                        <option value="신축/상가 준공청소">신축/상가 준공청소</option>
                        <option value="사무실/상가 정기·대청소">사무실/상가 정기·대청소</option>
                        <option value="바닥 관리 & 왁스코팅/박리">바닥 관리 & 왁스코팅/박리</option>
@@ -215,7 +215,7 @@ const Contact: React.FC = () => {
                        name="location" 
                        required 
                        type="text" 
-                       className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" 
+                       className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-hidden transition bg-white text-slate-900 placeholder-slate-400"
                        placeholder="예: 서울 강남구 / 인천 송도 / 경기 수원" 
                      />
                   </div>
@@ -224,11 +224,11 @@ const Contact: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   <div>
                      <label htmlFor="contact-area_size" className="block text-sm md:text-base font-bold text-white mb-2.5">현장 면적 (평수)</label>
-                     <input id="contact-area_size" name="area_size" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 32평형 / 150평 등" />
+                     <input id="contact-area_size" name="area_size" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 32평형 / 150평 등" />
                   </div>
                   <div>
                      <label htmlFor="contact-target_date" className="block text-sm md:text-base font-bold text-white mb-2.5">희망 일정</label>
-                     <input id="contact-target_date" name="target_date" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 즉시 / 다음 주 화요일 / 협의" />
+                     <input id="contact-target_date" name="target_date" type="text" className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-hidden transition bg-white text-slate-900 placeholder-slate-400" placeholder="예: 즉시 / 다음 주 화요일 / 협의" />
                   </div>
                 </div>
 
@@ -238,14 +238,14 @@ const Contact: React.FC = () => {
                      name="message" 
                      required 
                      rows={4} 
-                     className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition bg-white text-slate-900 placeholder-slate-400 resize-none" 
+                     className="w-full px-5 py-3.5 md:py-4 text-base rounded-xl border-2 border-slate-750 focus:ring-2 focus:ring-primary focus:border-primary outline-hidden transition bg-white text-slate-900 placeholder-slate-400 resize-none"
                      placeholder="희망 일정, 오염 상태 등&#10;특이사항을 입력해 주세요."
                    ></textarea>
                 </div>
 
                 <div className="flex items-start gap-2.5">
                   <input id="privacy-consent" name="privacy_consent" type="checkbox" required className="mt-1 w-4 h-4 accent-primary shrink-0" />
-                  <label htmlFor="privacy-consent" className="text-xs md:text-sm text-slate-400 leading-relaxed break-keep">
+                  <label htmlFor="privacy-consent" className="text-xs md:text-sm md:leading-[1.25rem] text-slate-400 leading-relaxed break-keep">
                     (필수) 견적 상담을 위한 개인정보 수집·이용에 동의합니다.{' '}
                     <Link to="/privacy" target="_blank" rel="noreferrer" className="underline text-slate-300 hover:text-primary">개인정보처리방침 보기</Link>
                   </label>
