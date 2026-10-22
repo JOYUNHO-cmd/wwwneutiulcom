@@ -268,8 +268,8 @@ const Navbar: React.FC = () => {
                         </button>
                         <div
                           id="mobile-service-links"
-                          className="overflow-hidden bg-slate-50 transition-[max-height] duration-200 ease-out"
-                          style={{ maxHeight: mobileServicesOpen ? '600px' : '0px' }}
+                          className="bg-slate-50"
+                          hidden={!mobileServicesOpen}
                           inert={!mobileServicesOpen}
                         >
                             <div className="grid grid-cols-2 gap-1.5 p-2.5">
@@ -278,7 +278,7 @@ const Navbar: React.FC = () => {
                                   key={service.id}
                                   to={`/services/${service.id}`}
                                   onClick={() => setIsOpen(false)}
-                                  className="px-3 py-2.5 rounded-lg text-[13px] font-semibold text-gray-700 text-center bg-white hover:bg-primary/10 hover:text-primaryDark transition-colors"
+                                  className="min-w-0 break-words px-3 py-2.5 rounded-lg text-[13px] font-semibold text-gray-700 text-center bg-white hover:bg-primary/10 hover:text-primaryDark transition-colors"
                                 >
                                   {service.title}
                                 </Link>
