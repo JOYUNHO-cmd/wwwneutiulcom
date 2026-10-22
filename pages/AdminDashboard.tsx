@@ -27,6 +27,7 @@ import {
 } from '../lib/firebaseService';
 import { PortfolioItem } from '../types';
 import ImageUploader from '../components/ImageUploader';
+import ServiceEditor from '../components/ServiceEditor';
 
 const AdminDashboardInner: React.FC = () => {
   const { user, isAdmin, loading: authLoading, logout, login: loginWithGoogle } = useAuth();
@@ -65,6 +66,9 @@ const AdminDashboardInner: React.FC = () => {
 
   // General Info State
   const [localInfo, setLocalInfo] = useState(config.companyInfo);
+  const [savingGeneral, setSavingGeneral] = useState(false);
+  const [generalMessage, setGeneralMessage] = useState('');
+  const [generalError, setGeneralError] = useState('');
 
   useEffect(() => {
     setLocalInfo(config.companyInfo);
@@ -79,16 +83,22 @@ const AdminDashboardInner: React.FC = () => {
     }
   }, [isAdmin]);
 
-  const handleSaveGeneral = async () => {
+  const handleSaveGeneral = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setSavingGeneral(true);
+    setGeneralMessage('');
+    setGeneralError('');
     try {
       // Save to Firestore first
       await updateCompanyInfoDoc(localInfo);
       // Update local context state
       updateCompanyInfo(localInfo);
-      alert('설정이 성공적으로 저장되었습니다.');
+      setGeneralMessage('설정이 저장되었습니다. 공개 페이지를 새로 열면 변경 내용을 확인할 수 있습니다.');
     } catch (error) {
       console.error(error);
-      alert('저장 실패: ' + (error instanceof Error ? error.message : String(error)));
+      setGeneralError('저장 실패: ' + (error instanceof Error ? error.message : String(error)));
+    } finally {
+      setSavingGeneral(false);
     }
   };
 
@@ -99,6 +109,7 @@ const AdminDashboardInner: React.FC = () => {
       if (editingItemId) {
         await updatePortfolioItem(editingItemId, itemForm);
         setEditingItemId(null);
+        setIsAddingPortfolio(false);
       } else {
         await addPortfolioItem(itemForm);
         setIsAddingPortfolio(false);
@@ -203,35 +214,38 @@ const AdminDashboardInner: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 hidden md:block">
-        <div className="p-6 border-b border-gray-100">
+      <aside aria-label="관리자 메뉴" className="w-full md:w-64 md:shrink-0 bg-white border-b md:border-r border-gray-200">
+        <div className="p-4 md:p-6 border-b border-gray-100">
           <h2 className="text-xl font-bold text-primary">Admin CMS</h2>
           <p className="text-xs text-gray-500">느티울종합청소 관리자</p>
         </div>
-        <nav className="p-4 space-y-1">
+        <nav aria-label="관리 항목" className="p-2 md:p-4 grid grid-cols-3 md:grid-cols-1 gap-1">
           <button 
             onClick={() => setActiveTab('general')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'general' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
+            aria-current={activeTab === 'general' ? 'page' : undefined}
+            className={`w-full flex flex-col md:flex-row items-center gap-2 px-2 md:px-4 py-3 rounded-lg text-xs md:text-sm font-medium transition-colors ${activeTab === 'general' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
           >
             <Settings size={18} /> 기본 설정
           </button>
           <button 
             onClick={() => setActiveTab('services')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'services' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
+            aria-current={activeTab === 'services' ? 'page' : undefined}
+            className={`w-full flex flex-col md:flex-row items-center gap-2 px-2 md:px-4 py-3 rounded-lg text-xs md:text-sm font-medium transition-colors ${activeTab === 'services' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
           >
             <LayoutDashboard size={18} /> 서비스 관리
           </button>
           <button 
             onClick={() => setActiveTab('portfolio')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'portfolio' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
+            aria-current={activeTab === 'portfolio' ? 'page' : undefined}
+            className={`w-full flex flex-col md:flex-row items-center gap-2 px-2 md:px-4 py-3 rounded-lg text-xs md:text-sm font-medium transition-colors ${activeTab === 'portfolio' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
           >
             <Briefcase size={18} /> 현장 기록 관리
           </button>
         </nav>
-        <div className="p-4 mt-auto border-t border-gray-100">
-           <div className="flex items-center gap-3 px-4 py-2 mb-4">
+        <div className="p-2 md:p-4 mt-auto border-t border-gray-100 grid grid-cols-2 md:block">
+           <div className="hidden md:flex items-center gap-3 px-4 py-2 mb-4">
               <img src={user.photoURL || ''} className="w-8 h-8 rounded-full" alt="User" />
               <div className="overflow-hidden">
                 <p className="text-xs font-bold truncate">{user.displayName}</p>
@@ -239,21 +253,21 @@ const AdminDashboardInner: React.FC = () => {
               </div>
            </div>
            <button onClick={logout} className="w-full text-red-500 text-sm font-medium hover:bg-red-50 py-2 rounded-sm">로그아웃</button>
-           <button onClick={() => navigate('/')} className="w-full text-gray-600 text-sm font-medium hover:bg-gray-50 py-2 rounded-sm mt-2">사이트 바로가기</button>
+           <button onClick={() => navigate('/')} className="w-full text-gray-600 text-sm font-medium hover:bg-gray-50 py-2 rounded-sm md:mt-2">사이트 바로가기</button>
         </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-8 overflow-y-auto">
-        <header className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-black text-gray-800 tracking-tight">
+      <div className="flex-1 min-w-0 p-4 md:p-8">
+        <header className="flex flex-wrap gap-4 justify-between items-center mb-6 md:mb-8">
+          <h1 className="text-xl md:text-2xl font-black text-gray-800 tracking-tight">
             {activeTab === 'general' ? '사이트 기본 정보 수정' : 
              activeTab === 'services' ? '서비스 콘텐츠 관리' : 
              '현장 시공 기록 추천 연동 관리'}
           </h1>
           {activeTab === 'general' && (
-            <button onClick={handleSaveGeneral} className="bg-primary text-white px-6 py-2 rounded-xl flex items-center gap-2 hover:bg-primaryDark transition-all shadow-lg shadow-primary/20">
-              <Save size={18} /> 저장하기
+            <button type="submit" form="company-settings" disabled={savingGeneral} className="bg-primary text-white px-6 py-2 rounded-xl flex items-center gap-2 hover:bg-primaryDark transition-all shadow-lg shadow-primary/20 disabled:opacity-50">
+              <Save size={18} /> {savingGeneral ? '저장 중...' : '저장하기'}
             </button>
           )}
           {activeTab === 'portfolio' && !isAddingPortfolio && (
@@ -271,29 +285,32 @@ const AdminDashboardInner: React.FC = () => {
         </header>
 
         {activeTab === 'general' && (
-          <div className="bg-white rounded-2xl shadow-xs p-8 space-y-6 border border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form id="company-settings" onSubmit={handleSaveGeneral} className="bg-white rounded-2xl shadow-xs p-4 md:p-8 space-y-6 border border-gray-100">
+            <fieldset disabled={savingGeneral} className="grid grid-cols-1 md:grid-cols-2 gap-6 disabled:opacity-60">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">업체명</label>
+                <label htmlFor="company-name" className="block text-sm font-bold text-gray-700 mb-2">업체명</label>
                 <input 
+                  id="company-name" required maxLength={100}
                   value={localInfo.name} 
                   onChange={(e) => setLocalInfo({...localInfo, name: e.target.value})}
                   className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">대표 전화번호</label>
+                <label htmlFor="company-phone" className="block text-sm font-bold text-gray-700 mb-2">대표 전화번호</label>
                 <input 
+                  id="company-phone" required type="tel" maxLength={50}
                   value={localInfo.phone} 
                   onChange={(e) => setLocalInfo({...localInfo, phone: e.target.value})}
                   className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
                <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-700 mb-2">로고 이미지 (URL)</label>
+                <label htmlFor="company-logo" className="block text-sm font-bold text-gray-700 mb-2">로고 이미지 (URL)</label>
                 <div className="flex gap-4">
                   <div className="flex-1">
                     <input 
+                      id="company-logo" maxLength={350000}
                       value={localInfo.logo} 
                       onChange={(e) => setLocalInfo({...localInfo, logo: e.target.value})}
                       className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden text-sm text-gray-600 transition-all"
@@ -306,25 +323,31 @@ const AdminDashboardInner: React.FC = () => {
                 </div>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-700 mb-2">메인 슬로건</label>
+                <label htmlFor="company-slogan" className="block text-sm font-bold text-gray-700 mb-2">메인 슬로건 (홈 첫 화면의 상단 문구)</label>
                 <input 
+                  id="company-slogan" maxLength={500}
                   value={localInfo.slogan} 
                   onChange={(e) => setLocalInfo({...localInfo, slogan: e.target.value})}
                   className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-700 mb-2">업체 설명 (About)</label>
+                <label htmlFor="company-description" className="block text-sm font-bold text-gray-700 mb-2">업체 설명 (회사소개·사이트 하단)</label>
                 <textarea 
+                  id="company-description" maxLength={5000}
                   rows={4}
                   value={localInfo.description} 
                   onChange={(e) => setLocalInfo({...localInfo, description: e.target.value})}
                   className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
-            </div>
-          </div>
+            </fieldset>
+            {generalError && <p role="alert" className="text-red-600 text-sm">{generalError}</p>}
+            {generalMessage && <p role="status" className="text-emerald-700 text-sm">{generalMessage}</p>}
+          </form>
         )}
+
+        {activeTab === 'services' && <ServiceEditor />}
 
         {activeTab === 'portfolio' && (
           <div className="space-y-6">
@@ -336,7 +359,7 @@ const AdminDashboardInner: React.FC = () => {
                       <X size={24} />
                    </button>
                 </div>
-                <form onSubmit={handlePortfolioSubmit} className="p-8 space-y-6">
+                <form onSubmit={handlePortfolioSubmit} className="p-4 md:p-8 space-y-6">
                   {/* Informational banner */}
                   <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs md:text-sm md:leading-[1.25rem] p-4 rounded-xl leading-relaxed space-y-1">
                     <p className="font-bold">💡 현장 시공 기록지 연동 안내</p>
@@ -461,7 +484,7 @@ const AdminDashboardInner: React.FC = () => {
                             alt={item.title} 
                             className="w-full h-full object-cover" 
                           />
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                          <div className="absolute inset-0 bg-black/40 opacity-100 md:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity flex items-center justify-center gap-3">
                              <button onClick={() => handleEditItem(item)} className="bg-white text-gray-900 p-3 rounded-full hover:bg-primary hover:text-white transition-all transform hover:scale-110" title="수정하기">
                                <Edit2 size={20} />
                              </button>
@@ -495,9 +518,9 @@ const AdminDashboardInner: React.FC = () => {
                   ))}
                 </div>
                 {portfolioItems.length === 0 && (
-                   <div className="bg-white rounded-3xl p-20 text-center border-2 border-dashed border-gray-100 max-w-xl mx-auto">
+                   <div className="bg-white rounded-3xl p-6 md:p-20 text-center border-2 border-dashed border-gray-100 max-w-xl mx-auto">
                       <p className="text-gray-400 font-bold text-lg mb-2">등록된 추천 현장시공사례 기록이 없습니다.</p>
-                      <p className="text-gray-400 text-xs leading-relaxed mb-6">상세 현장 시공 기록지 링크를 등록하여 사이트 '추천 시공 사례' 탭에 고급스럽게 노출시켜 보세요!</p>
+                      <p className="text-gray-400 text-xs leading-relaxed mb-6">등록한 기록은 공개 시공사례와 해당 서비스 페이지의 '추천 시공 사례' 영역에 표시됩니다.</p>
                       <button 
                         onClick={() => {
                           setEditingItemId(null);

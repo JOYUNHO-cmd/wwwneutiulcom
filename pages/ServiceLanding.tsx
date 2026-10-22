@@ -11,8 +11,7 @@ import {
 } from 'lucide-react';
 import { m } from 'motion/react';
 import { trackEvent } from '../lib/analytics';
-import { subscribePortfolioItems } from '../lib/firebaseService';
-import { PortfolioItem } from '../types';
+import RecommendedPortfolioSection from '../components/RecommendedPortfolioSection';
 import ServiceBeforeAfterMarquee from '../components/ServiceBeforeAfterMarquee';
 import ReviewsSection from '../components/ReviewsSection';
 import CeoMessageSection from '../components/CeoMessageSection';
@@ -59,40 +58,10 @@ const certificationsData = [
   },
 ];
 
-// Must match the exact category strings the admin dashboard's portfolio
-// form saves to Firestore (see AdminDashboard.tsx's category <select>) —
-// this used to return spaced-out labels like '식당 청소' that never
-// equaled any saved item's category (admin saves '식당청소', no space),
-// so every single service page's "관련 시공사례" section silently
-// filtered down to zero photos regardless of what was uploaded.
-const getCategoryMapping = (serviceId: string) => {
-  switch (serviceId) {
-    case 'new-construction': return '준공청소';
-    case 'interior': return '인테리어청소';
-    case 'move-in': return '입주청소';
-    case 'office': return '사무실청소';
-    case 'floor': return '바닥청소';
-    case 'floor-wax': return '바닥코팅';
-    case 'restaurant': return '주방청소';
-    case 'hood': return '후드청소';
-    case 'factory': return '공장청소';
-    case 'flood': return '침수청소';
-    case 'fire': return '화재청소';
-    case 'special': return '특수청소';
-    case 'trash-house': return '쓰레기집청소';
-    case 'lonely-death': return '고독사청소';
-    case 'external-wall': return '외벽청소';
-    case 'government-school': return '관공서청소';
-    default: return '';
-  }
-};
-
 const ServiceLanding: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
   const { config } = useSite();
-  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
-  const [isPortfolioLoading, setIsPortfolioLoading] = useState(true);
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const detailsRef = useRef<HTMLDivElement>(null);
   const beforeAfterRef = useRef<HTMLDivElement>(null);
@@ -104,16 +73,6 @@ const ServiceLanding: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [serviceId]);
-
-  // Fetch portfolios dynamically from Firestore/local fallback
-  useEffect(() => {
-    const unsubscribe = subscribePortfolioItems((items) => {
-      setPortfolioItems(items as PortfolioItem[]);
-      setIsPortfolioLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   if (!service) return <NotFound />;
 
@@ -150,10 +109,6 @@ const ServiceLanding: React.FC = () => {
     }
   };
 
-  // Filter portfolio cases matching this specific service
-  const targetCategory = getCategoryMapping(serviceId || '');
-  const filteredPortfolios = portfolioItems.filter(item => item.category === targetCategory);
-
   const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');
 
   return (
@@ -168,7 +123,7 @@ const ServiceLanding: React.FC = () => {
               fetchPriority="high" is safe here — the double-download issue
               only affects <img> inside <picture> (see Home.tsx). */}
           <img
-            src={service.image}
+            src={service.image || '/images/logo.webp'}
             alt={service.title}
             fetchPriority="high"
             decoding="async"
@@ -245,6 +200,8 @@ const ServiceLanding: React.FC = () => {
       </div>
 
       <ServiceCaseBlogSection serviceId={serviceId || ''} className="py-16 md:py-24 max-w-7xl mx-auto px-4 bg-slate-50" />
+
+      <RecommendedPortfolioSection serviceId={serviceId || ''} />
 
       <ReviewsSection />
 
@@ -614,8 +571,7 @@ const ServiceLanding: React.FC = () => {
               <span className="block sm:inline text-emerald-700">작업 범위 및 정밀 프로세스</span>
             </h3>
             <p className="text-slate-600 text-[13px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mt-3 font-medium leading-relaxed max-w-2xl mx-auto break-keep">
-              <span className="block sm:inline">체계적인 단계별 클리닝과 대표 직접 검수로</span>{" "}
-              <span className="block sm:inline">완성하는 프리미엄 서비스입니다.</span>
+              <span className="whitespace-pre-line">{service.description}</span>
             </p>
           </div>
 

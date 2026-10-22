@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Phone, MessageCircle } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 import KakaoConfirmModal from './KakaoConfirmModal';
+import { useSite } from '../context/SiteContext';
 
 // Side-mounted floating contact buttons for mobile — replaces the old
 // full-width bottom bar. Stays fixed to the bottom-right corner while
@@ -12,7 +13,8 @@ import KakaoConfirmModal from './KakaoConfirmModal';
 // motion is plain CSS transform/opacity (GPU-composited, no JS per
 // frame), and is disabled under prefers-reduced-motion.
 const MobileStickyBar: React.FC = () => {
-  const phoneNumber = '01048807386';
+  const { config } = useSite();
+  const phoneNumber = config.companyInfo.phone.replace(/[^0-9]/g, '');
   const kakaoUrl = 'https://open.kakao.com/o/srNJGmpg';
   const [showKakaoConfirm, setShowKakaoConfirm] = useState(false);
   // Slides the buttons off the right edge while the reader scrolls down (so

@@ -23,10 +23,7 @@ const Footer: React.FC = () => {
               {config.companyInfo.name}
             </h3>
             <p className="text-gray-400 text-[11px] md:text-base md:leading-[1.5rem] font-medium leading-relaxed whitespace-pre-line break-keep">
-              상담부터 청소까지 대표가 직접<br />
-              관리하는 신뢰받는 기업.<br /><br className="hidden md:block" />
-              고객님의 공간에<br />
-              평화와 휴식을 선물합니다.
+              {config.companyInfo.description}
             </p>
             <div className="flex space-x-2 md:space-x-4">
               <m.a 

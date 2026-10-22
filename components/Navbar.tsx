@@ -215,6 +215,8 @@ const Navbar: React.FC = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="relative bg-primary text-white p-2.5 focus:outline-hidden rounded-2xl shadow-lg shadow-primary/35 active:bg-primaryDark transition-colors"
               aria-label="Toggle navigation menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation-menu"
             >
               {!isOpen && (
                 <span className="absolute inset-2 rounded-2xl bg-primary/40 animate-ping pointer-events-none" />
@@ -234,8 +236,9 @@ const Navbar: React.FC = () => {
           via max-height:0 + inert rather than AnimatePresence unmounting
           it, so there's no exit-animation bookkeeping either. */}
       <div
-        className="lg:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl overflow-hidden left-0 right-0 z-50 transition-[max-height] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
-        style={{ backgroundColor: '#ffffff', maxHeight: isOpen ? '1000px' : '0px' }}
+        id="mobile-navigation-menu"
+        className="lg:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl overflow-y-auto overflow-x-hidden overscroll-contain left-0 right-0 z-50 transition-[max-height] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{ backgroundColor: '#ffffff', maxHeight: isOpen ? 'calc(100dvh - 6rem - 1px)' : '0px' }}
         inert={!isOpen}
       >
             <div className="px-4 pt-3 pb-6 space-y-1 sm:px-3 bg-white">
@@ -252,6 +255,8 @@ const Navbar: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setMobileServicesOpen((v) => !v)}
+                          aria-expanded={mobileServicesOpen}
+                          aria-controls="mobile-service-links"
                           className={`w-full flex items-center justify-center gap-1.5 px-4 py-3.5 text-[17px] font-bold text-center transition-all ${
                               isActive(link.path) || mobileServicesOpen
                                 ? 'bg-primary/10 text-primaryDark font-black shadow-xs'
@@ -262,8 +267,9 @@ const Navbar: React.FC = () => {
                           <ChevronDown size={18} className={`transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
                         </button>
                         <div
-                          className="overflow-hidden bg-slate-50 transition-[max-height] duration-200 ease-out"
-                          style={{ maxHeight: mobileServicesOpen ? '600px' : '0px' }}
+                          id="mobile-service-links"
+                          className="bg-slate-50"
+                          hidden={!mobileServicesOpen}
                           inert={!mobileServicesOpen}
                         >
                             <div className="grid grid-cols-2 gap-1.5 p-2.5">
@@ -272,7 +278,7 @@ const Navbar: React.FC = () => {
                                   key={service.id}
                                   to={`/services/${service.id}`}
                                   onClick={() => setIsOpen(false)}
-                                  className="px-3 py-2.5 rounded-lg text-[13px] font-semibold text-gray-700 text-center bg-white hover:bg-primary/10 hover:text-primaryDark transition-colors"
+                                  className="min-w-0 break-words px-3 py-2.5 rounded-lg text-[13px] font-semibold text-gray-700 text-center bg-white hover:bg-primary/10 hover:text-primaryDark transition-colors"
                                 >
                                   {service.title}
                                 </Link>

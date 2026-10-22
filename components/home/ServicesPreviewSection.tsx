@@ -35,7 +35,7 @@ const ServicesPreviewSection: React.FC = () => {
                 className="group relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 shadow-md hover:shadow-2xl hover:border-primary/40 transition-all duration-300 flex flex-col h-full w-full"
               >
                 <div className="h-32 sm:h-48 lg:h-52 overflow-hidden relative">
-                  <img src={service.image} alt={service.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <img src={service.image || '/images/logo.webp'} alt={service.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
                 </div>
                 <div className="p-4 sm:p-5 flex-1 flex items-center justify-center text-center">

@@ -1,5 +1,16 @@
-import { doc, getDoc } from 'firebase/firestore/lite';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore/lite';
 import { dbLite, isMockFirebase } from './firebaseLite';
+
+export async function getServiceOverrides() {
+  if (isMockFirebase) return [];
+  try {
+    const snapshot = await getDocs(collection(dbLite, 'services'));
+    return snapshot.docs.map(item => ({ ...item.data(), id: item.id }));
+  } catch (error) {
+    console.warn('Service content could not be loaded; using the built-in catalog.', error);
+    return [];
+  }
+}
 
 // Read-only functions for public pages (SiteContext etc.) only. Admin CRUD
 // and real-time subscriptions keep using the full lib/firebaseService.ts —

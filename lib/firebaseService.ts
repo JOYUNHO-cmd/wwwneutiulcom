@@ -14,6 +14,14 @@ import {
 } from 'firebase/firestore';
 import { db, isMockFirebase, getCachedAuth } from './firebase';
 import { isVerifiedAdmin } from './adminPolicy.mjs';
+import { SERVICES } from './servicesData.mjs';
+import { serviceEditPayload } from './serviceOverrides.mjs';
+
+export async function updateServiceDoc(id: string, data: unknown) {
+  requireAdmin();
+  if (!SERVICES.some(service => service.id === id)) throw new Error('등록된 서비스를 선택해 주세요.');
+  await setDoc(doc(db, 'services', id), serviceEditPayload(data), { merge: true });
+}
 
 function requireAdmin() {
   if (isMockFirebase || !db || !isVerifiedAdmin(getCachedAuth()?.currentUser)) {

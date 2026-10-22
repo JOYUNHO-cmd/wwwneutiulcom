@@ -5,6 +5,7 @@ import { m } from 'motion/react';
 import portfolioManifest from '../lib/portfolioManifest.json';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
+import RecommendedPortfolioSection from '../components/RecommendedPortfolioSection';
 import { getRegionCaseUrlByPortfolioItemId } from '../lib/regionCaseData.mjs';
 import { fetchNaverFieldLogs, optimizedNaverThumb, smallNaverThumb, naverThumbFallback } from '../lib/naverFeedClient';
 
@@ -376,6 +377,8 @@ export const Portfolio: React.FC = () => {
       {openItem && (
         <PortfolioLightbox item={openItem} onClose={() => setOpenItem(null)} />
       )}
+
+      <RecommendedPortfolioSection />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
 
