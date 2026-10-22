@@ -21,9 +21,9 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
   const [faqDropdownOpen, setFaqDropdownOpen] = useState(false);
 
   return (
-    <section id="faq" className="py-20 md:py-28 bg-gradient-to-br from-[#ebf7f4] via-[#f7fbf9] to-[#e6f4f1] relative overflow-hidden border-b border-slate-100/80">
+    <section id="faq" className="py-20 md:py-28 bg-linear-to-br/srgb from-[#ebf7f4] via-[#f7fbf9] to-[#e6f4f1] relative overflow-hidden border-b border-slate-100/80">
       {/* Premium subtle dot pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(#22ba8b_0.8px,transparent_0.8px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-[0.06] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#22ba8b_0.8px,transparent_0.8px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-[0.06] pointer-events-none" />
 
       {/* Soft eco-inspired backdrop highlights */}
       <div className="absolute top-1/4 right-[-10%] w-[600px] h-[600px] bg-emerald-400/12 rounded-full blur-[150px] pointer-events-none" />
@@ -32,7 +32,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-10 md:mb-14">
           <h2 className="text-[18px] min-[360px]:text-[20px] min-[400px]:text-[22px] sm:text-[32px] md:text-[36.4px] font-black text-slate-900 mb-3.5 leading-tight tracking-tight whitespace-nowrap">
-            가장 많이 질문하시는 <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 bg-clip-text text-transparent underline decoration-emerald-300 decoration-wavy underline-offset-8">안심 Q&A</span>
+            가장 많이 질문하시는 <span className="bg-linear-to-r/srgb from-emerald-600 via-teal-600 to-emerald-500 bg-clip-text text-transparent underline decoration-emerald-300 decoration-wavy underline-offset-8">안심 Q&A</span>
           </h2>
           <p className="text-slate-600 text-sm sm:text-base md:text-lg font-bold max-w-2xl mx-auto break-keep">
             궁금한 점을 명쾌하게 해결해 드립니다.
@@ -44,7 +44,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
           <button
             onClick={() => setFaqDropdownOpen(!faqDropdownOpen)}
             aria-expanded={faqDropdownOpen}
-            className="w-full flex items-center justify-between bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/90 border-2 border-emerald-500 rounded-2xl px-3.5 sm:px-5 py-3.5 text-sm font-extrabold text-slate-900 shadow-md shadow-emerald-500/10 active:scale-[0.99] transition-all duration-200"
+            className="w-full flex items-center justify-between bg-linear-to-r/srgb from-emerald-50 via-teal-50 to-emerald-50/90 border-2 border-emerald-500 rounded-2xl px-3.5 sm:px-5 py-3.5 text-sm font-extrabold text-slate-900 shadow-md shadow-emerald-500/10 active:scale-[0.99] transition-all duration-200"
           >
             <span className="flex items-center gap-2 overflow-hidden">
               <span className="relative flex h-3 w-3 shrink-0">
@@ -56,16 +56,16 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                   궁금하신 카테고리를 선택해주세요
                 </span>
               ) : activeFAQTab === 'all' ? (
-                <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-sm shrink-0">
+                <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-xs shrink-0">
                   전체 보기
                 </span>
               ) : (
-                <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-sm">
+                <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-xs">
                   {FAQ_DATA.find((cat) => cat.category === activeFAQTab)?.categoryName || ''}
                 </span>
               )}
             </span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm ml-1">
+            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs ml-1">
               <ChevronDown
                 className={`w-5 h-5 transition-transform duration-300 ${
                   faqDropdownOpen ? 'rotate-180' : ''
@@ -137,9 +137,9 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                 setActiveFAQTab('all');
                 setOpenFAQIdx(null);
               }}
-              className={`whitespace-nowrap flex-shrink-0 px-4 py-2.5 rounded-full text-xs lg:text-sm font-black transition-all duration-200 cursor-pointer ${
+              className={`whitespace-nowrap shrink-0 px-4 py-2.5 rounded-full text-xs lg:text-sm font-black transition-all duration-200 cursor-pointer ${
                 activeFAQTab === 'all'
-                  ? 'bg-gradient-to-r from-[#04a875] to-[#22ba8b] text-white shadow-md shadow-emerald-600/25 scale-[1.02]'
+                  ? 'bg-linear-to-r/srgb from-[#04a875] to-[#22ba8b] text-white shadow-md shadow-emerald-600/25 scale-[1.02]'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
               }`}
             >
@@ -152,9 +152,9 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                   setActiveFAQTab(cat.category);
                   setOpenFAQIdx(null);
                 }}
-                className={`whitespace-nowrap flex-shrink-0 px-4 py-2.5 rounded-full text-xs lg:text-sm font-extrabold transition-all duration-200 cursor-pointer ${
+                className={`whitespace-nowrap shrink-0 px-4 py-2.5 rounded-full text-xs lg:text-sm font-extrabold transition-all duration-200 cursor-pointer ${
                   activeFAQTab === cat.category
-                    ? 'bg-gradient-to-r from-[#04a875] to-[#22ba8b] text-white shadow-md shadow-emerald-600/25 font-black scale-[1.02]'
+                    ? 'bg-linear-to-r/srgb from-[#04a875] to-[#22ba8b] text-white shadow-md shadow-emerald-600/25 font-black scale-[1.02]'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
                 }`}
               >
@@ -173,7 +173,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
             <div className="flex flex-col gap-2.5 md:flex-row md:items-stretch md:justify-center md:gap-4">
               <button
                 onClick={() => setActiveFAQTab('all')}
-                className="w-full md:w-auto px-4 py-2.5 md:px-7 rounded-full md:rounded-2xl text-sm md:text-base font-black bg-gradient-to-r from-[#04a875] to-[#22ba8b] text-white shadow-md shadow-emerald-600/25 md:flex md:items-center"
+                className="w-full md:w-auto px-4 py-2.5 md:px-7 rounded-full md:rounded-2xl text-sm md:text-base font-black bg-linear-to-r/srgb from-[#04a875] to-[#22ba8b] text-white shadow-md shadow-emerald-600/25 md:flex md:items-center"
               >
                 전체 질문 보기
               </button>
@@ -182,7 +182,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                   <button
                     key={cat.category}
                     onClick={() => setActiveFAQTab(cat.category)}
-                    className="px-2.5 py-2 md:px-4 md:py-2.5 rounded-full text-[11px] sm:text-xs md:text-sm font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors break-keep leading-snug"
+                    className="px-2.5 py-2 md:px-4 md:py-2.5 rounded-full text-[11px] sm:text-xs sm:leading-[1rem] md:text-sm md:leading-[1.25rem] font-bold bg-slate-100 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors break-keep leading-snug"
                   >
                     {cat.categoryName}
                   </button>
@@ -230,7 +230,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                       </div>
                     </div>
                     <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center shrink-0 transition-all duration-200 ${
-                      isOpen ? 'bg-emerald-500 text-white rotate-180 shadow-sm' : 'bg-slate-100 text-slate-500 group-hover:bg-emerald-100 group-hover:text-emerald-700'
+                      isOpen ? 'bg-emerald-500 text-white rotate-180 shadow-xs' : 'bg-slate-100 text-slate-500 group-hover:bg-emerald-100 group-hover:text-emerald-700'
                     }`}>
                       <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
                     </div>
@@ -247,13 +247,13 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                       most-repeated instance of this pattern. */}
                   <div
                     id={`faq-answer-${uniqueKey}`}
-                    className="overflow-hidden transition-[max-height,opacity] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    className="overflow-hidden transition-[max-height,opacity] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
                     style={{ maxHeight: isOpen ? '600px' : '0px', opacity: isOpen ? 1 : 0 }}
                     inert={!isOpen}
                   >
                       <div className="px-5 pb-6 pt-1 sm:px-7 sm:pb-7 text-left">
-                        <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-50/70 to-slate-50 border border-emerald-100/80 flex gap-3.5 sm:gap-4 items-start shadow-inner">
-                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-900 text-white font-black text-xs sm:text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                        <div className="p-4 sm:p-6 rounded-2xl bg-linear-to-r/srgb from-emerald-50/70 to-slate-50 border border-emerald-100/80 flex gap-3.5 sm:gap-4 items-start shadow-inner">
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-900 text-white font-black text-xs sm:text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
                             A
                           </div>
                           <div className="text-slate-800 text-[14px] sm:text-[16.5px] md:text-[17px] leading-relaxed font-semibold break-keep whitespace-pre-line flex-1">
@@ -268,9 +268,9 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
         </div>
 
         {/* Bottom Trust Badge */}
-        <div className="text-center mt-12 md:mt-16 p-6 sm:p-8 bg-gradient-to-r from-[#04a875] via-[#03855c] to-[#026344] text-white rounded-3xl max-w-2xl mx-auto shadow-xl shadow-emerald-950/20 border border-emerald-400/30 relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="text-center mt-12 md:mt-16 p-6 sm:p-8 bg-linear-to-r/srgb from-[#04a875] via-[#03855c] to-[#026344] text-white rounded-3xl max-w-2xl mx-auto shadow-xl shadow-emerald-950/20 border border-emerald-400/30 relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
-            <p className="text-sm sm:text-base md:text-lg font-extrabold text-white leading-snug break-keep">
+            <p className="text-sm sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] font-extrabold text-white leading-snug break-keep">
               💡 찾으시는 답변이 없으신가요?
             </p>
             <p className="text-xs sm:text-sm text-emerald-100 font-medium mt-1 break-keep">

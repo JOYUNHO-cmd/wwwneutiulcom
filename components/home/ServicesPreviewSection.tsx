@@ -12,7 +12,7 @@ const ServicesPreviewSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-2 md:px-8 relative z-10">
         <div className="text-center mb-10 md:mb-16">
           <h3 className="text-2xl md:text-5xl font-extrabold text-slate-900 mb-3 sm:mb-4">전문적인 청소 솔루션</h3>
-          <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primaryDark font-bold text-xs sm:text-sm md:text-base shadow-sm hover:shadow-md transition-all">
+          <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primaryDark font-bold text-xs sm:text-sm md:text-base shadow-xs hover:shadow-md transition-all">
             <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 text-primaryDark animate-pulse" />
             <span>아래 사진을 클릭하면 이동합니다</span>
             <span className="inline-block animate-bounce text-base sm:text-lg">👇</span>

@@ -21,10 +21,10 @@ const CertificationsSection: React.FC = () => {
             <Award size={14} />
             공인 자격 보유
           </span>
-          <h2 className="text-sm md:text-4xl font-black text-slate-900 mb-3 md:mb-5 leading-tight whitespace-nowrap">
+          <h2 className="text-sm md:text-4xl md:leading-[2.5rem] font-black text-slate-900 mb-3 md:mb-5 leading-tight whitespace-nowrap">
             말이 아닌 자격증으로 증명합니다
           </h2>
-          <p className="text-slate-500 text-sm md:text-lg leading-relaxed break-keep">
+          <p className="text-slate-500 text-sm md:text-lg md:leading-[1.75rem] leading-relaxed break-keep">
             <span className="block md:inline">대표와 전담팀이 취득한 6개 공인 자격증입니다.</span>{' '}
             <span className="block md:inline">눌러서 실제 자격증을 확인하실 수 있습니다.</span>
           </p>
@@ -39,7 +39,7 @@ const CertificationsSection: React.FC = () => {
               className="text-center group"
               aria-label={`${cert.title} 자격증 크게 보기`}
             >
-              <div className="aspect-[3/4] rounded-xl md:rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm group-hover:shadow-lg group-hover:border-primary/40 transition-all mb-2">
+              <div className="aspect-3/4 rounded-xl md:rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-xs group-hover:shadow-lg group-hover:border-primary/40 transition-all mb-2">
                 <img
                   src={cert.image}
                   alt={cert.title}
@@ -48,7 +48,7 @@ const CertificationsSection: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-slate-700 text-[10px] md:text-sm font-bold leading-tight break-keep">{cert.title}</p>
+              <p className="text-slate-700 text-[10px] md:text-sm md:leading-[1.25rem] font-bold leading-tight break-keep">{cert.title}</p>
             </button>
           ))}
         </div>
@@ -56,7 +56,7 @@ const CertificationsSection: React.FC = () => {
 
       {openCertIdx !== null && (
         <div
-          className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:p-10"
+          className="fixed inset-0 z-100 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4 md:p-10"
           onClick={() => setOpenCertIdx(null)}
         >
           <button

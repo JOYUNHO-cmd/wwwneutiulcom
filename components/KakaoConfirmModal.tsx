@@ -23,7 +23,7 @@ const KakaoConfirmModal: React.FC<KakaoConfirmModalProps> = ({ kakaoUrl, locatio
 
   return (
     <div
-      className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
+      className="fixed inset-0 z-100 bg-black/60 backdrop-blur-xs flex items-center justify-center p-6"
       onClick={onClose}
     >
       <div
@@ -39,7 +39,7 @@ const KakaoConfirmModal: React.FC<KakaoConfirmModalProps> = ({ kakaoUrl, locatio
           <X size={18} />
         </button>
 
-        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-[#FEE500] flex items-center justify-center shadow-sm">
+        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-[#FEE500] flex items-center justify-center shadow-xs">
           <MessageCircle size={26} className="fill-[#3C1E1E] text-[#3C1E1E]" />
         </div>
 

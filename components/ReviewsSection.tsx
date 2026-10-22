@@ -8,7 +8,7 @@ import ReviewMarquee from './ReviewMarquee';
 // review screenshots without duplicating the markup.
 const ReviewsSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-white via-amber-50/30 to-white relative border-b border-slate-100 overflow-hidden">
+    <section className="py-16 md:py-24 bg-linear-to-b/srgb from-white via-amber-50/30 to-white relative border-b border-slate-100 overflow-hidden">
       <div className="absolute top-10 right-[10%] w-64 h-64 bg-amber-300/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 left-[10%] w-72 h-72 bg-emerald-300/10 rounded-full blur-3xl pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-8 md:mb-14 relative z-10">
@@ -29,10 +29,10 @@ const ReviewsSection: React.FC = () => {
             </m.div>
           ))}
         </div>
-        <h2 className="text-sm md:text-4xl font-black text-slate-900 leading-tight mb-3 md:mb-5 whitespace-nowrap">
+        <h2 className="text-sm md:text-4xl md:leading-[2.5rem] font-black text-slate-900 leading-tight mb-3 md:mb-5 whitespace-nowrap">
           직접 이용해보신 고객님들의 후기
         </h2>
-        <p className="text-slate-500 text-sm md:text-lg leading-relaxed break-keep">
+        <p className="text-slate-500 text-sm md:text-lg md:leading-[1.75rem] leading-relaxed break-keep">
           <span className="block md:inline">저희가 아닌, 실제로 청소를 맡기신</span>{' '}
           <span className="block md:inline">고객님들의 이야기입니다.</span>{' '}
           <span className="block md:inline mt-3 md:mt-0">사진을 눌러 크게 볼 수 있습니다.</span>

@@ -65,7 +65,7 @@ const About: React.FC = () => {
             className="w-full h-full object-cover opacity-50"
           />
         </picture>
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/75" />
+        <div className="absolute inset-0 bg-linear-to-b/srgb from-slate-900/60 via-slate-900/40 to-slate-900/75" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <m.h1 
@@ -79,7 +79,7 @@ const About: React.FC = () => {
                 느티울은 고객의 <span className="text-primary">신뢰</span>를 최우선으로 생각하는
               </span>
               <span className="block md:hidden text-center leading-normal">
-                <span className="block whitespace-nowrap text-[18px]">느티울은 고객의 <span className="text-[#0f9d6c] font-extrabold">신뢰</span>를</span>
+                <span className="block whitespace-nowrap text-[18px]">느티울은 고객의 <span className="text-primary font-extrabold">신뢰</span>를</span>
                 <span className="block whitespace-nowrap mt-1 text-[18px]">최우선으로 생각하는</span>
               </span>
             </span>
@@ -110,7 +110,7 @@ const About: React.FC = () => {
 
         </div>
         
-        <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-gradient-to-t from-slate-50 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-16 md:h-24 bg-linear-to-t/srgb from-slate-50 to-transparent"></div>
       </section>
 
       {/* Brand Name Meaning & Promise Section */}
@@ -118,7 +118,7 @@ const About: React.FC = () => {
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
         <div className="absolute inset-0 opacity-[0.06] bg-[url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center pointer-events-none -z-10"></div>
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white to-transparent pointer-events-none -z-10"></div>
+        <div className="absolute inset-x-0 top-0 h-24 bg-linear-to-b/srgb from-white to-transparent pointer-events-none -z-10"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
@@ -131,11 +131,11 @@ const About: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left items-center lg:items-start"
             >
-              <h2 className="text-[16px] xs:text-[18px] sm:text-2xl md:text-3xl lg:text-[32px] font-black text-slate-900 leading-tight mb-6 whitespace-nowrap text-center lg:text-left">
-                '느티울' 이라는 이름에 담긴 <span className="text-[#0f9d6c] font-black border-b-4 border-[#0f9d6c]/20">소중한 약속</span>
+              <h2 className="text-[16px] xs:text-[18px] sm:text-2xl sm:leading-[2rem] md:text-3xl md:leading-[2.5rem] lg:text-[32px] font-black text-slate-900 leading-tight mb-6 whitespace-nowrap text-center lg:text-left">
+                '느티울' 이라는 이름에 담긴 <span className="text-primary font-black border-b-4 border-primary/20">소중한 약속</span>
               </h2>
               
-              <p className="text-slate-500 text-xs sm:text-sm md:text-base leading-relaxed mb-8 break-keep text-center lg:text-left">
+              <p className="text-slate-500 text-xs sm:text-sm sm:leading-[1.25rem] md:text-base md:leading-[1.5rem] leading-relaxed mb-8 break-keep text-center lg:text-left">
                 <span className="block md:whitespace-nowrap font-bold" style={{ fontWeight: 'bold' }}>
                   저희의 사명 '느티울'에는 고객 한분 한분의 <br className="block md:hidden" />소중한 생활 터전을 지키고,
                 </span>
@@ -151,7 +151,7 @@ const About: React.FC = () => {
                   whileHover={{ scale: 1.02, x: 4 }}
                   className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-start gap-4 transition-all hover:bg-slate-100/70 hover:shadow-md cursor-default"
                 >
-                  <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-md flex items-center justify-center bg-white border border-slate-100">
+                  <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 shadow-md flex items-center justify-center bg-white border border-slate-100">
                     <img loading="lazy" decoding="async" 
                       src="/images/about/icon-neuti-tree.png" 
                       alt="느티" 
@@ -160,10 +160,10 @@ const About: React.FC = () => {
                   </div>
                   <div>
                     <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 mb-1">
-                      <span className="text-lg font-bold text-slate-955"><strong className="font-black text-[#0f9d6c]" style={{ fontSize: '30px', fontFamily: '"Noto Sans KR", sans-serif', lineHeight: '32px' }}>느티</strong>나무(Zelkova)</span>
-                      <span className="text-xs text-[#0f9d6c] font-bold">든든한 그늘과 쉼</span>
+                      <span className="text-lg font-bold text-slate-955"><strong className="font-black text-primary" style={{ fontSize: '30px', fontFamily: '"Noto Sans KR", sans-serif', lineHeight: '32px' }}>느티</strong>나무(Zelkova)</span>
+                      <span className="text-xs text-primary font-bold">든든한 그늘과 쉼</span>
                     </div>
-                    <p className="text-slate-600 text-[11.5px] xs:text-xs sm:text-sm leading-relaxed font-bold break-keep" style={{ fontWeight: 'bold' }}>
+                    <p className="text-slate-600 text-[11.5px] xs:text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed font-bold break-keep" style={{ fontWeight: 'bold' }}>
                       <span className="block sm:inline">마을 한가운데에서 오랜 세월 변함없이</span>
                       <span className="hidden sm:inline"> </span>
                       <br className="hidden xs:block sm:hidden" />
@@ -180,7 +180,7 @@ const About: React.FC = () => {
                   whileHover={{ scale: 1.02, x: 4 }}
                   className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-start gap-4 transition-all hover:bg-slate-100/70 hover:shadow-md cursor-default"
                 >
-                  <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 shadow-md flex items-center justify-center bg-white border border-slate-100">
+                  <div className="w-12 h-12 rounded-xl overflow-hidden shrink-0 shadow-md flex items-center justify-center bg-white border border-slate-100">
                     <img loading="lazy" decoding="async" 
                       src="/images/about/icon-ul-fence.png" 
                       alt="울" 
@@ -189,10 +189,10 @@ const About: React.FC = () => {
                   </div>
                   <div>
                     <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 mb-1">
-                      <span className="text-lg font-bold text-slate-955"><strong className="font-black text-[#0f9d6c]" style={{ fontSize: '32px', fontFamily: '"Noto Sans KR", sans-serif', lineHeight: '32px' }}>울</strong>타리(Fence)</span>
+                      <span className="text-lg font-bold text-slate-955"><strong className="font-black text-primary" style={{ fontSize: '32px', fontFamily: '"Noto Sans KR", sans-serif', lineHeight: '32px' }}>울</strong>타리(Fence)</span>
                       <span className="text-xs text-primaryDark font-bold">따뜻하게 품는 울타리</span>
                     </div>
-                    <p className="text-slate-600 text-[11px] xs:text-xs sm:text-sm leading-relaxed font-bold break-keep" style={{ fontWeight: 'bold' }}>
+                    <p className="text-slate-600 text-[11px] xs:text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed font-bold break-keep" style={{ fontWeight: 'bold' }}>
                       {/* Mobile version (three lines) */}
                       <span className="block sm:hidden">이웃들의 소중한 공간을 포근하고 든든하게</span>
                       <span className="block sm:hidden">에워싸고 안전하게 보호해 주는 건강한</span>
@@ -223,7 +223,7 @@ const About: React.FC = () => {
                   below (w-fit) so it sits over the quote's own centre. */}
               <div className="mb-8 flex w-fit max-w-full flex-col items-center">
                 <AnimatedLogo className="mb-6 w-40 h-40 sm:w-52 sm:h-52" />
-                <p className="text-[#0f9d6c] font-black text-[18px] sm:text-[22px] md:text-[24px] leading-snug tracking-wide break-keep">
+                <p className="text-primary font-black text-[18px] sm:text-[22px] md:text-[24px] leading-snug tracking-wide break-keep">
                   "언제나 한자리에 서서 이웃을 품다"
                 </p>
               </div>
@@ -273,7 +273,7 @@ const About: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="max-w-6xl mx-auto mb-32 relative"
         >
-          <div className="bg-white rounded-[2rem] p-8 md:p-20 shadow-2xl border border-slate-100 relative overflow-hidden">
+          <div className="bg-white rounded-4xl p-8 md:p-20 shadow-2xl border border-slate-100 relative overflow-hidden">
             <Quote className="absolute top-10 left-10 text-primary/5 transform -scale-x-100" size={160} />
             <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-bl-full"></div>
             
@@ -281,14 +281,14 @@ const About: React.FC = () => {
                <div className="w-full md:w-3/5 order-2 md:order-1">
                    <div className="mb-10">
                       <p className="text-primaryDark font-bold tracking-widest uppercase text-sm mb-3">CEO Message</p>
-                      <h2 className="text-[20px] sm:text-3xl md:text-5xl font-extrabold text-slate-900 leading-[1.5] md:leading-tight mb-6 break-keep tracking-tight">
+                      <h2 className="text-[20px] sm:text-3xl sm:leading-[2.5rem] md:text-5xl font-extrabold text-slate-900 leading-normal md:leading-tight mb-6 break-keep tracking-tight">
                         "고객님의 만족이<br/>
                         <span className="text-primary">저의 행복이자 보람</span>입니다."
                       </h2>
                    </div>
 
                    {/* CEO Body Text: Strictly following requested line-by-line structure */}
-                   <div className="space-y-7 text-slate-600 text-[14.5px] sm:text-lg md:text-lg leading-[1.7] md:leading-loose font-medium break-keep">
+                   <div className="space-y-7 text-slate-600 text-[14.5px] sm:text-lg sm:leading-[1.75rem] md:text-lg leading-[1.7] md:leading-loose font-medium break-keep">
                        <p>
                         안녕하세요.<br />
                         느티울 대표 조윤호입니다.<br />
@@ -353,13 +353,13 @@ const About: React.FC = () => {
                 <div className="w-full md:w-2/5 order-1 md:order-2 flex justify-center">
                     <m.div 
                       whileHover={{ scale: 1.03, rotate: 0 }}
-                      className="relative w-full max-w-sm aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border-[12px] border-slate-50 bg-slate-200 transform md:rotate-3 transition-transform duration-500"
+                      className="relative w-full max-w-sm aspect-3/4 rounded-3xl overflow-hidden shadow-2xl border-12 border-slate-50 bg-slate-200 transform md:rotate-3 transition-transform duration-500"
                     >
                        <img loading="lazy" decoding="async" 
                          src="/images/about/ceo-message.webp" alt="CEO 조윤호" className="w-full h-full object-cover" 
                         />
                         {/* 대표 표기 배지 및 오버레이 (모바일/PC 최적화) */}
-                        <div className="absolute top-4 left-4 hidden z-10 bg-slate-900/90 text-primary font-bold text-[11px] sm:text-xs px-3.5 py-1.5 rounded-full shadow-lg border border-white/10 flex items-center gap-1.5 backdrop-blur-sm">
+                        <div className="absolute top-4 left-4 hidden z-10 bg-slate-900/90 text-primary font-bold text-[11px] sm:text-xs px-3.5 py-1.5 rounded-full shadow-lg border border-white/10 flex items-center gap-1.5 backdrop-blur-xs">
                           <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
                           <span>대표</span>
                         </div>
@@ -404,14 +404,14 @@ const About: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.08 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="bg-white p-3.5 sm:p-6 md:p-12 rounded-xl md:rounded-[2rem] border border-slate-200 shadow-lg md:shadow-xl shadow-slate-200/50 text-center hover:border-primary/50 transition-all duration-300 group relative overflow-hidden flex flex-col items-center cursor-default"
+              className="bg-white p-3.5 sm:p-6 md:p-12 rounded-xl md:rounded-4xl border border-slate-200 shadow-lg md:shadow-xl shadow-slate-200/50 text-center hover:border-primary/50 transition-all duration-300 group relative overflow-hidden flex flex-col items-center cursor-default"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r/srgb from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="w-10 h-10 md:w-24 md:h-24 mx-auto bg-primary/10 rounded-xl md:rounded-3xl flex items-center justify-center text-primary mb-3 md:mb-10 group-hover:bg-primary group-hover:text-white transition-all duration-500 transform group-hover:rotate-6">
                 <val.icon className="w-5 h-5 md:w-12 md:h-12" strokeWidth={2} />
               </div>
               <h3 className="text-xs sm:text-lg md:text-2xl font-extrabold mb-1 md:mb-5 text-slate-900 break-keep group-hover:text-primary transition-colors">{val.title}</h3>
-              <p className="text-slate-500 text-[10px] sm:text-base md:text-lg font-medium leading-normal md:leading-relaxed break-keep hidden xs:block whitespace-pre-line">
+              <p className="text-slate-500 text-[10px] sm:text-base sm:leading-[1.5rem] md:text-lg font-medium leading-normal md:leading-relaxed break-keep hidden xs:block whitespace-pre-line">
                 {val.descDesktop}
               </p>
               <p className="text-slate-500 text-[13px] md:text-[25px] font-bold leading-tight break-keep xs:hidden whitespace-pre-line">
@@ -447,19 +447,19 @@ const About: React.FC = () => {
                 whileHover={{ y: -6 }}
                 className="group relative cursor-default"
               >
-                <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg group-hover:border-primary/50 group-hover:shadow-2xl transition-all duration-500">
+                <div className="aspect-3/4 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg group-hover:border-primary/50 group-hover:shadow-2xl transition-all duration-500">
                   <img loading="lazy" decoding="async" 
                     src={cert.image} 
                     alt={cert.title} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-linear-to-t/srgb from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="absolute bottom-4 left-0 w-full px-4 transform translate-y-4 group-hover:translate-y-0 transition-transform opacity-0 group-hover:opacity-100">
                      <p className="text-white text-[8px] md:text-[10px] font-bold uppercase tracking-wider">{cert.issuer}</p>
                   </div>
                 </div>
                 <div className="mt-3 md:mt-5 text-center px-1">
-                  <h4 className="text-xs sm:text-base md:text-[17px] font-bold text-slate-800 mb-1 group-hover:text-primaryDark transition-colors leading-tight break-keep">
+                  <h4 className="text-xs sm:text-base sm:leading-[1.5rem] md:text-[17px] font-bold text-slate-800 mb-1 group-hover:text-primaryDark transition-colors leading-tight break-keep">
                     {cert.title}
                   </h4>
                 </div>

@@ -80,7 +80,7 @@ const RegionServiceLanding: React.FC = () => {
   const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');
 
   return (
-    <div className="w-full flex-grow">
+    <div className="w-full grow">
       {/* Breadcrumb */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 text-sm text-gray-500 flex items-center gap-2 flex-wrap">
         <Link to="/services" className="hover:text-primary">서비스</Link>
@@ -92,7 +92,7 @@ const RegionServiceLanding: React.FC = () => {
 
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-10">
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4 leading-tight text-center sm:text-left">
+        <h1 className="text-3xl sm:text-4xl sm:leading-[2.5rem] font-black text-slate-900 mb-4 leading-tight text-center sm:text-left">
           {region.name} {content.serviceLabel}
         </h1>
         {/* Mobile: short-line "1문장 1줄" stanza formatting for readability */}
@@ -236,7 +236,7 @@ const RegionServiceLanding: React.FC = () => {
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
         <div className="space-y-4">
           {content.faqs.map((faq, i) => (
-            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
+            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-xs">
               <h3 className="font-bold text-slate-800 mb-2 flex items-start gap-2">
                 <HelpCircle className="text-primary shrink-0 mt-0.5" size={18} />
                 <span className="break-keep">{faq.q}</span>

@@ -14,7 +14,7 @@ const PrivacyPolicy: React.FC = () => {
           통해 수집하는 개인정보의 처리에 관한 사항을 안내합니다.
         </p>
 
-        <div className="space-y-10 md:space-y-12 text-sm md:text-base leading-relaxed break-keep">
+        <div className="space-y-10 md:space-y-12 text-sm md:text-base md:leading-[1.5rem] leading-relaxed break-keep">
           <section>
             <h2 className="text-lg md:text-xl font-black text-slate-900 mb-3">1. 수집하는 개인정보 항목 및 수집 방법</h2>
             <p className="text-slate-600 mb-2">

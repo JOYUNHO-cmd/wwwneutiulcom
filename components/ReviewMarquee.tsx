@@ -57,7 +57,7 @@ const ReviewMarquee: React.FC = () => {
               key={`${review.file}-${idx}`}
               type="button"
               onClick={() => setOpenFile(review.file)}
-              className="shrink-0 w-48 sm:w-60 md:w-72 mx-2 md:mx-3 rounded-xl md:rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-shadow bg-white text-left"
+              className="shrink-0 w-48 sm:w-60 md:w-72 mx-2 md:mx-3 rounded-xl md:rounded-2xl overflow-hidden border border-slate-200 shadow-xs hover:shadow-lg transition-shadow bg-white text-left"
               aria-label="후기 크게 보기"
             >
               <img
@@ -76,7 +76,7 @@ const ReviewMarquee: React.FC = () => {
 
       {openFile && (
         <div
-          className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:p-10"
+          className="fixed inset-0 z-100 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4 md:p-10"
           onClick={() => setOpenFile(null)}
         >
           <button

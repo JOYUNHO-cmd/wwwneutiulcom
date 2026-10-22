@@ -19,10 +19,10 @@ const Footer: React.FC = () => {
           
           {/* Column 1: Company Info */}
           <div className="flex flex-col space-y-4 md:space-y-6">
-            <h3 className="text-lg md:text-3xl font-extrabold text-white leading-tight">
+            <h3 className="text-lg md:text-3xl md:leading-[2.5rem] font-extrabold text-white leading-tight">
               {config.companyInfo.name}
             </h3>
-            <p className="text-gray-400 text-[11px] md:text-base font-medium leading-relaxed whitespace-pre-line break-keep">
+            <p className="text-gray-400 text-[11px] md:text-base md:leading-[1.5rem] font-medium leading-relaxed whitespace-pre-line break-keep">
               상담부터 청소까지 대표가 직접<br />
               관리하는 신뢰받는 기업.<br /><br className="hidden md:block" />
               고객님의 공간에<br />
@@ -93,20 +93,20 @@ const Footer: React.FC = () => {
             <h4 className="text-[12px] md:text-lg font-bold text-white mb-4 md:mb-8 uppercase tracking-wider">Contact Us</h4>
             <ul className="space-y-4 md:space-y-6 text-[11px] md:text-base">
               <li className="flex items-start gap-2 md:gap-3">
-                <MapPin className="flex-shrink-0 text-primary mt-0.5" size={14} />
+                <MapPin className="shrink-0 text-primary mt-0.5" size={14} />
                 <span className="text-gray-400 font-medium leading-snug break-keep">
                   {config.companyInfo.address}
                 </span>
               </li>
               <li className="flex items-center gap-2 md:gap-3">
-                <Phone className="flex-shrink-0 text-primary" size={14} />
+                <Phone className="shrink-0 text-primary" size={14} />
                 <a href={`tel:${cleanPhone}`} onClick={() => trackEvent('contact_click', { method: 'phone', location: 'footer' })} className="hover:text-white text-gray-300 font-bold text-[13px] md:text-lg transition-colors">
                   {config.companyInfo.phone}
                 </a>
               </li>
               <li className="flex flex-col gap-1">
                 <div className="flex items-center gap-2 md:gap-3">
-                  <Mail className="flex-shrink-0 text-primary" size={14} />
+                  <Mail className="shrink-0 text-primary" size={14} />
                   <span className="text-gray-400 font-bold uppercase text-[9px] md:text-xs tracking-widest">Email</span>
                 </div>
                 <a
@@ -131,13 +131,13 @@ const Footer: React.FC = () => {
               </h4>
             </div>
             <div className="flex flex-wrap gap-2 text-[10px] md:text-xs">
-              <span className="px-2.5 py-1 rounded bg-gray-800 text-gray-300 font-medium">서울 전지역 (25개구)</span>
-              <span className="px-2.5 py-1 rounded bg-gray-800 text-gray-300 font-medium">인천 전지역 (송도·청라·영종·남동)</span>
-              <span className="px-2.5 py-1 rounded bg-gray-800 text-gray-300 font-medium">경기 전지역 (군포·안양·수원·판교·화성)</span>
+              <span className="px-2.5 py-1 rounded-sm bg-gray-800 text-gray-300 font-medium">서울 전지역 (25개구)</span>
+              <span className="px-2.5 py-1 rounded-sm bg-gray-800 text-gray-300 font-medium">인천 전지역 (송도·청라·영종·남동)</span>
+              <span className="px-2.5 py-1 rounded-sm bg-gray-800 text-gray-300 font-medium">경기 전지역 (군포·안양·수원·판교·화성)</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-[11px] md:text-xs text-gray-400 leading-relaxed bg-gray-950/60 p-4 md:p-6 rounded-xl border border-gray-800/60">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-[11px] md:text-xs md:leading-[1rem] text-gray-400 leading-relaxed bg-gray-950/60 p-4 md:p-6 rounded-xl border border-gray-800/60">
             <div>
               <p className="text-gray-200 font-bold mb-1.5 flex items-center gap-1.5">
                 <span className="text-emerald-400 font-black">●</span> 서울특별시 권역

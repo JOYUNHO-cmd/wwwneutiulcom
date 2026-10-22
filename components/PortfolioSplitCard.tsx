@@ -50,7 +50,7 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
     <div
       className={`text-left group ${
         isMarqueeLg
-          ? 'shrink-0 w-[32rem] sm:w-[40rem] md:w-[48rem] mx-2 md:mx-3'
+          ? 'shrink-0 w-lg sm:w-160 md:w-3xl mx-2 md:mx-3'
           : isMarquee
           ? 'shrink-0 w-64 sm:w-80 md:w-96 mx-2 md:mx-3'
           : 'w-full'
@@ -62,7 +62,7 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
         className="w-full text-left"
         aria-label={`${item.title} 시공 전후 크게 보기`}
       >
-      <div className="rounded-xl md:rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm group-hover:shadow-lg group-hover:border-primary/40 transition-all bg-white">
+      <div className="rounded-xl md:rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs group-hover:shadow-lg group-hover:border-primary/40 transition-all bg-white">
         <div className="grid grid-cols-2">
           <div className="relative aspect-square bg-slate-100">
             <img

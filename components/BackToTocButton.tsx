@@ -31,7 +31,7 @@ const BackToTocButton: React.FC<BackToTocButtonProps> = ({ tocId, fromId }) => {
         onClick={onClick}
         aria-label="상단 메뉴로 이동"
         title="상단 메뉴로 이동"
-        className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white text-primary border border-primary/30 shadow-md shadow-primary/15 transition-colors hover:bg-primary hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white text-primary border border-primary/30 shadow-md shadow-primary/15 transition-colors hover:bg-primary hover:text-white focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         <ArrowUpToLine size={20} aria-hidden="true" className="anim-toc-back" />
       </a>

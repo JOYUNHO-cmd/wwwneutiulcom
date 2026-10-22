@@ -31,7 +31,7 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
           위에 보여드린 사진들은 실제 작업한 현장의 일부 사진입니다.
         </h3>
         <div className="flex flex-col items-center justify-center">
-          <p className="text-primary font-extrabold text-[17.5px] leading-[19px] sm:text-base md:text-[26.25px] tracking-tight">
+          <p className="text-primary font-extrabold text-[17.5px] leading-[19px] sm:text-base sm:leading-[1.5rem] md:text-[26.25px] tracking-tight">
             전체 작업 과정들이 궁금하시다면??
           </p>
           <div className="flex flex-col items-center mt-2">
@@ -59,7 +59,7 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
             className="group bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-[#03C75A] hover:scale-[1.01] shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_32px_rgba(3,199,90,0.1)] transition-all duration-300 flex flex-col h-full"
           >
             {/* Thumbnail Image */}
-            <div className="relative aspect-[4/3] overflow-hidden w-full bg-slate-100 border-b border-slate-100">
+            <div className="relative aspect-4/3 overflow-hidden w-full bg-slate-100 border-b border-slate-100">
               <img
                 // Card-sized local copy (scripts/cache-blog-thumbnails.mjs);
                 // falls back to Naver's original for a post not cached yet.
@@ -75,7 +75,7 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
                 }}
                 className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
               />
-              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-[#03C75A] text-white text-[8px] sm:text-[9px] font-black px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded sm:rounded shadow-md z-10 flex items-center gap-1">
+              <span className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-[#03C75A] text-white text-[8px] sm:text-[9px] font-black px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-sm sm:rounded-sm shadow-md z-10 flex items-center gap-1">
                 <span className="w-1 h-1 bg-white rounded-full animate-ping" />
                 블로그 현장기
               </span>

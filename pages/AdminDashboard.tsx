@@ -164,7 +164,7 @@ const AdminDashboardInner: React.FC = () => {
             type="button"
             disabled={isLoggingIn}
             onClick={handleGoogleLogin}
-            className="w-full bg-white text-gray-700 border border-gray-300 py-3.5 rounded-xl font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 text-sm"
+            className="w-full bg-white text-gray-700 border border-gray-300 py-3.5 rounded-xl font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2 shadow-xs disabled:opacity-50 text-sm"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.92h6.61a5.62 5.62 0 0 1-2.44 3.71v3.08h3.94c2.31-2.13 3.63-5.27 3.63-8.64z"/>
@@ -238,8 +238,8 @@ const AdminDashboardInner: React.FC = () => {
                 <p className="text-[10px] text-gray-400 truncate">{user.email}</p>
               </div>
            </div>
-           <button onClick={logout} className="w-full text-red-500 text-sm font-medium hover:bg-red-50 py-2 rounded">로그아웃</button>
-           <button onClick={() => navigate('/')} className="w-full text-gray-600 text-sm font-medium hover:bg-gray-50 py-2 rounded mt-2">사이트 바로가기</button>
+           <button onClick={logout} className="w-full text-red-500 text-sm font-medium hover:bg-red-50 py-2 rounded-sm">로그아웃</button>
+           <button onClick={() => navigate('/')} className="w-full text-gray-600 text-sm font-medium hover:bg-gray-50 py-2 rounded-sm mt-2">사이트 바로가기</button>
         </div>
       </div>
 
@@ -271,14 +271,14 @@ const AdminDashboardInner: React.FC = () => {
         </header>
 
         {activeTab === 'general' && (
-          <div className="bg-white rounded-2xl shadow-sm p-8 space-y-6 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-xs p-8 space-y-6 border border-gray-100">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">업체명</label>
                 <input 
                   value={localInfo.name} 
                   onChange={(e) => setLocalInfo({...localInfo, name: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
               <div>
@@ -286,7 +286,7 @@ const AdminDashboardInner: React.FC = () => {
                 <input 
                   value={localInfo.phone} 
                   onChange={(e) => setLocalInfo({...localInfo, phone: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
                <div className="md:col-span-2">
@@ -296,7 +296,7 @@ const AdminDashboardInner: React.FC = () => {
                     <input 
                       value={localInfo.logo} 
                       onChange={(e) => setLocalInfo({...localInfo, logo: e.target.value})}
-                      className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none text-sm text-gray-600 transition-all"
+                      className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden text-sm text-gray-600 transition-all"
                       placeholder="https://... or data:image/..."
                     />
                   </div>
@@ -310,7 +310,7 @@ const AdminDashboardInner: React.FC = () => {
                 <input 
                   value={localInfo.slogan} 
                   onChange={(e) => setLocalInfo({...localInfo, slogan: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
               <div className="md:col-span-2">
@@ -319,7 +319,7 @@ const AdminDashboardInner: React.FC = () => {
                   rows={4}
                   value={localInfo.description} 
                   onChange={(e) => setLocalInfo({...localInfo, description: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
             </div>
@@ -338,7 +338,7 @@ const AdminDashboardInner: React.FC = () => {
                 </div>
                 <form onSubmit={handlePortfolioSubmit} className="p-8 space-y-6">
                   {/* Informational banner */}
-                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs md:text-sm p-4 rounded-xl leading-relaxed space-y-1">
+                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs md:text-sm md:leading-[1.25rem] p-4 rounded-xl leading-relaxed space-y-1">
                     <p className="font-bold">💡 현장 시공 기록지 연동 안내</p>
                     <p>
                       기존의 비포&애프터 비교 앨범형 대신, 대표님이 <b>현장 공식 시공 기록지에 작성하신 글 주소</b>를 등록하는 연동형 시스템입니다.
@@ -353,7 +353,7 @@ const AdminDashboardInner: React.FC = () => {
                          required
                          value={itemForm.title}
                          onChange={e => setItemForm({...itemForm, title: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden"
                          placeholder="예: [준공청소] 마포구 신축 오피스 빌딩 준공 대청소 현장 기록"
                        />
                     </div>
@@ -364,7 +364,7 @@ const AdminDashboardInner: React.FC = () => {
                          required
                          value={itemForm.category}
                          onChange={e => setItemForm({...itemForm, category: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden"
                        >
                          <option value="">카테고리 선택</option>
                          <option value="화재청소">화재청소</option>
@@ -392,7 +392,7 @@ const AdminDashboardInner: React.FC = () => {
                          type="date"
                          value={itemForm.date}
                          onChange={e => setItemForm({...itemForm, date: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden"
                        />
                     </div>
 
@@ -403,7 +403,7 @@ const AdminDashboardInner: React.FC = () => {
                          type="url"
                          value={itemForm.afterImage}
                          onChange={e => setItemForm({...itemForm, afterImage: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none text-sm font-mono text-emerald-800 bg-[#fafdfb]"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden text-sm font-mono text-emerald-800 bg-[#fafdfb]"
                          placeholder="예: https://blog.naver.com/kslee0143/223284920202"
                        />
                        <p className="text-[11px] text-emerald-600 font-bold mt-1.5 flex items-center gap-1">
@@ -425,7 +425,7 @@ const AdminDashboardInner: React.FC = () => {
                          rows={4}
                          value={itemForm.description}
                          onChange={e => setItemForm({...itemForm, description: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none text-sm"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden text-sm"
                          placeholder="작업의 주요 스펙과 성과를 짧고 가독성 좋게 적어주세요. (예: 100평 대형 식당 기름때 제거 및 후드 정밀 고압 청소 완벽 시공!)"
                        />
                     </div>
@@ -453,7 +453,7 @@ const AdminDashboardInner: React.FC = () => {
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {portfolioItems.map(item => (
-                    <div key={item.id} className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 group flex flex-col justify-between">
+                    <div key={item.id} className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-100 group flex flex-col justify-between">
                       <div>
                         <div className="relative aspect-video bg-gray-50">
                           <img 
@@ -469,7 +469,7 @@ const AdminDashboardInner: React.FC = () => {
                                <Trash2 size={20} />
                              </button>
                           </div>
-                          <span className="absolute top-2 left-2 bg-emerald-500 text-white font-extrabold text-[10px] px-2 py-0.5 rounded shadow">추천글</span>
+                          <span className="absolute top-2 left-2 bg-emerald-500 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-sm shadow-sm">추천글</span>
                         </div>
                         <div className="p-5">
                            <div className="flex justify-between items-start mb-2">

@@ -89,7 +89,7 @@ const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
     <section className="py-12 md:py-16 bg-white relative border-b border-slate-100 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-6 md:mb-10 relative z-10">
         <p className="text-slate-900 text-xl md:text-3xl font-black tracking-tight break-keep">
-          제가 직접 시공한 <span className="bg-gradient-to-r from-[#04a875] to-[#22ba8b] bg-clip-text text-transparent">전후 사진</span>입니다
+          제가 직접 시공한 <span className="bg-linear-to-r/srgb from-[#04a875] to-[#22ba8b] bg-clip-text text-transparent">전후 사진</span>입니다
         </p>
         <p className="text-slate-500 text-sm md:text-base mt-2">
           사진을 누르면 크게 볼 수 있어요.
