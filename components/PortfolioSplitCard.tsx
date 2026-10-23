@@ -63,7 +63,7 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
         type="button"
         onClick={onClick}
         className="w-full text-left"
-        aria-label={`${item.title} 사진 크게 보기`}
+        aria-label={`${item.title} 크게 보기`}
       >
       <div className="rounded-xl md:rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs group-hover:shadow-lg group-hover:border-primary/40 transition-all bg-white">
         <div className="grid grid-cols-2">

@@ -137,7 +137,11 @@ const RegionServiceLanding: React.FC = () => {
         <p className="mt-3 text-gray-600 leading-relaxed break-keep">아래는 다른 지역의 현장도 포함한 {content.serviceLabel} 관련 자료입니다. 사진과 후기의 현장명을 확인해 주세요.</p>
       </div>
       <ServiceBeforeAfterMarquee serviceId={serviceId || ''} />
-      <ServiceCaseBlogSection serviceId={serviceId || ''} className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
+      <ServiceCaseBlogSection
+        serviceId={serviceId || ''}
+        introText="작업 현장과 청소 범위가 담긴 블로그 후기도 확인해 보세요."
+        className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
+      />
 
       {/* Situations */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10">

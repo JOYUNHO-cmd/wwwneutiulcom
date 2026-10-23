@@ -12,13 +12,14 @@ interface ServiceCaseBlogSectionProps {
   // RegionServiceLanding.tsx's sections are all narrower (max-w-5xl) with
   // no background of their own.
   className?: string;
+  introText?: string;
 }
 
 // "Want to see the full job, not just the before/after photos?" — a grid
 // of real Naver blog posts written by the crew, one curated set per
 // service (see lib/serviceBlogLinks.mjs). Shared by the service page and
 // every region+service landing page so both point at the same proof.
-const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ serviceId, className }) => {
+const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ serviceId, className, introText }) => {
   const activeBlogs = getServiceBlogLinks(serviceId);
   if (!activeBlogs || activeBlogs.length === 0) return null;
 
@@ -28,7 +29,7 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
         {/* Vibrant top brand green bar */}
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#03C75A]" />
         <h3 className="text-[17px] sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight break-keep mb-3">
-          위에 보여드린 사진들은 실제 작업한 현장의 일부 사진입니다.
+          {introText || '위에 보여드린 사진들은 실제 작업한 현장의 일부 사진입니다.'}
         </h3>
         <div className="flex flex-col items-center justify-center">
           <p className="text-primary font-extrabold text-[17.5px] leading-[19px] sm:text-base sm:leading-[1.5rem] md:text-[26.25px] tracking-tight">
