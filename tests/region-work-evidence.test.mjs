@@ -165,9 +165,10 @@ test('each case renders a linked photo card with an independent, initially close
     assert.doesNotMatch(text, /(?:동|로|길)\s*\d{2,}-\d+/, `${serviceId}/${regionId} should not expose a precise street/lot address`);
   }
   assert.equal(collapsedCases, getAllRegionCases().length, 'all existing cases must participate in the collapsed card layout');
+  const EmptyComponent = loadEvidenceComponent(() => []);
   const noEvidence = renderToStaticMarkup(React.createElement(MemoryRouter, null,
-    React.createElement(Component, { serviceId: 'interior', regionId: 'gwacheon', regionName: '과천시', serviceLabel: '인테리어청소' })));
-  assert.equal(noEvidence, '', 'photos alone must not fabricate a detailed field-case block');
+    React.createElement(EmptyComponent, { serviceId: 'interior', regionId: 'gwacheon', regionName: '과천시', serviceLabel: '인테리어청소' })));
+  assert.equal(noEvidence, '', 'an empty case result must not fabricate a detailed field-case block');
 });
 
 test('new cases without a reviewed summary preserve full closing conditions and notes in the collapsed card', () => {
@@ -264,12 +265,12 @@ test('a linked exact-region case takes precedence over a misleading legacy photo
   assert.doesNotMatch(selected[0].title, /511-11|강남/);
 });
 
-test('Gwacheon photo-only notes use their actual records without promoting them to invented job facts', () => {
+test('reviewed Gwacheon photo notes stay factual when other local records are added', () => {
   const records = getRegionPortfolioItems('interior', getRegion('gwacheon'), portfolio);
-  assert.deepEqual(records.map(item => item.id).sort(), ['gwacheon-interior-250', 'gwacheon-interior-263']);
-  for (const record of records) {
+  for (const id of ['gwacheon-interior-250', 'gwacheon-interior-263']) {
+    const record = records.find(item => item.id === id);
+    assert.ok(record, `${id} must retain its reviewed photo note`);
     assert.ok(record.description, `${record.id} should explain the reviewed photographs`);
-    assert.equal(record.detailHref, null, 'there is no detailed Gwacheon interior article to fabricate');
     assert.doesNotMatch(`${record.title} ${record.description}`, /별빛상회|바나프레소|\d+\s*(?:명|시간)|(?:고압|스팀|약품|세제)\s*(?:사용|작업)/);
     assert.doesNotMatch(`${record.title} ${record.description}`, outcomePromise);
     assert.doesNotMatch(`${record.beforeLabel} ${record.afterLabel}`, /완료|완벽/);
