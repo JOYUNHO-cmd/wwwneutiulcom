@@ -12,6 +12,7 @@ import { SERVICES } from '../lib/servicesData.mjs';
 import { REGION_LANDING_SERVICES, buildRegionServiceContent } from '../lib/regionServiceContent.mjs';
 import { getAllRegionCases, getRegionCases } from '../lib/regionCaseData.mjs';
 import { getRegionWorkEvidence } from '../lib/regionWorkEvidence.mjs';
+import { REGION_WORK_SUMMARIES, summarizeRegionWork } from '../lib/regionWorkSummaries.mjs';
 import { getRegionPortfolioItems, PORTFOLIO_PHOTO_NOTES } from '../lib/regionPortfolioEvidence.mjs';
 import { matchesServicePhoto } from '../lib/servicePhotoMatch.mjs';
 
@@ -22,12 +23,15 @@ const outcomePromise = /완벽(?:한|하게)?|완전(?:히)?\s*(?:제거|복구|
 const inventedPrice = /\d[\d,]*(?:\.\d+)?\s*(?:만\s*원|원)(?:부터|으로|이면|입니다|\s*[~～])/;
 const portfolio = JSON.parse(readFileSync(new URL('../lib/portfolioManifest.json', import.meta.url), 'utf8'));
 
-function loadEvidenceComponent() {
+function loadEvidenceComponent(getEvidence = getRegionWorkEvidence) {
   const { outputText } = ts.transpileModule(readFileSync(new URL('../components/RegionWorkEvidence.tsx', import.meta.url), 'utf8'), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.React, esModuleInterop: true, target: ts.ScriptTarget.ES2022 },
   });
   const module = { exports: {} };
-  new Function('require', 'module', 'exports', outputText)(require, module, module.exports);
+  const resolve = specifier => specifier === '../lib/regionWorkEvidence.mjs'
+    ? { getRegionWorkEvidence: getEvidence }
+    : require(specifier);
+  new Function('require', 'module', 'exports', outputText)(resolve, module, module.exports);
   return module.exports.default;
 }
 
@@ -149,8 +153,13 @@ test('each case renders a linked photo card with an independent, initially close
         assert.ok(summaryText.includes(normalize(fact.value)), `${record.sourceUrl} lost summary information from SSR`);
       }
       if (record.summaryNote) assert.ok(summaryText.includes(normalize(record.summaryNote)), `${record.sourceUrl} lost its limitation`);
-      for (const paragraph of [record.closingSection?.body, record.note].filter(value => value && value.length > 100)) {
-        assert.ok(!normalize(article.textContent).includes(normalize(paragraph)), `${record.sourceUrl} repeats a full article paragraph instead of its summary`);
+      const reviewed = Object.hasOwn(REGION_WORK_SUMMARIES, `${serviceId}/${regionId}/${record.slug}`);
+      for (const paragraph of [record.closingSection?.body, record.note].filter(Boolean)) {
+        if (reviewed && paragraph.length > 100) {
+          assert.ok(!normalize(article.textContent).includes(normalize(paragraph)), `${record.sourceUrl} repeats a full article paragraph instead of its reviewed summary`);
+        } else if (!reviewed) {
+          assert.ok(summaryText.includes(normalize(paragraph)), `${record.sourceUrl} must preserve unreviewed source limitations until a summary is reviewed`);
+        }
       }
     }
     assert.doesNotMatch(text, /(?:동|로|길)\s*\d{2,}-\d+/, `${serviceId}/${regionId} should not expose a precise street/lot address`);
@@ -159,6 +168,44 @@ test('each case renders a linked photo card with an independent, initially close
   const noEvidence = renderToStaticMarkup(React.createElement(MemoryRouter, null,
     React.createElement(Component, { serviceId: 'interior', regionId: 'gwacheon', regionName: '과천시', serviceLabel: '인테리어청소' })));
   assert.equal(noEvidence, '', 'photos alone must not fabricate a detailed field-case block');
+});
+
+test('new cases without a reviewed summary preserve full closing conditions and notes in the collapsed card', () => {
+  const base = getRegionWorkEvidence('trash-house', 'uijeongbu')[0];
+  const closing = '물건을 비운 뒤 바닥과 벽을 닦고 남은 상태를 확인했습니다. 청소 후에도 바닥재 안쪽에 스며든 얼룩과 벽 아래 마감재 손상은 남아 있어, 청소만으로 복구되었다고 안내하지 않았습니다. 이 부분은 별도 보수와 교체가 필요한 상태입니다.';
+  const note = '공개 사진에는 건조가 끝난 같은 구간의 결과 장면이 없습니다. 사진에 보이는 표면만으로 전체 공간의 건조 완료나 이용 가능 상태를 약속하지 않으며, 배수관 수리는 별도 업체의 작업 범위입니다.';
+  for (const [index, retained] of [[closing, note], [closing, ''], ['', note]].entries()) {
+    const source = {
+      slug: `unreviewed-source-fixture-${index}`,
+      heading: '신규 현장 기록',
+      facts: {
+        location: '의정부시 주거 공간',
+        before: '물건이 놓여 있고 바닥과 벽에 얼룩이 남은 상태입니다.',
+        process: '물건을 정리하고 바닥과 벽을 닦은 뒤 남은 상태를 확인했습니다.',
+        staff: '확인된 인원과 시간 기록은 없습니다.',
+      },
+      sections: retained[0] ? [{ heading: '작업 뒤 확인한 상태', body: retained[0] }] : [],
+      note: retained[1],
+    };
+    const snapshot = structuredClone(source);
+    assert.equal(Object.hasOwn(REGION_WORK_SUMMARIES, `trash-house/uijeongbu/${source.slug}`), false);
+    const summary = summarizeRegionWork('trash-house', 'uijeongbu', source);
+    assert.deepEqual(summary.summaryFacts, [
+      { label: '현장', value: source.facts.location },
+      { label: '작업 전', value: source.facts.before },
+      { label: '주요 작업', value: source.facts.process },
+    ], 'unreviewed records keep their own facts and cannot acquire an invented crew or duration');
+    for (const text of retained.filter(Boolean)) assert.ok(summary.summaryNote.includes(text), 'source conditions may not be truncated before review');
+    const record = { ...base, ...summary, slug: source.slug, sourceUrl: `/services/trash-house/uijeongbu/${source.slug}` };
+    const Component = loadEvidenceComponent(() => [record]);
+    const document = parse(renderToStaticMarkup(React.createElement(MemoryRouter, null,
+      React.createElement(Component, { serviceId: 'trash-house', regionId: 'uijeongbu', regionName: '의정부시', serviceLabel: '쓰레기집청소' }))));
+    const details = document.querySelector('article details');
+    assert.ok(details);
+    assert.equal(details.hasAttribute('open'), false);
+    for (const text of retained.filter(Boolean)) assert.ok(normalize(details.textContent).includes(normalize(text)), 'the collapsed server HTML must preserve every unreviewed limitation');
+    assert.deepEqual(source, snapshot, 'summarizing a new article must not alter its source');
+  }
 });
 
 test('short summaries preserve the cases with important remaining damage or unconfirmed results', () => {
