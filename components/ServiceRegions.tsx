@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown, MapPin, Info } from 'lucide-react';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { REGION_GROUPS, getCitiesInGroup, getChildRegions, getHotspots } from '../lib/regionHierarchy.mjs';
-import { getRegion } from '../lib/regionData.mjs';
-import { getVerifiedRegionsForService } from '../lib/serviceRegionPriority.mjs';
 // Headings/thumbnails/URLs only — generated from lib/regionCaseData.mjs by
 // scripts/generate-region-case-index.mjs to keep the article text out of this page.
 import regionCaseIndex from '../lib/regionCaseIndex.json';
@@ -98,7 +96,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
 
   const regionHref = (regionId: string) => `/services/${serviceId}/${regionId}`;
   const serviceCases = REGION_CASE_INDEX.filter((item) => item.serviceId === serviceId);
-  const featuredRegions = getVerifiedRegionsForService(serviceId).slice(0, 6);
 
   // After a panel opens, bring it into view — with 31 cities in 경기 the
   // 동네 panel opens below the whole grid, out of sight on most screens.
@@ -131,24 +128,6 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
           권역을 누르고, 시·구를 고르면 주요 동네까지 차례로 펼쳐집니다.
         </p>
       </div>
-
-      {featuredRegions.length > 0 && (
-        <div className="mb-7 sm:mb-9 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4 sm:p-6">
-          <h3 id="verified-service-regions-title" className="text-base sm:text-lg font-extrabold text-slate-900">실제 작업 사례가 있는 지역</h3>
-          <p className="mt-2 text-sm text-slate-600 break-keep">현장 후기가 있는 지역부터 살펴보세요. 전체 지역은 아래에서 찾을 수 있습니다.</p>
-          <nav aria-labelledby="verified-service-regions-title" className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-            {featuredRegions.map(({ regionId, caseCount, href }) => (
-              <Link key={regionId} to={href} className="group flex items-center justify-between gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-3 sm:px-4 text-sm shadow-xs transition-colors hover:border-primary hover:text-primaryDark focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                <span className="min-w-0">
-                  <span className="block font-extrabold break-keep">{getRegion(regionId)?.name}<span className="sr-only"> {serviceTitle}</span></span>
-                  <span className="mt-1 block text-xs text-slate-500">현장 후기 {caseCount}건</span>
-                </span>
-                <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
 
       {/* Level 1 — 권역 */}
       <div className="grid grid-cols-3 gap-2.5 sm:gap-5">

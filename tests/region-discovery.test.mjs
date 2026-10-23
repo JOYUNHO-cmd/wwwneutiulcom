@@ -77,36 +77,24 @@ const render = (Component, props) => parse(renderToStaticMarkup(
   React.createElement(MemoryRouter, null, React.createElement(Component, props))
 ));
 
-test('verified region links are visible before expanding the full area browser', () => {
+test('the full service region browser keeps every destination in its initial HTML', () => {
   const Component = loadComponent('components/ServiceRegions.tsx');
-  const document = render(Component, { serviceId: 'floor-wax', serviceTitle: '바닥 왁스코팅' });
-  const nav = document.querySelector('nav[aria-labelledby="verified-service-regions-title"]');
-  assert.ok(nav, 'case-backed regions must be available in the initial HTML');
-  const links = nav.querySelectorAll('a[href]');
-  assert.ok(links.length > 0 && links.length <= 6, 'keep the initial choice compact');
-  assert.equal(new Set(links.map(link => link.getAttribute('href'))).size, links.length);
-  const cases = getAllRegionCases().filter(item => item.serviceId === 'floor-wax');
-  for (const link of links) {
-    const href = link.getAttribute('href');
-    const matches = cases.filter(item => `/services/${item.serviceId}/${item.regionId}` === href);
-    assert.ok(matches.length, `${href} must be backed by real case records`);
-    assert.ok(link.text.includes(`현장 후기 ${matches.length}건`));
-    for (let node = link; node; node = node.parentNode) {
-      assert.notEqual(node.getAttribute?.('aria-hidden'), 'true');
-      assert.equal(node.hasAttribute?.('inert') ?? false, false);
-    }
+  for (const service of SERVICES) {
+    const document = render(Component, { serviceId: service.id, serviceTitle: service.title });
+    const allHrefs = new Set(document.querySelectorAll('a[href]').map(link => link.getAttribute('href')));
+    for (const region of REGIONS) assert.ok(allHrefs.has(`/services/${service.id}/${region.id}`), `${service.id}/${region.id}: the complete region browser must remain crawlable`);
   }
-  const allHrefs = new Set(document.querySelectorAll('a[href]').map(link => link.getAttribute('href')));
-  for (const region of REGIONS) assert.ok(allHrefs.has(`/services/floor-wax/${region.id}`), 'the complete region browser must remain crawlable');
-  const ordered = document.querySelectorAll('a, button');
-  assert.ok(ordered.indexOf(links[0]) < ordered.findIndex(node => node.getAttribute('aria-controls')?.startsWith('service-regions-group-')));
 });
 
-test('one case-backed region produces one featured link, without invented regions', () => {
+test('nested city case cards keep their actual service article destinations', () => {
   const Component = loadComponent('components/ServiceRegions.tsx');
-  const document = render(Component, { serviceId: 'external-wall', serviceTitle: '외벽청소' });
-  const links = document.querySelectorAll('nav[aria-labelledby="verified-service-regions-title"] a');
-  assert.deepEqual(links.map(link => link.getAttribute('href')), ['/services/external-wall/seongsu']);
+  for (const serviceId of ['floor-wax', 'external-wall']) {
+    const document = render(Component, { serviceId, serviceTitle: SERVICES.find(service => service.id === serviceId).title });
+    const articleHrefs = document.querySelectorAll('a[href]').map(link => decodeURIComponent(link.getAttribute('href')))
+      .filter(href => /^\/services\/[^/]+\/[^/]+\/[^/]+$/.test(href));
+    const expected = getAllRegionCases().filter(item => item.serviceId === serviceId).map(item => item.url);
+    assert.deepEqual(articleHrefs.sort(), expected.sort(), `${serviceId}: preserve the real nested case links without inventing another destination`);
+  }
 });
 
 for (const count of [0, 1, 2]) {
