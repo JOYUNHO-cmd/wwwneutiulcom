@@ -60,10 +60,10 @@ const RegionCaseDetail: React.FC = () => {
     window.history.replaceState(null, '', `#${id}`);
   };
   // Clears the sticky navbar (≈97px) when a heading is scrolled into view.
-  const anchorClass = 'scroll-mt-28 focus:outline-none';
+  const anchorClass = 'scroll-mt-28 focus:outline-hidden';
 
   return (
-    <div className="w-full flex-grow">
+    <div className="w-full grow">
       {/* From lg up every block below shares one centered max-w-3xl column,
           so the article reads down the middle of a wide screen instead of
           hugging the left edge of the wider layout. */}
@@ -80,12 +80,12 @@ const RegionCaseDetail: React.FC = () => {
 
       {/* Hero */}
       <section className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-6 pb-4">
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-5 leading-snug break-keep max-w-2xl lg:max-w-none">
+        <h1 className="text-2xl sm:text-4xl sm:leading-[2.5rem] font-black text-slate-900 mb-5 leading-snug break-keep max-w-2xl lg:max-w-none">
           {regionCase.heading}
         </h1>
         <SentenceText
           text={regionCase.intro}
-          className="text-gray-700 text-[17px] sm:text-lg leading-[1.8] max-w-2xl lg:max-w-none"
+          className="text-gray-700 text-[17px] sm:text-lg sm:leading-[1.75rem] leading-[1.8] max-w-2xl lg:max-w-none"
         />
         <a
           href={`tel:${cleanPhone}`}
@@ -108,7 +108,7 @@ const RegionCaseDetail: React.FC = () => {
                 <a
                   href={`#${t.id}`}
                   onClick={(e) => jumpTo(e, t.id)}
-                  className="group flex items-center gap-3 min-h-[3rem] h-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-[15px] sm:text-base text-slate-800 shadow-sm transition-colors hover:border-primary/50 hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="group flex items-center gap-3 min-h-12 h-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-[15px] sm:text-base text-slate-800 shadow-xs transition-colors hover:border-primary/50 hover:bg-primary/5 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-bold tabular-nums shrink-0">
                     {i + 1}
@@ -142,7 +142,7 @@ const RegionCaseDetail: React.FC = () => {
               >
                 {s.heading}
               </h2>
-              <SentenceText text={s.body} className="text-gray-700 text-[17px] sm:text-lg leading-[1.8]" />
+              <SentenceText text={s.body} className="text-gray-700 text-[17px] sm:text-lg sm:leading-[1.75rem] leading-[1.8]" />
               {sectionSteps(s).length > 0 && (
                 <div className="mt-6 space-y-6">
                   {sectionSteps(s).map((si) => (
@@ -186,7 +186,7 @@ const RegionCaseDetail: React.FC = () => {
         <h2 id="case-faq" tabIndex={-1} className={`${anchorClass} text-xl sm:text-2xl font-bold text-slate-900 mb-5`}>자주 묻는 질문</h2>
         <div className="space-y-4 max-w-2xl lg:max-w-none">
           {regionCase.faq.map((faq, i) => (
-            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
+            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-xs">
               <h3 className="font-bold text-slate-800 text-[17px] sm:text-lg mb-2 flex items-start gap-2">
                 <HelpCircle className="text-primary shrink-0 mt-1" size={18} aria-hidden="true" />
                 <span className="break-keep">{faq.q}</span>
@@ -207,7 +207,7 @@ const RegionCaseDetail: React.FC = () => {
               <Link
                 key={c.slug}
                 to={`/services/${serviceId}/${regionId}/${c.slug}`}
-                className="group flex gap-4 bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:border-primary/30 transition-all p-3"
+                className="group flex gap-4 bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-xs hover:shadow-md hover:border-primary/30 transition-all p-3"
               >
                 <img
                   src={c.thumbnail}

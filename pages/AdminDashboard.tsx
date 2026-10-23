@@ -27,30 +27,16 @@ import {
 } from '../lib/firebaseService';
 import { PortfolioItem } from '../types';
 import ImageUploader from '../components/ImageUploader';
+import ServiceEditor from '../components/ServiceEditor';
 
 const AdminDashboardInner: React.FC = () => {
-  const { user, isAdmin, loading: authLoading, loginWithCredentials, logout, login: loginWithGoogle } = useAuth();
+  const { user, isAdmin, loading: authLoading, logout, login: loginWithGoogle } = useAuth();
   const { config, updateCompanyInfo } = useSite();
   const [activeTab, setActiveTab] = useState<'general' | 'services' | 'portfolio'>('general');
   const navigate = useNavigate();
 
-  // Login Credentials state
-  const [adminId, setAdminId] = useState('');
-  const [adminPw, setAdminPw] = useState('');
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-  const handleCredentialLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoginError('');
-    setIsLoggingIn(true);
-    
-    const success = await loginWithCredentials(adminId, adminPw);
-    if (!success) {
-      setLoginError('아이디 또는 비밀번호가 올바르지 않습니다.');
-    }
-    setIsLoggingIn(false);
-  };
 
   const handleGoogleLogin = async () => {
     setLoginError('');
@@ -80,6 +66,9 @@ const AdminDashboardInner: React.FC = () => {
 
   // General Info State
   const [localInfo, setLocalInfo] = useState(config.companyInfo);
+  const [savingGeneral, setSavingGeneral] = useState(false);
+  const [generalMessage, setGeneralMessage] = useState('');
+  const [generalError, setGeneralError] = useState('');
 
   useEffect(() => {
     setLocalInfo(config.companyInfo);
@@ -94,16 +83,22 @@ const AdminDashboardInner: React.FC = () => {
     }
   }, [isAdmin]);
 
-  const handleSaveGeneral = async () => {
+  const handleSaveGeneral = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setSavingGeneral(true);
+    setGeneralMessage('');
+    setGeneralError('');
     try {
       // Save to Firestore first
       await updateCompanyInfoDoc(localInfo);
       // Update local context state
       updateCompanyInfo(localInfo);
-      alert('설정이 성공적으로 저장되었습니다.');
+      setGeneralMessage('설정이 저장되었습니다. 공개 페이지를 새로 열면 변경 내용을 확인할 수 있습니다.');
     } catch (error) {
       console.error(error);
-      alert('저장 실패: ' + (error instanceof Error ? error.message : String(error)));
+      setGeneralError('저장 실패: ' + (error instanceof Error ? error.message : String(error)));
+    } finally {
+      setSavingGeneral(false);
     }
   };
 
@@ -114,6 +109,7 @@ const AdminDashboardInner: React.FC = () => {
       if (editingItemId) {
         await updatePortfolioItem(editingItemId, itemForm);
         setEditingItemId(null);
+        setIsAddingPortfolio(false);
       } else {
         await addPortfolioItem(itemForm);
         setIsAddingPortfolio(false);
@@ -136,7 +132,8 @@ const AdminDashboardInner: React.FC = () => {
 
   const handleEditItem = (item: PortfolioItem) => {
     setEditingItemId(item.id);
-    setItemForm(item);
+    const { title, category, beforeImage, afterImage, description, date } = item;
+    setItemForm({ title, category, beforeImage, afterImage, description, date });
     setIsAddingPortfolio(true);
   };
 
@@ -170,69 +167,15 @@ const AdminDashboardInner: React.FC = () => {
             </div>
           </div>
           <h2 className="text-2xl font-black text-center text-gray-900 mb-1 tracking-tight">느티울종합청소 관리자</h2>
-          <p className="text-gray-500 text-center mb-8 text-sm font-medium">자체 계정 아이디와 비밀번호로 로그인하세요.</p>
+          <p className="text-gray-500 text-center mb-8 text-sm font-medium">등록된 관리자 Google 계정으로 로그인하세요.</p>
           
-          <form onSubmit={handleCredentialLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">관리자 아이디</label>
-              <input
-                type="text"
-                required
-                value={adminId}
-                onChange={(e) => setAdminId(e.target.value)}
-                placeholder="아이디를 입력하세요 (기본: admin)"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none text-sm transition-all text-gray-800"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">비밀번호</label>
-              <input
-                type="password"
-                required
-                value={adminPw}
-                onChange={(e) => setAdminPw(e.target.value)}
-                placeholder="비밀번호를 입력하세요"
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none text-sm transition-all text-gray-800"
-              />
-            </div>
-
-            {loginError && (
-              <p className="text-xs text-red-500 font-bold bg-red-50 p-3 rounded-xl flex items-center gap-2">
-                <span>⚠️</span> {loginError}
-              </p>
-            )}
-
-            <button
-              type="submit"
-              disabled={isLoggingIn}
-              className="w-full bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-primaryDark transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/25 disabled:opacity-50 text-sm mt-6"
-            >
-              {isLoggingIn ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  로그인 중...
-                </>
-              ) : (
-                '관리자 로그인'
-              )}
-            </button>
-          </form>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white px-2 text-gray-400 font-bold">또는 (추천)</span>
-            </div>
-          </div>
+          {loginError && <p className="text-sm text-red-600 mb-4" role="alert">{loginError}</p>}
 
           <button
             type="button"
             disabled={isLoggingIn}
             onClick={handleGoogleLogin}
-            className="w-full bg-white text-gray-700 border border-gray-300 py-3.5 rounded-xl font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 text-sm"
+            className="w-full bg-white text-gray-700 border border-gray-300 py-3.5 rounded-xl font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2 shadow-xs disabled:opacity-50 text-sm"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v3.92h6.61a5.62 5.62 0 0 1-2.44 3.71v3.08h3.94c2.31-2.13 3.63-5.27 3.63-8.64z"/>
@@ -245,7 +188,7 @@ const AdminDashboardInner: React.FC = () => {
 
           <div className="mt-8 pt-6 border-t border-gray-100 bg-gray-50/50 -mx-8 -mb-10 px-8 py-6 rounded-b-3xl">
              <p className="text-[11px] text-gray-400 font-medium leading-relaxed">
-               ※ 네이버/구글 로그인 중단으로 인하여 404 및 연동 오류를 해결하기 위해 <b>자체 ID/Password 로그인 시스템</b>으로 즉각 교체되었습니다.
+               ※ 등록된 관리자 Google 계정만 사용할 수 있습니다. 기존 자체 아이디와 비밀번호 로그인은 폐기되었습니다.
              </p>
           </div>
         </div>
@@ -271,57 +214,60 @@ const AdminDashboardInner: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 hidden md:block">
-        <div className="p-6 border-b border-gray-100">
+      <aside aria-label="관리자 메뉴" className="w-full md:w-64 md:shrink-0 bg-white border-b md:border-r border-gray-200">
+        <div className="p-4 md:p-6 border-b border-gray-100">
           <h2 className="text-xl font-bold text-primary">Admin CMS</h2>
           <p className="text-xs text-gray-500">느티울종합청소 관리자</p>
         </div>
-        <nav className="p-4 space-y-1">
+        <nav aria-label="관리 항목" className="p-2 md:p-4 grid grid-cols-3 md:grid-cols-1 gap-1">
           <button 
             onClick={() => setActiveTab('general')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'general' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
+            aria-current={activeTab === 'general' ? 'page' : undefined}
+            className={`w-full flex flex-col md:flex-row items-center gap-2 px-2 md:px-4 py-3 rounded-lg text-xs md:text-sm font-medium transition-colors ${activeTab === 'general' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
           >
             <Settings size={18} /> 기본 설정
           </button>
           <button 
             onClick={() => setActiveTab('services')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'services' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
+            aria-current={activeTab === 'services' ? 'page' : undefined}
+            className={`w-full flex flex-col md:flex-row items-center gap-2 px-2 md:px-4 py-3 rounded-lg text-xs md:text-sm font-medium transition-colors ${activeTab === 'services' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
           >
             <LayoutDashboard size={18} /> 서비스 관리
           </button>
           <button 
             onClick={() => setActiveTab('portfolio')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'portfolio' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
+            aria-current={activeTab === 'portfolio' ? 'page' : undefined}
+            className={`w-full flex flex-col md:flex-row items-center gap-2 px-2 md:px-4 py-3 rounded-lg text-xs md:text-sm font-medium transition-colors ${activeTab === 'portfolio' ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-50'}`}
           >
             <Briefcase size={18} /> 현장 기록 관리
           </button>
         </nav>
-        <div className="p-4 mt-auto border-t border-gray-100">
-           <div className="flex items-center gap-3 px-4 py-2 mb-4">
+        <div className="p-2 md:p-4 mt-auto border-t border-gray-100 grid grid-cols-2 md:block">
+           <div className="hidden md:flex items-center gap-3 px-4 py-2 mb-4">
               <img src={user.photoURL || ''} className="w-8 h-8 rounded-full" alt="User" />
               <div className="overflow-hidden">
                 <p className="text-xs font-bold truncate">{user.displayName}</p>
                 <p className="text-[10px] text-gray-400 truncate">{user.email}</p>
               </div>
            </div>
-           <button onClick={logout} className="w-full text-red-500 text-sm font-medium hover:bg-red-50 py-2 rounded">로그아웃</button>
-           <button onClick={() => navigate('/')} className="w-full text-gray-600 text-sm font-medium hover:bg-gray-50 py-2 rounded mt-2">사이트 바로가기</button>
+           <button onClick={logout} className="w-full text-red-500 text-sm font-medium hover:bg-red-50 py-2 rounded-sm">로그아웃</button>
+           <button onClick={() => navigate('/')} className="w-full text-gray-600 text-sm font-medium hover:bg-gray-50 py-2 rounded-sm md:mt-2">사이트 바로가기</button>
         </div>
-      </div>
+      </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-8 overflow-y-auto">
-        <header className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-black text-gray-800 tracking-tight">
+      <div className="flex-1 min-w-0 p-4 md:p-8">
+        <header className="flex flex-wrap gap-4 justify-between items-center mb-6 md:mb-8">
+          <h1 className="text-xl md:text-2xl font-black text-gray-800 tracking-tight">
             {activeTab === 'general' ? '사이트 기본 정보 수정' : 
              activeTab === 'services' ? '서비스 콘텐츠 관리' : 
              '현장 시공 기록 추천 연동 관리'}
           </h1>
           {activeTab === 'general' && (
-            <button onClick={handleSaveGeneral} className="bg-primary text-white px-6 py-2 rounded-xl flex items-center gap-2 hover:bg-primaryDark transition-all shadow-lg shadow-primary/20">
-              <Save size={18} /> 저장하기
+            <button type="submit" form="company-settings" disabled={savingGeneral} className="bg-primary text-white px-6 py-2 rounded-xl flex items-center gap-2 hover:bg-primaryDark transition-all shadow-lg shadow-primary/20 disabled:opacity-50">
+              <Save size={18} /> {savingGeneral ? '저장 중...' : '저장하기'}
             </button>
           )}
           {activeTab === 'portfolio' && !isAddingPortfolio && (
@@ -339,32 +285,35 @@ const AdminDashboardInner: React.FC = () => {
         </header>
 
         {activeTab === 'general' && (
-          <div className="bg-white rounded-2xl shadow-sm p-8 space-y-6 border border-gray-100">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form id="company-settings" onSubmit={handleSaveGeneral} className="bg-white rounded-2xl shadow-xs p-4 md:p-8 space-y-6 border border-gray-100">
+            <fieldset disabled={savingGeneral} className="grid grid-cols-1 md:grid-cols-2 gap-6 disabled:opacity-60">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">업체명</label>
+                <label htmlFor="company-name" className="block text-sm font-bold text-gray-700 mb-2">업체명</label>
                 <input 
+                  id="company-name" required maxLength={100}
                   value={localInfo.name} 
                   onChange={(e) => setLocalInfo({...localInfo, name: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">대표 전화번호</label>
+                <label htmlFor="company-phone" className="block text-sm font-bold text-gray-700 mb-2">대표 전화번호</label>
                 <input 
+                  id="company-phone" required type="tel" maxLength={50}
                   value={localInfo.phone} 
                   onChange={(e) => setLocalInfo({...localInfo, phone: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
                <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-700 mb-2">로고 이미지 (URL)</label>
+                <label htmlFor="company-logo" className="block text-sm font-bold text-gray-700 mb-2">로고 이미지 (URL)</label>
                 <div className="flex gap-4">
                   <div className="flex-1">
                     <input 
+                      id="company-logo" maxLength={350000}
                       value={localInfo.logo} 
                       onChange={(e) => setLocalInfo({...localInfo, logo: e.target.value})}
-                      className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none text-sm text-gray-600 transition-all"
+                      className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden text-sm text-gray-600 transition-all"
                       placeholder="https://... or data:image/..."
                     />
                   </div>
@@ -374,25 +323,31 @@ const AdminDashboardInner: React.FC = () => {
                 </div>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-700 mb-2">메인 슬로건</label>
+                <label htmlFor="company-slogan" className="block text-sm font-bold text-gray-700 mb-2">메인 슬로건 (홈 첫 화면의 상단 문구)</label>
                 <input 
+                  id="company-slogan" maxLength={500}
                   value={localInfo.slogan} 
                   onChange={(e) => setLocalInfo({...localInfo, slogan: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-bold text-gray-700 mb-2">업체 설명 (About)</label>
+                <label htmlFor="company-description" className="block text-sm font-bold text-gray-700 mb-2">업체 설명 (회사소개·사이트 하단)</label>
                 <textarea 
+                  id="company-description" maxLength={5000}
                   rows={4}
                   value={localInfo.description} 
                   onChange={(e) => setLocalInfo({...localInfo, description: e.target.value})}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary outline-hidden transition-all"
                 />
               </div>
-            </div>
-          </div>
+            </fieldset>
+            {generalError && <p role="alert" className="text-red-600 text-sm">{generalError}</p>}
+            {generalMessage && <p role="status" className="text-emerald-700 text-sm">{generalMessage}</p>}
+          </form>
         )}
+
+        {activeTab === 'services' && <ServiceEditor />}
 
         {activeTab === 'portfolio' && (
           <div className="space-y-6">
@@ -404,9 +359,9 @@ const AdminDashboardInner: React.FC = () => {
                       <X size={24} />
                    </button>
                 </div>
-                <form onSubmit={handlePortfolioSubmit} className="p-8 space-y-6">
+                <form onSubmit={handlePortfolioSubmit} className="p-4 md:p-8 space-y-6">
                   {/* Informational banner */}
-                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs md:text-sm p-4 rounded-xl leading-relaxed space-y-1">
+                  <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs md:text-sm md:leading-[1.25rem] p-4 rounded-xl leading-relaxed space-y-1">
                     <p className="font-bold">💡 현장 시공 기록지 연동 안내</p>
                     <p>
                       기존의 비포&애프터 비교 앨범형 대신, 대표님이 <b>현장 공식 시공 기록지에 작성하신 글 주소</b>를 등록하는 연동형 시스템입니다.
@@ -421,7 +376,7 @@ const AdminDashboardInner: React.FC = () => {
                          required
                          value={itemForm.title}
                          onChange={e => setItemForm({...itemForm, title: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden"
                          placeholder="예: [준공청소] 마포구 신축 오피스 빌딩 준공 대청소 현장 기록"
                        />
                     </div>
@@ -432,7 +387,7 @@ const AdminDashboardInner: React.FC = () => {
                          required
                          value={itemForm.category}
                          onChange={e => setItemForm({...itemForm, category: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden"
                        >
                          <option value="">카테고리 선택</option>
                          <option value="화재청소">화재청소</option>
@@ -460,7 +415,7 @@ const AdminDashboardInner: React.FC = () => {
                          type="date"
                          value={itemForm.date}
                          onChange={e => setItemForm({...itemForm, date: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden"
                        />
                     </div>
 
@@ -471,7 +426,7 @@ const AdminDashboardInner: React.FC = () => {
                          type="url"
                          value={itemForm.afterImage}
                          onChange={e => setItemForm({...itemForm, afterImage: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none text-sm font-mono text-emerald-800 bg-[#fafdfb]"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden text-sm font-mono text-emerald-800 bg-[#fafdfb]"
                          placeholder="예: https://blog.naver.com/kslee0143/223284920202"
                        />
                        <p className="text-[11px] text-emerald-600 font-bold mt-1.5 flex items-center gap-1">
@@ -493,7 +448,7 @@ const AdminDashboardInner: React.FC = () => {
                          rows={4}
                          value={itemForm.description}
                          onChange={e => setItemForm({...itemForm, description: e.target.value})}
-                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-none text-sm"
+                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary transition-all outline-hidden text-sm"
                          placeholder="작업의 주요 스펙과 성과를 짧고 가독성 좋게 적어주세요. (예: 100평 대형 식당 기름때 제거 및 후드 정밀 고압 청소 완벽 시공!)"
                        />
                     </div>
@@ -521,7 +476,7 @@ const AdminDashboardInner: React.FC = () => {
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {portfolioItems.map(item => (
-                    <div key={item.id} className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 group flex flex-col justify-between">
+                    <div key={item.id} className="bg-white rounded-2xl shadow-xs overflow-hidden border border-gray-100 group flex flex-col justify-between">
                       <div>
                         <div className="relative aspect-video bg-gray-50">
                           <img 
@@ -529,7 +484,7 @@ const AdminDashboardInner: React.FC = () => {
                             alt={item.title} 
                             className="w-full h-full object-cover" 
                           />
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                          <div className="absolute inset-0 bg-black/40 opacity-100 md:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity flex items-center justify-center gap-3">
                              <button onClick={() => handleEditItem(item)} className="bg-white text-gray-900 p-3 rounded-full hover:bg-primary hover:text-white transition-all transform hover:scale-110" title="수정하기">
                                <Edit2 size={20} />
                              </button>
@@ -537,7 +492,7 @@ const AdminDashboardInner: React.FC = () => {
                                <Trash2 size={20} />
                              </button>
                           </div>
-                          <span className="absolute top-2 left-2 bg-emerald-500 text-white font-extrabold text-[10px] px-2 py-0.5 rounded shadow">추천글</span>
+                          <span className="absolute top-2 left-2 bg-emerald-500 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-sm shadow-sm">추천글</span>
                         </div>
                         <div className="p-5">
                            <div className="flex justify-between items-start mb-2">
@@ -563,9 +518,9 @@ const AdminDashboardInner: React.FC = () => {
                   ))}
                 </div>
                 {portfolioItems.length === 0 && (
-                   <div className="bg-white rounded-3xl p-20 text-center border-2 border-dashed border-gray-100 max-w-xl mx-auto">
+                   <div className="bg-white rounded-3xl p-6 md:p-20 text-center border-2 border-dashed border-gray-100 max-w-xl mx-auto">
                       <p className="text-gray-400 font-bold text-lg mb-2">등록된 추천 현장시공사례 기록이 없습니다.</p>
-                      <p className="text-gray-400 text-xs leading-relaxed mb-6">상세 현장 시공 기록지 링크를 등록하여 사이트 '추천 시공 사례' 탭에 고급스럽게 노출시켜 보세요!</p>
+                      <p className="text-gray-400 text-xs leading-relaxed mb-6">등록한 기록은 공개 시공사례와 해당 서비스 페이지의 '추천 시공 사례' 영역에 표시됩니다.</p>
                       <button 
                         onClick={() => {
                           setEditingItemId(null);

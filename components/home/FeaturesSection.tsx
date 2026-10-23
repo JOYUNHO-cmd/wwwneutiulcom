@@ -7,8 +7,8 @@ const FeaturesSection: React.FC = () => {
     <section className="py-16 md:py-24 bg-surface relative">
       <div className="max-w-7xl mx-auto px-1 md:px-8">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-[20px] sm:text-2xl md:text-4xl font-extrabold text-slate-900 mb-4 leading-tight break-keep">
-            <span className="text-[#0f9d6c] font-black">사실</span>로만 입증하는 4대 안심 보장 조건
+          <h2 className="text-[20px] sm:text-2xl sm:leading-[2rem] md:text-4xl md:leading-[2.5rem] font-extrabold text-slate-900 mb-4 leading-tight break-keep">
+            <span className="text-primary font-black">사실</span>로만 입증하는 4대 안심 보장 조건
           </h2>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-10 text-center">
@@ -27,7 +27,7 @@ const FeaturesSection: React.FC = () => {
               whileHover={{ y: -6, scale: 1.02 }}
               className="px-2 py-5 md:p-10 rounded-2xl md:rounded-3xl bg-white border border-slate-100 shadow-md md:shadow-xl shadow-slate-200/50 hover:border-primary/40 hover:shadow-2xl transition-all group duration-300 cursor-default"
             >
-              <div className="w-11 h-11 md:w-20 md:h-20 bg-primaryBright/10 text-primaryBright rounded-full flex items-center justify-center mx-auto mb-3 md:mb-8 group-hover:bg-primaryBright group-hover:text-white group-hover:rotate-12 transition-all duration-300 shadow-sm">
+              <div className="w-11 h-11 md:w-20 md:h-20 bg-primaryBright/10 text-primaryBright rounded-full flex items-center justify-center mx-auto mb-3 md:mb-8 group-hover:bg-primaryBright group-hover:text-white group-hover:rotate-12 transition-all duration-300 shadow-xs">
                 <feature.icon className="w-5 h-5 md:w-9 md:h-9" strokeWidth={2.5} />
               </div>
               <h3 className="text-[12px] md:text-2xl font-extrabold text-slate-900 mb-1 md:mb-4 whitespace-nowrap break-keep group-hover:text-primaryBright transition-colors">

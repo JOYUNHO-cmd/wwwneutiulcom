@@ -1,5 +1,16 @@
-import { doc, getDoc, updateDoc } from 'firebase/firestore/lite';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore/lite';
 import { dbLite, isMockFirebase } from './firebaseLite';
+
+export async function getServiceOverrides() {
+  if (isMockFirebase) return [];
+  try {
+    const snapshot = await getDocs(collection(dbLite, 'services'));
+    return snapshot.docs.map(item => ({ ...item.data(), id: item.id }));
+  } catch (error) {
+    console.warn('Service content could not be loaded; using the built-in catalog.', error);
+    return [];
+  }
+}
 
 // Read-only functions for public pages (SiteContext etc.) only. Admin CRUD
 // and real-time subscriptions keep using the full lib/firebaseService.ts —
@@ -34,8 +45,6 @@ export async function getCompanyInfo() {
       const data = d.data();
       if (data && (data.logo === oldLogo1 || data.logo === oldLogo2 || !data.logo)) {
         data.logo = newLogo;
-        // Logo migration runs in the background — failure doesn't affect the page.
-        updateDoc(docRef, { logo: newLogo }).catch(e => console.error("Error migrating remote logo:", e));
       }
       return data;
     }

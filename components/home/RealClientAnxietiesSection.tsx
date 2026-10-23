@@ -7,7 +7,7 @@ const anxietyTopImageMobile = '/images/professional-cleaning-mobile.webp';
 
 const RealClientAnxietiesSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-white via-[#f4faf7] to-[#eaf7f3] relative overflow-hidden border-b border-emerald-100/50">
+    <section className="py-16 md:py-24 bg-linear-to-b/srgb from-white via-[#f4faf7] to-[#eaf7f3] relative overflow-hidden border-b border-emerald-100/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top Section Graphic Image with Representative Greeting */}
         <div className="flex flex-col-reverse sm:flex-row items-center justify-center gap-6 sm:gap-8 md:gap-10 mb-10 md:mb-14 max-w-5xl mx-auto px-4">
@@ -40,7 +40,7 @@ const RealClientAnxietiesSection: React.FC = () => {
               {/* Centered Text for Desktop */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none pr-[13%] pl-[2%]">
                 <h2 className="text-slate-900 font-black text-[20px] md:text-[23px] tracking-tight whitespace-nowrap text-center">
-                  안녕하세요, 대표 <span className="text-[#0b7a54] font-black">조윤호</span> 입니다
+                  안녕하세요, 대표 <span className="text-primaryDark font-black">조윤호</span> 입니다
                 </h2>
               </div>
             </div>
@@ -66,7 +66,7 @@ const RealClientAnxietiesSection: React.FC = () => {
               {/* Centered Text for Mobile */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none pt-[22px] pb-[6px] px-3">
                 <h2 className="text-slate-900 font-black text-[15.5px] tracking-tight whitespace-nowrap text-center">
-                  안녕하세요, 대표 <span className="text-[#0b7a54] font-black">조윤호</span> 입니다
+                  안녕하세요, 대표 <span className="text-primaryDark font-black">조윤호</span> 입니다
                 </h2>
               </div>
             </div>
@@ -96,7 +96,7 @@ const RealClientAnxietiesSection: React.FC = () => {
         </div>
 
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-[20px] sm:text-2xl md:text-4xl font-extrabold text-slate-955 mb-4 leading-tight break-keep">
+          <h2 className="text-[20px] sm:text-2xl sm:leading-[2rem] md:text-4xl md:leading-[2.5rem] font-extrabold text-slate-955 mb-4 leading-tight break-keep">
             <span className="block md:inline">청소업체를 알아볼 때,</span>
             <span className="block md:inline md:ml-2">이런 <span className="text-red-500 font-black">불쾌한 경험이나 두려움</span>이</span>
             <span className="block md:inline md:ml-2">앞서지 않으셨나요?</span>
@@ -140,7 +140,7 @@ const RealClientAnxietiesSection: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.08 }}
               whileHover={{ y: -6 }}
-              className="p-6 md:p-8 rounded-3xl bg-white border border-slate-100/80 flex flex-col items-center text-center h-full shadow-sm hover:shadow-xl hover:border-emerald-300 transition-all group duration-300 select-none cursor-default"
+              className="p-6 md:p-8 rounded-3xl bg-white border border-slate-100/80 flex flex-col items-center text-center h-full shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all group duration-300 select-none cursor-default"
             >
               <div className="w-10 h-10 md:w-12 md:h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-5 transition-all duration-300 group-hover:bg-emerald-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-6">
                 <ShieldAlert className="w-5 h-5 md:w-6 md:h-6 block group-hover:hidden" />
@@ -157,15 +157,15 @@ const RealClientAnxietiesSection: React.FC = () => {
         </div>
 
         {/* Solution Highlight Banner */}
-        <div className="max-w-4xl mx-auto text-center mt-8 p-6 md:p-10 bg-gradient-to-br from-[#10945f] to-[#085f42] rounded-3xl border-none relative overflow-hidden shadow-lg shadow-emerald-900/10">
+        <div className="max-w-4xl mx-auto text-center mt-8 p-6 md:p-10 bg-linear-to-br/srgb from-[#10945f] to-[#085f42] rounded-3xl border-none relative overflow-hidden shadow-lg shadow-emerald-900/10">
           {/* Subtle decorative elements for the premium banner */}
           <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl" />
           <div className="absolute -left-10 -top-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl" />
 
-          <h4 className="text-[16px] sm:text-lg md:text-2xl font-black text-white mb-4 break-keep drop-shadow-sm">
+          <h4 className="text-[16px] sm:text-lg md:text-2xl font-black text-white mb-4 break-keep drop-shadow-xs">
             "느티울은 고객님의 모든 의심과 피로를 정면으로 해결합니다."
           </h4>
-          <p className="text-emerald-50/90 text-xs sm:text-sm md:text-[17px] leading-relaxed md:leading-loose font-bold max-w-3xl mx-auto break-keep">
+          <p className="text-emerald-50/90 text-xs sm:text-sm sm:leading-[1.25rem] md:text-[17px] leading-relaxed md:leading-loose font-bold max-w-3xl mx-auto break-keep">
             낯선 사람이 나의 삶의 공간을 만지는 직업이기에
             <br className="block md:hidden" />
             <span className="hidden md:inline"> </span>

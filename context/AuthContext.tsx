@@ -1,205 +1,68 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  signOut, 
-  onAuthStateChanged 
-} from 'firebase/auth';
-import { getFirebaseAuth, isMockFirebase } from '../lib/firebase';
+import { signInWithPopup, GoogleAuthProvider, signOut, onIdTokenChanged } from 'firebase/auth';
+import { getFirebaseAuth } from '../lib/firebase';
+import { isVerifiedAdmin } from '../lib/adminPolicy.mjs';
 
-export interface AdminUser {
-  email: string;
-  displayName: string;
-  photoURL: string;
-}
-
+export interface AdminUser { email: string; displayName: string; photoURL: string; }
 interface AuthContextType {
   user: AdminUser | null;
   isAdmin: boolean;
   loading: boolean;
-  loginWithCredentials: (id: string, pw: string) => Promise<boolean>;
   logout: () => Promise<void>;
-  // Google login
   login: () => Promise<void>;
-  loginWithNaver: () => void;
 }
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// Default Admin Credentials
-export const DEFAULT_ADMIN_ID = 'johyun3662';
-export const DEFAULT_ADMIN_PW = 'qlalfdltkA1@3';
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AdminUser | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    // 1. First check client credentials local storage fallback session
-    const savedSession = localStorage.getItem('neutiul_admin_session');
-    if (savedSession === 'true') {
-      setUser({
-        email: 'johyun3662@gmail.com',
-        displayName: '느티울 어드민',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-      });
-      setIsAdmin(true);
-      setLoading(false);
-      return;
-    }
-
-    // 2. Real Firebase Auth state listener
-    if (isMockFirebase) {
-      setLoading(false);
-      return;
-    }
-
+    // The old UI-only session must never grant authority.
+    try { localStorage.removeItem('neutiul_admin_session'); } catch { /* Storage may be disabled. */ }
     let unsubscribe: (() => void) | undefined;
     let cancelled = false;
-    getFirebaseAuth().then((auth) => {
-      if (cancelled || !auth) {
+    getFirebaseAuth().then(auth => {
+      if (cancelled) return;
+      if (!auth) { setLoading(false); return; }
+      unsubscribe = onIdTokenChanged(auth, firebaseUser => {
+        if (cancelled) return;
+        setUser(isVerifiedAdmin(firebaseUser) ? {
+          email: firebaseUser!.email!,
+          displayName: firebaseUser!.displayName || '느티울 관리자',
+          photoURL: firebaseUser!.photoURL || '',
+        } : null);
         setLoading(false);
-        return;
-      }
-      unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-        if (firebaseUser) {
-          if (firebaseUser.email === 'johyun3662@gmail.com') {
-            setUser({
-              email: firebaseUser.email || '',
-              displayName: firebaseUser.displayName || '느티울 어드민',
-              photoURL: firebaseUser.photoURL || ''
-            });
-            setIsAdmin(true);
-            localStorage.setItem('neutiul_admin_session', 'true');
-          } else {
-            signOut(auth).catch(e => console.error(e));
-            setUser(null);
-            setIsAdmin(false);
-            localStorage.removeItem('neutiul_admin_session');
-          }
-        } else {
-          setUser(null);
-          setIsAdmin(false);
-        }
-        setLoading(false);
-      }, (error) => {
-        console.error("Auth state change error:", error);
-        setLoading(false);
+      }, () => {
+        if (!cancelled) { setUser(null); setLoading(false); }
       });
+    }).catch(() => {
+      if (!cancelled) { setUser(null); setLoading(false); }
     });
-
-    return () => {
-      cancelled = true;
-      if (unsubscribe) unsubscribe();
-    };
+    return () => { cancelled = true; unsubscribe?.(); };
   }, []);
-
-  const loginWithCredentials = async (id: string, pw: string): Promise<boolean> => {
+  const authenticate = async () => {
     setLoading(true);
-    try {
-      const isValidId = id.trim() === DEFAULT_ADMIN_ID;
-      const isValidPw = pw === DEFAULT_ADMIN_PW;
-
-      if (isValidId && isValidPw) {
-        localStorage.setItem('neutiul_admin_session', 'true');
-        setUser({
-          email: 'johyun3662@gmail.com',
-          displayName: '느티울 어드민',
-          photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-        });
-        setIsAdmin(true);
-        setLoading(false);
-        return true;
-      }
-      setLoading(false);
-      return false;
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
-      return false;
-    }
-  };
-
-  const logout = async () => {
-    localStorage.removeItem('neutiul_admin_session');
     setUser(null);
-    setIsAdmin(false);
-    if (!isMockFirebase) {
-      const auth = await getFirebaseAuth();
-      if (auth) {
-        try {
-          await signOut(auth);
-        } catch (err) {
-          console.error("Sign out error:", err);
-        }
-      }
-    }
-  };
-
-  // Google Login
-  const login = async () => {
-    setLoading(true);
-    const auth = isMockFirebase ? null : await getFirebaseAuth();
-    if (!auth) {
-      localStorage.setItem('neutiul_admin_session', 'true');
-      setUser({
-        email: 'johyun3662@gmail.com',
-        displayName: '느티울 어드민 (Mock)',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces'
-      });
-      setIsAdmin(true);
-      setLoading(false);
-      return;
-    }
-
     try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const firebaseUser = result.user;
-      if (firebaseUser.email === 'johyun3662@gmail.com') {
-        setUser({
-          email: firebaseUser.email || '',
-          displayName: firebaseUser.displayName || '느티울 어드민',
-          photoURL: firebaseUser.photoURL || ''
-        });
-        setIsAdmin(true);
-        localStorage.setItem('neutiul_admin_session', 'true');
-      } else {
+      const auth = await getFirebaseAuth();
+      if (!auth) throw new Error('인증 서비스를 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.');
+      const result = await signInWithPopup(auth, new GoogleAuthProvider());
+      if (!isVerifiedAdmin(result.user)) {
         await signOut(auth);
-        throw new Error('이 계정은 관리자 권한이 없습니다.');
+        throw new Error('인증된 관리자 계정으로 로그인해 주세요.');
       }
-    } catch (err) {
-      console.error("Google sign in failed:", err);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
-
-  const loginWithNaver = () => {
-    console.warn("Legacy login with Naver is deprecated. Please use loginWithCredentials or login (Google).");
+  const logout = async () => {
+    setUser(null);
+    const auth = await getFirebaseAuth();
+    if (auth) await signOut(auth);
   };
-
-  return (
-    <AuthContext.Provider value={{ 
-      user, 
-      isAdmin, 
-      loading, 
-      loginWithCredentials, 
-      logout,
-      login,
-      loginWithNaver
-    }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, isAdmin: user !== null, loading, logout, login: () => authenticate() }}>
+    {children}
+  </AuthContext.Provider>;
 };
-
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };

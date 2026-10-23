@@ -25,3 +25,15 @@ The build renders every published route, generates its metadata and FAQ schema,
 and creates `llms.txt` / `llms-full.txt` from the public service and FAQ data.
 After deployment, run `npm run audit:seo -- --origin=https://www.neutiul.com`.
 This audit only reads pages; it does not submit enquiry forms or change Firebase.
+
+## Dependency security and styling
+
+Use `npm ci` and commit `package-lock.json`; npm is the deployment package manager.
+Run `npm audit --audit-level=low` with network access before releases (an offline audit is not evidence of a clean registry audit).
+
+Tailwind CSS 4.3 uses `@tailwindcss/postcss` and the theme in `src/styles.css`.
+The v3 palette, pixel breakpoints, gradient interpolation and responsive line heights
+are preserved for this site's 18px root font. Source scanning excludes build output.
+Supported browsers follow Tailwind 4: Safari 16.4+, Chrome 111+, Firefox 128+.
+Check desktop and mobile navigation, enquiry forms, portfolio dialogs and admin layout
+when changing styling. Avoid automatic migration of non-CSS strings such as the logo's `ring` stage.

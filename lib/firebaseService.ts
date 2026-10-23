@@ -13,6 +13,21 @@ import {
   serverTimestamp
 } from 'firebase/firestore';
 import { db, isMockFirebase, getCachedAuth } from './firebase';
+import { isVerifiedAdmin } from './adminPolicy.mjs';
+import { SERVICES } from './servicesData.mjs';
+import { serviceEditPayload } from './serviceOverrides.mjs';
+
+export async function updateServiceDoc(id: string, data: unknown) {
+  requireAdmin();
+  if (!SERVICES.some(service => service.id === id)) throw new Error('등록된 서비스를 선택해 주세요.');
+  await setDoc(doc(db, 'services', id), serviceEditPayload(data), { merge: true });
+}
+
+function requireAdmin() {
+  if (isMockFirebase || !db || !isVerifiedAdmin(getCachedAuth()?.currentUser)) {
+    throw new Error('인증된 관리자만 저장할 수 있습니다.');
+  }
+}
 
 export enum OperationType {
   CREATE = 'create',
@@ -77,21 +92,6 @@ function getLocalPortfolioItems(): any[] {
   return [];
 }
 
-function saveLocalPortfolioItems(items: any[]) {
-  localStorage.setItem('neutiul_portfolio_items', JSON.stringify(items));
-}
-
-function notifyPortfolioChanged() {
-  const items = getLocalPortfolioItems();
-  mockPortfolioListeners.forEach(cb => {
-    try {
-      cb(items);
-    } catch (e) {
-      console.error("Error in portfolio listener:", e);
-    }
-  });
-}
-
 // Company Info Operations
 export async function getCompanyInfo() {
   const oldLogo1 = 'https://i.ibb.co/kVzK83Kf/image.png';
@@ -123,8 +123,6 @@ export async function getCompanyInfo() {
       const data = d.data();
       if (data && (data.logo === oldLogo1 || data.logo === oldLogo2 || !data.logo)) {
         data.logo = newLogo;
-        // Optionally update the doc in background
-        updateDoc(docRef, { logo: newLogo }).catch(e => console.error("Error migrating remote logo:", e));
       }
       return data;
     }
@@ -136,10 +134,7 @@ export async function getCompanyInfo() {
 }
 
 export async function updateCompanyInfoDoc(data: any) {
-  if (isMockFirebase || !getCachedAuth()?.currentUser) {
-    localStorage.setItem('neutiul_company_info', JSON.stringify(data));
-    return;
-  }
+  requireAdmin();
 
   const path = 'company/info';
   try {
@@ -167,18 +162,7 @@ export async function getPortfolioItems() {
 }
 
 export async function addPortfolioItem(data: any) {
-  if (isMockFirebase || !getCachedAuth()?.currentUser) {
-    const items = getLocalPortfolioItems();
-    const newItem = {
-      ...data,
-      id: 'p_local_' + Math.random().toString(36).substr(2, 9),
-      createdAt: new Date().toISOString()
-    };
-    const updated = [newItem, ...items];
-    saveLocalPortfolioItems(updated);
-    notifyPortfolioChanged();
-    return newItem.id;
-  }
+  requireAdmin();
 
   const path = 'portfolio';
   try {
@@ -193,18 +177,7 @@ export async function addPortfolioItem(data: any) {
 }
 
 export async function updatePortfolioItem(id: string, data: any) {
-  if (isMockFirebase || !getCachedAuth()?.currentUser) {
-    const items = getLocalPortfolioItems();
-    const updated = items.map(item => {
-      if (item.id === id) {
-        return { ...item, ...data };
-      }
-      return item;
-    });
-    saveLocalPortfolioItems(updated);
-    notifyPortfolioChanged();
-    return;
-  }
+  requireAdmin();
 
   const path = `portfolio/${id}`;
   try {
@@ -215,13 +188,7 @@ export async function updatePortfolioItem(id: string, data: any) {
 }
 
 export async function deletePortfolioItem(id: string) {
-  if (isMockFirebase || !getCachedAuth()?.currentUser) {
-    const items = getLocalPortfolioItems();
-    const updated = items.filter(item => item.id !== id);
-    saveLocalPortfolioItems(updated);
-    notifyPortfolioChanged();
-    return;
-  }
+  requireAdmin();
 
   const path = `portfolio/${id}`;
   try {

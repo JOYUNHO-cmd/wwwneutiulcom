@@ -52,7 +52,7 @@ class ChunkErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="w-full flex-grow flex flex-col items-center justify-center gap-4 py-24 px-4 text-center">
+        <div className="w-full grow flex flex-col items-center justify-center gap-4 py-24 px-4 text-center">
           <p className="text-slate-600 font-bold">
             페이지를 불러오는 중 문제가 발생했습니다.
           </p>
