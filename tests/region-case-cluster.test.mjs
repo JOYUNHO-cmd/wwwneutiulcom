@@ -69,6 +69,16 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'ansan-interior-287': '/services/interior/ansan/안산한식당인테리어청소',
   'interior-291': '/services/interior/yongin/용인테마체험공간인테리어청소',
   'suwon-move-in-312': '/services/move-in/suwon/수원매탄동아파트입주청소',
+  'yongin-government-027': '/services/government-school/yongin/용인학교교실분진청소',
+  'new-construction-219': '/services/new-construction/seongbuk/성북곱창집준공청소',
+  'uiwang-new-construction-224': '/services/new-construction/uiwang/의왕골프연습실준공청소',
+  'guro-digital-interior-252': '/services/interior/guro-digital/구로카페인테리어청소',
+  'interior-293': '/services/interior/gangnam/강남역삼동피부과인테리어청소',
+  'kitchen-336': '/services/restaurant/michuhol/미추홀식당홀주방청소',
+  'gwacheon-hood-399': '/services/hood/gwacheon/과천어린이집후드청소',
+  'pyeongtaek-hood-417': '/services/hood/pyeongtaek/평택요양원후드청소',
+  'new-construction-211': '/services/new-construction/gwanggyo/광교축구교실준공청소',
+  'seongsu-floor-tile-159': '/services/floor/seongsu/성수식당바닥타일청소',
   'ansan-government-017': '/services/government-school/ansan/안산학교바닥왁스청소',
 };
 
@@ -96,7 +106,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 143);
+  assert.equal(cases.length, 153);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -400,6 +410,16 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['interior', 'suwon', '수원안경원인테리어청소', '수원 인테리어청소'],
     ['interior', 'jongno', '종로업무공간분진인테리어청소', '종로 인테리어청소'],
     ['move-in', 'icheon', '이천상가공실입주청소', '이천 입주청소'],
+    ['government-school', 'yongin', '용인학교교실분진청소', '용인 학교청소'],
+    ['new-construction', 'seongbuk', '성북곱창집준공청소', '성북 준공청소'],
+    ['new-construction', 'uiwang', '의왕골프연습실준공청소', '의왕 준공청소'],
+    ['interior', 'guro-digital', '구로카페인테리어청소', '구로디지털단지 인테리어청소'],
+    ['interior', 'gangnam', '강남역삼동피부과인테리어청소', '강남 인테리어청소'],
+    ['restaurant', 'michuhol', '미추홀식당홀주방청소', '미추홀 주방청소'],
+    ['hood', 'gwacheon', '과천어린이집후드청소', '과천 후드청소'],
+    ['hood', 'pyeongtaek', '평택요양원후드청소', '평택 후드청소'],
+    ['new-construction', 'gwanggyo', '광교축구교실준공청소', '광교 준공청소'],
+    ['floor', 'seongsu', '성수식당바닥타일청소', '성수 바닥청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);
