@@ -79,6 +79,14 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'pyeongtaek-hood-417': '/services/hood/pyeongtaek/평택요양원후드청소',
   'new-construction-211': '/services/new-construction/gwanggyo/광교축구교실준공청소',
   'seongsu-floor-tile-159': '/services/floor/seongsu/성수식당바닥타일청소',
+  'yongin-government-025': '/services/government-school/yongin/용인학교교실리모델링청소',
+  'hood-409': '/services/hood/yeongdeungpo/영등포어린이집조리실후드청소',
+  'suwon-floor-wax-coating-124': '/services/floor-wax/suwon/수원고색동에폭시바닥코팅',
+  'sanbon-floor-wax-coating-120': '/services/floor-wax/sanbon/산본스터디카페바닥왁스코팅',
+  'seongsu-floor-wax-coating-123': '/services/floor-wax/seongsu/성수매장에폭시바닥코팅',
+  'new-construction-235': '/services/new-construction/dongdaemun/동대문이문동김밥집준공청소',
+  'seongsu-floor-tile-158': '/services/floor/seongsu/성수카페모자이크타일바닥청소',
+  'floor-oil-poultice-102': '/services/floor/yeongdeungpo/영등포신길동계단기름얼룩청소',
   'ansan-government-017': '/services/government-school/ansan/안산학교바닥왁스청소',
 };
 
@@ -106,7 +114,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 153);
+  assert.equal(cases.length, 163);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -130,7 +138,10 @@ test('verified service regions are derived from actual case records', () => {
       { regionId: 'gangnam', caseCount: 2, href: '/services/floor-wax/gangnam' },
       { regionId: 'anyang', caseCount: 2, href: '/services/floor-wax/anyang' },
       { regionId: 'yongin', caseCount: 2, href: '/services/floor-wax/yongin' },
+      { regionId: 'seongsu', caseCount: 1, href: '/services/floor-wax/seongsu' },
       { regionId: 'gunpo', caseCount: 1, href: '/services/floor-wax/gunpo' },
+      { regionId: 'sanbon', caseCount: 1, href: '/services/floor-wax/sanbon' },
+      { regionId: 'suwon', caseCount: 1, href: '/services/floor-wax/suwon' },
       { regionId: 'uiwang', caseCount: 1, href: '/services/floor-wax/uiwang' },
       { regionId: 'ansan', caseCount: 1, href: '/services/floor-wax/ansan' },
       { regionId: 'gwacheon', caseCount: 1, href: '/services/floor-wax/gwacheon' },
@@ -420,6 +431,16 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['hood', 'pyeongtaek', '평택요양원후드청소', '평택 후드청소'],
     ['new-construction', 'gwanggyo', '광교축구교실준공청소', '광교 준공청소'],
     ['floor', 'seongsu', '성수식당바닥타일청소', '성수 바닥청소'],
+    ['government-school', 'yongin', '용인학교교실리모델링청소', '용인 학교청소'],
+    ['hood', 'yeongdeungpo', '영등포어린이집조리실후드청소', '영등포 후드청소'],
+    ['government-school', 'suwon', '수원전시관바닥청소', '수원 관공서청소'],
+    ['floor-wax', 'suwon', '수원고색동에폭시바닥코팅', '수원 에폭시코팅'],
+    ['floor-wax', 'sanbon', '산본스터디카페바닥왁스코팅', '산본 바닥왁스코팅'],
+    ['floor-wax', 'seongsu', '성수매장에폭시바닥코팅', '성수 에폭시코팅'],
+    ['new-construction', 'dongdaemun', '동대문이문동김밥집준공청소', '동대문 준공청소'],
+    ['floor', 'seongsu', '성수카페모자이크타일바닥청소', '성수 바닥청소'],
+    ['interior', 'yongin', '용인기흥빵집인테리어청소', '용인 인테리어청소'],
+    ['floor', 'yeongdeungpo', '영등포신길동계단기름얼룩청소', '영등포 바닥청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);

@@ -379,6 +379,13 @@
   },
   {
     "serviceId": "hood",
+    "regionId": "yeongdeungpo",
+    "heading": "영등포 후드청소 현장 후기 | 배플 필터와 후드 모서리에 기름때가 남은 어린이집 조리실 후드 청소",
+    "thumbnail": "/images/regional/yeongdeungpo-hood-police-daycare-12.webp",
+    "url": "/services/hood/yeongdeungpo/영등포어린이집조리실후드청소"
+  },
+  {
+    "serviceId": "hood",
     "regionId": "suwon",
     "heading": "수원 갈비탕집 후드청소, 보이는 공정만 구분한 현장",
     "thumbnail": "/images/regional/suwon-hood-10-after.webp",
@@ -414,10 +421,24 @@
   },
   {
     "serviceId": "floor",
+    "regionId": "yeongdeungpo",
+    "heading": "영등포 바닥청소 현장 후기 | 화강석 계단에 스며든 기름 얼룩을 흡착제로 빼낸 신길동 건물 계단 청소",
+    "thumbnail": "/images/regional/yeongdeungpo-floor-oil-stairs-02.webp",
+    "url": "/services/floor/yeongdeungpo/영등포신길동계단기름얼룩청소"
+  },
+  {
+    "serviceId": "floor",
     "regionId": "seongsu",
     "heading": "성수 바닥청소 현장 후기 | 입구 타일에 때가 얼룩진 성수동 식당 바닥 타일 청소",
     "thumbnail": "/images/regional/seongsu-floor-restaurant-10.webp",
     "url": "/services/floor/seongsu/성수식당바닥타일청소"
+  },
+  {
+    "serviceId": "floor",
+    "regionId": "seongsu",
+    "heading": "성수 바닥청소 현장 후기 | 육각 모자이크 타일 줄눈에 때가 낀 성수동 카페 바닥 청소",
+    "thumbnail": "/images/regional/seongsu-floor-tile-cafe-12.webp",
+    "url": "/services/floor/seongsu/성수카페모자이크타일바닥청소"
   },
   {
     "serviceId": "floor",
@@ -624,6 +645,13 @@
   },
   {
     "serviceId": "interior",
+    "regionId": "yongin",
+    "heading": "용인 인테리어청소 현장 후기 | 창틀 분진과 먼지가 쌓인 기흥구 빵집 매장 인테리어 청소",
+    "thumbnail": "/images/regional/yongin-interior-bakery-09.webp",
+    "url": "/services/interior/yongin/용인기흥빵집인테리어청소"
+  },
+  {
+    "serviceId": "interior",
     "regionId": "bundang",
     "heading": "분당신도시 수내동 사무실 복원청소",
     "thumbnail": "/images/regional/bundang-interior-06.webp",
@@ -656,6 +684,13 @@
     "heading": "하남시 미사 통건물 시트지제거청소",
     "thumbnail": "/images/regional/hanam-interior-06.webp",
     "url": "/services/interior/hanam/하남미사통건물시트지제거청소"
+  },
+  {
+    "serviceId": "new-construction",
+    "regionId": "dongdaemun",
+    "heading": "동대문 준공청소 현장 후기 | 분진과 페인트 자국이 남은 이문동 김밥집 주방·홀 준공 청소",
+    "thumbnail": "/images/regional/dongdaemun-new-construction-gimbap-11.webp",
+    "url": "/services/new-construction/dongdaemun/동대문이문동김밥집준공청소"
   },
   {
     "serviceId": "new-construction",
@@ -740,6 +775,27 @@
     "heading": "인천 중구 준공청소 현장 후기 | 신포동 매장 공사 먼지부터 유리창까지",
     "thumbnail": "/images/regional/incheon-jung-newconstruction-12.webp",
     "url": "/services/new-construction/incheon-jung/인천중구매장준공청소"
+  },
+  {
+    "serviceId": "floor-wax",
+    "regionId": "sanbon",
+    "heading": "산본 바닥왁스코팅 현장 후기 | 좌석 사이 마루 바닥에 광을 올린 스터디카페 왁스코팅",
+    "thumbnail": "/images/regional/sanbon-floor-wax-studycafe-08.webp",
+    "url": "/services/floor-wax/sanbon/산본스터디카페바닥왁스코팅"
+  },
+  {
+    "serviceId": "floor-wax",
+    "regionId": "seongsu",
+    "heading": "성수 에폭시코팅 현장 후기 | 긁힘이 번진 검은 에폭시 바닥을 세척하고 코팅한 성수동 매장",
+    "thumbnail": "/images/regional/seongsu-floor-wax-store-12.webp",
+    "url": "/services/floor-wax/seongsu/성수매장에폭시바닥코팅"
+  },
+  {
+    "serviceId": "floor-wax",
+    "regionId": "suwon",
+    "heading": "수원 에폭시코팅 현장 후기 | 바퀴 자국과 긁힘이 남은 고색동 공장 에폭시 바닥 세척과 코팅",
+    "thumbnail": "/images/regional/suwon-floor-wax-epoxy-12.webp",
+    "url": "/services/floor-wax/suwon/수원고색동에폭시바닥코팅"
   },
   {
     "serviceId": "floor-wax",
@@ -1009,6 +1065,13 @@
   },
   {
     "serviceId": "government-school",
+    "regionId": "yongin",
+    "heading": "용인 학교청소 현장 후기 | 공사 분진과 보호 필름이 남은 초등학교 교실 리모델링 청소",
+    "thumbnail": "/images/regional/yongin-government-school-remodel-12.webp",
+    "url": "/services/government-school/yongin/용인학교교실리모델링청소"
+  },
+  {
+    "serviceId": "government-school",
     "regionId": "suwon",
     "heading": "수원 학교청소 현장 후기 | 급식실 유리 칸막이 그림 시트지 제거와 끈끈이 정리",
     "thumbnail": "/images/regional/suwon-government-school-sheet-10.webp",
@@ -1020,6 +1083,13 @@
     "heading": "수원 학교청소 현장 후기 | 발자국과 먼지가 남은 초등학교 강당과 복도·계단 청소",
     "thumbnail": "/images/regional/suwon-government-school-auditorium-11.webp",
     "url": "/services/government-school/suwon/수원학교강당청소"
+  },
+  {
+    "serviceId": "government-school",
+    "regionId": "suwon",
+    "heading": "수원 관공서청소 현장 후기 | 전시물 둘레 먼지와 바닥을 정리한 전시관 청소",
+    "thumbnail": "/images/regional/suwon-government-museum-12.webp",
+    "url": "/services/government-school/suwon/수원전시관바닥청소"
   },
   {
     "serviceId": "government-school",
