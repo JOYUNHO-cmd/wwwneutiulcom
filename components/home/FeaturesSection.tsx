@@ -8,15 +8,15 @@ const FeaturesSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-1 md:px-8">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-[20px] sm:text-2xl sm:leading-[2rem] md:text-4xl md:leading-[2.5rem] font-extrabold text-slate-900 mb-4 leading-tight break-keep">
-            <span className="text-primary font-black">사실</span>로만 입증하는 4대 안심 보장 조건
+            <span className="text-primary font-black">상담</span>부터 마무리까지, 4가지 확인 사항
           </h2>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-10 text-center">
           {[
             { icon: ShieldCheck, title: '대표 직접 관리', desc: '상담부터 마무리까지\n대표가 직접 관리합니다.' },
-            { icon: CheckCircle2, title: '정직한 투명 견적', desc: '현장 상태와 범위 확인 후\n추가 없는 견적 안내' },
-            { icon: Clock, title: '신속 현장 대응', desc: '고객님이 원하는 시간\n언제든 달려갑니다.' },
-            { icon: Star, title: '100% 만족 보장', desc: '만족하실 때까지\n끝까지 책임집니다.' }
+            { icon: CheckCircle2, title: '작업 범위와 견적', desc: '현장 상태와 작업 범위를 살피고\n추가 작업은 먼저 상의합니다.' },
+            { icon: Clock, title: '방문 일정 조율', desc: '희망 일정을 알려주시면\n방문 가능 시간을 안내합니다.' },
+            { icon: Star, title: '마무리 함께 확인', desc: '협의한 작업 범위를 기준으로\n마무리 상태를 함께 확인합니다.' }
           ].map((feature, idx) => (
             <m.div
               key={idx}

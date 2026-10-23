@@ -19,13 +19,13 @@ const CertificationsSection: React.FC = () => {
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primaryDark text-xs md:text-sm font-bold mb-3 md:mb-4">
             <Award size={14} />
-            공인 자격 보유
+            자격증 안내
           </span>
           <h2 className="text-sm md:text-4xl md:leading-[2.5rem] font-black text-slate-900 mb-3 md:mb-5 leading-tight whitespace-nowrap">
-            말이 아닌 자격증으로 증명합니다
+            자격증을 확인해 보세요
           </h2>
           <p className="text-slate-500 text-sm md:text-lg md:leading-[1.75rem] leading-relaxed break-keep">
-            <span className="block md:inline">대표와 전담팀이 취득한 6개 공인 자격증입니다.</span>{' '}
+            <span className="block md:inline">게시된 자격증의 자격명과 발급기관을 확인하실 수 있습니다.</span>{' '}
             <span className="block md:inline">눌러서 실제 자격증을 확인하실 수 있습니다.</span>
           </p>
         </div>

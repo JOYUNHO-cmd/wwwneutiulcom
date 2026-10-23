@@ -1,4 +1,4 @@
-import { FAQ_DATA as RAW_FAQ_DATA } from './faqData.mjs';
+import { FAQ_DATA as RAW_FAQ_DATA, getServiceFaqData as getRawServiceFaqData } from './faqData.mjs';
 
 export interface FAQItem {
   q: string;
@@ -15,3 +15,5 @@ export interface FAQCategory {
 // both in the browser and by the Node-only scripts/prerender.mjs — can
 // share the exact same data without a TypeScript toolchain.
 export const FAQ_DATA: FAQCategory[] = RAW_FAQ_DATA;
+
+export const getServiceFaqData = (serviceId?: string): FAQCategory[] => getRawServiceFaqData(serviceId);
