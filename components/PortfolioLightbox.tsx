@@ -30,18 +30,18 @@ const PortfolioLightbox: React.FC<PortfolioLightboxProps> = ({ item, onClose }) 
           <div className="relative">
             <img
               src={`/images/portfolio-gallery/${item.before}`}
-              alt={`${item.title} 시공 전`}
+              alt={`${item.title} ${item.beforeLabel || '시공 전'}`}
               className="w-full h-auto max-h-[65vh] object-contain rounded-lg md:rounded-xl shadow-2xl bg-black/20"
             />
-            <span className="absolute top-2 left-2 px-2 py-1 rounded-md bg-slate-900/80 text-white text-xs font-bold">전</span>
+            <span className="absolute top-2 left-2 px-2 py-1 rounded-md bg-slate-900/80 text-white text-xs font-bold">{item.beforeLabel || '전'}</span>
           </div>
           <div className="relative">
             <img
               src={`/images/portfolio-gallery/${item.after}`}
-              alt={`${item.title} 시공 후`}
+              alt={`${item.title} ${item.afterLabel || '시공 후'}`}
               className="w-full h-auto max-h-[65vh] object-contain rounded-lg md:rounded-xl shadow-2xl bg-black/20"
             />
-            <span className="absolute top-2 left-2 px-2 py-1 rounded-md bg-primary text-white text-xs font-bold">후</span>
+            <span className="absolute top-2 left-2 px-2 py-1 rounded-md bg-primary text-white text-xs font-bold">{item.afterLabel || '후'}</span>
           </div>
         </div>
         <div className="text-center">

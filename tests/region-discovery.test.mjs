@@ -9,6 +9,8 @@ import { parse } from 'node-html-parser';
 import ts from 'typescript';
 import { REGIONS } from '../lib/regionData.mjs';
 import { getAllRegionCases } from '../lib/regionCaseData.mjs';
+import { buildMeta } from '../lib/seoData.mjs';
+import { SERVICES } from '../lib/servicesData.mjs';
 
 const require = createRequire(import.meta.url);
 
@@ -27,6 +29,9 @@ function loadComponent(filename, { params = {}, photos = [] } = {}) {
       __esModule: true,
       default: ({ item }) => React.createElement('img', { src: item.before, alt: item.title }),
     };
+    if (specifier === '../components/RegionWorkEvidence') return {
+      __esModule: true, default: loadComponent('components/RegionWorkEvidence.tsx'),
+    };
     if (specifier.startsWith('../lib/')) return require(specifier);
     if (specifier.startsWith('.')) return { __esModule: true, default: () => null };
     return require(specifier);
@@ -34,6 +39,33 @@ function loadComponent(filename, { params = {}, photos = [] } = {}) {
   new Function('require', 'module', 'exports', outputText)(resolve, module, module.exports);
   return module.exports.default;
 }
+
+test('regional landing presents exact local records before clearly labelled examples from other regions', () => {
+  const Component = loadComponent('pages/RegionServiceLanding.tsx', { params: { serviceId: 'trash-house', regionId: 'ansan' } });
+  const document = render(Component);
+  const headings = document.querySelectorAll('h2');
+  const localHeading = headings.find(heading => heading.getAttribute('id') === 'region-work-evidence-trash-house-ansan');
+  const otherHeading = headings.find(heading => heading.text.includes('여러 지역의 작업 사진과 현장 후기'));
+  assert.ok(localHeading);
+  assert.ok(otherHeading, 'service-wide examples must not read as local proof');
+  assert.ok(headings.indexOf(localHeading) < headings.indexOf(otherHeading));
+  const localHrefs = localHeading.parentNode.querySelectorAll('article a[href]').map(link => decodeURIComponent(link.getAttribute('href')));
+  assert.ok(localHrefs.length > 0);
+  assert.ok(localHrefs.every(href => href.startsWith('/services/trash-house/ansan/')));
+});
+
+test('rendered FAQs match schema on case-backed, photo-only and no-local-evidence pages', () => {
+  for (const [serviceId, regionId] of [['trash-house', 'ansan'], ['interior', 'gwacheon'], ['factory', 'dobong']]) {
+    const Component = loadComponent('pages/RegionServiceLanding.tsx', { params: { serviceId, regionId } });
+    const document = render(Component);
+    const faqHeading = document.querySelectorAll('h2').find(heading => heading.text === '자주 묻는 질문');
+    assert.ok(faqHeading);
+    const visible = faqHeading.parentNode.querySelectorAll('h3').map(question => ({ q: question.text, a: question.parentNode.querySelector('p').text }));
+    const meta = buildMeta({ pathname: `/services/${serviceId}/${regionId}`, services: SERVICES });
+    const schema = meta.jsonLd['@graph'].find(entity => entity['@type'] === 'FAQPage');
+    assert.deepEqual(visible, schema.mainEntity.map(item => ({ q: item.name, a: item.acceptedAnswer.text })), `${serviceId}/${regionId}`);
+  }
+});
 
 const render = (Component, props) => parse(renderToStaticMarkup(
   React.createElement(MemoryRouter, null, React.createElement(Component, props))

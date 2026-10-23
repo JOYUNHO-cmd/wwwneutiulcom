@@ -1,23 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import NotFound from './NotFound';
 import { MapPin, CheckCircle2, HelpCircle, Award } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
-import { getRegion, regionCoreTerm, titleMatchesRegion } from '../lib/regionData.mjs';
+import { getRegion } from '../lib/regionData.mjs';
 import { buildRegionServiceContent, REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
-import { getRegionCases, getRegionCaseUrlByPortfolioItemId } from '../lib/regionCaseData.mjs';
-import RegionCaseLinks from '../components/RegionCaseLinks';
+import RegionWorkEvidence from '../components/RegionWorkEvidence';
+import { getRegionPortfolioItems } from '../lib/regionPortfolioEvidence.mjs';
 import { breakIntoLines, groupIntoStanzas } from '../lib/mobileLineBreak.mjs';
 import { josa } from '../lib/korean.mjs';
-import { shuffle } from '../lib/shuffle.mjs';
 import ServiceBeforeAfterMarquee from '../components/ServiceBeforeAfterMarquee';
-import { matchesServicePhoto } from '../lib/servicePhotoMatch.mjs';
 import ReviewsSection from '../components/ReviewsSection';
 import CeoMessageSection from '../components/CeoMessageSection';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import ServiceCaseBlogSection from '../components/ServiceCaseBlogSection';
-import { getServiceBlogLinks } from '../lib/serviceBlogLinks.mjs';
 import portfolioManifest from '../lib/portfolioManifest.json';
 
 const allPortfolioItems = portfolioManifest as PortfolioGalleryItem[];
@@ -41,35 +38,12 @@ const RegionServiceLanding: React.FC = () => {
   const content = region && serviceId ? buildRegionServiceContent(region, serviceId) : null;
   const service = config.services.find((s) => s.id === serviceId);
   const introStanzas = content ? groupIntoStanzas(breakIntoLines(content.intro)) : [];
-  const regionCases = serviceId && regionId ? getRegionCases(serviceId, regionId) : [];
-  const hasServiceBlogs = (getServiceBlogLinks(serviceId || '') ?? []).length > 0;
-
-  // Real photos taken in this specific region, for this specific service —
-  // proof that isn't just "we work in your area" but "here's your area".
-  // A single verified job still provides useful local before/after evidence;
-  // keep it visible instead of falling back to service-wide photos only.
-  //
-  // Shuffle order lives in state, seeded from the unshuffled filter and
-  // reshuffled only in an effect (see the matching comment in
-  // ServiceBeforeAfterMarquee.tsx) — this route is server-rendered by
-  // scripts/prerender.mjs and hydrated on the client, so shuffling during
-  // render would have the server's Math.random() call and the client's
-  // hydration pass disagree on the order and silently mismatch (production
-  // React mostly drops hydration-mismatch console warnings, so this
-  // wouldn't even be visible as an error, just as wrong photos). Effects
-  // never run on the server, so seeding with the deterministic unshuffled
-  // list keeps the first render — server and client alike — identical, and
-  // the reshuffle that follows is an ordinary post-mount state update.
-  const filteredRegionItems = useMemo(() => {
-    if (!region || !serviceId) return [];
-    return allPortfolioItems.filter(
-      (item) => matchesServicePhoto(serviceId, item) && titleMatchesRegion(item.title, regionCoreTerm(region))
-    );
-  }, [region, serviceId]);
-  const [regionItems, setRegionItems] = useState(filteredRegionItems);
-  useEffect(() => {
-    setRegionItems(shuffle(filteredRegionItems));
-  }, [filteredRegionItems]);
+  // Keep evidence in a stable order on the server and after client navigation.
+  // Related title matches are not described as confirmed local job addresses.
+  const regionItems = useMemo(
+    () => getRegionPortfolioItems(serviceId, region, allPortfolioItems),
+    [region, serviceId],
+  );
 
   // Unknown routes must not silently become an indexable service page.
   if (!isEnabled || !region || !content) {
@@ -121,23 +95,33 @@ const RegionServiceLanding: React.FC = () => {
         </div>
       </section>
 
-      {/* Service-wide before/after proof (same real photos as the main service page) */}
-      <ServiceBeforeAfterMarquee serviceId={serviceId || ''} />
+      <RegionWorkEvidence
+        serviceId={serviceId || ''}
+        regionId={regionId || ''}
+        regionName={region.name}
+        serviceLabel={content.serviceLabel}
+        className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
+      />
 
       {/* Region-specific before/after proof, only when we actually have it */}
       {regionItems.length > 0 && (
         <section aria-labelledby="region-work-photos-title" className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
           <h2 id="region-work-photos-title" className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">
-            {region.name}에서 직접 진행한 시공 사진
+            {region.name} 관련 시공 사진
           </h2>
-          <div className={`grid gap-4 ${regionItems.length === 1 ? 'grid-cols-1 max-w-md mx-auto sm:mx-0' : 'grid-cols-2 sm:grid-cols-3'}`}>
+          <p className="text-gray-600 mb-5 leading-relaxed break-keep">
+            기존 포트폴리오의 현장명과 작업 종류를 함께 확인할 수 있습니다. 사진을 누르면 크게 볼 수 있으며, 작업 기록이 있는 사진은 상세사례로 연결됩니다.
+          </p>
+          <div className={`grid gap-6 ${regionItems.length === 1 ? 'grid-cols-1 max-w-md mx-auto sm:mx-0' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
             {regionItems.map((item) => (
-              <PortfolioSplitCard
-                key={item.id}
-                item={item}
-                onClick={() => setOpenItem(item)}
-                detailHref={getRegionCaseUrlByPortfolioItemId(item.id)}
-              />
+              <div key={item.id}>
+                <PortfolioSplitCard
+                  item={item}
+                  onClick={() => setOpenItem(item)}
+                  detailHref={item.detailHref}
+                />
+                {item.description && <p className="mt-3 text-sm leading-relaxed text-gray-600 break-keep">{item.description}</p>}
+              </div>
             ))}
           </div>
         </section>
@@ -147,27 +131,13 @@ const RegionServiceLanding: React.FC = () => {
         <PortfolioLightbox item={openItem} onClose={() => setOpenItem(null)} />
       )}
 
-      {/* "Want the full job, not just before/after photos?" — real blog
-          posts for this service, right after the photos it refers back to
-          (its own heading text says "위에 보여드린 사진들") and before the
-          page moves on to situations/FAQ. Same component + curated links
-          as the /services/:id page (lib/serviceBlogLinks.mjs), just laid
-          out at this page's narrower max-w-5xl width. */}
-      <ServiceCaseBlogSection serviceId={serviceId || ''} className="max-w-5xl mx-auto px-4 sm:px-6 pb-6" />
-
-      {/* Link-out cards to each real field-case article for this exact
-          service+region — its own page at /services/:serviceId/:regionId/:slug
-          (see pages/RegionCaseDetail.tsx), not inlined here. A region can
-          accumulate many separate case articles over time. They follow the
-          blog cards, whose "전체 작업 과정들이 궁금하시다면??" box already
-          introduces them, so their own heading is hidden when blogs exist. */}
-      <RegionCaseLinks
-        serviceId={serviceId || ''}
-        regionId={regionId || ''}
-        cases={regionCases}
-        hideHeading={hasServiceBlogs}
-        className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
-      />
+      {/* These are service-wide examples; do not imply they were all local. */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-900">여러 지역의 작업 사진과 현장 후기</h2>
+        <p className="mt-3 text-gray-600 leading-relaxed break-keep">아래는 다른 지역의 현장도 포함한 {content.serviceLabel} 관련 자료입니다. 사진과 후기의 현장명을 확인해 주세요.</p>
+      </div>
+      <ServiceBeforeAfterMarquee serviceId={serviceId || ''} />
+      <ServiceCaseBlogSection serviceId={serviceId || ''} className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
 
       {/* Situations */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10">
@@ -190,7 +160,7 @@ const RegionServiceLanding: React.FC = () => {
           {region.name} 출동 지역 안내
         </h2>
         <p className="text-gray-600 mb-4 break-keep">
-          {region.name} 전 지역에서 상담·출동합니다. 동 단위로 문의해 주시면 가까운 인력을 배치합니다.
+          {region.name} 작업을 상담하실 때 주소와 공간 용도를 알려 주세요. 이동·출입 여건과 작업 범위를 확인한 뒤 방문 일정을 안내합니다.
         </p>
         <div className="flex flex-wrap gap-2">
           {content.dongs.map((dong) => (

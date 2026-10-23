@@ -613,14 +613,6 @@ test('Yongin office case leads with its keyword and shows every photo under its 
   assert.doesNotMatch(JSON.stringify(regionCase), /완전히 제거|균일한 광택|미끄럼 방지|내구성|완벽|세척이 완료된|개점 가능한|비공개/);
 });
 
-test('region+service landing shows field-case cards right under the blog section', () => {
-  const page = fs.readFileSync(new URL('../pages/RegionServiceLanding.tsx', import.meta.url), 'utf8');
-  const blog = page.indexOf('<ServiceCaseBlogSection');
-  const cases = page.indexOf('<RegionCaseLinks');
-  assert.ok(blog > 0 && cases > blog, 'case cards follow the blog section');
-  assert.match(page.slice(cases, page.indexOf('/>', cases)), /hideHeading=\{hasServiceBlogs\}/);
-});
-
 test('region case cards show four before a 더보기 button and keep every link in the markup', () => {
   const src = fs.readFileSync(new URL('../components/RegionCaseLinks.tsx', import.meta.url), 'utf8');
   assert.match(src, /const INITIAL_VISIBLE = 4;/);

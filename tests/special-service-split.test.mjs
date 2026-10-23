@@ -50,7 +50,8 @@ test('each new service gets region pages with region-specific copy and a full FA
       assert.ok(residential, `${region.id} needs a residential description`);
       assert.ok(content.intro.includes(residential), `${serviceId}/${region.id} intro carries the residential description`);
       assert.ok(!content.intro.includes(region.story), `${serviceId}/${region.id} intro should not reuse the business story`);
-      assert.ok(content.faqs[0].a.includes(region.landmark), `${serviceId}/${region.id} first FAQ names the landmark`);
+      assert.ok(content.faqs[0].a.includes(region.name), `${serviceId}/${region.id} first FAQ names the consultation area`);
+      assert.match(content.faqs[0].a, /상담|확인/, `${serviceId}/${region.id} first FAQ explains consultation, not invented local work`);
       assert.ok(JSON.stringify(content).includes(region.dongs[0]), `${serviceId}/${region.id} lists the region's dongs`);
       assert.doesNotMatch(JSON.stringify(content), /undefined|\[object/, `${serviceId}/${region.id}`);
       // These are residential/sensitive jobs: no blanket "we keep meeting
