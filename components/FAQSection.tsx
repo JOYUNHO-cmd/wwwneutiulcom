@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { m } from 'motion/react';
-import { FAQ_DATA } from '../lib/faqData';
+import { getServiceFaqData } from '../lib/faqData';
 import { trackEvent } from '../lib/analytics';
 
 interface FAQSectionProps {
-  // If set, the bottom trust badge's "무료 상담 신청" button calls this
+  // If set, the bottom trust badge's "상담 문의" button calls this
   // number directly instead of linking to /contact — used on service
   // landing pages, where a direct call is the more natural next step.
   ctaPhone?: string;
+  serviceId?: string;
 }
 
 // Self-contained "안심 Q&A" section — originally lived inline in Home.tsx;
 // extracted so it can also render on every ServiceLanding page without
 // duplicating ~250 lines of accordion/dropdown markup and its state.
-const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
+const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone, serviceId }) => {
+  const faqData = getServiceFaqData(serviceId);
   const [activeFAQTab, setActiveFAQTab] = useState<string | null>(null);
   const [openFAQIdx, setOpenFAQIdx] = useState<string | null>(null);
   const [faqDropdownOpen, setFaqDropdownOpen] = useState(false);
@@ -61,7 +63,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                 </span>
               ) : (
                 <span className="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-xs sm:text-sm font-black shadow-xs">
-                  {FAQ_DATA.find((cat) => cat.category === activeFAQTab)?.categoryName || ''}
+                  {faqData.find((cat) => cat.category === activeFAQTab)?.categoryName || ''}
                 </span>
               )}
             </span>
@@ -104,7 +106,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   )}
                 </button>
-                {FAQ_DATA.map((cat) => (
+                {faqData.map((cat) => (
                   <button
                     key={cat.category}
                     onClick={() => {
@@ -145,7 +147,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
             >
               전체 보기
             </button>
-            {FAQ_DATA.map((cat) => (
+            {faqData.map((cat) => (
               <button
                 key={cat.category}
                 onClick={() => {
@@ -178,7 +180,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
                 전체 질문 보기
               </button>
               <div className="grid grid-cols-3 gap-2 md:gap-2.5">
-                {FAQ_DATA.map((cat) => (
+                {faqData.map((cat) => (
                   <button
                     key={cat.category}
                     onClick={() => setActiveFAQTab(cat.category)}
@@ -193,7 +195,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
         )}
         {/* Keep every answer in initial HTML, while preserving the category chooser. */}
         <div hidden={activeFAQTab === null} className="space-y-4 max-w-3xl mx-auto">
-          {FAQ_DATA
+          {faqData
             .flatMap((cat) => cat.qas.map((qa, index) => {
               const uniqueKey = `${cat.category}-${index}`;
               const isOpen = openFAQIdx === uniqueKey;
@@ -274,8 +276,8 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
               💡 찾으시는 답변이 없으신가요?
             </p>
             <p className="text-xs sm:text-sm text-emerald-100 font-medium mt-1 break-keep">
-              <span className="block sm:inline">언제든 문의해 주시면</span>{' '}
-              <span className="block sm:inline">속 시원하게 안내해 드리겠습니다.</span>
+              <span className="block sm:inline">문의 내용을 남겨주시면</span>{' '}
+              <span className="block sm:inline">상담 가능 시간과 일정을 확인해 안내합니다.</span>
             </p>
           </div>
           {ctaPhone ? (
@@ -284,7 +286,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
               onClick={() => trackEvent('contact_click', { method: 'phone', location: 'service_faq' })}
               className="shrink-0 px-5 py-2.5 bg-white text-[#04a875] hover:bg-emerald-50 text-xs sm:text-sm font-black rounded-xl shadow-md transition-all flex items-center gap-1.5 transform hover:scale-105"
             >
-              <span>무료 상담 신청</span>
+              <span>상담 문의</span>
               <ArrowRight className="w-4 h-4" />
             </a>
           ) : (
@@ -293,7 +295,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
               onClick={() => trackEvent('contact_click', { method: 'quote', location: 'home_faq' })}
               className="shrink-0 px-5 py-2.5 bg-white text-[#04a875] hover:bg-emerald-50 text-xs sm:text-sm font-black rounded-xl shadow-md transition-all flex items-center gap-1.5 transform hover:scale-105"
             >
-              <span>무료 상담 신청</span>
+              <span>상담 문의</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           )}

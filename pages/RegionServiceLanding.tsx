@@ -179,13 +179,13 @@ const RegionServiceLanding: React.FC = () => {
       {/* 대표 소개 — a named, accountable person, right before his credentials */}
       <CeoMessageSection />
 
-      {/* 공인 자격 보유 — same trust badges as the homepage/service pages */}
+      {/* 자격증 안내 — same certificate images as the homepage/service pages */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-10">
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2">
           <Award className="text-primary" size={22} />
-          말이 아닌 자격증으로 증명합니다
+          자격증 안내
         </h2>
-        <p className="text-gray-500 mb-5 break-keep">대표와 전담팀이 취득한 6개 공인 자격증입니다.</p>
+        <p className="text-gray-500 mb-5 break-keep">게시된 자격증의 자격명과 발급기관을 확인해 보세요.</p>
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
           {certifications.map((cert) => (
             <div key={cert.id} className="text-center">
@@ -224,10 +224,10 @@ const RegionServiceLanding: React.FC = () => {
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
         <div className="bg-gray-900 rounded-2xl p-6 sm:p-10 text-center">
           <h2 className="text-white text-sm sm:text-2xl font-bold mb-3 whitespace-nowrap">
-            {region.name} {content.serviceLabel} 무료 상담 접수
+            {region.name} {content.serviceLabel} 상담 접수
           </h2>
           <p className="text-gray-300 mb-6 break-keep">
-            현장 상황을 알려 주시면 필요한 작업 범위부터 무료로 안내해 드립니다.
+            현장 상황과 희망 일정을 알려 주세요. 작업 범위와 방문 필요 여부, 비용을 상담으로 안내합니다.
           </p>
           <a
             href={`tel:${cleanPhone}`}

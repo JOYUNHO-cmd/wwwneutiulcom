@@ -117,11 +117,11 @@ const Contact: React.FC = () => {
                 Contact Info
               </h3>
               <p className="text-slate-600 mt-8 mb-16 leading-[1.8] text-[12px] sm:text-[15px] md:text-lg md:leading-[1.75rem] break-keep font-medium">
-                현장 방문 견적은 <span className="text-primary font-bold">100% 무료</span>입니다.
+                방문 필요 여부와 <span className="text-primary font-bold">비용은 상담 시 먼저 안내</span>합니다.
                 <br />
-                직접 방문하여 공간의 특성을 진단하고
+                현장 사진과 공간의 특성을 살피고
                 <br />
-                가장 효율적인 클리닝 플랜을 제안합니다.
+                필요한 작업 범위와 일정을 함께 정합니다.
               </p>
               
               <div className="space-y-8">

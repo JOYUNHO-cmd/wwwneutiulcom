@@ -96,7 +96,7 @@ const ServiceLanding: React.FC = () => {
       if (response.ok) {
         setFormStatus('success');
         trackEvent('generate_lead', { method: 'contact_form', location: 'service_landing', service_type: formData.get('service_type') });
-        alert('문의가 성공적으로 전달되었습니다! 기재해주신 번호로 신속히 연락해 드리겠습니다.');
+        alert('문의가 성공적으로 전달되었습니다! 기재해주신 번호로 문의 내용을 확인해 연락드리겠습니다.');
         form.reset();
         setTimeout(() => setFormStatus('idle'), 3000);
       } else {
@@ -105,7 +105,7 @@ const ServiceLanding: React.FC = () => {
       }
     } catch (error) {
       setFormStatus('idle');
-      alert('네트워크 에러가 발생하였습니다. 대표번호로 직접 전전화를 주시면 즉시 상담 드립니다!');
+      alert('네트워크 오류가 발생했습니다. 다시 시도하시거나 대표번호로 전화해 주세요.');
     }
   };
 
@@ -161,7 +161,7 @@ const ServiceLanding: React.FC = () => {
           {/* Slogan Descriptive paragraph */}
           <div className="text-slate-200 text-sm sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] max-w-3xl lg:max-w-5xl mx-auto font-medium tracking-tight break-keep leading-relaxed opacity-95 px-4 flex flex-col gap-3 sm:gap-4">
             <p className="md:text-[25.25px] md:font-normal">
-              {(service.heroLead || '보여주기식 청소는 절대 하지 않습니다.').split('\n').map((line, i) => (
+              {(service.heroLead || '현장 상태에 맞춰 청소 범위와 일정을 상담합니다.').split('\n').map((line, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && <>{' '}<br className="hidden lg:inline" /></>}
                   {line}
@@ -207,14 +207,14 @@ const ServiceLanding: React.FC = () => {
 
       <CeoMessageSection />
 
-      {/* Professional Certifications Status Section (전문 자격증 보유 현황) */}
+      {/* Professional Certifications Status Section (자격증 안내) */}
       <section className="py-16 md:py-20 bg-slate-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-[31.75px] md:text-5xl font-extrabold text-slate-900 mb-6">전문 자격증 보유 현황</h2>
+            <h2 className="text-[31.75px] md:text-5xl font-extrabold text-slate-900 mb-6">자격증 안내</h2>
             <p className="text-slate-500 text-[11px] font-bold leading-[18px] sm:text-[15px] md:text-xl md:leading-[1.75rem] sm:font-medium sm:leading-relaxed max-w-3xl mx-auto break-keep">
-              느티울은 검증된 전문 자격을 갖춘 대표가 직접 시공합니다.<br />
-              전문성과 기술력을 바탕으로 신뢰할 수 있는 서비스를 제공합니다.
+              자격명과 발급기관을 아래에서 확인하실 수 있습니다.<br />
+              해당 작업의 적용 범위와 필요한 현장 요건은 상담에서 확인해 주세요.
             </p>
           </div>
 
@@ -259,7 +259,7 @@ const ServiceLanding: React.FC = () => {
             {/* Intro & Core Problem Card */}
             <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] mb-10 md:mb-12 space-y-6 sm:space-y-8">
               <p className="text-slate-800 text-xs sm:text-sm sm:leading-[1.25rem] md:text-base md:leading-[1.5rem] lg:text-lg lg:leading-[1.75rem] leading-relaxed font-bold tracking-tight sm:tracking-normal">
-                <span className="block sm:inline text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap sm:whitespace-normal">아무리 쓸고 닦아도 어느순간 바닥이 얼룩지고</span>{" "}
+                <span className="block sm:inline text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap sm:whitespace-normal">아무리 쓸고 닦아도 어느 순간 바닥이 얼룩지고</span>{" "}
                 <span className="block sm:inline text-xs sm:text-sm md:text-base lg:text-lg whitespace-nowrap sm:whitespace-normal">오염이 번져가는 현상을 겪으셨을 것입니다.</span>
               </p>
               
@@ -269,16 +269,16 @@ const ServiceLanding: React.FC = () => {
                     <Info className="w-4 h-4 stroke-[2.5]" />
                   </div>
                   <h4 className="text-emerald-950 font-extrabold text-base sm:text-lg md:text-xl">
-                    이유는 간단합니다.
+                    표면과 기존 코팅 상태를 함께 확인합니다.
                   </h4>
                 </div>
                 <p className="text-slate-800 text-xs sm:text-base sm:leading-[1.5rem] leading-relaxed font-medium space-y-0.5 sm:space-y-0">
-                  <span className="block sm:inline">타일 표면에는 눈에 보이지 않는</span>{" "}
-                  <span className="block sm:inline">미세한 기공과 패턴이 있어,</span>{" "}
-                  <span className="block sm:inline">오염물이 표면이 아니라</span>{" "}
-                  <span className="block sm:inline"><strong className="text-emerald-700 underline decoration-emerald-400 decoration-2 underline-offset-4 font-bold">그 속으로 스며들기 때문</strong>입니다.</span>{" "}
-                  <span className="block sm:inline">그리고 여기서 잘못된 청소방식이</span>{" "}
-                  <span className="block sm:inline">오염을 오히려 악화시킵니다.</span>
+                  <span className="block sm:inline">바닥의 표면 상태와 기존 코팅,</span>{" "}
+                  <span className="block sm:inline">오염이 쌓인 기간에 따라</span>{" "}
+                  <span className="block sm:inline">닦은 뒤에도 얼룩이</span>{" "}
+                  <span className="block sm:inline"><strong className="text-emerald-700 underline decoration-emerald-400 decoration-2 underline-offset-4 font-bold">남을 수 있기 때문</strong>입니다.</span>{" "}
+                  <span className="block sm:inline">청소 방식과 오염수 정리 상태도</span>{" "}
+                  <span className="block sm:inline">함께 살펴 작업 범위를 정합니다.</span>
                 </p>
               </div>
             </div>
@@ -290,7 +290,7 @@ const ServiceLanding: React.FC = () => {
                   <AlertTriangle className="w-5 h-5 stroke-[2.5]" />
                 </div>
                 <h4 className="text-[16.5px] leading-[22px] sm:text-2xl sm:leading-[2rem] font-extrabold text-slate-900 tracking-tight">
-                  왜 일반 청소로는 해결되지 않을까요?
+                  바닥 세척 전 확인할 사항은 무엇일까요?
                 </h4>
               </div>
 
@@ -302,11 +302,11 @@ const ServiceLanding: React.FC = () => {
                       원인 ①
                     </span>
                     <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mb-2.5 leading-snug">
-                      <span className="block sm:inline whitespace-nowrap sm:whitespace-normal">타일(기공,패턴)속에 굳어버린 오염,</span>{" "}
-                      <span className="block sm:inline whitespace-nowrap sm:whitespace-normal">단순한 세정으로 해결 불가</span>
+                      <span className="block sm:inline whitespace-nowrap sm:whitespace-normal">오래된 오염과 자재 변색,</span>{" "}
+                      <span className="block sm:inline whitespace-nowrap sm:whitespace-normal">세척과 보수를 구분해 확인</span>
                     </h5>
                     <p className="text-slate-600 text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed break-keep font-normal">
-                      오염이 깊이 스며들어 경화되면, 표면만 닦는 세정으로는 절대 제거되지 않습니다.
+                      오염이 스며든 깊이와 자재 상태에 따라 세척 후에도 자국이 남을 수 있습니다. 변색이나 손상은 보수 검토가 필요할 수 있습니다.
                     </p>
                   </div>
                 </div>
@@ -318,10 +318,10 @@ const ServiceLanding: React.FC = () => {
                       원인 ②
                     </span>
                     <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mb-2.5 leading-snug whitespace-nowrap sm:whitespace-normal tracking-tight sm:tracking-normal">
-                      억지로 오염을 닦아내면 오히려 확산
+                      작업 구역과 오염수 정리 범위
                     </h5>
                     <p className="text-slate-600 text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed break-keep font-normal">
-                      세제로 때를 불려도 그대로 닦아내면, 불려진 오염수가 옆으로 퍼지면서 다시 스며듭니다. 결국 얼룩의 위치만 이동할 뿐, 근본적으로는 사라지지 않습니다.
+                      바닥재와 주변 집기, 배수 여건을 확인해 세척 구역과 오염수 정리 범위를 정합니다. 모든 표면에 같은 방식을 적용하지 않습니다.
                     </p>
                   </div>
                 </div>
@@ -333,10 +333,10 @@ const ServiceLanding: React.FC = () => {
                       원인 ③
                     </span>
                     <h5 className="text-slate-900 font-extrabold text-[15.5px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mb-2.5 break-keep leading-snug">
-                      잔류 세제로 인한 2차 오염
+                      세척 후 표면과 사용 일정
                     </h5>
                     <p className="text-slate-600 text-xs sm:text-sm sm:leading-[1.25rem] leading-relaxed break-keep font-normal">
-                      세제 사용 후 충분히 헹구지 않으면 잔류 세제가 남아 끈적임, 광택 저하, 먼지 흡착을 유발하고 오염이 반복되는 악순환이 시작됩니다.
+                      세척 후 잔여물과 수분, 남은 얼룩을 확인합니다. 통행과 집기 재배치 시점은 현장 상태를 보고 협의하며, 코팅과 연마는 별도입니다.
                     </p>
                   </div>
                 </div>
@@ -349,214 +349,31 @@ const ServiceLanding: React.FC = () => {
         </section>
       )}
 
-      {/* 5th Section: Trash-house Cleaning Pricing & Transparency Guide (쓰레기집청소 비용 및 투명 견적 안내). The 특수청소 hub and 고독사청소 deliberately show no price table: the numbers below are 쓰레기집 figures. */}
+      {/* Trash-house quote inputs, not unsupported price statistics. */}
       {serviceId === 'trash-house' && (
-        <section className="py-16 md:py-24 bg-slate-50/80 text-slate-900 relative overflow-hidden border-y border-slate-200/80">
-          {/* Background Ambient Glows */}
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-teal-500/5 rounded-full blur-[120px] pointer-events-none" />
-          
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-            
-            {/* Header Badge & Title */}
-            <div className="text-center mb-12 md:mb-16">
-              <h3 className="text-2xl sm:text-4xl sm:leading-[2.5rem] md:text-5xl md:leading-[1] font-extrabold text-slate-900 tracking-tight leading-snug break-keep">
-                투명하고 합리적인 <br className="block sm:hidden" /><span className="text-emerald-600">맞춤 비용 산정 가이드</span>
-              </h3>
-              <p className="text-slate-600 text-xs sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mt-3 font-medium leading-relaxed max-w-3xl mx-auto break-keep">
-                과잉 청구나 무단 추가금 우려 없이, <br className="block sm:hidden" />정직하고 세심한 기준으로 가격을 제시합니다.
+        <section className="py-16 md:py-24 bg-slate-50/80 text-slate-900 border-y border-slate-200/80">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="text-center mb-10">
+              <h3 className="text-2xl sm:text-4xl font-extrabold">쓰레기집 청소 견적 확인사항</h3>
+              <p className="mt-4 text-slate-600 leading-relaxed break-keep">
+                평수만으로 비용을 확정하지 않습니다. 사진과 현장 상태를 확인해 포함·별도 작업과 비용을 상담합니다.
               </p>
             </div>
-
-            {/* Top Important Notice Banner */}
-            <div className="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-5 sm:p-7 mb-10 md:mb-12 shadow-xs flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
-              <div className="w-12 h-12 rounded-xl bg-emerald-700 text-white flex items-center justify-center shrink-0 shadow-xs">
-                <Info className="w-6 h-6 stroke-[2.5]" />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-emerald-950 font-extrabold text-sm sm:text-base md:text-lg mb-3 sm:mb-4 flex items-center justify-center sm:justify-start gap-2">
-                  <span>정확한 비용은 현장 기준으로 <br className="block sm:hidden" />세심하게 산정됩니다</span>
-                </h4>
-                <p className="text-slate-800 text-[11px] xs:text-xs sm:text-sm md:text-base md:leading-[1.5rem] leading-relaxed sm:leading-loose tracking-tighter sm:tracking-normal font-medium">
-                  <span className="block sm:inline">쓰레기 적치량 · 오염도 · 투입 인원 · 작업 시간</span>{" "}
-                  <span className="block sm:inline">층수 및 엘리베이터 동선 등에 따라 맞춤 견적이</span>{" "}
-                  <span className="block sm:inline">산정되며, 사진 전송 시 <strong className="text-emerald-700 font-bold">10분 이내에 빠르게</strong></span>{" "}
-                  <span className="block sm:inline"><strong className="text-emerald-700 font-bold">비대면 예상 견적</strong>을 바로 안내드립니다.</span>
-                </p>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                ['적치량과 보관 물품', '쓰레기의 종류·양과 보관할 물건, 의뢰인 확인이 필요한 물품을 구분합니다. 사진에 보이지 않는 구역은 추가 확인이 필요할 수 있습니다.'],
+                ['층수와 반출 동선', '계단·엘리베이터와 차량 접근, 공용공간 이용 조건을 확인합니다. 운반 범위와 인원·일정은 현장 여건에 맞춰 협의합니다.'],
+                ['청소와 추가 작업', '반출 후 드러난 바닥·욕실의 오염 청소를 중심으로 견적을 냅니다. 방제·소독·탈취 가능 범위와 마감재 보수·교체는 별도로 확인합니다.'],
+              ].map(([title, description]) => (
+                <div key={title} className="bg-white border border-slate-200 rounded-2xl p-6">
+                  <h4 className="font-bold text-lg text-emerald-800 mb-3">{title}</h4>
+                  <p className="text-sm text-slate-600 leading-relaxed break-keep">{description}</p>
+                </div>
+              ))}
             </div>
-
-            {/* Main Grid: Left Table & Right Chart Card */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 md:mb-16">
-              
-              {/* Left Column: Average Price Table (7 cols) */}
-              <div className="lg:col-span-7 bg-white border border-slate-200/80 rounded-2xl sm:rounded-3xl p-4 sm:p-8 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
-                <div>
-                  <div className="flex items-center justify-center sm:justify-start gap-2 mb-4 sm:mb-6 border-b border-slate-200/80 pb-3 sm:pb-4 text-center sm:text-left">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                      <DollarSign className="w-5 h-5 stroke-[2.5]" />
-                    </div>
-                    <h4 className="text-base sm:text-xl sm:leading-[1.75rem] font-bold text-slate-900 tracking-tight leading-snug text-center sm:text-left">
-                      쓰레기집 청소 <br className="block sm:hidden" />평균 비용 안내
-                    </h4>
-                  </div>
-
-                  {/* Mobile Card View (block sm:hidden) */}
-                  <div className="block sm:hidden space-y-3">
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-xs">
-                      <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/80">
-                        <span className="text-sm font-extrabold text-slate-900">원룸 · 소형</span>
-                        <span className="text-sm font-black text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-200">
-                          30만 원 ~
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-600 leading-relaxed break-keep font-medium">
-                        쓰레기 적치량 및 오염 수준에 따라 유연하게 책정
-                      </p>
-                    </div>
-
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-xs">
-                      <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/80">
-                        <span className="text-sm font-extrabold text-slate-900">빌라 · 아파트</span>
-                        <span className="text-sm font-black text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-200">
-                          70만 원 ~
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-600 leading-relaxed break-keep font-medium">
-                        작업 인원 · 소요 시간 · 층수 및 운반 동선 반영
-                      </p>
-                    </div>
-
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 shadow-xs">
-                      <div className="flex items-center justify-between gap-2 mb-2 pb-2 border-b border-slate-200/80">
-                        <span className="text-sm font-extrabold text-slate-900 leading-tight">
-                          심각한<br />특수 현장
-                        </span>
-                        <span className="text-xs font-black text-amber-800 bg-amber-100 px-2.5 py-1 rounded-md border border-amber-200 text-right leading-tight">
-                          맞춤 상담 후<br />현장 실사 견적
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-600 leading-relaxed break-keep font-medium">
-                        부패 · 분뇨 · 해충 박멸 및 특수 탈취 소독 포함
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Desktop Table View (hidden sm:block) */}
-                  <div className="hidden sm:block overflow-x-auto">
-                    <table className="w-full text-left text-xs sm:text-sm">
-                      <thead>
-                        <tr className="border-b border-slate-200/80 text-slate-500 font-bold">
-                          <th className="pb-3 px-2 w-1/4">구분</th>
-                          <th className="pb-3 px-2 w-1/3 text-emerald-700">평균 비용 범위</th>
-                          <th className="pb-3 px-2">산정 및 주요 작업 설명</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-200/80 text-slate-800">
-                        <tr className="hover:bg-slate-50 transition-colors">
-                          <td className="py-4 px-2 font-bold text-slate-900">
-                            원룸 · 소형
-                          </td>
-                          <td className="py-4 px-2 font-extrabold text-emerald-700 text-sm sm:text-base">
-                            30만 원 ~
-                          </td>
-                          <td className="py-4 px-2 text-xs sm:text-sm sm:leading-[1.25rem] text-slate-600 leading-normal">
-                            쓰레기 적치량 및 오염 수준에 따라 유연하게 책정
-                          </td>
-                        </tr>
-                        <tr className="hover:bg-slate-50 transition-colors">
-                          <td className="py-4 px-2 font-bold text-slate-900">
-                            빌라 · 아파트
-                          </td>
-                          <td className="py-4 px-2 font-extrabold text-emerald-700 text-sm sm:text-base">
-                            70만 원 ~
-                          </td>
-                          <td className="py-4 px-2 text-xs sm:text-sm sm:leading-[1.25rem] text-slate-600 leading-normal">
-                            작업 인원 · 소요 시간 · 층수 및 운반 동선 반영
-                          </td>
-                        </tr>
-                        <tr className="hover:bg-slate-50 transition-colors">
-                          <td className="py-4 px-2 font-bold text-slate-900">
-                            심각한 특수 현장
-                          </td>
-                          <td className="py-4 px-2 font-extrabold text-amber-700 text-xs sm:text-sm">
-                            현장 맞춤 상담 후 견적
-                          </td>
-                          <td className="py-4 px-2 text-xs sm:text-sm sm:leading-[1.25rem] text-slate-600 leading-normal">
-                            부패 · 분뇨 · 해충 박멸 및 특수 탈취 소독 포함
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-slate-200/80 text-slate-500 text-[11px] sm:text-xs sm:leading-[1rem] leading-relaxed">
-                  * 정확한 금액은 폐기물의 최종 무게(톤) 및 특수 약품/소독 범위에 따라 사전 상의 후 확정됩니다.
-                </div>
-              </div>
-
-              {/* Right Column: Estimated Price Distribution Chart & Transparency Guarantee (5 cols) */}
-              <div className="lg:col-span-5 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
-                
-                <div>
-                  <div className="flex items-center gap-2 mb-6 border-b border-slate-200/80 pb-4">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5 stroke-[2.5]" />
-                    </div>
-                    <h4 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                      합리적인 가성비 견적
-                    </h4>
-                  </div>
-
-                  <p className="text-[12.5px] sm:text-sm sm:leading-[1.25rem] text-slate-600 mb-6 leading-relaxed">
-                    폐기물량, 오염도, 청소 범위를 기준으로<br />
-                    불필요한 거품 없이 합리적이고 정직하게<br />
-                    책정하여 고객님께 말씀드립니다.
-                  </p>
-
-                  {/* Visual Bar Chart / Range Indicator */}
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <div className="flex justify-between text-xs font-extrabold mb-1.5">
-                        <span className="text-slate-700">최저 시작 비용 (부분/경미)</span>
-                        <span className="text-emerald-700">25만 원 ~</span>
-                      </div>
-                      <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200/60">
-                        <div className="h-full bg-emerald-500 rounded-full" style={{ width: '25%' }} />
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between text-xs font-extrabold mb-1.5">
-                        <span className="text-slate-700">평균 작업 비용 (표준 원/투룸)</span>
-                        <span className="text-emerald-700">85만 원 선</span>
-                      </div>
-                      <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200/60">
-                        <div className="h-full bg-emerald-700 rounded-full" style={{ width: '55%' }} />
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between text-xs font-extrabold mb-1.5">
-                        <span className="text-slate-700">고가/중증 특수현장 (대형/고난도)</span>
-                        <span className="text-amber-700">200만 원 ~</span>
-                      </div>
-                      <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200/60">
-                        <div className="h-full bg-amber-500 rounded-full" style={{ width: '90%' }} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 text-xs text-slate-600 leading-relaxed">
-                  사진으로 먼저 상담받으시면 불필요한 작업 항목을 제외하고 꼭 필요한 부분만 예산에 맞춰 진행해 드립니다.
-                </div>
-
-              </div>
-
-            </div>
-
+            <p className="mt-6 text-sm text-slate-600 leading-relaxed text-center break-keep">
+              사진 상담은 예상 범위 확인을 위한 절차입니다. 방문 필요 여부와 최종 비용, 변경·취소·결제 조건은 예약 전에 확인해 주세요.
+            </p>
           </div>
         </section>
       )}
@@ -632,7 +449,7 @@ const ServiceLanding: React.FC = () => {
           {/* Bottom Trust Guarantee Banner */}
           <div className="mt-8 sm:mt-12 bg-emerald-50/80 rounded-2xl p-5 sm:p-6 border border-emerald-200/70 text-center flex items-center justify-center gap-3 text-emerald-900 text-xs sm:text-sm font-bold break-keep">
             <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-            <span>모든 청소 작업은 사전 현장 진단 후 진행되며, 작업 완료 후 고객님과 함께 현장을 직접 검수하여 마감합니다.</span>
+            <span>위 항목은 상담을 위한 작업 범위 안내입니다. 포함·제외·별도 항목은 견적 때 확정하고, 결과 확인과 보완 범위·기간도 사전에 협의합니다.</span>
           </div>
 
         </div>
@@ -648,7 +465,7 @@ const ServiceLanding: React.FC = () => {
           className="text-center mb-10 md:mb-16"
         >
           <h3 className="text-[17px] min-[360px]:text-xl min-[410px]:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight whitespace-nowrap">
-            느티울이 약속하는 3대 작업 원칙
+            상담에서 확인할 3가지 작업 기준
           </h3>
         </m.div>
 
@@ -665,19 +482,19 @@ const ServiceLanding: React.FC = () => {
             <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300">
               <ShieldCheck className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">대표 직접 성실 관리</h4>
+            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">현장 담당과 진행 방식 확인</h4>
             <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm md:leading-[1.25rem] leading-relaxed font-semibold text-center space-y-4">
               <p>
-                하청이나 외주팀에 일을<br />
-                넘겨주는 행위는 절대 없습니다.
+                방문 담당자와 작업 구역,<br />
+                출입 조건을 먼저 확인합니다.
               </p>
               <p>
-                상담 과정부터 실제 세척,<br />
-                그리고 최종 점검까지!
+                청소 중 확인할 사항과<br />
+                결과 확인 방식을 협의합니다.
               </p>
               <p>
-                대표인 제가 직접 관리 감독하며<br />
-                디테일을 마감합니다.
+                현장 제약과 요청사항을 확인해<br />
+                진행 범위를 안내합니다.
               </p>
             </div>
           </m.div>
@@ -693,11 +510,11 @@ const ServiceLanding: React.FC = () => {
             <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300">
               <Star className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">추가없는 투명한 견적 약속</h4>
+            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">포함·별도 항목을 나눈 견적</h4>
             <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm md:leading-[1.25rem] leading-relaxed font-semibold text-center space-y-4">
               <p>
-                애매한 견적서, 숨겨진 추가비용<br />
-                저희와 거리가 먼 얘기입니다.
+                청소 구역과 선택 작업을<br />
+                견적에서 구분해 확인합니다.
               </p>
               <p>
                 현장을 직접 확인하고<br />
@@ -705,7 +522,7 @@ const ServiceLanding: React.FC = () => {
               </p>
               <p>
                 투명하게 금액을 공개하고<br />
-                고객님께 의뢰를 제시합니다.
+                고객님께 견적을 안내합니다.
               </p>
             </div>
           </m.div>
@@ -721,18 +538,18 @@ const ServiceLanding: React.FC = () => {
             <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-300">
               <Sparkles className="w-6 h-6 md:w-8 md:h-8" strokeWidth={2.5} />
             </div>
-            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">100% 고객 만족 정직 시공</h4>
+            <h4 className="text-[17px] min-[360px]:text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 mb-4 tracking-tight whitespace-nowrap">결과 확인과 보완 범위 협의</h4>
             <div className="text-slate-500 text-xs sm:text-[13px] md:text-sm md:leading-[1.25rem] leading-relaxed font-semibold text-center space-y-4">
               <p>
-                고객님이 현장을 함께 확인하시고<br />
-                만족할 때까지 책임을 다합니다.
+                합의한 작업 내역을 기준으로<br />
+                결과 확인 방식을 정합니다.
               </p>
               <p>
-                투명하고 양심적인 비용 대비<br />
-                완벽한 시공 퀄리티로 작업하여,
+                남은 오염과 자재 손상을<br />
+                구분해 안내하고,
               </p>
               <p>
-                감동적인 공간으로 되돌려드립니다.
+                보완 대상과 기간은 사전에 확인합니다.
               </p>
             </div>
           </m.div>
@@ -740,7 +557,7 @@ const ServiceLanding: React.FC = () => {
         </div>
       </section>
 
-      <FAQSection ctaPhone={cleanPhone} />
+      <FAQSection key={service.id} serviceId={service.id} ctaPhone={cleanPhone} />
       <ServiceRegions serviceId={service.id} serviceTitle={service.title} />
 
       {/* Embedded Real, Seamless Consultation Contact Formspree Area (No placeholders) */}
@@ -760,11 +577,11 @@ const ServiceLanding: React.FC = () => {
               <h3 className="text-xl sm:text-3xl sm:leading-[2.5rem] font-extrabold text-white tracking-tight mb-2 leading-tight">
                 {service.title}
                 <br />
-                무료 견적 신청
+                견적 상담 신청
               </h3>
               <p className="text-slate-300 text-[11.5px] xs:text-[13.5px] sm:text-base md:text-[18px] font-bold leading-normal xs:leading-relaxed sm:leading-loose break-keep px-2 sm:px-4 opacity-95">
-                필요 조건만 적어 접수해주시면, 빠르게<br />
-                합리적인 비용으로 마스터 플랜을 구성해<br />
+                현장 위치와 희망 범위를 접수해 주시면,<br />
+                작업 가능 범위와 일정을 확인해<br />
                 친절하게 안내드리겠습니다
               </p>
             </div>
@@ -831,7 +648,7 @@ const ServiceLanding: React.FC = () => {
                         작업전송 처리중...
                      </span>
                   ) : (
-                     <>무료 상세 견적 신청 및 문의 전송 <Send className="w-4 h-4 sm:w-6 sm:h-6 shrink-0" /></>
+                     <>상세 견적 상담 신청 및 문의 전송 <Send className="w-4 h-4 sm:w-6 sm:h-6 shrink-0" /></>
                   )}
                 </m.button>
               </div>

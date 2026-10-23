@@ -176,7 +176,7 @@ test('Uijeongbu hoarder-house case follows the field-case format and keeps sanit
   assert.ok(regionCase.description.startsWith('의정부 쓰레기집 청소 전문업체'));
   assert.match(regionCase.heading, /의정부 쓰레기집 청소/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   assert.doesNotMatch(regionCase.intro, /다시 생활할 수 있는 상태|비밀보장|즉시 출동/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
@@ -214,7 +214,7 @@ test('Ansan hoarder-house case follows the field-case format and keeps sanitized
   assert.ok(regionCase.description.startsWith('안산 쓰레기집 청소 전문업체'));
   assert.match(regionCase.heading, /안산 쓰레기집 청소/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
@@ -243,7 +243,7 @@ test('Suwon hoarder-house case follows the field-case format and keeps sanitized
   assert.ok(regionCase.description.startsWith('수원 쓰레기집 청소 전문업체'));
   assert.match(regionCase.heading, /수원 쓰레기집 청소/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
@@ -278,7 +278,7 @@ test('new trash-house cases follow the field-case format and keep sanitized medi
     assert.match(regionCase.description, /업체 추천/);
     assert.match(regionCase.description, /비용·견적/);
     assert.match(regionCase.intro, /전 지역 출장/);
-    assert.match(regionCase.intro, /무료 방문 견적/);
+    assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
     const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
     assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
     assert.equal(regionCase.prep.length, 4);
@@ -318,7 +318,7 @@ test('new office cases follow the field-case format and keep sanitized media', (
     assert.match(regionCase.description, /업체 추천/);
     assert.match(regionCase.description, /비용·견적/);
     assert.match(regionCase.intro, /전 지역 출장/);
-    assert.match(regionCase.intro, /무료 방문 견적/);
+    assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
     const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
     assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
     assert.equal(regionCase.prep.length, 4);
@@ -429,7 +429,7 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     assert.match(regionCase.description, /업체 추천/);
     assert.match(regionCase.description, /비용·견적/);
     assert.match(regionCase.intro, /전 지역 출장/);
-    assert.match(regionCase.intro, /무료 방문 견적/);
+    assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
     const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
     assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
     assert.equal(regionCase.prep.length, 4);
@@ -621,7 +621,7 @@ test('Gangnam school floor-wax case leads with its keyword and shows every photo
   assert.ok(regionCase.description.startsWith('강남 바닥왁스코팅 전문업체'));
   assert.match(regionCase.heading, /강남 바닥왁스코팅/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
@@ -635,7 +635,7 @@ test('Anyang office floor-wax case leads with its keyword and shows every photo 
   assert.ok(regionCase.description.startsWith('안양 바닥왁스코팅 전문업체'));
   assert.match(regionCase.heading, /안양 바닥왁스코팅/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
@@ -649,7 +649,7 @@ test('Gunpo office case leads with its keyword and shows every photo under its s
   assert.ok(regionCase.description.startsWith('군포 사무실청소 전문업체'));
   assert.match(regionCase.heading, /군포 사무실청소/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
@@ -663,7 +663,7 @@ test('Suwon office case leads with its keyword and shows every photo under its s
   assert.ok(regionCase.description.startsWith('수원 사무실청소 전문업체'));
   assert.match(regionCase.heading, /수원 사무실청소/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);
@@ -677,7 +677,7 @@ test('Yongin office case leads with its keyword and shows every photo under its 
   assert.ok(regionCase.description.startsWith('용인 사무실청소 전문업체'));
   assert.match(regionCase.heading, /용인 사무실청소/);
   assert.match(regionCase.intro, /전 지역 출장/);
-  assert.match(regionCase.intro, /무료 방문 견적/);
+  assert.match(regionCase.intro, /방문 필요 여부와 비용은 상담에서 먼저 확인/);
   const placed = regionCase.sections.flatMap((s) => s.stepIndexes ?? []).sort();
   assert.deepEqual(placed, regionCase.steps.map((_, i) => i));
   assert.ok(regionCase.prep.length >= 3);

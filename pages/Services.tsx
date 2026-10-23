@@ -218,7 +218,7 @@ const Services: React.FC = () => {
                            상담해 보세요
                          </h4>
                          <p className="text-slate-400 text-xs md:text-lg font-medium break-keep">
-                           현장 방문을 통한 <span className="text-primary font-bold">100% 무료 견적</span>으로 합리적인 비용을 제안해 드립니다.
+                           방문 필요 여부와 <span className="text-primary font-bold">비용은 상담 시 먼저 안내</span>하고, 현장에 맞는 작업 범위를 제안합니다.
                          </p>
                          <div className="pt-2 md:pt-4">
                             <m.div
@@ -230,7 +230,7 @@ const Services: React.FC = () => {
                                 to="/contact" 
                                 className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-primary text-white text-sm md:text-xl font-bold rounded-xl hover:bg-primaryDark transition-all shadow-xl shadow-primary/20"
                               >
-                                무료 견적 신청하기 <Sparkles size={20} />
+                                견적 상담 신청하기 <Sparkles size={20} />
                               </Link>
                             </m.div>
                          </div>

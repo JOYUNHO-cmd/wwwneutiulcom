@@ -124,7 +124,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center gap-2.5">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <h4 className="text-xs md:text-sm font-bold text-gray-200 tracking-wider">
-                수도권 전지역 100% 무료 출장 방문 견적 & 24시 긴급 출동 지원
+                수도권 청소 상담 · 현장별 방문 가능 일정 안내
               </h4>
             </div>
             <div className="flex flex-wrap gap-2 text-[10px] md:text-xs">
@@ -170,7 +170,7 @@ const Footer: React.FC = () => {
             {' '}| <Link to="/privacy" className="underline hover:text-white transition-colors">개인정보처리방침</Link>
           </p>
           <p className="text-[10px] md:text-xs text-gray-400">
-            수도권 전지역 24시간 실시간 상담 & 100% 무료 현장 방문 견적 지원
+            방문 필요 여부와 비용은 상담 시 먼저 안내합니다.
           </p>
         </div>
         <p className="text-center text-[9px] md:text-[11px] text-gray-500 mt-4 leading-relaxed break-keep">
