@@ -48,6 +48,12 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'move-in-310': '/services/interior/seocho/서초리모델링인테리어청소',
   'government-018': '/services/government-school/yangcheon/양천공공회관인테리어청소',
   'government-029': '/services/government-school/hanam/하남학교복도분진청소',
+  'government-020': '/services/government-school/yangcheon/양천공원카페관공서청소',
+  'interior-273': '/services/restaurant/seocho/서초갈비집주방청소',
+  'new-construction-223': '/services/new-construction/gangnam/강남신사동병원준공청소',
+  'move-in-325': '/services/interior/ilsan/일산주택인테리어청소',
+  'suwon-government-013': '/services/government-school/suwon/수원학교강당청소',
+  'yongin-government-023': '/services/government-school/yongin/용인학교교실인테리어청소',
   'ansan-government-017': '/services/government-school/ansan/안산학교바닥왁스청소',
 };
 
@@ -75,7 +81,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 113);
+  assert.equal(cases.length, 123);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -349,6 +355,16 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['government-school', 'yongin', '용인학교과학실청소', '용인 학교청소'],
     ['government-school', 'ansan', '안산학교바닥왁스청소', '안산 학교청소'],
     ['interior', 'yongin', '용인원룸인테리어청소', '용인 인테리어청소'],
+    ['interior', 'dongtan', '동탄바인테리어청소', '동탄 인테리어청소'],
+    ['interior', 'yangju', '양주댄스학원인테리어청소', '양주 인테리어청소'],
+    ['new-construction', 'namyangju', '남양주카페준공청소', '남양주 준공청소'],
+    ['government-school', 'yangcheon', '양천공원카페관공서청소', '양천 관공서청소'],
+    ['restaurant', 'seocho', '서초갈비집주방청소', '서초 주방청소'],
+    ['new-construction', 'gangnam', '강남신사동병원준공청소', '강남 준공청소'],
+    ['interior', 'ilsan', '일산주택인테리어청소', '일산 인테리어청소'],
+    ['government-school', 'suwon', '수원학교강당청소', '수원 학교청소'],
+    ['government-school', 'yongin', '용인학교교실인테리어청소', '용인 학교청소'],
+    ['interior', 'gangnam', '강남대치동놀이방인테리어청소', '강남 인테리어청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);
