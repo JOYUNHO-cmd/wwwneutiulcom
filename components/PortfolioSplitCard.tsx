@@ -12,6 +12,9 @@ export interface PortfolioGalleryItem {
   beforeHeight: number;
   afterWidth: number;
   afterHeight: number;
+  beforeLabel?: string;
+  afterLabel?: string;
+  description?: string;
 }
 
 interface PortfolioSplitCardProps {
@@ -60,33 +63,33 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
         type="button"
         onClick={onClick}
         className="w-full text-left"
-        aria-label={`${item.title} 시공 전후 크게 보기`}
+        aria-label={`${item.title} 크게 보기`}
       >
       <div className="rounded-xl md:rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs group-hover:shadow-lg group-hover:border-primary/40 transition-all bg-white">
         <div className="grid grid-cols-2">
           <div className="relative aspect-square bg-slate-100">
             <img
               src={canLoad ? `/images/portfolio-gallery/thumbs/${item.before}` : undefined}
-              alt={`${item.title} 시공 전`}
+              alt={`${item.title} ${item.beforeLabel || '시공 전'}`}
               width={item.beforeWidth}
               height={item.beforeHeight}
               loading={eager ? 'eager' : 'lazy'}
               decoding="async"
               className="w-full h-full object-cover"
             />
-            <span className={`absolute top-1.5 left-1.5 rounded-md bg-slate-900/75 text-white font-bold tracking-wide ${isMarqueeLg ? 'px-2.5 py-1 text-sm' : 'px-1.5 py-0.5 text-[10px]'}`}>전</span>
+            <span className={`absolute top-1.5 left-1.5 rounded-md bg-slate-900/75 text-white font-bold tracking-wide ${isMarqueeLg ? 'px-2.5 py-1 text-sm' : 'px-1.5 py-0.5 text-[10px]'}`}>{item.beforeLabel || '전'}</span>
           </div>
           <div className="relative aspect-square bg-slate-100 border-l border-white">
             <img
               src={canLoad ? `/images/portfolio-gallery/thumbs/${item.after}` : undefined}
-              alt={`${item.title} 시공 후`}
+              alt={`${item.title} ${item.afterLabel || '시공 후'}`}
               width={item.afterWidth}
               height={item.afterHeight}
               loading={eager ? 'eager' : 'lazy'}
               decoding="async"
               className="w-full h-full object-cover"
             />
-            <span className={`absolute top-1.5 left-1.5 rounded-md bg-primary text-white font-bold tracking-wide ${isMarqueeLg ? 'px-2.5 py-1 text-sm' : 'px-1.5 py-0.5 text-[10px]'}`}>후</span>
+            <span className={`absolute top-1.5 left-1.5 rounded-md bg-primary text-white font-bold tracking-wide ${isMarqueeLg ? 'px-2.5 py-1 text-sm' : 'px-1.5 py-0.5 text-[10px]'}`}>{item.afterLabel || '후'}</span>
           </div>
         </div>
         <div className={`px-2.5 py-2 ${isMarquee ? 'text-center' : ''} ${isMarqueeLg ? 'py-3' : ''}`}>
