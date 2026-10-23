@@ -15,7 +15,7 @@ const stepImage5Mobile = '/images/confirmation-aftercare-mobile.webp';
 
 const FiveStepWorkflowSection: React.FC = () => {
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-b from-emerald-50/20 via-white to-emerald-50/30 border-b border-slate-100/80 relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-linear-to-b/srgb from-emerald-50/20 via-white to-emerald-50/30 border-b border-slate-100/80 relative overflow-hidden">
       {/* Natural & Eco-friendly Decorative Background Elements */}
       <div className="absolute top-10 -left-16 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-20 -right-20 w-80 h-80 bg-emerald-400/5 rounded-full blur-3xl pointer-events-none" />
@@ -64,7 +64,7 @@ const FiveStepWorkflowSection: React.FC = () => {
 
       <div className="max-w-3xl lg:max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-[22px] sm:text-2xl md:text-4xl font-extrabold text-slate-900 mb-3 md:mb-4 leading-tight break-keep">
+          <h2 className="text-[22px] sm:text-2xl sm:leading-[2rem] md:text-4xl md:leading-[2.5rem] font-extrabold text-slate-900 mb-3 md:mb-4 leading-tight break-keep">
             고객님을 위한 5단계 진행 과정
           </h2>
           <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto break-keep">
@@ -117,13 +117,13 @@ const FiveStepWorkflowSection: React.FC = () => {
               {idx < arr.length - 1 && (
                 <div className="my-5 sm:my-8 flex flex-col items-center justify-center relative">
                   {/* Glowing flow line with moving light tracer */}
-                  <div className="w-[3px] h-8 sm:h-12 bg-gradient-to-b from-[#0f9d6c]/40 via-[#0f9d6c] to-[#0f9d6c]/40 rounded-full relative overflow-hidden shadow-[0_0_12px_rgba(34,186,139,0.4)]">
+                  <div className="w-[3px] h-8 sm:h-12 bg-linear-to-b/srgb from-primary/40 via-primary to-primary/40 rounded-full relative overflow-hidden shadow-[0_0_12px_rgba(34,186,139,0.4)]">
                     <div className="anim-tracer w-full h-5 bg-white rounded-full opacity-90 blur-[0.5px]" />
                   </div>
 
                   {/* Floating bouncing animated circle badge with bold downward chevron */}
-                  <div className="anim-nudge-down-sm mt-1 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-b from-[#0f9d6c] to-emerald-600 text-white shadow-[0_4px_18px_rgba(34,186,139,0.45)] border-2 border-white ring-4 ring-[#0f9d6c]/15">
-                    <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-[3]" />
+                  <div className="anim-nudge-down-sm mt-1 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-linear-to-b/srgb from-primary to-emerald-600 text-white shadow-[0_4px_18px_rgba(34,186,139,0.45)] border-2 border-white ring-4 ring-primary/15">
+                    <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 stroke-3" />
                   </div>
                 </div>
               )}

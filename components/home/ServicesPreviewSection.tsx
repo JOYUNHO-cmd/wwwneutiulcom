@@ -12,7 +12,7 @@ const ServicesPreviewSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-2 md:px-8 relative z-10">
         <div className="text-center mb-10 md:mb-16">
           <h3 className="text-2xl md:text-5xl font-extrabold text-slate-900 mb-3 sm:mb-4">전문적인 청소 솔루션</h3>
-          <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primaryDark font-bold text-xs sm:text-sm md:text-base shadow-sm hover:shadow-md transition-all">
+          <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primaryDark font-bold text-xs sm:text-sm md:text-base shadow-xs hover:shadow-md transition-all">
             <MousePointerClick className="w-4 h-4 sm:w-5 sm:h-5 text-primaryDark animate-pulse" />
             <span>아래 사진을 클릭하면 이동합니다</span>
             <span className="inline-block animate-bounce text-base sm:text-lg">👇</span>
@@ -35,7 +35,7 @@ const ServicesPreviewSection: React.FC = () => {
                 className="group relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 shadow-md hover:shadow-2xl hover:border-primary/40 transition-all duration-300 flex flex-col h-full w-full"
               >
                 <div className="h-32 sm:h-48 lg:h-52 overflow-hidden relative">
-                  <img src={service.image} alt={service.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <img src={service.image || '/images/logo.webp'} alt={service.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
                 </div>
                 <div className="p-4 sm:p-5 flex-1 flex items-center justify-center text-center">

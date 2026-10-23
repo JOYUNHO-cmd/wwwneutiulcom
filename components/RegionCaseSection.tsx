@@ -84,7 +84,7 @@ export const CaseStepGroup: React.FC<{ step: CaseStep; si: number; className?: s
               muted
               playsInline
               preload="metadata"
-              className="w-full aspect-[3/4] object-cover bg-slate-900"
+              className="w-full aspect-3/4 object-cover bg-slate-900"
             />
           ) : (
             <img
@@ -93,10 +93,10 @@ export const CaseStepGroup: React.FC<{ step: CaseStep; si: number; className?: s
               height={m.height}
               alt={m.alt}
               loading="lazy"
-              className="w-full aspect-[3/4] object-cover"
+              className="w-full aspect-3/4 object-cover"
             />
           )}
-          <figcaption className="text-[13px] sm:text-sm leading-snug text-gray-700 px-2.5 py-2 break-keep">
+          <figcaption className="text-[13px] sm:text-sm sm:leading-[1.25rem] leading-snug text-gray-700 px-2.5 py-2 break-keep">
             <CaseCaption caption={m.caption} />
           </figcaption>
         </figure>
@@ -135,19 +135,19 @@ const RegionCaseSection: React.FC<RegionCaseSectionProps> = ({ regionCase, class
           </h2>
 
           <div className="grid sm:grid-cols-2 gap-3 mb-8">
-            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base sm:leading-[1.5rem] leading-[1.7] text-gray-700">
               <MapPin className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
               <span className="break-keep"><FactLabel>위치</FactLabel>{withDotBreaks(regionCase.facts.location)}</span>
             </div>
-            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base sm:leading-[1.5rem] leading-[1.7] text-gray-700">
               <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
               <span className="break-keep"><FactLabel>작업 전 상태</FactLabel>{withDotBreaks(regionCase.facts.before)}</span>
             </div>
-            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base sm:leading-[1.5rem] leading-[1.7] text-gray-700">
               <ClipboardList className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
               <span className="break-keep"><FactLabel>작업 순서</FactLabel>{withDotBreaks(regionCase.facts.process)}</span>
             </div>
-            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base leading-[1.7] text-gray-700">
+            <div className="flex items-start gap-2.5 bg-gray-50 rounded-xl p-4 text-[15px] sm:text-base sm:leading-[1.5rem] leading-[1.7] text-gray-700">
               <Users2 className="text-primary shrink-0 mt-0.5" size={18} aria-hidden="true" />
               <span className="break-keep"><FactLabel>인원·시간</FactLabel>{withDotBreaks(regionCase.facts.staff)}</span>
             </div>

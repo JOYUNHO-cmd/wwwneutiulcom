@@ -5,6 +5,7 @@ import { m } from 'motion/react';
 import { trackEvent } from '../lib/analytics';
 import PortfolioMarquee from '../components/PortfolioMarquee';
 import ReviewsSection from '../components/ReviewsSection';
+import { useSite } from '../context/SiteContext';
 
 const zelkovaHero = '/images/hero-tree-family.webp';
 const zelkovaMobileHero = '/images/hero-tree-family-mobile.webp';
@@ -36,6 +37,7 @@ const LiveWorkFeedSection = lazy(() => import('../components/home/LiveWorkFeedSe
 const CTASection = lazy(() => import('../components/home/CTASection'));
 
 const Home: React.FC = () => {
+  const { config } = useSite();
   const heroParallaxRef = useRef<HTMLDivElement>(null);
 
   // Hero parallax: mutate the DOM node directly via ref instead of
@@ -92,7 +94,7 @@ const Home: React.FC = () => {
               className="w-full h-full object-cover object-center"
             />
           </picture>
-          <div className="absolute inset-0 bg-white/50 md:bg-white/25 md:bg-gradient-to-r md:from-white/80 md:via-white/50 md:to-white/30" />
+          <div className="absolute inset-0 bg-white/50 md:bg-white/25 md:bg-linear-to-r/srgb md:from-white/80 md:via-white/50 md:to-white/30" />
         </div>
 
         {/* Text and Buttons Container */}
@@ -103,15 +105,15 @@ const Home: React.FC = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-3xl md:max-w-6xl mx-auto flex flex-col items-center justify-center"
           >
-            <h1 className="font-extrabold text-slate-900 mb-4 md:mb-8 leading-tight drop-shadow-sm break-keep text-center flex flex-col items-center">
-              <span className="block whitespace-nowrap text-[11.5px] min-[360px]:text-[13px] sm:text-sm md:text-2xl text-[#444a53] font-extrabold mb-1.5 md:mb-4 tracking-[0.02em] md:tracking-[0.1em]">
-                서울·인천·경기 쓰레기집·침수·화재 특수청소 전문업체
+            <h1 className="font-extrabold text-slate-900 mb-4 md:mb-8 leading-tight drop-shadow-xs break-keep text-center flex flex-col items-center">
+              <span className="block whitespace-pre-line break-words max-w-full text-[11.5px] min-[360px]:text-[13px] sm:text-sm md:text-2xl text-[#444a53] font-extrabold mb-1.5 md:mb-4 tracking-[0.02em] md:tracking-widest">
+                {config.companyInfo.slogan}
               </span>
               <span className="text-[25px] sm:text-4xl md:text-7xl block mb-1 md:mb-3">
-                한결같은 <span className="text-[#0f9d6c] font-black">마음</span>으로
+                한결같은 <span className="text-primary font-black">마음</span>으로
               </span>
               <span className="text-[25px] sm:text-4xl md:text-7xl block">
-                이웃의 <span className="text-[#0f9d6c] font-black">소중한 공간</span>을 품습니다
+                이웃의 <span className="text-primary font-black">소중한 공간</span>을 품습니다
               </span>
             </h1>
 
@@ -164,12 +166,12 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-6 md:mb-10 relative z-10">
           <p className="text-slate-900 text-xl md:text-3xl font-black tracking-tight break-keep">
             <span className="block md:inline">제가 직접 발로 뛴</span>{' '}
-            <span className="block md:inline">현장 <span className="bg-gradient-to-r from-[#04a875] to-[#22ba8b] bg-clip-text text-transparent">사진</span>으로 증명합니다</span>
+            <span className="block md:inline">현장 <span className="bg-linear-to-r/srgb from-[#04a875] to-[#22ba8b] bg-clip-text text-transparent">사진</span>으로 증명합니다</span>
           </p>
           <p className="text-slate-500 text-sm md:text-base mt-2">
             실제 시공 현장의 전/후 비교 사진입니다.
           </p>
-          <span className="anim-nudge-up inline-flex items-center gap-1.5 mt-3 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primaryDark text-xs md:text-sm font-bold shadow-sm">
+          <span className="anim-nudge-up inline-flex items-center gap-1.5 mt-3 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primaryDark text-xs md:text-sm font-bold shadow-xs">
             🔍 사진을 누르면 크게 볼 수 있어요
           </span>
         </div>

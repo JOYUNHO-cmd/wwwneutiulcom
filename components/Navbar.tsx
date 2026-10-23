@@ -42,11 +42,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm transition-all">
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-xs transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-24 items-center">
           {/* Logo & Socials */}
-          <div className="flex-shrink-0 flex items-center gap-6">
+          <div className="shrink-0 flex items-center gap-6">
             <Link 
               to="/" 
               onClick={handleLogoClick}
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
                    느티울
                  </span>
                  <span 
-                   className="text-[#0b7a54] font-extrabold tracking-[0.2em] whitespace-nowrap uppercase text-[12px] min-[400px]:text-[14px]"
+                   className="text-primaryDark font-extrabold tracking-[0.2em] whitespace-nowrap uppercase text-[12px] min-[400px]:text-[14px]"
                    style={{
                      fontFamily: "'Cinzel', serif",
                      lineHeight: '1',
@@ -213,8 +213,10 @@ const Navbar: React.FC = () => {
             <m.button
               whileTap={{ scale: 0.92 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="relative bg-primary text-white p-2.5 focus:outline-none rounded-2xl shadow-lg shadow-primary/35 active:bg-primaryDark transition-colors"
+              className="relative bg-primary text-white p-2.5 focus:outline-hidden rounded-2xl shadow-lg shadow-primary/35 active:bg-primaryDark transition-colors"
               aria-label="Toggle navigation menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation-menu"
             >
               {!isOpen && (
                 <span className="absolute inset-2 rounded-2xl bg-primary/40 animate-ping pointer-events-none" />
@@ -234,8 +236,9 @@ const Navbar: React.FC = () => {
           via max-height:0 + inert rather than AnimatePresence unmounting
           it, so there's no exit-animation bookkeeping either. */}
       <div
-        className="lg:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl overflow-hidden left-0 right-0 z-50 transition-[max-height] duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-        style={{ backgroundColor: '#ffffff', maxHeight: isOpen ? '1000px' : '0px' }}
+        id="mobile-navigation-menu"
+        className="lg:hidden bg-white border-b border-gray-100 absolute w-full shadow-2xl overflow-y-auto overflow-x-hidden overscroll-contain left-0 right-0 z-50 transition-[max-height] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{ backgroundColor: '#ffffff', maxHeight: isOpen ? 'calc(100dvh - 6rem - 1px)' : '0px' }}
         inert={!isOpen}
       >
             <div className="px-4 pt-3 pb-6 space-y-1 sm:px-3 bg-white">
@@ -252,9 +255,11 @@ const Navbar: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setMobileServicesOpen((v) => !v)}
+                          aria-expanded={mobileServicesOpen}
+                          aria-controls="mobile-service-links"
                           className={`w-full flex items-center justify-center gap-1.5 px-4 py-3.5 text-[17px] font-bold text-center transition-all ${
                               isActive(link.path) || mobileServicesOpen
-                                ? 'bg-primary/10 text-primaryDark font-black shadow-sm'
+                                ? 'bg-primary/10 text-primaryDark font-black shadow-xs'
                                 : 'text-gray-700 hover:bg-gray-50 active:bg-gray-100'
                           }`}
                         >
@@ -262,8 +267,9 @@ const Navbar: React.FC = () => {
                           <ChevronDown size={18} className={`transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
                         </button>
                         <div
-                          className="overflow-hidden bg-slate-50 transition-[max-height] duration-200 ease-out"
-                          style={{ maxHeight: mobileServicesOpen ? '600px' : '0px' }}
+                          id="mobile-service-links"
+                          className="bg-slate-50"
+                          hidden={!mobileServicesOpen}
                           inert={!mobileServicesOpen}
                         >
                             <div className="grid grid-cols-2 gap-1.5 p-2.5">
@@ -272,7 +278,7 @@ const Navbar: React.FC = () => {
                                   key={service.id}
                                   to={`/services/${service.id}`}
                                   onClick={() => setIsOpen(false)}
-                                  className="px-3 py-2.5 rounded-lg text-[13px] font-semibold text-gray-700 text-center bg-white hover:bg-primary/10 hover:text-primaryDark transition-colors"
+                                  className="min-w-0 break-words px-3 py-2.5 rounded-lg text-[13px] font-semibold text-gray-700 text-center bg-white hover:bg-primary/10 hover:text-primaryDark transition-colors"
                                 >
                                   {service.title}
                                 </Link>
@@ -295,7 +301,7 @@ const Navbar: React.FC = () => {
                         onClick={() => setIsOpen(false)}
                         className={`block px-4 py-3.5 text-[17px] font-bold text-center transition-all ${
                             isActive(link.path)
-                              ? 'bg-primary/10 text-primaryDark font-black shadow-sm'
+                              ? 'bg-primary/10 text-primaryDark font-black shadow-xs'
                               : 'text-gray-700 hover:bg-gray-50 active:bg-gray-100'
                         }`}
                       >
@@ -313,7 +319,7 @@ const Navbar: React.FC = () => {
                    href={config.companyInfo.blog} 
                    target="_blank" 
                    rel="noreferrer" 
-                   className="flex items-center justify-center w-[38px] h-[38px] rounded-full bg-gray-100 text-gray-500 hover:bg-[#03C75A] hover:text-white transition-all shadow-sm"
+                   className="flex items-center justify-center w-[38px] h-[38px] rounded-full bg-gray-100 text-gray-500 hover:bg-[#03C75A] hover:text-white transition-all shadow-xs"
                    title="Naver Blog 1"
                  >
                     <span className="font-bold text-[10px]">BLOG</span>
@@ -324,7 +330,7 @@ const Navbar: React.FC = () => {
                    href={config.companyInfo.blog2} 
                    target="_blank" 
                    rel="noreferrer" 
-                   className="flex items-center justify-center w-[38px] h-[38px] rounded-full bg-gray-100 text-gray-500 hover:bg-[#03C75A] hover:text-white transition-all shadow-sm"
+                   className="flex items-center justify-center w-[38px] h-[38px] rounded-full bg-gray-100 text-gray-500 hover:bg-[#03C75A] hover:text-white transition-all shadow-xs"
                    title="Naver Blog 2"
                  >
                     <span className="font-bold text-[10px]">BLOG</span>
@@ -353,9 +359,9 @@ const Navbar: React.FC = () => {
                   whileTap={{ scale: 0.92 }}
                   onClick={() => setIsOpen(false)}
                   aria-label="메뉴 접기"
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 border border-primary/20 text-primaryDark shadow-sm hover:bg-primary/15 hover:shadow-md active:bg-primary/20 transition-all"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 border border-primary/20 text-primaryDark shadow-xs hover:bg-primary/15 hover:shadow-md active:bg-primary/20 transition-all"
                 >
-                  <ChevronUp size={26} className="stroke-[3]" />
+                  <ChevronUp size={26} className="stroke-3" />
                 </m.button>
               </div>
             </div>

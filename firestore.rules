@@ -30,12 +30,33 @@ service cloud.firestore {
       return resource.data;
     }
 
+    // Only explicit web URLs and local asset paths are accepted. No script URLs.
+    function isWebUrl(value) {
+      return value is string && value.size() <= 2000
+        && value.matches('https?://[^/ ?#]+[^ ]*');
+    }
+
+    function isImage(value) {
+      return value is string && (
+        value == '' || isWebUrl(value)
+        || (value.size() <= 2000 && value.matches('/images/[^ ]+'))
+        || (value.size() <= 350000 && value.matches('data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+'))
+      );
+    }
+
+    function optionalLink(data, key) {
+      return !data.keys().hasAny([key]) || data[key] == '' || isWebUrl(data[key]);
+    }
+
     // Validation Blueprint for Company Info
     function isValidCompanyInfo(data) {
       return data.keys().hasAll(['name', 'phone'])
+        && data.keys().hasOnly(['name', 'phone', 'logo', 'slogan', 'description', 'email', 'address', 'instagram', 'blog', 'blog2', 'youtube'])
+        && optionalLink(data, 'instagram') && optionalLink(data, 'blog')
+        && optionalLink(data, 'blog2') && optionalLink(data, 'youtube')
         && data.name is string && data.name.size() <= 100
         && data.phone is string && data.phone.size() <= 50
-        && (!data.keys().hasAny(['logo']) || (data.logo is string && data.logo.size() <= 2000))
+        && (!data.keys().hasAny(['logo']) || isImage(data.logo))
         && (!data.keys().hasAny(['slogan']) || (data.slogan is string && data.slogan.size() <= 500))
         && (!data.keys().hasAny(['description']) || (data.description is string && data.description.size() <= 5000))
         && (!data.keys().hasAny(['email']) || (data.email is string && data.email.size() <= 100))
@@ -49,21 +70,23 @@ service cloud.firestore {
     // Validation Blueprint for Service Item
     function isValidServiceItem(data) {
       return data.keys().hasAll(['title', 'description'])
+        && data.keys().hasOnly(['title', 'description', 'details', 'icon', 'image', 'order'])
         && data.title is string && data.title.size() <= 200
         && data.description is string && data.description.size() <= 5000
         && (!data.keys().hasAny(['details']) || (data.details is list && data.details.size() <= 30))
         && (!data.keys().hasAny(['icon']) || (data.icon is string && data.icon.size() <= 200))
-        && (!data.keys().hasAny(['image']) || (data.image is string && data.image.size() <= 2000))
+        && (!data.keys().hasAny(['image']) || isImage(data.image))
         && (!data.keys().hasAny(['order']) || (data.order is number));
     }
 
     // Validation Blueprint for Portfolio Item
     function isValidPortfolioItem(data) {
-      return data.keys().hasAll(['title', 'category', 'beforeImage', 'afterImage', 'description', 'date'])
+      return data.keys().hasAll(['title', 'category', 'beforeImage', 'afterImage', 'description', 'date', 'createdAt'])
+        && data.keys().hasOnly(['title', 'category', 'beforeImage', 'afterImage', 'description', 'date', 'createdAt'])
         && data.title is string && data.title.size() <= 200
         && data.category is string && data.category.size() <= 50
-        && data.beforeImage is string && data.beforeImage.size() <= 2000
-        && data.afterImage is string && data.afterImage.size() <= 2000
+        && isImage(data.beforeImage)
+        && isWebUrl(data.afterImage)
         && data.description is string && data.description.size() <= 5000
         && data.date is string && data.date.size() <= 50;
     }
@@ -105,7 +128,7 @@ service cloud.firestore {
 
     // 4. System Connection Check Document
     match /system/{docId} {
-      allow read: if true;
+      allow read: if isAdmin();
     }
   }
 }

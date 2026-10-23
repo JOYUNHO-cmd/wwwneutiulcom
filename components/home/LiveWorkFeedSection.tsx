@@ -145,7 +145,7 @@ const LiveWorkFeedSection: React.FC = () => {
                   href={item.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200/80 hover:border-primary/40 hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+                  className="group bg-white rounded-2xl overflow-hidden shadow-xs border border-slate-200/80 hover:border-primary/40 hover:shadow-xl transition-all duration-300 flex flex-col h-full"
                 >
                   <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
                     <img
@@ -158,23 +158,23 @@ const LiveWorkFeedSection: React.FC = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       referrerPolicy="no-referrer"
                     />
-                    <div className={`absolute top-3 left-3 text-white text-[9px] md:text-xs font-black px-2 py-0.5 rounded shadow-sm flex items-center gap-1 ${isSecondBlog ? 'bg-indigo-600' : 'bg-primary'}`}>
+                    <div className={`absolute top-3 left-3 text-white text-[9px] md:text-xs font-black px-2 py-0.5 rounded-sm shadow-xs flex items-center gap-1 ${isSecondBlog ? 'bg-indigo-600' : 'bg-primary'}`}>
                       <span className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></span>
                       {item.blogName || '시공 사례'}
                     </div>
                   </div>
 
-                  <div className="p-5 flex flex-col flex-grow text-left">
+                  <div className="p-5 flex flex-col grow text-left">
                     <div className="flex items-center gap-1.5 text-slate-400 text-xs font-medium mb-2.5">
                       <Calendar size={13} className="text-slate-400" />
                       <span>{formatDateString(item.pubDate)}</span>
                     </div>
 
-                    <h4 className="text-base md:text-lg font-bold text-slate-900 mb-2 line-clamp-2 leading-snug group-hover:text-primaryBright transition-colors tracking-tight">
+                    <h4 className="text-base md:text-lg md:leading-[1.75rem] font-bold text-slate-900 mb-2 line-clamp-2 leading-snug group-hover:text-primaryBright transition-colors tracking-tight">
                       {item.title}
                     </h4>
 
-                    <p className="text-slate-500 text-xs md:text-sm line-clamp-2 leading-relaxed mb-4 flex-grow">
+                    <p className="text-slate-500 text-xs md:text-sm md:leading-[1.25rem] line-clamp-2 leading-relaxed mb-4 grow">
                       {cleanDescription(item.description || item.content || '')}
                     </p>
 

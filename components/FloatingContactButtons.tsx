@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Phone, MessageCircle } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 import KakaoConfirmModal from './KakaoConfirmModal';
+import { useSite } from '../context/SiteContext';
 
 const FloatingContactButtons: React.FC = () => {
-  const phoneNumber = '01048807386';
+  const { config } = useSite();
+  const phoneNumber = config.companyInfo.phone.replace(/[^0-9]/g, '');
   const kakaoUrl = 'https://open.kakao.com/o/srNJGmpg';
   const [showKakaoConfirm, setShowKakaoConfirm] = useState(false);
 

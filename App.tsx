@@ -35,7 +35,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
 const RouteFallback = () => (
-  <div className="w-full flex-grow flex items-center justify-center py-24">
+  <div className="w-full grow flex items-center justify-center py-24">
     <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
   </div>
 );
@@ -69,7 +69,7 @@ const AnimatedRoutes: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -6 }}
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full flex-grow flex flex-col"
+        className="w-full grow flex flex-col"
       >
         <ChunkErrorBoundary>
           <Suspense fallback={<RouteFallback />}>
@@ -103,7 +103,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
     <>
       <SEO />
       {!isAdmin && <Navbar />}
-      <main className="flex-grow min-h-svh flex flex-col">
+      <main className="grow min-h-svh flex flex-col">
         {children}
       </main>
       {!isAdmin && !isServices && <Footer />}

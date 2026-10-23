@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown, MapPin, Info } from 'lucide-react';
 import { REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
 import { REGION_GROUPS, getCitiesInGroup, getChildRegions, getHotspots } from '../lib/regionHierarchy.mjs';
+import { getRegion } from '../lib/regionData.mjs';
+import { getVerifiedRegionsForService } from '../lib/serviceRegionPriority.mjs';
 // Headings/thumbnails/URLs only — generated from lib/regionCaseData.mjs by
 // scripts/generate-region-case-index.mjs to keep the article text out of this page.
 import regionCaseIndex from '../lib/regionCaseIndex.json';
@@ -96,6 +98,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
 
   const regionHref = (regionId: string) => `/services/${serviceId}/${regionId}`;
   const serviceCases = REGION_CASE_INDEX.filter((item) => item.serviceId === serviceId);
+  const featuredRegions = getVerifiedRegionsForService(serviceId).slice(0, 6);
 
   // After a panel opens, bring it into view — with 31 cities in 경기 the
   // 동네 panel opens below the whole grid, out of sight on most screens.
@@ -121,13 +124,31 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
     <section className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20" aria-labelledby="service-regions-title">
       <div className="text-center mb-8 sm:mb-12">
         <p className="text-primary text-xs sm:text-sm font-extrabold tracking-[0.2em] mb-2 sm:mb-3">SERVICE AREA</p>
-        <h2 id="service-regions-title" className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-snug break-keep">
+        <h2 id="service-regions-title" className="text-2xl sm:text-4xl sm:leading-[2.5rem] font-black text-slate-900 tracking-tight leading-snug break-keep">
           지역별 <span className="text-primary">{serviceTitle}</span> 안내
         </h2>
-        <p className="text-sm sm:text-base text-slate-500 leading-relaxed mt-3 break-keep">
+        <p className="text-sm sm:text-base sm:leading-[1.5rem] text-slate-500 leading-relaxed mt-3 break-keep">
           권역을 누르고, 시·구를 고르면 주요 동네까지 차례로 펼쳐집니다.
         </p>
       </div>
+
+      {featuredRegions.length > 0 && (
+        <div className="mb-7 sm:mb-9 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-4 sm:p-6">
+          <h3 id="verified-service-regions-title" className="text-base sm:text-lg font-extrabold text-slate-900">실제 작업 사례가 있는 지역</h3>
+          <p className="mt-2 text-sm text-slate-600 break-keep">현장 후기가 있는 지역부터 살펴보세요. 전체 지역은 아래에서 찾을 수 있습니다.</p>
+          <nav aria-labelledby="verified-service-regions-title" className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            {featuredRegions.map(({ regionId, caseCount, href }) => (
+              <Link key={regionId} to={href} className="group flex items-center justify-between gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-3 sm:px-4 text-sm shadow-xs transition-colors hover:border-primary hover:text-primaryDark focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                <span className="min-w-0">
+                  <span className="block font-extrabold break-keep">{getRegion(regionId)?.name}<span className="sr-only"> {serviceTitle}</span></span>
+                  <span className="mt-1 block text-xs text-slate-500">현장 후기 {caseCount}건</span>
+                </span>
+                <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
 
       {/* Level 1 — 권역 */}
       <div className="grid grid-cols-3 gap-2.5 sm:gap-5">
@@ -140,9 +161,9 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
               onClick={() => toggleGroup(group)}
               aria-expanded={selected}
               aria-controls={`service-regions-group-${group}`}
-              className={`group relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl sm:rounded-3xl px-2 py-4 text-center transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:flex-row md:gap-5 md:px-5 md:py-5 md:text-left ${
+              className={`group relative flex flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl sm:rounded-3xl px-2 py-4 text-center transition-all duration-300 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:flex-row md:gap-5 md:px-5 md:py-5 md:text-left ${
                 selected
-                  ? 'bg-gradient-to-br from-emerald-600 to-teal-600 text-white shadow-xl shadow-emerald-900/20 -translate-y-1'
+                  ? 'bg-linear-to-br/srgb from-emerald-600 to-teal-600 text-white shadow-xl shadow-emerald-900/20 -translate-y-1'
                   : 'bg-white text-slate-900 border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-lg hover:border-primary/40'
               }`}
             >
@@ -153,7 +174,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                 <span
                   aria-hidden="true"
                   className={`flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-2xl ring-1 transition-all duration-300 group-hover:scale-105 ${
-                    selected ? 'bg-white ring-white/60 shadow-md' : `bg-gradient-to-br ${GROUP_META[group].tile} ring-white shadow-sm`
+                    selected ? 'bg-white ring-white/60 shadow-md' : `bg-linear-to-br/srgb ${GROUP_META[group].tile} ring-white shadow-xs`
                   }`}
                 >
                   <GroupIcon group={group} selected={selected} className="h-8 w-8 sm:h-10 sm:w-10" />
@@ -163,7 +184,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                 </span>
               </span>
               <span className="flex flex-col items-center md:items-start">
-                <span className="flex items-center gap-1 text-xl sm:text-3xl md:text-4xl font-black tracking-tight leading-none">
+                <span className="flex items-center gap-1 text-xl sm:text-3xl sm:leading-[2.5rem] md:text-4xl md:leading-[2.5rem] font-black tracking-tight leading-none">
                   {group}
                   <ChevronDown
                     aria-hidden="true"
@@ -204,7 +225,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                         onClick={() => toggleCity(city.id)}
                         aria-expanded={selected}
                         aria-controls={`service-regions-city-${city.id}`}
-                        className={`flex min-h-[3.25rem] flex-col items-start justify-center gap-1 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary ${
+                        className={`flex min-h-13 flex-col items-start justify-center gap-1 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-primary ${
                           selected
                             ? 'border-primary bg-emerald-50 shadow-md'
                             : 'border-slate-200 bg-white hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md'
@@ -230,7 +251,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                   return (
                     <Curtain key={city.id} id={`service-regions-city-${city.id}`} open={groupOpen && openCity === city.id}>
                       <div className="pt-4">
-                        <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/80 to-white p-4 sm:p-6">
+                        <div className="rounded-2xl border border-emerald-100 bg-linear-to-br/srgb from-emerald-50/80 to-white p-4 sm:p-6">
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                             <p className="flex items-center gap-2 text-base sm:text-lg font-extrabold text-slate-900">
                               <MapPin aria-hidden="true" className="w-5 h-5 text-primary" />
@@ -255,9 +276,9 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                                   <Link
                                     key={item.url}
                                     to={item.url}
-                                    className="group flex items-center gap-3 rounded-2xl border border-emerald-100 bg-white p-2.5 pr-3 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md"
+                                    className="group flex items-center gap-3 rounded-2xl border border-emerald-100 bg-white p-2.5 pr-3 shadow-xs transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md"
                                   >
-                                    <span className="h-16 w-20 sm:h-[4.5rem] sm:w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+                                    <span className="h-16 w-20 sm:h-18 sm:w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100">
                                       <img
                                         src={item.thumbnail}
                                         alt=""
@@ -272,7 +293,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                                           {regionName(item.regionId)}
                                         </span>
                                       )}
-                                      <span className="block text-[13px] sm:text-sm font-extrabold leading-snug text-slate-800 line-clamp-2 break-keep group-hover:text-primaryDark">
+                                      <span className="block text-[13px] sm:text-sm sm:leading-[1.25rem] font-extrabold leading-snug text-slate-800 line-clamp-2 break-keep group-hover:text-primaryDark">
                                         {item.heading}
                                       </span>
                                       <span className="mt-1 inline-flex items-center gap-1 text-xs font-bold text-primary">
@@ -294,7 +315,7 @@ export default function ServiceRegions({ serviceId, serviceTitle }: { serviceId:
                                   <Link
                                     key={child.id}
                                     to={regionHref(child.id)}
-                                    className="group inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-white px-3.5 py-2.5 text-sm font-extrabold text-slate-800 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary hover:text-primaryDark hover:shadow-md"
+                                    className="group inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-white px-3.5 py-2.5 text-sm font-extrabold text-slate-800 shadow-xs transition-all hover:-translate-y-0.5 hover:border-primary hover:text-primaryDark hover:shadow-md"
                                   >
                                     {child.name}
                                     <span className="sr-only"> {serviceTitle}</span>

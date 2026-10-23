@@ -46,9 +46,8 @@ const RegionServiceLanding: React.FC = () => {
 
   // Real photos taken in this specific region, for this specific service —
   // proof that isn't just "we work in your area" but "here's your area".
-  // Requires at least 2 matches so the section never renders with a single
-  // token photo; below that it stays silent and the service-wide marquee
-  // above still carries the visual proof.
+  // A single verified job still provides useful local before/after evidence;
+  // keep it visible instead of falling back to service-wide photos only.
   //
   // Shuffle order lives in state, seeded from the unshuffled filter and
   // reshuffled only in an effect (see the matching comment in
@@ -80,7 +79,7 @@ const RegionServiceLanding: React.FC = () => {
   const cleanPhone = config.companyInfo.phone.replace(/[^0-9]/g, '');
 
   return (
-    <div className="w-full flex-grow">
+    <div className="w-full grow">
       {/* Breadcrumb */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 text-sm text-gray-500 flex items-center gap-2 flex-wrap">
         <Link to="/services" className="hover:text-primary">서비스</Link>
@@ -92,7 +91,7 @@ const RegionServiceLanding: React.FC = () => {
 
       {/* Hero */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-10">
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4 leading-tight text-center sm:text-left">
+        <h1 className="text-3xl sm:text-4xl sm:leading-[2.5rem] font-black text-slate-900 mb-4 leading-tight text-center sm:text-left">
           {region.name} {content.serviceLabel}
         </h1>
         {/* Mobile: short-line "1문장 1줄" stanza formatting for readability */}
@@ -126,12 +125,12 @@ const RegionServiceLanding: React.FC = () => {
       <ServiceBeforeAfterMarquee serviceId={serviceId || ''} />
 
       {/* Region-specific before/after proof, only when we actually have it */}
-      {regionItems.length >= 2 && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">
-            {region.name}에서 직접 진행한 시공 사례
+      {regionItems.length > 0 && (
+        <section aria-labelledby="region-work-photos-title" className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+          <h2 id="region-work-photos-title" className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">
+            {region.name}에서 직접 진행한 시공 사진
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className={`grid gap-4 ${regionItems.length === 1 ? 'grid-cols-1 max-w-md mx-auto sm:mx-0' : 'grid-cols-2 sm:grid-cols-3'}`}>
             {regionItems.map((item) => (
               <PortfolioSplitCard
                 key={item.id}
@@ -236,7 +235,7 @@ const RegionServiceLanding: React.FC = () => {
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-5">자주 묻는 질문</h2>
         <div className="space-y-4">
           {content.faqs.map((faq, i) => (
-            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-sm">
+            <div key={i} className="border border-gray-100 rounded-xl p-5 bg-white shadow-xs">
               <h3 className="font-bold text-slate-800 mb-2 flex items-start gap-2">
                 <HelpCircle className="text-primary shrink-0 mt-0.5" size={18} />
                 <span className="break-keep">{faq.q}</span>
