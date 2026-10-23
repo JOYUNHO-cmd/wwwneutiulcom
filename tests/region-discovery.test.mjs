@@ -32,6 +32,9 @@ function loadComponent(filename, { params = {}, photos = [] } = {}) {
     if (specifier === '../components/RegionWorkEvidence') return {
       __esModule: true, default: loadComponent('components/RegionWorkEvidence.tsx'),
     };
+    if (specifier === '../components/ServiceCaseBlogSection') return {
+      __esModule: true, default: () => React.createElement('section', { 'data-testid': 'service-case-blog' }),
+    };
     if (specifier.startsWith('../lib/')) return require(specifier);
     if (specifier.startsWith('.')) return { __esModule: true, default: () => null };
     return require(specifier);
@@ -40,7 +43,7 @@ function loadComponent(filename, { params = {}, photos = [] } = {}) {
   return module.exports.default;
 }
 
-test('regional landing presents exact local records before clearly labelled examples from other regions', () => {
+test('regional landing places local case cards after the common blog section while keeping locality clear', () => {
   const Component = loadComponent('pages/RegionServiceLanding.tsx', { params: { serviceId: 'trash-house', regionId: 'ansan' } });
   const document = render(Component);
   const headings = document.querySelectorAll('h2');
@@ -48,7 +51,10 @@ test('regional landing presents exact local records before clearly labelled exam
   const otherHeading = headings.find(heading => heading.text.includes('여러 지역의 작업 사진과 현장 후기'));
   assert.ok(localHeading);
   assert.ok(otherHeading, 'service-wide examples must not read as local proof');
-  assert.ok(headings.indexOf(localHeading) < headings.indexOf(otherHeading));
+  const blogSection = document.querySelector('section[data-testid="service-case-blog"]');
+  assert.ok(blogSection);
+  const sections = document.querySelectorAll('section');
+  assert.ok(sections.indexOf(blogSection) < sections.indexOf(localHeading.parentNode), 'local case cards follow the common blog section');
   const localHrefs = localHeading.parentNode.querySelectorAll('article a[href]').map(link => decodeURIComponent(link.getAttribute('href')));
   assert.ok(localHrefs.length > 0);
   assert.ok(localHrefs.every(href => href.startsWith('/services/trash-house/ansan/')));

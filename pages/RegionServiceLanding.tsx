@@ -95,14 +95,6 @@ const RegionServiceLanding: React.FC = () => {
         </div>
       </section>
 
-      <RegionWorkEvidence
-        serviceId={serviceId || ''}
-        regionId={regionId || ''}
-        regionName={region.name}
-        serviceLabel={content.serviceLabel}
-        className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
-      />
-
       {/* Region-specific before/after proof, only when we actually have it */}
       {regionItems.length > 0 && (
         <section aria-labelledby="region-work-photos-title" className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
@@ -141,6 +133,14 @@ const RegionServiceLanding: React.FC = () => {
         serviceId={serviceId || ''}
         introText="작업 현장과 청소 범위가 담긴 블로그 후기도 확인해 보세요."
         className="max-w-5xl mx-auto px-4 sm:px-6 pb-10"
+      />
+
+      <RegionWorkEvidence
+        serviceId={serviceId || ''}
+        regionId={regionId || ''}
+        regionName={region.name}
+        serviceLabel={content.serviceLabel}
+        className="max-w-5xl mx-auto px-4 sm:px-6 pb-12"
       />
 
       {/* Situations */}

@@ -73,6 +73,19 @@ test('work evidence uses only the exact service and region records, preserving l
         assert.equal(record.note, source.note || '', `${record.sourceUrl} must retain its caveat`);
         const closing = source.sections.at(-1);
         assert.deepEqual(record.closingSection, closing ? { heading: closing.heading, body: closing.body } : null, `${record.sourceUrl} must preserve its recorded final condition`);
+        assert.ok(typeof record.cardTitle === 'string' && record.cardTitle.trim(), `${record.sourceUrl} needs a readable card title`);
+        assert.ok(Array.isArray(record.summaryFacts) && record.summaryFacts.length >= 3 && record.summaryFacts.length <= 4, `${record.sourceUrl} needs a compact factual summary`);
+        assert.deepEqual(record.summaryFacts.slice(0, 3).map(fact => fact.label), ['현장', '작업 전', '주요 작업']);
+        assert.equal(record.summaryFacts[0].value, source.facts.location, 'the summary must retain the recorded locality');
+        for (const fact of record.summaryFacts) {
+          assert.ok(typeof fact.value === 'string' && fact.value.trim(), `${record.sourceUrl}/${fact.label}`);
+          assert.doesNotMatch(fact.value, /undefined|\[object Object\]/);
+        }
+        const staff = source.facts.staff?.match(/이번 현장은 (\d+(?:\.\d+)?)명이 들어가 (\d+(?:\.\d+)?)시간 동안 작업했습니다\./);
+        const staffSummary = record.summaryFacts.find(fact => fact.label === '인원·시간');
+        if (staff) assert.equal(staffSummary?.value, `${staff[1]}명 · ${staff[2]}시간`, `${record.sourceUrl} must retain confirmed crew/time values`);
+        else assert.equal(staffSummary, undefined, `${record.sourceUrl} must not turn an unknown crew/time into a fact`);
+        assert.equal(typeof record.summaryNote, 'string');
         count += 1;
       }
     }
@@ -83,7 +96,7 @@ test('work evidence uses only the exact service and region records, preserving l
   }
 });
 
-test('server-rendered evidence keeps every selected fact and caveat, including cases inside collapsed details', () => {
+test('each case renders a linked photo card with an independent, initially closed native summary that remains in server HTML', () => {
   const Component = loadEvidenceComponent();
   const groups = new Map(getAllRegionCases().map(({ serviceId, regionId }) => [`${serviceId}/${regionId}`, { serviceId, regionId }]));
   let collapsedCases = 0;
@@ -95,28 +108,91 @@ test('server-rendered evidence keeps every selected fact and caveat, including c
       React.createElement(Component, { serviceId, regionId, regionName: region.name, serviceLabel: service.title })));
     const document = parse(html);
     assert.equal(document.querySelectorAll('article').length, expected.length, `${serviceId}/${regionId}`);
-    assert.equal(document.querySelectorAll('details').length, Math.max(0, expected.length - 2));
-    for (const image of document.querySelectorAll('img')) {
-      const record = expected.find(item => item.thumbnail === image.getAttribute('src'));
-      assert.ok(record, 'rendered thumbnail must belong to this exact record group');
-      assert.equal(Number(image.getAttribute('width')), record.thumbnailWidth);
-      assert.equal(Number(image.getAttribute('height')), record.thumbnailHeight);
-    }
+    assert.equal(document.querySelectorAll('details').length, expected.length, 'every card, including the first two, starts with a collapsed summary');
+    assert.equal(document.querySelectorAll('img').length, expected.length, 'every case must retain its own photograph');
     collapsedCases += document.querySelectorAll('details').length;
     const text = normalize(document.textContent);
-    const hrefs = new Set(document.querySelectorAll('a[href]').map(link => decodeURIComponent(link.getAttribute('href'))));
-    for (const record of expected) {
-      assert.ok(hrefs.has(record.sourceUrl), `missing source link ${record.sourceUrl}`);
-      for (const value of [...Object.values(record.facts), record.note, record.closingSection?.body].filter(Boolean)) {
-        assert.ok(text.includes(normalize(value)), `${record.sourceUrl} lost source wording: ${String(value).slice(0, 80)}`);
+    for (const [index, article] of document.querySelectorAll('article').entries()) {
+      const record = expected[index];
+      const details = article.querySelector('details');
+      assert.ok(details, record.sourceUrl);
+      assert.equal(details.hasAttribute('open'), false, `${record.sourceUrl} must be closed on first render`);
+      const summary = details.querySelector('summary');
+      assert.ok(summary);
+      assert.equal(details.childNodes.find(node => node.nodeType === 1), summary, 'native summary must be the first element in details');
+      assert.ok(normalize(summary.textContent).includes('작업 요약 보기'), 'the native disclosure must explain that it opens the work summary');
+      assert.equal(summary.querySelectorAll('a, button, input, select, textarea, details').length, 0, 'the disclosure target must not contain another interactive control');
+      for (let node = details.parentNode; node && node !== article; node = node.parentNode) {
+        assert.notEqual(node.tagName, 'A', 'a detail link must not wrap the disclosure target');
+      }
+      const image = article.querySelector('img');
+      assert.equal(image.getAttribute('src'), record.thumbnail);
+      assert.equal(Number(image.getAttribute('width')), record.thumbnailWidth);
+      assert.equal(Number(image.getAttribute('height')), record.thumbnailHeight);
+      let photoLink = image.parentNode;
+      while (photoLink && photoLink !== article && photoLink.tagName !== 'A') photoLink = photoLink.parentNode;
+      assert.equal(photoLink?.tagName, 'A', `${record.sourceUrl} photo needs its detail link`);
+      assert.equal(decodeURIComponent(photoLink.getAttribute('href')), record.sourceUrl);
+      const title = article.querySelector('h3');
+      assert.ok(title && normalize(title.textContent).includes(normalize(record.cardTitle)));
+      let titleLink = title.querySelector('a') || title.parentNode;
+      while (titleLink && titleLink !== article && titleLink.tagName !== 'A') titleLink = titleLink.parentNode;
+      assert.equal(titleLink?.tagName, 'A', `${record.sourceUrl} title needs its detail link`);
+      assert.equal(decodeURIComponent(titleLink.getAttribute('href')), record.sourceUrl);
+      for (const link of article.querySelectorAll('a[href]')) {
+        assert.equal(decodeURIComponent(link.getAttribute('href')), record.sourceUrl, 'card links may not cross into another case');
+        assert.equal(link.querySelectorAll('summary, details').length, 0);
+      }
+      const summaryText = normalize(details.textContent);
+      for (const fact of record.summaryFacts) {
+        assert.ok(summaryText.includes(normalize(fact.label)), `${record.sourceUrl} lost summary label`);
+        assert.ok(summaryText.includes(normalize(fact.value)), `${record.sourceUrl} lost summary information from SSR`);
+      }
+      if (record.summaryNote) assert.ok(summaryText.includes(normalize(record.summaryNote)), `${record.sourceUrl} lost its limitation`);
+      for (const paragraph of [record.closingSection?.body, record.note].filter(value => value && value.length > 100)) {
+        assert.ok(!normalize(article.textContent).includes(normalize(paragraph)), `${record.sourceUrl} repeats a full article paragraph instead of its summary`);
       }
     }
     assert.doesNotMatch(text, /(?:동|로|길)\s*\d{2,}-\d+/, `${serviceId}/${regionId} should not expose a precise street/lot address`);
   }
-  assert.ok(collapsedCases > 0, 'the test must exercise evidence beyond the first two records');
+  assert.equal(collapsedCases, getAllRegionCases().length, 'all existing cases must participate in the collapsed card layout');
   const noEvidence = renderToStaticMarkup(React.createElement(MemoryRouter, null,
     React.createElement(Component, { serviceId: 'interior', regionId: 'gwacheon', regionName: '과천시', serviceLabel: '인테리어청소' })));
   assert.equal(noEvidence, '', 'photos alone must not fabricate a detailed field-case block');
+});
+
+test('short summaries preserve the cases with important remaining damage or unconfirmed results', () => {
+  const critical = [
+    ['의정부쓰레기집청소', [/장판/, /교체/, /얼룩|스며/]],
+    ['군포지식산업센터바닥왁스코팅', [/도포/, /건조/], true],
+    ['송파바닥세척도포작업', [/박리/, /왁스/, /건조/], true],
+    ['용인주택마루표면작업', [/동일|같은/, /전후/, /건조/], true],
+    ['과천주택마루코팅', [/동일|같은/, /전후/, /건조/], true],
+    ['서초잠원동침수현장정리', [/건조/, /영업/], true],
+    ['평택물류창고에폭시바닥세척', [/건조/, /동일|같은/, /결과/], true],
+    ['의정부계단본드제거', [/접착제 색.*남/]],
+    ['미추홀구고독사청소', [/도배.*장판 교체/]],
+    ['도봉구원룸고독사청소', [/별도 도배/]],
+    ['서초배달음식점후드청소', [/덕트.*제외/]],
+    ['안양싱크대역류청소', [/배수관.*별도/]],
+    ['부천지하1층침수청소', [/복구되지.*보수/]],
+    ['안산유품정리', [/전체.*반출.*완료.*확인되지/]],
+    ['서초주민센터주차장청소', [/건조 완료.*차량 통행.*확인/]],
+    ['용산48평인테리어청소', [/바깥 유리.*별도.*제외/]],
+    ['종로한옥사무실청소', [/다다미/, /물걸레 대신 마른 관리/]],
+    ['대림동음식점퇴거청소', [/줄눈/, /녹물 색.*남/]],
+    ['영종도바닥왁스코팅', [/결과.*사진 한 장.*한정/, /박리/, /도포 횟수/], true],
+  ];
+  const allCases = getAllRegionCases();
+  for (const [slug, requirements, uncertainResult] of critical) {
+    const source = allCases.find(record => record.caseData.slug === slug);
+    assert.ok(source, slug);
+    const record = getRegionWorkEvidence(source.serviceId, source.regionId).find(record => record.slug === slug);
+    assert.ok(record, slug);
+    assert.ok(record.summaryNote, `${slug} needs its limitation in the compact summary`);
+    for (const requirement of requirements) assert.match(record.summaryNote, requirement, slug);
+    if (uncertainResult) assert.match(record.summaryNote, /확인.*(?:없|않|불가)|기록.*없|미확인|단정.*(?:않|없)|약속.*(?:않|없)/, `${slug} must retain the uncertainty, not merely mention a result`);
+  }
 });
 
 test('photo location corrections use verified places rather than ambiguous branch names', () => {
