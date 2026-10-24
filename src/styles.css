@@ -524,3 +524,40 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .anim-toc-back { animation: none; }
 }
+
+/* Regional reading layout: copy stays identical on every viewport. */
+.region-reading .reading-copy {
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.9;
+  font-weight: 400;
+  color: #334155;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.region-reading .reading-lead {
+  font-size: 1.125rem;
+  line-height: 1.95;
+}
+.region-reading .reading-context {
+  border-left: 3px solid #a7f3d0;
+  padding: 0.25rem 0 0.25rem 1.125rem;
+}
+.region-reading .reading-note {
+  border-left: 3px solid #94a3b8;
+}
+.region-reading .reading-card-copy,
+.region-reading .reading-blog-title {
+  font-size: 16px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+.region-reading .reading-record-single .reading-card-copy {
+  font-size: 1rem;
+}
+.region-reading .reading-unit { white-space: nowrap; }
+.region-reading .reading-sentence { display: inline; }
+@media (max-width: 767px) {
+  .region-reading .reading-sentence { display: block; }
+  .region-reading .reading-sentence + .reading-sentence { margin-top: 0.6em; }
+}

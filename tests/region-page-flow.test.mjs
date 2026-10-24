@@ -41,6 +41,7 @@ function createRenderer(photos = portfolio) {
       if (specifier === '../components/ServiceBeforeAfterMarquee') return { __esModule: true, default: ({ items = [] }) => React.createElement('section', { 'data-flow-marker': 'service-marquee', 'data-photo-ids': JSON.stringify(items.map(item => item.id)) }) };
       if (specifier === '../components/PortfolioLightbox') return { __esModule: true, default: () => null };
       if (specifier.startsWith('../components/')) return load(`components/${specifier.split('/').at(-1)}.tsx`);
+      if (specifier === './SentenceFlow') return load('components/SentenceFlow.tsx');
       if (specifier === './NotFound') return load('pages/NotFound.tsx');
       return require(specifier);
     };
