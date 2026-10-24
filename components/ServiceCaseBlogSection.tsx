@@ -13,19 +13,23 @@ interface ServiceCaseBlogSectionProps {
   // no background of their own.
   className?: string;
   introText?: string;
+  compact?: boolean;
 }
 
 // "Want to see the full job, not just the before/after photos?" — a grid
 // of real Naver blog posts written by the crew, one curated set per
 // service (see lib/serviceBlogLinks.mjs). Shared by the service page and
 // every region+service landing page so both point at the same proof.
-const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ serviceId, className, introText }) => {
+const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ serviceId, className, introText, compact = false }) => {
   const activeBlogs = getServiceBlogLinks(serviceId);
   if (!activeBlogs || activeBlogs.length === 0) return null;
 
   return (
     <section className={className}>
-      <div className="bg-white rounded-3xl p-6 sm:p-8 mb-8 border-2 border-[#03C75A]/25 text-center relative overflow-hidden shadow-[0_8px_30px_rgba(3,199,90,0.04)]">
+      {compact ? <div className="mb-5">
+        <h3 className="text-lg font-bold text-slate-900">블로그에 기록한 작업 과정</h3>
+        <p className="mt-2 text-sm text-slate-600 leading-relaxed break-keep">느티울이 직접 작성한 현장 기록입니다. 사진을 누르면 해당 블로그 글이 새 창에서 열립니다.</p>
+      </div> : <div className="bg-white rounded-3xl p-6 sm:p-8 mb-8 border-2 border-[#03C75A]/25 text-center relative overflow-hidden shadow-[0_8px_30px_rgba(3,199,90,0.04)]">
         {/* Vibrant top brand green bar */}
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#03C75A]" />
         <h3 className="text-[17px] sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight break-keep mb-3">
@@ -42,10 +46,10 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
             </div>
           </div>
         </div>
-      </div>
+      </div>}
 
       <div className={`grid gap-3 sm:gap-6 lg:gap-8 ${
-        activeBlogs.length === 1
+        compact ? (activeBlogs.length === 1 ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3') : activeBlogs.length === 1
           ? "grid-cols-1 max-w-md mx-auto"
           : activeBlogs.length === 2
           ? "grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto"

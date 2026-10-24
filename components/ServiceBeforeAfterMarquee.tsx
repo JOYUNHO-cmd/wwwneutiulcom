@@ -12,9 +12,11 @@ export { SERVICE_CATEGORY_MAP, matchesServicePhoto };
 
 interface Props {
   serviceId: string;
+  items?: PortfolioGalleryItem[];
+  compact?: boolean;
 }
 
-const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
+const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId, items: suppliedItems, compact = false }) => {
   // portfolioManifest.json is generated one category folder at a time, so
   // an unshuffled filter shows long same-sub-category runs (e.g. every
   // floor-adhesive-removal shot before any floor-tile one) instead of a
@@ -29,8 +31,8 @@ const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
   // then runs once in an effect, which by definition never executes on the
   // server, so there's nothing for hydration to mismatch against.
   const filteredItems = useMemo(
-    () => allItems.filter((item) => matchesServicePhoto(serviceId, item)),
-    [serviceId]
+    () => suppliedItems ?? allItems.filter((item) => matchesServicePhoto(serviceId, item)),
+    [serviceId, suppliedItems]
   );
   const [items, setItems] = useState(filteredItems);
   useEffect(() => {
@@ -86,15 +88,15 @@ const ServiceBeforeAfterMarquee: React.FC<Props> = ({ serviceId }) => {
   const track = everVisible ? [...items, ...items] : items;
 
   return (
-    <section className="py-12 md:py-16 bg-white relative border-b border-slate-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-6 md:mb-10 relative z-10">
+    <section className={compact ? 'py-6 bg-white relative overflow-hidden rounded-2xl' : 'py-12 md:py-16 bg-white relative border-b border-slate-100 overflow-hidden'}>
+      {!compact && <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-6 md:mb-10 relative z-10">
         <p className="text-slate-900 text-xl md:text-3xl font-black tracking-tight break-keep">
           제가 직접 시공한 <span className="bg-linear-to-r/srgb from-[#04a875] to-[#22ba8b] bg-clip-text text-transparent">전후 사진</span>입니다
         </p>
         <p className="text-slate-500 text-sm md:text-base mt-2">
           사진을 누르면 크게 볼 수 있어요.
         </p>
-      </div>
+      </div>}
 
       <div className="marquee-track overflow-hidden">
         <div ref={trackRef} className="flex w-max animate-marquee">
