@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, ArrowUpRight } from 'lucide-react';
+import { ChevronDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { getRegionWorkEvidence } from '../lib/regionWorkEvidence.mjs';
 
 interface RegionWorkEvidenceProps {
@@ -39,20 +39,23 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
           <article key={record.slug} className={`min-w-0 rounded-xl sm:rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs ${isSingle ? 'md:grid md:grid-cols-2' : ''}`}>
             <Link
               to={record.sourceUrl}
-              aria-label={`${record.heading} 전체 후기 보기`}
+              aria-label={`${record.heading} — 사진·전체 작업 기록 보기`}
               className="group/photo relative block self-start bg-slate-100 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
             >
-              <img
-                src={record.thumbnail}
-                alt={record.heading}
-                width={record.thumbnailWidth}
-                height={record.thumbnailHeight}
-                loading="lazy"
-                decoding="async"
-                className="w-full aspect-4/3 object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover/photo:scale-105"
-              />
-              <span aria-hidden="true" className="absolute bottom-2 right-2 rounded-full bg-white/95 p-1.5 text-slate-800 shadow-sm">
-                <ArrowUpRight size={16} />
+              <div className="overflow-hidden">
+                <img
+                  src={record.thumbnail}
+                  alt={record.heading}
+                  width={record.thumbnailWidth}
+                  height={record.thumbnailHeight}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full aspect-4/3 object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover/photo:scale-105"
+                />
+              </div>
+              <span className={`flex min-h-11 items-center justify-center bg-emerald-700 py-2.5 ${isSingle ? 'gap-2 px-3 text-sm' : 'gap-1.5 px-2 text-[12px] sm:gap-2 sm:px-3 sm:text-sm'} font-bold leading-relaxed text-white group-hover/photo:bg-emerald-800 group-focus-visible/photo:bg-emerald-800`}>
+                <span className="text-center break-keep">사진·전체 작업 기록 보기</span>
+                <ArrowRight size={16} aria-hidden="true" className="shrink-0" />
               </span>
             </Link>
             <div className="min-w-0">
@@ -72,9 +75,13 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
                 </dl>
               </div>
             <details className="group border-t border-slate-100">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-1 bg-emerald-50/70 px-3 py-3 text-xs sm:text-sm font-bold text-emerald-800 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
+              <summary className={`flex min-h-11 cursor-pointer list-none justify-between gap-2 ${isSingle ? 'items-center' : 'flex-col items-start sm:flex-row sm:items-center'} bg-emerald-50/70 px-3 py-3 text-xs sm:text-sm font-bold text-emerald-800 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary [&::-webkit-details-marker]:hidden`}>
                   <span>작업 과정·참고사항</span>
-                <ChevronDown size={16} aria-hidden="true" className="shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-200 bg-white px-2 py-1 text-[11px] sm:text-xs">
+                  <span className="group-open:hidden">내용 펼치기</span>
+                  <span className="hidden group-open:inline">내용 접기</span>
+                  <ChevronDown size={14} aria-hidden="true" className="shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                </span>
               </summary>
               <div className={isSingle ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}>
                 <dl className="space-y-3">

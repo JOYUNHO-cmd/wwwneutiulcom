@@ -23,6 +23,9 @@ interface PortfolioSplitCardProps {
   size?: 'marquee' | 'marquee-lg' | 'grid';
   eager?: boolean;
   detailHref?: string | null;
+  // Regional photo sections can span the full content width. Use the same
+  // source as the lightbox instead of enlarging a compressed 400px thumbnail.
+  useOriginal?: boolean;
   // Marquee callers only: false while the marquee section has never
   // scrolled into view. A CSS-animated track keeps moving every item
   // through the browser's near-viewport lazy-load distance regardless of
@@ -37,17 +40,19 @@ interface PortfolioSplitCardProps {
 // Side-by-side 전/후 split card — both photos visible at once (no tap
 // needed to compare), so a strip or grid of these reads as proof at a
 // glance rather than a guessing game. Tapping opens the full-size pair
-// in a lightbox. Cards show the 400px thumbnails from
-// scripts/generate-portfolio-thumbs.mjs; the lightbox shows the originals.
+// in a lightbox. Compact cards default to the 400px thumbnails from
+// scripts/generate-portfolio-thumbs.mjs; regional sections opt into the
+// same original photos as the lightbox because their cards can be much wider.
 // Renders the full real-photo gallery in
 // lib/portfolioManifest.json.
 // 'marquee-lg' is double the width of 'marquee' — used only on service
 // landing pages (ServiceBeforeAfterMarquee); the homepage teaser and the
 // /portfolio grid stay on 'marquee'/'grid' untouched.
-const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, size = 'grid', eager = false, visible = true, detailHref = null }) => {
+const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, size = 'grid', eager = false, visible = true, detailHref = null, useOriginal = false }) => {
   const isMarquee = size === 'marquee' || size === 'marquee-lg';
   const isMarqueeLg = size === 'marquee-lg';
   const canLoad = eager || visible;
+  const imageDirectory = useOriginal ? '/images/portfolio-gallery' : '/images/portfolio-gallery/thumbs';
 
   return (
     <div
@@ -69,7 +74,7 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
         <div className="grid grid-cols-2">
           <div className="relative aspect-square bg-slate-100">
             <img
-              src={canLoad ? `/images/portfolio-gallery/thumbs/${item.before}` : undefined}
+              src={canLoad ? `${imageDirectory}/${item.before}` : undefined}
               alt={`${item.title} ${item.beforeLabel || '시공 전'}`}
               width={item.beforeWidth}
               height={item.beforeHeight}
@@ -81,7 +86,7 @@ const PortfolioSplitCard: React.FC<PortfolioSplitCardProps> = ({ item, onClick, 
           </div>
           <div className="relative aspect-square bg-slate-100 border-l border-white">
             <img
-              src={canLoad ? `/images/portfolio-gallery/thumbs/${item.after}` : undefined}
+              src={canLoad ? `${imageDirectory}/${item.after}` : undefined}
               alt={`${item.title} ${item.afterLabel || '시공 후'}`}
               width={item.afterWidth}
               height={item.afterHeight}
