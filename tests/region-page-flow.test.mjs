@@ -73,6 +73,9 @@ test('all regional pages lead with exact local work and keep guidance, reviews, 
         return matches[0];
       };
       const intro = section('region-intro');
+      const label = buildMeta({ pathname: `/services/${where}`, services: SERVICES }).title.split(' 전문업체')[0];
+      assert.equal(intro.querySelector('h1').textContent.trim(), label, `${where}: preserve the regional H1`);
+      assert.ok(intro.querySelector('p').textContent.startsWith(label), `${where}: the first visible description must identify its region and service`);
       const scope = section('service-scope');
       const credentials = section('team-credentials');
       const relatedSections = document.querySelectorAll('[data-section="related-work"]');
