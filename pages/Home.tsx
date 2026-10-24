@@ -210,7 +210,7 @@ const Home: React.FC = () => {
       </Suspense>
 
       <Suspense fallback={null}>
-        <FAQSection />
+        <FAQSection desktopLayout />
       </Suspense>
 
       <Suspense fallback={null}>

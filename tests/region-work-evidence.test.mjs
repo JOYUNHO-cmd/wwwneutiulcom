@@ -24,15 +24,20 @@ const inventedPrice = /\d[\d,]*(?:\.\d+)?\s*(?:만\s*원|원)(?:부터|으로|�
 const portfolio = JSON.parse(readFileSync(new URL('../lib/portfolioManifest.json', import.meta.url), 'utf8'));
 
 function loadEvidenceComponent(getEvidence = getRegionWorkEvidence) {
-  const { outputText } = ts.transpileModule(readFileSync(new URL('../components/RegionWorkEvidence.tsx', import.meta.url), 'utf8'), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.React, esModuleInterop: true, target: ts.ScriptTarget.ES2022 },
-  });
-  const module = { exports: {} };
-  const resolve = specifier => specifier === '../lib/regionWorkEvidence.mjs'
-    ? { getRegionWorkEvidence: getEvidence }
-    : require(specifier);
-  new Function('require', 'module', 'exports', outputText)(resolve, module, module.exports);
-  return module.exports.default;
+  function load(filename) {
+    const { outputText } = ts.transpileModule(readFileSync(new URL(`../${filename}`, import.meta.url), 'utf8'), {
+      compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.React, esModuleInterop: true, target: ts.ScriptTarget.ES2022 },
+    });
+    const module = { exports: {} };
+    const resolve = specifier => {
+      if (specifier === '../lib/regionWorkEvidence.mjs') return { getRegionWorkEvidence: getEvidence };
+      if (specifier === './SentenceFlow') return load('components/SentenceFlow.tsx');
+      return require(specifier);
+    };
+    new Function('require', 'module', 'exports', outputText)(resolve, module, module.exports);
+    return module.exports;
+  }
+  return load('components/RegionWorkEvidence.tsx').default;
 }
 
 test('all regional service guides stay neutral about job history and condition without inventing prices or guaranteed results', () => {
@@ -207,11 +212,11 @@ test('one case uses the full mobile width while multiple cases retain two mobile
       const facts = article.querySelector('dl[aria-label="작업 핵심 정보"]');
       const workLabel = facts.querySelectorAll('dt').find(node => normalize(node.textContent) === '주요 작업');
       const workValue = workLabel.parentNode.querySelector('dd');
-      assert.equal(normalize(workValue.textContent), normalize(base.summaryFacts.find(fact => fact.label === '주요 작업').value), 'even a visually shortened multi-card summary retains the entire work scope in HTML');
-      assert.equal(workValue.classNames.includes('line-clamp-2'), count > 1, 'only compact multi-card work descriptions may use a two-line preview');
+      assert.equal(normalize(workValue.textContent), normalize(base.summaryFacts.find(fact => fact.label === '주요 작업').value), 'both single and multi-card layouts retain the entire work scope in HTML');
+      assert.doesNotMatch(workValue.classNames, /line-clamp|truncate|overflow-hidden/, 'the readable card layout must expose the full work scope without clipping it');
       const detailedWorkLabel = article.querySelector('details').querySelectorAll('dt').find(node => normalize(node.textContent) === '주요 작업');
       if (count > 1) {
-        assert.ok(detailedWorkLabel, 'a shortened preview must expose the complete work scope when expanded');
+        assert.ok(detailedWorkLabel, 'multi-card details retain the complete work scope beside the existing context and conditions');
         const detailedWorkValue = detailedWorkLabel.parentNode.querySelector('dd');
         assert.equal(normalize(detailedWorkValue.textContent), normalize(workValue.textContent));
         assert.doesNotMatch(detailedWorkValue.classNames, /line-clamp|truncate|overflow-hidden/, 'the expanded work scope must not remain visually shortened');

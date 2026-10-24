@@ -2,7 +2,7 @@
 import { setTimeout as delay } from 'node:timers/promises';
 const origin = 'https://www.neutiul.com';
 const checks = [
-  ...['/', '/services', '/portfolio', '/contact', '/admin'].map(path => ({
+  ...['/', '/services/office', '/portfolio', '/contact', '/admin'].map(path => ({
     name: path,
     url: origin + path,
     async verify(response) {

@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
           <div className="flex flex-col">
             <h4 className="text-[12px] md:text-lg font-bold text-white mb-4 md:mb-8 uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2 md:space-y-4 text-[11px] md:text-base">
-              {['Home', 'About', 'Services', 'Portfolio', 'Contact'].map((item) => (
+              {['Home', 'About', 'Portfolio', 'Contact'].map((item) => (
                 <li key={item}>
                    <Link 
                     to={item === 'Home' ? '/' : `/${item.toLowerCase()}`} 
@@ -63,7 +63,6 @@ const Footer: React.FC = () => {
                   >
                     {item === 'Home' ? '홈' : 
                      item === 'About' ? '회사소개' : 
-                     item === 'Services' ? '서비스' : 
                      item === 'Portfolio' ? '포트폴리오' : '견적문의'}
                   </Link>
                 </li>

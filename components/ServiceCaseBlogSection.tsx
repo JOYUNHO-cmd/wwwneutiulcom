@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { getServiceBlogLinks } from '../lib/serviceBlogLinks.mjs';
 import BLOG_THUMBS from '../lib/blogThumbs.json';
+import SentenceFlow from './SentenceFlow';
 
 interface ServiceCaseBlogSectionProps {
   serviceId: string;
@@ -28,9 +29,8 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
     <section className={className}>
       {compact ? <div className="mb-5">
         <h3 className="text-lg font-bold text-slate-900">블로그에 기록한 작업 과정</h3>
-        <p className="mt-2 text-[clamp(12.5px,3.9vw,0.875rem)] sm:text-sm text-slate-600 leading-relaxed break-keep">
-          <span className="block sm:inline">느티울이 직접 작성한 현장 기록입니다.</span>{' '}
-          <span className="block sm:inline">사진을 누르면 해당 블로그 글이 새 창에서 열립니다.</span>
+        <p className="reading-copy mt-3">
+          <SentenceFlow text="느티울이 직접 작성한 현장 기록입니다. 사진을 누르면 해당 블로그 글이 새 창에서 열립니다." />
         </p>
       </div> : <div className="bg-white rounded-3xl p-6 sm:p-8 mb-8 border-2 border-[#03C75A]/25 text-center relative overflow-hidden shadow-[0_8px_30px_rgba(3,199,90,0.04)]">
         {/* Vibrant top brand green bar */}
@@ -90,8 +90,8 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
             </div>
 
             {/* Body - Only simple title */}
-            <div className="p-3.5 sm:p-5">
-              <h5 className="text-[13px] sm:text-[16px] font-extrabold text-slate-900 group-hover:text-[#03C75A] transition-colors duration-200 line-clamp-2 leading-snug break-keep">
+            <div className={compact ? 'p-3 sm:p-5' : 'p-3.5 sm:p-5'}>
+              <h5 className={compact ? 'reading-blog-title font-bold text-slate-900 group-hover:text-[#03C75A] transition-colors duration-200 break-keep' : 'text-[13px] sm:text-[16px] font-extrabold text-slate-900 group-hover:text-[#03C75A] transition-colors duration-200 line-clamp-2 leading-snug break-keep'}>
                 {blog.title}
               </h5>
             </div>

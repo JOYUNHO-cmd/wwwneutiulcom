@@ -43,6 +43,14 @@ test('trailing slashes use the same no-slash convention as canonicals and histor
   }
 });
 
+test('only the retired service directory redirects home, keeping detailed service routes', () => {
+  assert.deepEqual(config.redirects.find(rule => rule.source === '/services'), {
+    source: '/services', destination: '/', permanent: true,
+  });
+  assert.ok(!config.redirects.some(rule => rule.source === '/services/:path*'));
+  for (const service of SERVICES) assert.equal(buildMeta({ pathname: `/services/${service.id}`, services: SERVICES }).shouldNoindex, false);
+});
+
 test('literal Korean redirect destinations are URI-encoded for browser-safe Location headers', () => {
   for (const [source, destination] of oldCaseRoutes.slice(1)) {
     const rule = config.redirects.find(candidate => candidate.source === encodeURI(source));
@@ -74,6 +82,17 @@ test('deployed index-file and slash aliases reach the canonical page without a l
       assert.ok(html.includes(`rel="canonical" href="${production}${pathname}"`), alias);
       assert.doesNotMatch(html, /<meta[^>]+name="robots"[^>]+content="noindex/, alias);
     }
+  }
+  for (const alias of ['/services', '/services/', '/services/index.html']) {
+    const url = new URL(`${alias}?utm_source=retired-directory`, origin);
+    const initial = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(15000) });
+    assert.equal(initial.status, 308, alias);
+    await initial.arrayBuffer();
+    const result = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    assert.equal(result.status, 200, alias);
+    assert.equal(new URL(result.url).pathname, '/', alias);
+    assert.equal(new URL(result.url).searchParams.get('utm_source'), 'retired-directory', alias);
+    await result.arrayBuffer();
   }
 });
 

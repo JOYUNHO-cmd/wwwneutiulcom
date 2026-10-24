@@ -1,0 +1,99 @@
+/* The existing single column and image sizing stay intact below desktop. */
+.home-workflow-nav {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .home-workflow-section {
+    /* Clip the decorative shapes without creating a sticky scroll container. */
+    overflow: clip;
+  }
+
+  .home-workflow-section .home-workflow-layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    column-gap: 40px;
+    max-width: 1280px;
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .home-workflow-heading {
+    grid-column: 1 / -1;
+  }
+
+  .home-workflow-nav {
+    display: block;
+    grid-column: 1;
+    grid-row: 2;
+    position: sticky;
+    top: 130px;
+    align-self: start;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+    padding: 4px;
+  }
+
+  .home-workflow-nav ol {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-workflow-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-height: 64px;
+    padding: 16px 24px;
+    border: 1px solid #cbd5e1;
+    border-radius: 16px;
+    background: #fff;
+    color: #334155;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .home-workflow-nav-number {
+    font-weight: 500;
+  }
+
+  .home-workflow-nav-label > span {
+    display: block;
+    word-break: keep-all;
+  }
+
+  .home-workflow-nav a[aria-current='step'] {
+    border-color: #047857;
+    background: #ecfdf5;
+    color: #065f46;
+    box-shadow: inset 4px 0 #047857;
+  }
+
+  .home-workflow-nav a:hover {
+    border-color: #047857;
+    background: #ecfdf5;
+  }
+
+  .home-workflow-nav a:focus-visible,
+  .home-workflow-step:focus-visible {
+    outline: 3px solid #047857;
+    outline-offset: 4px;
+  }
+
+  .home-workflow-section .home-workflow-list {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+    max-width: 900px;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .home-workflow-step {
+    scroll-margin-top: 150px;
+  }
+}

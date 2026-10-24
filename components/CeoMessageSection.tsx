@@ -4,7 +4,7 @@ import React from 'react';
 // same "a real, accountable person runs this" trust signal — placed right
 // before the certifications section on both, so the credentials that follow
 // read as *his* credentials, not an anonymous company's.
-const CeoMessageSection: React.FC = () => {
+const CeoMessageSection: React.FC<{ readingLayout?: boolean }> = ({ readingLayout = false }) => {
   return (
     <section className="py-12 md:py-16 bg-linear-to-b/srgb from-white via-[#f4faf7] to-white border-b border-emerald-100/60 relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -17,7 +17,7 @@ const CeoMessageSection: React.FC = () => {
               느티울 대표 <span className="text-emerald-700 underline decoration-emerald-300 decoration-4 underline-offset-4">조윤호</span>입니다.
             </h3>
             <div className="bg-white/90 backdrop-blur-xs p-4 sm:p-6 rounded-2xl border border-emerald-100/90 shadow-md shadow-emerald-900/5">
-              <p className="text-slate-800 text-[12px] leading-[25px] md:text-[18.5px] md:leading-loose font-bold whitespace-pre-line break-keep">
+              <p className={readingLayout ? 'reading-copy whitespace-pre-line' : 'text-slate-800 text-[12px] leading-[25px] md:text-[18.5px] md:leading-loose font-bold whitespace-pre-line break-keep'}>
 {`저희는 결과로 증명하는 청소를 합니다.
 제가 직접 현장을 관리하며
 시작부터 마무리까지 책임지고 작업합니다.
