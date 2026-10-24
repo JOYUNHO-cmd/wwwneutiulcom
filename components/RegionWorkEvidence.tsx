@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, ArrowUpRight } from 'lucide-react';
+import { ChevronDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { getRegionWorkEvidence } from '../lib/regionWorkEvidence.mjs';
 
 interface RegionWorkEvidenceProps {
@@ -39,20 +39,23 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
           <article key={record.slug} className={`min-w-0 rounded-xl sm:rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs ${isSingle ? 'md:grid md:grid-cols-2' : ''}`}>
             <Link
               to={record.sourceUrl}
-              aria-label={`${record.heading} 전체 후기 보기`}
+              aria-label={`${record.heading} — 사진·전체 작업 기록 보기`}
               className="group/photo relative block self-start bg-slate-100 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
             >
-              <img
-                src={record.thumbnail}
-                alt={record.heading}
-                width={record.thumbnailWidth}
-                height={record.thumbnailHeight}
-                loading="lazy"
-                decoding="async"
-                className="w-full aspect-4/3 object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover/photo:scale-105"
-              />
-              <span aria-hidden="true" className="absolute bottom-2 right-2 rounded-full bg-white/95 p-1.5 text-slate-800 shadow-sm">
-                <ArrowUpRight size={16} />
+              <div className="overflow-hidden">
+                <img
+                  src={record.thumbnail}
+                  alt={record.heading}
+                  width={record.thumbnailWidth}
+                  height={record.thumbnailHeight}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full aspect-4/3 object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover/photo:scale-105"
+                />
+              </div>
+              <span className={`flex min-h-11 items-center justify-center bg-emerald-700 py-2.5 ${isSingle ? 'gap-2 px-3 text-sm' : 'gap-1.5 px-2 text-[12px] sm:gap-2 sm:px-3 sm:text-sm'} font-bold leading-relaxed text-white group-hover/photo:bg-emerald-800 group-focus-visible/photo:bg-emerald-800`}>
+                <span className="text-center break-keep">사진·전체 작업 기록 보기</span>
+                <ArrowRight size={16} aria-hidden="true" className="shrink-0" />
               </span>
             </Link>
             <div className="min-w-0">
