@@ -69,7 +69,7 @@ const RegionCaseDetail: React.FC = () => {
           hugging the left edge of the wider layout. */}
       {/* Breadcrumb */}
       <div className="max-w-5xl lg:max-w-3xl mx-auto px-4 sm:px-6 pt-6 text-sm text-gray-500 flex items-center gap-2 flex-wrap">
-        <Link to="/services" className="hover:text-primary">서비스</Link>
+        <Link to="/" className="hover:text-primary">홈</Link>
         <span>/</span>
         <Link to={`/services/${serviceId}`} className="hover:text-primary">{service?.title || serviceId}</Link>
         <span>/</span>

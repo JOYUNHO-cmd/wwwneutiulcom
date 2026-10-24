@@ -1,0 +1,70 @@
+{
+  "revision": "92efecb6feed9cd625daa3b91fa564356c6b9a6b",
+  "regions": 91,
+  "services": {
+    "office": {
+      "contentWithoutHero": "c39928362f29e4ea969c20ace418045b675644fa4ecb1765db4f937cef3da309",
+      "metadataAndH1": "32669ab05d3601c2f1cc5508e2cd37eafd1a4665efd28e50c42b38a44712c715"
+    },
+    "external-wall": {
+      "contentWithoutHero": "e471190528ddd8e91a03cb78f594ac05115ac138842fc7ac9aebbaa1cf891f79",
+      "metadataAndH1": "92a15df50df4b61c3c4857e2c013ec9cfcd49d93983d26df2600b1258766292f"
+    },
+    "move-in": {
+      "contentWithoutHero": "f08e385d791b7b3e42e4f91ef28f2d11712483ebe886af916a304be5b108117c",
+      "metadataAndH1": "9d4c8181a6abc4cf04f8c1b1fc77c972a0f87594d141f4296c2fed099c110544"
+    },
+    "restaurant": {
+      "contentWithoutHero": "76606d8ba3403c8a6b440867a13a9d94f752af294f09f2846d4b036595114975",
+      "metadataAndH1": "e293f8a8377fda46cc3a73d3ee44f538a8e5a2ed3820f2dcb995bbf1cff14262"
+    },
+    "factory": {
+      "contentWithoutHero": "3bcc941511d8f8102527e9409b88fd63b7590fdd0472b6fe104e0d6e8b6f560a",
+      "metadataAndH1": "16b1a46c77a2d6c79259627fc64330619378c1c374460a755068511cca6eb8d3"
+    },
+    "flood": {
+      "contentWithoutHero": "ef35f91bdd9f04e6e8a10ea47a1db2ed3d35e1bfec35d1b8747856a5a9a41431",
+      "metadataAndH1": "53aa90fb15bb82b508edc585bddc545b0399256609abd2571ea424fbc54df4da"
+    },
+    "fire": {
+      "contentWithoutHero": "a69eeb5acfd8fd6007bec3f6a32734bcb0f5675d48ae5e948bb818bd3fa10081",
+      "metadataAndH1": "0b4ec7fcb6e367cf80462254923e6ce488aabe58a7611ff7bc5be29021513038"
+    },
+    "special": {
+      "contentWithoutHero": "91d5a8df54780f170e040a426148edc7851b779fff4a4c815a8bd28e279121e9",
+      "metadataAndH1": "d64df3c305904f34ed2ca1dd7c25a1c06197bf15f5b0b3ecb3ad3944ebb53cbe"
+    },
+    "trash-house": {
+      "contentWithoutHero": "0cafdd57eedfc089779e77a781caacd672cf626771ec70ac0cadcd0ad4804363",
+      "metadataAndH1": "6324ff993b1864f835946e271e9eb9f20ea99fd5374eae6e3a1b2b1388b52ac3"
+    },
+    "lonely-death": {
+      "contentWithoutHero": "b0c7c561fe545ca309875c8368055558422d7b7ba6fa473fd416a82293bf4e01",
+      "metadataAndH1": "0c28fcb3e414f661970174058fb4e91cbeb5f787c32823c364d82a9f27f55923"
+    },
+    "interior": {
+      "contentWithoutHero": "23dcf019c548b64e74b143a678755779a0ce1b837719ead89f82c4756fdf1591",
+      "metadataAndH1": "af643a4a2ee871eb1eaf2c8e90ab73c5878e038e0435da010c25964347283c2c"
+    },
+    "new-construction": {
+      "contentWithoutHero": "d5497a0381f0459a0136aa56e9b89be45e85be714338aa25484151db9549f860",
+      "metadataAndH1": "836518b68cdb049954e49fd23d1dc91ed59714624ba2fee399ee114cf1334ea8"
+    },
+    "floor": {
+      "contentWithoutHero": "94dcc11a197e425c6bf4dd6ed2f8064c0b324bdf7962cbd74c55c611fe6ba470",
+      "metadataAndH1": "1bf28714b652d06f4a48230b9f5c0c93f7bb549a4c60daaed5bd0499deef75ab"
+    },
+    "floor-wax": {
+      "contentWithoutHero": "05b0d1a4bcfd11fae6c7fa5bdd7e91d01b095e54068bcd6e39e45b6f42863406",
+      "metadataAndH1": "b64b6ae410d0dd78a6041352536049b4c9c38f043ba139630bda70cae1f4211f"
+    },
+    "hood": {
+      "contentWithoutHero": "422a711fd9399765a3d74d5c6cd0d83a7098223dbec55595f1600459ab6cd872",
+      "metadataAndH1": "0c494b6df683c79476629e4eaf7e2811ba52c23ae39f0754c045b32f69212fb0"
+    },
+    "government-school": {
+      "contentWithoutHero": "bb88d73dd497e8b26dc00eedac76dcf2230e8ab9358c081c289c0822af0e2748",
+      "metadataAndH1": "32efaeda4acedf03c3ad6e7ac42d3531bc4a7e624d7e1db2d1462d3118907e8b"
+    }
+  }
+}

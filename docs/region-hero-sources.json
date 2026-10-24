@@ -1,0 +1,1227 @@
+{
+  "reviewedAt": "2026-10-24",
+  "profiles": {
+    "gangnam": [
+      {
+        "url": "https://gangnam.go.kr/notice/view.do?mid=ID05_040203&not_ancmt_mgt_no=62685",
+        "supports": "강남역 사거리부터 포스코 사거리까지 테헤란로 구역의 위치와 업무·교류 기능. 리모델링 계획을 모든 건물의 상태로 일반화하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.gangnam: 대치·개포동 아파트와 역삼·논현동 원룸·오피스텔의 병존. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "yeouido": [
+      {
+        "url": "https://www.seoul.go.kr/news/news_report.do?nttNo=448573&tr_code=snews",
+        "supports": "여의도역 주변에 한국거래소·대형 증권회사 등 금융기관이 밀집한 현황. 심의 대상 신축 사업을 준공 시설로 표현하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.yeouido: 아파트 단지와 업무지구 주변 오피스텔. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "guro-digital": [
+      {
+        "url": "https://www.guro.go.kr/health/contents.do?key=1407",
+        "supports": "구로디지털단지역 인근 깔깔거리의 음식점 상권. 개별 업소의 위생 상태나 고객 수를 추정하지 않음."
+      },
+      {
+        "url": "https://news.seoul.go.kr/citybuild/archives/233271?listPage=8",
+        "supports": "G밸리가 구로구 구로동과 금천구 가산동에 걸친 서울디지털국가산업단지라는 위치·산업 성격."
+      },
+      {
+        "url": "https://www.guro.go.kr/www/contents.do?key=2851",
+        "supports": "구로구의 공식 입주절차 안내에 명시된 구로디지털단지 내 지식산업센터. 개별 건물의 입주 업종이나 규모는 추정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.guro-digital: 구로동·가리봉동의 원룸·다세대주택과 업무지구의 병존; 기존 밀도 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "gasan-digital": [
+      {
+        "url": "https://www.geumcheon.go.kr/portal/contents.do?key=914",
+        "supports": "가산동 산업 2·3단지, 지식산업센터 및 패션쇼핑거리·패션단지길. 오래된 업체 수·방문객 수는 사용하지 않음."
+      },
+      {
+        "url": "https://news.seoul.go.kr/citybuild/archives/233271?listPage=8",
+        "supports": "서울디지털국가산업단지의 구로동·가산동 위치. 가산디지털단지와 구로디지털단지를 같은 행정동으로 취급하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.gasan-digital: 가산동·독산동 다세대주택·원룸과 업무지구의 병존. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "seongsu": [
+      {
+        "url": "https://sd.go.kr/tour/contents.do?key=5336",
+        "supports": "연무장길 카페거리의 공장·창고 활용 공간과 아뜰리에길의 공방·카페. 모든 성수동 상가를 같은 구조로 일반화하지 않음."
+      },
+      {
+        "url": "https://www.sd.go.kr/seongsu1ga2/contents.do?key=2787",
+        "supports": "성수1가2동의 준공업·주거지역 구성 및 공장·아파트·주택 병존. 해당 특성을 성수동 모든 필지의 용도로 단정하지 않음."
+      },
+      {
+        "url": "https://www.sd.go.kr/main/selectBbsNttView.do?bbsNo=188&key=1477&nttNo=305052&pageUnit=10",
+        "supports": "성수역~건대입구역 준공업지역의 전통산업·첨단산업 및 지식산업센터 이용환경."
+      }
+    ],
+    "songdo": [
+      {
+        "url": "https://www.ifez.go.kr/investment/content/view.do?sn=37",
+        "supports": "송도동 위치, 국제업무단지·지식정보산업단지와 인천글로벌캠퍼스의 조성·준공 현황. 미완료 사업의 완공은 주장하지 않음."
+      },
+      {
+        "url": "https://www.ifez.go.kr/investment/region/plan/songdo.do?plan_se=A01001",
+        "supports": "국제업무단지의 업무시설·송도컨벤시아 등 기존 건물 용도."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.songdo: 아파트 단지·오피스텔; 높이에 대한 포괄적 표현은 생략. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "cheongna": [
+      {
+        "url": "https://www.ifez.go.kr/commissioner/pst/view.do?pst_id=mayor_photo&pst_sn=670882",
+        "supports": "2026-10-02 청라 헤드쿼터 오프닝과 기존 통합데이터센터·하나글로벌캠퍼스. 인원·이전 완료율은 사용하지 않음."
+      },
+      {
+        "url": "https://www.seohae.go.kr/open_content/main/part/city/development_cheongna.jsp",
+        "supports": "청라동 일원의 업무·주거·문화 복합 기능. 계획 중인 쇼핑몰·병원·타워를 기존 시설로 쓰지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.cheongna: 아파트 단지와 오피스텔; 신축·개장 증가 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "namdong": [
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010501/396",
+        "supports": "남동국가산업단지 위치(고잔동·남촌동·논현동), 산업시설·지원시설 용지 및 제조업 업종. 오래된 통계 수치는 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.namdong: 산업단지 주변 원룸·기숙사와 논현동 아파트; 주택이 산업시설 용지 안에 있다는 뜻으로 쓰지 않음. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "gunpo": [
+      {
+        "url": "https://infoedu.gunpo.go.kr/www/selectEminwonView.do?key=3907&notAncmtSeCd=01&not_ancmt_mgt_no=42359",
+        "supports": "군포첨단산업단지 관리기본계획 고시를 통한 해당 산업단지 존재 확인. 기업 수·조성 규모는 사용하지 않음."
+      },
+      {
+        "url": "https://www.lh.or.kr/gallery.es?act=view&b_list=8&bid=0003&keyField=&list_no=11957&mid=a10502000000&nPage=18&orderby=&vlist_no_npage=28",
+        "supports": "산본이 군포의 1기 신도시라는 점과 기존 주거단지 존재. 재건축 계획을 현재 준공 결과로 표현하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.gunpo: 산본 아파트와 당동·금정동 다세대주택; 산본 상업지구는 기존 regionData.mjs의 gunpo·sanbon 항목. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "sanbon": [
+      {
+        "url": "https://www.lh.or.kr/gallery.es?act=view&b_list=8&bid=0003&keyField=&list_no=11957&mid=a10502000000&nPage=18&orderby=&vlist_no_npage=28",
+        "supports": "군포 산본의 1기 신도시·기존 주거단지 성격. 정비계획의 미래 세대수나 완료 상태는 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.sanbon: 산본동·금정동 아파트와 주변 주택가; 상업지구는 기존 regionData.mjs의 sanbon.landmark. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "anyang": [
+      {
+        "url": "https://m.anyang.go.kr/main/contents.do?key=428",
+        "supports": "평촌 스마트스퀘어 도시첨단산업단지의 관리계획·지구단위계획 존재."
+      },
+      {
+        "url": "https://www.anyang.go.kr/tour/index.do",
+        "supports": "범계역에서 안양우편집중국 방향으로 이어지는 평촌1번가 문화의 거리와 상업 생활권."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.anyang: 안양동·비산동 주택가와 평촌 신도시 아파트 단지. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "pyeongchon": [
+      {
+        "url": "https://m.anyang.go.kr/main/contents.do?key=428",
+        "supports": "평촌 스마트스퀘어 도시첨단산업단지의 존재와 계획 명칭."
+      },
+      {
+        "url": "https://www.anyang.go.kr/tour/index.do",
+        "supports": "범계역에서 이어지는 평촌1번가 문화의 거리 위치."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.pyeongchon: 평촌 신도시 아파트 단지 중심의 주거 생활권. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "suwon": [
+      {
+        "url": "https://www.suwon.go.kr/trans/transCon.jsp?conMenuId=www%2Feco08_02_01",
+        "supports": "수원델타플렉스의 고색동 소재, 기존 개별 공장·지식산업센터와 제조업 현황. 입주업체 수·사업 규모나 미래 사업은 사용하지 않음."
+      },
+      {
+        "url": "https://www.suwon.go.kr/webcontent/ckeditor/2025/11/10/4c5009f0-209b-47ea-a213-bec013193bb2.pdf",
+        "supports": "수원화성·행궁 주변 공방·음식점·갤러리 등 상권과 영통구 삼성디지털시티 위치. 관광·산업의 규모나 순위는 사용하지 않음."
+      },
+      {
+        "url": "https://www.suwon.go.kr/webcontent/ckeditor/2020/3/9/8f07be34-ecc6-4f45-97c1-1260255ef339.pdf",
+        "supports": "기존 도시계획 자료의 광교테크노밸리·삼성디지털시티 및 공동주택 주거지역 현황. 계획 단계 교통시설은 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.suwon: 화성 주변 구도심 주택가와 영통·광교 아파트; 주택 연식 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "uiwang": [
+      {
+        "url": "https://www.uiwang.go.kr/humanframe/theme/health/assets/pdf/MedicalEquipmentStore%282025.01%29.pdf",
+        "supports": "공식 업소 현황의 포일동 인덕원IT밸리 주소. 이 목록으로 입주 업종 전체나 기업 수는 추정하지 않음."
+      },
+      {
+        "url": "https://livinglab.uiwang.go.kr/uw_plan.pdf",
+        "supports": "의왕시 계획의 기존 지역 현황에 제시된 의왕ICD·의왕테크노파크 및 부곡동 물류시설 위치."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.uiwang: 포일·내손동 아파트와 오전동 주택가; 연식 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "pangyo": [
+      {
+        "url": "https://www.pangyotechnovalley.org/base/contents/view?contentsNo=20&menuLevel=3&menuNo=14",
+        "supports": "경기도경제과학진흥원 운영 공식 사이트의 IT·BT·CT 중심 연구개발 기능. 최고·최대 및 기업 수를 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.pangyo: 판교 신도시 아파트 단지와 단독주택 단지. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "ansan": [
+      {
+        "url": "https://www.ansan.go.kr/www/common/cntnts/selectContents.do?cntnts_id=C0001493",
+        "supports": "안산시 관할 반월·시화 국가산업단지와 제조업 업종의 존재. 시화산업단지 전체를 안산시로 한정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.ansan: 원곡·고잔동 원룸·다세대주택과 초지·성포동 아파트; 도심 상권은 기존 regionData.mjs의 ansan.story. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "banwol": [
+      {
+        "url": "https://www.investkorea.org/ik-kr/bbs/i-2483/detail.do?ntt_sn=48",
+        "supports": "KOTRA의 반월국가산업단지 소개와 원시동·성곡동·신길동·목내동·초지동 위치 및 제조업 기반. 오래된 수치는 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.banwol: 반월국가산업단지 주변 기숙사·원룸; 주거지를 공장 용지 내부로 단정하지 않음. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "hwaseong": [
+      {
+        "url": "https://council.hscity.go.kr/cnts/mnt/mntsViewer.php?schSn=7683",
+        "supports": "향남제약산단·발안산단의 기존 존재. 새로 제안된 산업단지의 완공이나 입주를 주장하지 않음."
+      },
+      {
+        "url": "https://www.hscity.go.kr/www/partInfo/taxEcnmy/lvlhEcnmy/trditMarket.jsp",
+        "supports": "남양시장 및 향남읍 발안만세시장의 위치와 상업 기능."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.hwaseong: 병점·봉담 아파트, 남양·향남 원룸, 농촌 단독주택; 신축·산업 배후 수요 주장은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "dongtan": [
+      {
+        "url": "https://dongtan.lh.or.kr/theme/basic/page/inq/inq02.php",
+        "supports": "LH의 동탄2신도시 내 테크노밸리 특화구역·동탄도시첨단산업단지 위치. 구역 전체의 사업 완료 상태는 주장하지 않음."
+      },
+      {
+        "url": "https://dongtan.lh.or.kr/theme/basic/page/special/special05.php",
+        "supports": "동탄테크노밸리 특별계획구역 명칭과 위치 자료. 동탄역 상권은 기존 regionData.mjs의 dongtan 설명에서 정제."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.dongtan: 아파트·오피스텔·단독주택 단지의 병존. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "osan": [
+      {
+        "url": "https://ostv.osan.go.kr/ostv/front/news/bbsCitizen.do?flag=&key=60916447180b70d86448980236cbff1c7859f66a489b00a655c3be9aad0e861a&keyword=&pageNum=283&reform=view",
+        "supports": "오산시 공식 매체에 소개된 오색시장과 식당가. 야시장 개최일·현재 개별 업소 영업 여부는 사용하지 않음."
+      },
+      {
+        "url": "https://ostv.osan.go.kr/ostv/front/news/bbsCitizen.do?flag=&key=ade25c4b4274ba147ea79b17d8cea5240062968dd25483fc9b76b679eda7a72c&keyword=&pageNum=226&reform=view",
+        "supports": "오산시 공식 보도자료의 가장산업단지 내 제조업 공장 준공 기록. 특정 업체의 현재 규모·고용인원은 사용하지 않음."
+      },
+      {
+        "url": "https://ostv.osan.go.kr/ostv/front/news/bbsCitizen.do?flag=&key=833657e26b12fde34b620c67a3a8646c3e362845d223e44387b4891d5fc75beb&keyword=&pageNum=163&reform=view",
+        "supports": "금암동 세교복지타운과 세교 아파트 생활권. 시설 요금·운영시간은 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.osan: 오산동 구도심 주택가와 세교 택지지구 아파트; 신축·노후 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "pyeongtaek": [
+      {
+        "url": "https://news.samsung.com/kr/삼성전자-평택-2라인에-낸드플래시-생산라인-투자",
+        "supports": "삼성전자 공식 자료의 기존 평택캠퍼스·반도체 생산시설. 투자 계획의 미래 생산량이나 완공은 사용하지 않음."
+      },
+      {
+        "url": "https://news.samsung.com/kr/꿈의-오케스트라를-아세요-삼성전자-평택캠퍼",
+        "supports": "삼성전자 공식 현장 기록에 제시된 평택캠퍼스의 고덕 지역 소재."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.pyeongtaek: 고덕 아파트·오피스텔과 비전·서정동 주택가; 신축 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "anseong": [
+      {
+        "url": "https://www.anseong.go.kr/depart/contents.do?mId=0103010000",
+        "supports": "안성시 산업·농공단지 현황에 제시된 공도일반산업단지와 미양농공단지 등 기존 산업시설. 개별 시설의 현재 가동률이나 규모는 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.anseong: 공도읍 택지지구 아파트와 읍면 단독주택; 주택 밀도는 수치화하지 않음. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "siheung": [
+      {
+        "url": "https://www.investkorea.org/ik-kr/bbs/i-2483/detail.do?ntt_sn=48",
+        "supports": "KOTRA의 시화국가산업단지 위치 및 제조업 기반. 반월·시화의 서로 다른 관할을 합치지 않음."
+      },
+      {
+        "url": "https://www.gg.go.kr/bbs/boardView.do?bIdx=121323417&bcIdx=&bsIdx=598&menuId=2828&page=1",
+        "supports": "경기도 교통영향평가 자료에 명시된 시흥시 정왕동 시화국가산업단지 위치. 재생사업 자체의 완료 여부는 주장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.siheung: 정왕동 원룸·다세대주택과 배곧 아파트; 신축·수요 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "gwacheon": [
+      {
+        "url": "https://new.gccity.go.kr/portal/contents.do?mId=0305030300",
+        "supports": "과천지식정보타운 공공주택지구 및 단계별 조성 현황. 전체 구역의 준공이나 공원·하천 공사 완료를 단정하지 않음."
+      },
+      {
+        "url": "https://gbmo.go.kr/chungsa/cm/cntnts/cntntsView.do?cntntsId=1035&mi=1148",
+        "supports": "행정안전부 정부청사관리본부의 정부과천청사 소개. 개별 입주기관의 이전·현재 인원은 주장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.gwacheon: 기존 아파트 단지와 지식정보타운 주거단지; 재건축 진행·신축 상태는 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "gwangmyeong": [
+      {
+        "url": "https://www.gm.go.kr/tour/sight/ms/ms06.jsp",
+        "supports": "KTX광명역세권의 기존 대형 쇼핑시설과 광명 국제 디자인클러스터(GIDC). 도보 시간·순위 표현은 사용하지 않음."
+      },
+      {
+        "url": "https://www.gm.go.kr/dong/ha1/ha1in/ha1in03.jsp",
+        "supports": "하안1동의 아파트·단독주택·자연마을 혼재. 하안동 전체를 아파트만 있는 곳으로 표현하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.gwangmyeong: 철산·하안동 아파트와 광명역세권 주거단지; 신축·노후 연식 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "bucheon": [
+      {
+        "url": "https://bucheon.go.kr/site/homepage/menu/viewMenu?menuid=148006001004001",
+        "supports": "부천테크노파크 내 로봇산업연구단지와 로보파크의 위치. 연구시설을 제조 공장으로 바꾸어 표현하지 않음."
+      },
+      {
+        "url": "https://www.bucheon.go.kr/site/homepage/menu/viewMenu?menuid=148009009007001",
+        "supports": "부천테크노파크의 위치와 부천산업진흥원의 기업 지원 기능."
+      },
+      {
+        "url": "https://bcmr.or.kr/web/main/index.do",
+        "supports": "부천상권활성화센터의 신중동·상동역·심곡복개천 등 기존 상권 목록."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.bucheon: 중동·상동 아파트와 심곡·오정동 다세대주택가. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "seongnam": [
+      {
+        "url": "https://www.pangyotechnovalley.org/base/contents/view?contentsNo=20&menuLevel=3&menuNo=14",
+        "supports": "판교테크노밸리의 연구개발·기업 업무 기능. 판교 사례를 성남의 모든 생활권과 동일하다고 일반화하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.seongnam: 수정·중원구 다세대주택가와 분당·위례 아파트; 위례 전체를 성남시로 한정하지 않음. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "yongin": [
+      {
+        "url": "https://www.sujigu.go.kr/lmth/06center050102.asp",
+        "supports": "용인 수지구 죽전2동의 죽전역과 상업·유통시설 현황. 수지구 상권의 성격을 처인구 전체로 확대하지 않음."
+      },
+      {
+        "url": "https://cheoingu.go.kr/home/townInfo.do?menu_no=948",
+        "supports": "처인구의 읍면·동 구성과 도시·농촌이 함께 있는 토지 이용 배경. 계획 중인 반도체 시설의 운영은 주장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.yongin: 수지·기흥 아파트와 처인구 전원주택·단독주택. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "suji": [
+      {
+        "url": "https://www.sujigu.go.kr/lmth/06center010102.asp",
+        "supports": "풍덕천1동의 아파트·일반 주거지역과 중심 상가 병존."
+      },
+      {
+        "url": "https://www.sujigu.go.kr/lmth/06center050102.asp",
+        "supports": "죽전2동의 죽전역과 상업·유통시설."
+      },
+      {
+        "url": "https://www.sujigu.go.kr/lmth/06center060102.asp",
+        "supports": "동천동 자연마을과 아파트 단지의 공존. 인구 증가 전망은 사용하지 않음."
+      }
+    ],
+    "gwangju-gg": [
+      {
+        "url": "https://www.gjcity.go.kr/csc/contents.do?mId=1101010000",
+        "supports": "경안시장과 금융·교육·문화시설 등 경안동의 기존 상업 생활권."
+      },
+      {
+        "url": "https://www.gjcity.go.kr/portal/contents.do?mId=0102010200",
+        "supports": "광주시의 도시·농촌 및 구릉 지형 배경. 개별 주택의 경사·접근 상태는 단정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.gwangju-gg: 오포·태전 아파트와 외곽 전원주택·창고형 시설; 폐지된 오포읍 명칭과 신축 표현은 쓰지 않음. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "hanam": [
+      {
+        "url": "https://www.hanam.go.kr/health/contents.do?key=914",
+        "supports": "하남시 공식 시설 목록의 스타필드 하남 및 미사강변 아파트 단지·신장동 아파트 존재와 위치. 시설별 비상장비 정보는 본문에 쓰지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 자료 RESIDENTIAL_STORIES.hanam: 미사강변도시 아파트와 덕풍·신장동 주택가; 신축·건물 연식 표현은 제외. 외부 공식 자료로 확인한 범위와 구분하며, 건물 연식·밀도·개별 현장 상태는 주장하지 않음."
+      }
+    ],
+    "icheon": [
+      {
+        "url": "https://www.icheon.go.kr/portal/contents.do?mid=0305030300",
+        "supports": "창전동·증포동·중리동·부발읍의 사업체 분포를 확인했으며 수치와 순위는 인용하지 않음."
+      },
+      {
+        "url": "https://www.icheon.go.kr/csc/contents.do?mid=0102020300",
+        "supports": "부발읍 편의시설 안내에 SK하이닉스 내 시설이 기재되어 있음."
+      },
+      {
+        "url": "https://news.skhynix.co.kr/high-na-euv-introduce/",
+        "supports": "SK하이닉스 공식 보도자료에서 이천 M16의 반도체 제조 장비 반입과 공장 소재를 확인함. 당사의 거래·작업 실적을 의미하지 않음."
+      },
+      {
+        "url": "https://www.icheon.go.kr/tour/cultureTour/manage/view.do?idx=76&mid=0101000000",
+        "supports": "관고전통시장의 관고동 소재와 상설시장·장터 운영을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): icheon: 창전·증포동 아파트·다세대, 부발읍 단지와 읍면 단독주택의 분포."
+      }
+    ],
+    "yeoju": [
+      {
+        "url": "https://www.yeoju.go.kr/town/selectBbsNttView.do?bbsNo=44&integrDeptCode=&key=1188&nttNo=62457&pageIndex=16&searchCnd=all&searchCtgry=&searchKrwd=",
+        "supports": "중앙동1지역의 원도심 상권과 도시재생 축제·플리마켓 운영을 확인함."
+      },
+      {
+        "url": "https://www.yeoju.go.kr/tour/selectTourCntntsWebEtcList.do?ctgry=58&key=2923&pageIndex=28&pageUnit=9&searchCnd=all&sortTy=SORT_TY",
+        "supports": "중앙동 일대 음식점의 소재를 확인했으며 특정 업소의 현재 영업시간은 인용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yeoju: 시내 아파트·주택가와 남한강 주변 전원주택의 분포."
+      }
+    ],
+    "goyang": [
+      {
+        "url": "https://goyang.go.kr/visitgoyang/www/tourRsrcView.do?key=243&searchCtgry=1669809941180&tourRsrcNo=547",
+        "supports": "킨텍스의 일산서구 소재와 전시·컨벤션 운영을 확인함. 최대 규모 등의 비교 표현은 사용하지 않음."
+      },
+      {
+        "url": "https://www.goyang.go.kr/ilsegu/ilsegu01/ilsegu01_5/ilsegu01_5_3.jsp",
+        "supports": "일산동구의 동별 행정구역과 생활권 지명 확인."
+      },
+      {
+        "url": "https://www.goyang.go.kr/www/www03/www03_4/www03_4_3/www03_4_3_tab8.jsp",
+        "supports": "고양시 사업체 현황의 제조업 사업체와 공장등록 업체 현황을 확인함. 특정 업종·밀집 지역은 추정하지 않음."
+      },
+      {
+        "url": "https://www.goyang.go.kr/www/www03/www03_4/www03_4_4/www03_4_4_tab2.jsp",
+        "supports": "일산시장의 일산동 소재와 농수축산물·청과·일용잡화 취급을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): goyang: 일산 아파트 단지와 덕양구 삼송·원흥 주거지의 분포."
+      }
+    ],
+    "uijeongbu": [
+      {
+        "url": "https://www.ui4u.go.kr/cscportal/uijeongbu1/main.do?mId=0303010000",
+        "supports": "제일시장, 상점, 금융기관이 있는 의정부1동의 상업·주거 구성을 확인함."
+      },
+      {
+        "url": "https://www.ui4u.go.kr/portal/bbs/view.do?bIdx=369074&mId=0301020000&ptIdx=1709",
+        "supports": "의정부시 보도자료에서 용현일반산업단지와 입주 기업·근로자의 일터가 존재함을 확인함. 구체적인 제조 업종은 추정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): uijeongbu: 의정부·호원동 주택가와 민락·녹양동 아파트 단지의 분포."
+      }
+    ],
+    "namyangju": [
+      {
+        "url": "https://www.nyj.go.kr/www/contents.do?key=2793",
+        "supports": "다산1동의 도시·녹지 공존과 금융기관·학교·의료기관 소재를 확인함. 기관 수는 인용하지 않음."
+      },
+      {
+        "url": "https://www.nyj.go.kr/www/contents.do?key=3320",
+        "supports": "진관일반산업단지의 진건읍 소재, 조성 완료와 산업시설용지를 확인함. 유치 가능 업종을 실제 입주 업종으로 바꾸지 않음."
+      },
+      {
+        "url": "https://www.nyj.go.kr/www/contents.do?key=3315",
+        "supports": "남양주시 투자환경 자료에서 진관일반산업단지의 입주 기업 현황을 확인함. 기업 수는 인용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): namyangju: 다산·별내 아파트와 화도·진접읍 단독·전원주택의 분포."
+      }
+    ],
+    "guri": [
+      {
+        "url": "https://www.guri.go.kr/www/contents.do?key=629",
+        "supports": "구리전통시장의 돌다리 중심가 소재와 농수산물 취급을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): guri: 인창·수택동 아파트·다세대와 갈매지구 공동주택의 분포."
+      }
+    ],
+    "paju": [
+      {
+        "url": "https://mayor.paju.go.kr/resources/download/hopePaju/plan_keumchon.pdf",
+        "supports": "금촌의 시청 소재와 행정·경제 중심 기능을 확인함. 과거 계획의 예정 사업은 현재 시설로 취급하지 않음."
+      },
+      {
+        "url": "https://parking.paju.go.kr/parkinfo",
+        "supports": "문발동 출판도시와 아시아출판문화정보센터·지혜의숲 등 운영 공간의 소재를 확인함."
+      },
+      {
+        "url": "https://www.paju.go.kr/www/www_02/city/city_indus/city_indus_00/city_indus_00_03.jsp",
+        "supports": "파주시 산업단지 현황에서 문발1·2, 출판문화정보, LCD 단지가 준공으로 분류됨을 확인함. 조성 중 단지는 제외함."
+      },
+      {
+        "url": "https://tour.paju.go.kr/user/tour/place/BD_tourPlaceInfoView.do?cntntsSn=541&menuCode=74",
+        "supports": "금촌통일시장·문산자유시장의 소재와 생활 상품·먹거리 점포를 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): paju: 운정 아파트 단지와 금촌·문산 주택가의 분포."
+      }
+    ],
+    "yangju": [
+      {
+        "url": "https://www.yangju.go.kr/www/contents.do?key=320",
+        "supports": "검준산업단지, 섬유 연구·지원시설, 옥정·회천 및 덕정 생활권을 확인함. 조성 중 사업은 사용하지 않음."
+      },
+      {
+        "url": "https://yangju.go.kr/www/contents.do?key=582",
+        "supports": "덕정시장과 가납시장의 소재 및 시장 현황을 확인함. 음식점 수나 특정 메뉴는 추정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yangju: 옥정·회천 아파트와 덕정·고암동 주택가의 분포."
+      }
+    ],
+    "dongducheon": [
+      {
+        "url": "https://www.ddc.go.kr/site/tour/download/tourmap_2021.pdf",
+        "supports": "생연동 음식문화거리와 중앙시장·큰시장·제일시장 소재를 확인함. 업소 수와 영업 상황은 인용하지 않음."
+      },
+      {
+        "url": "https://www.ddc.go.kr/site/ddc/download/ddc_2024/ddc_2024_10.pdf",
+        "supports": "동두천시 산업단지 현황에서 동두천동 소재 일반산업단지와 제2일반산업단지를 확인함. 국가산단의 조성 상태와 혼동하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): dongducheon: 시가지의 아파트·단독·다세대주택 구성."
+      }
+    ],
+    "pocheon": [
+      {
+        "url": "https://www.pocheon.go.kr/she/contents.do?key=10128",
+        "supports": "소흘읍의 고모리 문화의 거리·먹거리 공간·전원주택과 송우택지개발 완료 사실을 확인함. 개발 전망은 제외함."
+      },
+      {
+        "url": "https://www.pocheon.go.kr/biz/contents.do?key=9444",
+        "supports": "용정일반산업단지 사업협동조합과 신평일반산업단지 입주기업체 협의회의 소재를 확인함. 시설별 설비·업종은 추정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): pocheon: 읍면 단독주택, 관광지 주변 펜션·전원주택의 분포."
+      }
+    ],
+    "gapyeong": [
+      {
+        "url": "https://sang.gp.go.kr/gapyeong/contents.do?key=300",
+        "supports": "가평읍의 상권 형성과 자라섬·용추구곡 등 자연관광 공간을 확인함. 방문 규모는 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gapyeong: 가평읍·청평·설악면의 단독주택·전원주택·펜션 구성."
+      }
+    ],
+    "yangpyeong": [
+      {
+        "url": "https://www.yp21.go.kr/www/contents.do?key=1508",
+        "supports": "양평읍·양서면·용문면·양동면의 전통시장과 상설·정기시장 운영을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yangpyeong: 양평읍 시가지 주거지와 읍면 단독·전원주택의 분포."
+      }
+    ],
+    "yeoncheon": [
+      {
+        "url": "https://tour.yeoncheon.go.kr/town/contents.do?key=4117",
+        "supports": "전곡읍의 상업·교통 중심 기능과 시가지에 주민이 모여 있는 특성을 확인함. 비율은 인용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yeoncheon: 연천·전곡읍 시가지와 농촌 마을 단독주택의 분포."
+      }
+    ],
+    "gimpo": [
+      {
+        "url": "https://www.gimpo.go.kr/portal/contents.do?key=3349",
+        "supports": "장기동의 금빛수로·라베니체와 한강중앙공원 소재를 확인함."
+      },
+      {
+        "url": "https://www.gimpo.go.kr/site/portal/images/contents/cts7619_file01_202512.pdf",
+        "supports": "장기동의 상업시설 및 주거·상업 생활권에 대한 도시기본계획 설명을 확인함. 예정 교통사업은 사용하지 않음."
+      },
+      {
+        "url": "https://m1.gimpo.go.kr/portal/contents.do?key=1317",
+        "supports": "양촌일반산업단지의 학운리 소재, 산업시설용지와 생산지원시설 구성을 확인함. 입주 허용 업종을 실제 개별 공장 업종으로 단정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gimpo: 한강신도시 아파트와 걸포·사우동 주택가의 분포."
+      }
+    ],
+    "incheon-jung": [
+      {
+        "url": "https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122715161333869",
+        "supports": "신포국제시장의 식재료·먹거리·생활필수품 취급과 개항장 생활권을 확인함. 현 행정구 명칭으로 기존 URL을 바꾸지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): incheon-jung: 개항장 주변 주택가와 공동주택 구성. 건물 연한을 단정하지 않음."
+      }
+    ],
+    "yeongjong": [
+      {
+        "url": "https://www.ifez.go.kr/investment/region/prcl/yeongjong.do",
+        "supports": "영종의 인천국제공항 소재 및 항공물류·관광 기능을 확인함. 개발계획에만 있는 시설은 완공 시설로 서술하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yeongjong: 운서·중산동 아파트와 주변 주택가의 공항 배후 생활권."
+      }
+    ],
+    "incheon-dong": [
+      {
+        "url": "https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122714571533601",
+        "supports": "송현시장의 동인천역 북쪽 위치, 취급 품목, 주변 아파트와 인근 시장을 확인함. 기존 지역 ID는 유지함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): incheon-dong: 원도심의 단독·다세대주택 구성."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionData.mjs",
+        "supports": "기존 사이트 지역 자료: incheon-dong의 만석·송림·화수동 안내 범위를 유지함. 현재 행정구역 명칭과 구분함."
+      }
+    ],
+    "michuhol": [
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010610",
+        "supports": "주안국가산업단지에 미추홀구 주안동 일원이 포함됨을 확인함. 전체 산단을 미추홀구로 귀속하지 않음."
+      },
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010602",
+        "supports": "인천기계산업단지가 미추홀구 도화동과 가좌동 일원에 걸쳐 있음을 확인함."
+      },
+      {
+        "url": "https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122715070213807",
+        "supports": "신기시장의 소재와 식품 판매·먹거리 골목을 확인함. 업소 수와 방문 규모는 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): michuhol: 주안·숭의동 주택가와 다세대주택의 분포."
+      }
+    ],
+    "yeonsu": [
+      {
+        "url": "https://www.yeonsu.go.kr/clinic/institution/dentist.asp",
+        "supports": "연수동 우성1차상가와 동춘동 무지개마을단지상가 등에 소재한 의료기관을 확인함. 송도 시설은 이 프로필에 포함하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yeonsu: 연수·청학·동춘동 아파트와 주택가의 분포."
+      }
+    ],
+    "namdong-gu": [
+      {
+        "url": "https://biz.namdong.go.kr/dong/sub/greeting.jsp?dong=guwol3",
+        "supports": "구월3동의 문화예술회관·공공기관·학교 및 음식점 거리 소재를 확인함. 인천터미널을 남동구 시설로 서술하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): namdong-gu: 구월·간석·만수동 아파트와 다세대주택의 분포."
+      }
+    ],
+    "bupyeong": [
+      {
+        "url": "https://www.icbp.go.kr/dong/sub/greeting.jsp?dong=bupyeong1",
+        "supports": "부평역 주변 지하상가·백화점과 아파트 단지가 함께 있음을 확인함."
+      },
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010610",
+        "supports": "부평 산단의 청천동 소재와 주안 산단에 십정동 일원이 포함됨을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): bupyeong: 부평역 주변 주택가와 산곡·청천동 아파트·다세대의 분포."
+      }
+    ],
+    "gyeyang": [
+      {
+        "url": "https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=APD21112609134310684",
+        "supports": "계산전통시장의 계산동 소재, 골목형 시장 및 주변 아파트·다세대주택과 취급 품목을 확인함."
+      },
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010611",
+        "supports": "서운일반산업단지의 계양구 소재와 2019년 준공인가를 확인함. 계양테크노밸리의 진행 상황과 구분함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gyeyang: 계산·작전·효성동 아파트·다세대주택의 분포."
+      }
+    ],
+    "incheon-seo": [
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010610",
+        "supports": "주안국가산업단지에 가좌동 일원이 포함됨을 확인함. 현 행정구역 개편과 별개로 기존 URL의 생활권을 설명함."
+      },
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010602",
+        "supports": "가좌동 일원이 인천기계산업단지에도 포함됨을 확인함."
+      },
+      {
+        "url": "https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122710290336855",
+        "supports": "가좌시장의 식료품·생활용품 점포 구성을 확인함."
+      },
+      {
+        "url": "https://itour.incheon.go.kr/thmtour/rcmdtour/detail.do?cotId=ITA21120214400216150",
+        "supports": "가좌시장 내 김밥·전 등 먹거리를 판매하는 가게를 확인함. 특정 점포의 영업 상태를 별도로 보장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): incheon-seo: 기존 안내 범위인 석남·가정동 주택가와 검단 아파트 구성. 현재 행정구 전체 범위로 단정하지 않음."
+      }
+    ],
+    "ganghwa": [
+      {
+        "url": "https://www.ganghwa.go.kr/open_content/dong/sub/present.jsp",
+        "supports": "강화읍의 도시형 주민 밀집과 생활 관련 기관의 집결을 확인함."
+      },
+      {
+        "url": "https://www.ganghwa.go.kr/open_content/dong/sub/gsm/present.jsp",
+        "supports": "길상면의 도시·농촌 복합 생활권을 확인함."
+      },
+      {
+        "url": "https://www.incheon.go.kr/eco/ECO010608",
+        "supports": "강화일반산업단지와 용도별 산업시설·지원시설 구성을 확인함. 입주 대상 업종을 실제 운영 업종으로 바꾸지 않음."
+      },
+      {
+        "url": "https://www.ganghwa.go.kr/open_content/tour/shopping/market/traditional.jsp",
+        "supports": "강화풍물시장의 1층 회센터와 2층 식당·풍물장 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): ganghwa: 읍면 단독주택·전원주택·펜션 구성."
+      }
+    ],
+    "yeongdeungpo": [
+      {
+        "url": "https://www.ydp.go.kr/site/tour/down/cts_5313.pdf",
+        "supports": "문래역 주변 철공소·예술가 공방·문래창작촌과 카페·식당의 공간 구성을 확인함. 철공소의 증감 추세는 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yeongdeungpo: 문래·영등포동 주택가와 신길동 아파트의 분포."
+      }
+    ],
+    "guro": [
+      {
+        "url": "https://www.guro.go.kr/www/contents.do?key=2095",
+        "supports": "구로의 준공업지역과 기계공구상가 유통단지 소재를 확인함. 규모 순위·미래 개발 가능성은 제외함."
+      },
+      {
+        "url": "https://www.guro.go.kr/market/html/guromarket.html",
+        "supports": "구로시장의 한복거리와 먹거리 점포를 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): guro: 다세대·연립주택과 개봉·고척동 아파트의 구성. 재건축 여부나 건물 연한은 단정하지 않음."
+      }
+    ],
+    "geumcheon": [
+      {
+        "url": "https://m.geumcheon.go.kr/portal/contents.do?key=282",
+        "supports": "독산동우시장과 생활권 전통시장·상점가, 독산·시흥지역의 주거 기능을 확인함."
+      },
+      {
+        "url": "https://www.geumcheon.go.kr/portal/contents.do?key=283",
+        "supports": "가산·독산·시흥동의 구성과 주거·상업·준공업지역이 함께 있음을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): geumcheon: 시흥동 단독·다세대주택과 독산동 원룸의 구성."
+      }
+    ],
+    "seongdong": [
+      {
+        "url": "https://sd.go.kr/main/contents.do?key=1385",
+        "supports": "왕십리·마장·용답 지역의 교통·상업 기능과 용답동 유통시설 소재를 확인함."
+      },
+      {
+        "url": "https://sd.go.kr/eng/webNewsToolDetail.do?eatitle=2021%EB%85%84+9%EC%9B%94%ED%98%B8&key=5184&subNo=19529",
+        "supports": "성동구 소식지에서 왕십리도선동상점가와 곱창거리·먹거리 공간을 확인함. 과거의 사업 추진 보도만으로 신규 시설을 추정하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): seongdong: 왕십리 및 금호·옥수동 아파트와 그 사이 주택가의 구성."
+      }
+    ],
+    "gangdong": [
+      {
+        "url": "https://www.gangdong.go.kr/web/dongrenew/contents/cheonho3_010_010",
+        "supports": "천호대로의 상가·오피스텔 혼합지역과 고분다리 전통시장, 천호역·강동역 인접 생활권을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gangdong: 고덕·암사동 아파트와 천호·길동 주택가의 분포."
+      }
+    ],
+    "gangbuk": [
+      {
+        "url": "https://council.gangbuk.go.kr/kr/bbs/download.do?bbs_id=research&uid=E3064CB78777ABDE08F356CD05C434A1",
+        "supports": "구의회 정책연구의 미아역 주변 생활 소비 상권 설명을 확인함. 유동인구 순위는 사용하지 않음."
+      },
+      {
+        "url": "https://child.gangbuk.go.kr/dong/main/contents.do?dongCd=01&menuNo=600063",
+        "supports": "삼양동(법정 미아동) 현황의 단독주택·아파트·빌라 구성을 확인함. 주택 수는 인용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gangbuk: 미아·수유·우이동의 아파트·다세대주택 구성."
+      }
+    ],
+    "gangseo": [
+      {
+        "url": "https://mediahub.seoul.go.kr/archives/1245279",
+        "supports": "마곡산업단지의 연구개발 중심 업무 기능을 확인함. 기사 속 신규 지원사업의 완료 여부는 주장하지 않음."
+      },
+      {
+        "url": "https://gsc.gangseo.seoul.kr/meeting/confer/popup.do?contype=4&ntime=309&num=6&subtype=3",
+        "supports": "화곡1동의 상업·주거지역 혼재와 화곡역·까치산역, 발산1동의 마곡 아파트 단지 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gangseo: 마곡 아파트와 화곡동 다세대·단독주택의 분포. 건물 연식 표현은 제외함."
+      }
+    ],
+    "gwanak": [
+      {
+        "url": "https://www.gwanak.go.kr/site/gwanak/11/11101020000002016051207.jsp",
+        "supports": "신림역 중심 상권, 봉천동 상업시설과 대학동의 서울대학교·고시원 등 동별 특성을 확인함."
+      },
+      {
+        "url": "https://www.gwanak.go.kr/site/gwanak/09/10905100000002023020811.jsp",
+        "supports": "봉천·낙성대·신림·난곡·대학의 골목상권 권역 구분을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gwanak: 신림·봉천 대학가와 주택가의 원룸·다세대·아파트 구성."
+      }
+    ],
+    "gwangjin": [
+      {
+        "url": "https://council.gwangjin.go.kr/attach/bbs/organization/33ccb20501c012713532e0c44d38765d.pdf",
+        "supports": "건대입구 상권의 자양·화양동 위치와 주변 주거지의 존재를 확인함."
+      },
+      {
+        "url": "https://council.gwangjin.go.kr/kr/news/bbs_process?bbs_id=magazine2&reform=download&uid=25355",
+        "supports": "건국대·세종대, 어린이대공원·뚝섬 한강공원과 역세권 상가의 지역 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gwangjin: 대학가 원룸·다세대와 구의·자양동 한강변 아파트의 분포."
+      }
+    ],
+    "nowon": [
+      {
+        "url": "https://www.nowon.kr/www/intrcn/intrcn1/intrcn1_13.jsp",
+        "supports": "상계·중계·하계 등 대단위 주거지, 노원역 4·7호선 역세권 및 수락산·불암산·중랑천의 지리 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): nowon: 상계·중계·하계 아파트 단지와 주택가의 분포."
+      }
+    ],
+    "dobong": [
+      {
+        "url": "https://www.dobong.go.kr/ebook/mobile/webzine_view.asp?pid=258&search_year=",
+        "supports": "창동신창시장·창동골목시장·방학동도깨비시장의 소재와 생활시장 기능을 확인함."
+      },
+      {
+        "url": "https://m.dobong.go.kr/majorWork/MajorView.asp?code=10009842&lidx=541",
+        "supports": "창동·방학동·도봉동의 아파트 및 소규모 주택 구성을 확인함. 개별 정비사업의 진행 상태는 인용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): dobong: 창동·도봉동·방학동의 아파트와 주택가. 연식 표현은 제외함."
+      }
+    ],
+    "dongdaemun": [
+      {
+        "url": "https://www.ddm.go.kr/www/contents.do?key=262",
+        "supports": "청량리역·경동시장·서울약령시, 지역 대학, 중랑천·정릉천과 주거지역 구성을 확인함."
+      },
+      {
+        "url": "https://www.ddm.go.kr/www/contents.do?key=500&searchCtgry=%ED%9C%98%EA%B2%BD1%EB%8F%99",
+        "supports": "회기역 주변 소규모 상가·원룸과 아파트의 주거 구성을 확인함."
+      },
+      {
+        "url": "https://www.ddm.go.kr/www/contents.do?key=356&searchCtgry=%EC%9D%B4%EB%AC%B81%EB%8F%99",
+        "supports": "이문1동의 단독주택과 아파트 등 주거 구성을 확인함."
+      }
+    ],
+    "dongjak": [
+      {
+        "url": "https://korean.visitseoul.net/etc-area/%EB%85%B8%EB%9F%89%EC%A7%84-%EC%88%98%EC%82%B0%EC%8B%9C%EC%9E%A5/KOP009505",
+        "supports": "서울관광재단 안내에서 노량진 수산물 도소매시장, 현장 식사 공간과 노량진역 접근 관계를 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): dongjak: 노량진 학원가 원룸·고시원과 흑석동 아파트의 분포. 재개발 시기 표현은 제외함."
+      }
+    ],
+    "mapo": [
+      {
+        "url": "https://uri.seoul.go.kr/web/contents/215.do?mid=1108",
+        "supports": "상암 DMC의 디지털미디어 특화 기능과 방송사 사옥·정보기술 업무시설 구성을 확인함."
+      },
+      {
+        "url": "https://korean.visitseoul.net/mapo-around/?curPage=1",
+        "supports": "서울관광재단 홍대 안내에서 홍대·연남동의 음식점과 문화 공간을 확인함."
+      },
+      {
+        "url": "https://korean.visitseoul.net/mapo-around/?curPage=3",
+        "supports": "서울관광재단 홍대 안내에서 연남동 카페 등 식음 공간을 확인함. 개별 업소 영업시간은 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): mapo: 연남·망원 다세대·원룸과 공덕·상암 아파트의 분포."
+      }
+    ],
+    "seodaemun": [
+      {
+        "url": "https://www.sdm.go.kr/fileUpload/board/209/20260203_5671287938330148.pdf",
+        "supports": "안산·백련산, 연세대·이화여대의 교육문화 환경과 아파트·단독·연립·다세대 등 주택 유형을 확인함."
+      },
+      {
+        "url": "https://sdm.go.kr/lll/directDownload.do?fileName=%EC%84%9C%EB%8C%80%EB%AC%B8%EA%B5%AC+%ED%8F%89%EC%83%9D%ED%95%99%EC%8A%B5+%EC%A3%BC%EB%AF%BC%EC%9A%94%EA%B5%AC%EB%8F%84+%EC%A1%B0%EC%82%AC+%EB%B0%8F+%EC%A4%91%EC%9E%A5%EA%B8%B0+%EB%B0%9C%EC%A0%84%EA%B3%84%ED%9A%8D+%EC%97%B0%EA%B5%AC%28%EA%B2%8C%EC%8B%9C%29.pdf&path=%2Fupload%2Fboarddefault%2F2022%2F03%2F20220303023230635D.pdf",
+        "supports": "신촌의 대학 및 음식·숙박업 상권과 구내 주거 생활권의 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): seodaemun: 신촌 원룸·다세대와 홍제·북아현 단지의 분포. 재개발 시점 표현은 제외함."
+      }
+    ],
+    "seocho": [
+      {
+        "url": "https://www.seocho.go.kr/site/seocho/05/10502020000002015070810.jsp",
+        "supports": "법조타운, 고속버스·남부 터미널, 공동주택 단지와 한강·우면산의 지역 구성을 확인함."
+      },
+      {
+        "url": "https://seocho.newstool.co.kr/pdf/seocho_202505.pdf",
+        "supports": "서초구 공식 소식지에서 서래마을의 카페·식음 공간과 골목 가게를 확인함. 업소별 메뉴·영업시간은 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): seocho: 반포·서초 아파트, 방배 주택가와 양재 빌라의 분포. 서초동 전체를 한강변으로 표현하지 않음."
+      }
+    ],
+    "seongbuk": [
+      {
+        "url": "https://news.seoul.go.kr/economy/archives/58138",
+        "supports": "성신여대입구역 인근 돈암시장의 위치와 식품·생활용품을 취급하는 골목시장 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): seongbuk: 성신여대 원룸·다세대와 길음·장위 아파트의 분포. 단지 연식 표현은 제외함."
+      }
+    ],
+    "songpa": [
+      {
+        "url": "https://www.songpa.go.kr/www/contents.do?key=2484",
+        "supports": "문정2동 공식 소개에서 문정 비즈밸리의 법조단지·업무단지·동남권유통단지 구성을 확인함."
+      },
+      {
+        "url": "https://www.songpa.go.kr/www/index.do",
+        "supports": "송파구 공식 쇼핑관광 안내에서 문정동 로데오거리와 가든파이브의 상업 기능을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): songpa: 잠실·가락 아파트 단지와 방이동 빌라·다세대의 분포."
+      }
+    ],
+    "yangcheon": [
+      {
+        "url": "https://archives.yangcheon.go.kr/mokdong-history/ch3-newtown-features.html",
+        "supports": "목동 중심지구의 상업·업무·공공시설, 주거 단지와 보행·녹지 공간의 계획 및 공간 특성을 확인함."
+      },
+      {
+        "url": "https://archives.yangcheon.go.kr/mokdong-history/ch2-newtown.html",
+        "supports": "목동 주거지 조성과 신정·신월 주택가의 지역 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yangcheon: 목동 아파트와 신월·신정 다세대주택의 분포."
+      }
+    ],
+    "yongsan": [
+      {
+        "url": "https://www.dangjin.go.kr/kor/sub04_09_01_01.do",
+        "supports": "당진시 자매도시 공식 소개에서 용산의 한강·남산 사이 위치, 전자 유통상가와 이태원 관광특구를 확인함."
+      },
+      {
+        "url": "https://opengov.seoul.go.kr/og/com/download.php?dname=%EA%B4%80%EA%B4%91%ED%8A%B9%EA%B5%AC+%EC%A7%80%EC%A0%95+%EB%B0%8F+%EA%B4%80%EB%A6%AC%ED%98%84%ED%99%A9%282016%EB%85%84%29.pdf&uri=%2Fsites%2Fdefault%2Ffiles%2Fpublic_new%2F201604%2F67055.pdf",
+        "supports": "서울시 관광특구 자료에서 용산구 이태원 일대의 세계음식·쇼핑 기능을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): yongsan: 이촌 아파트, 한남 주택과 효창·용산동 주택가의 분포. 가격·등급·연식 표현은 제외함."
+      }
+    ],
+    "eunpyeong": [
+      {
+        "url": "https://urban.seoul.go.kr/UpisArchive/DATA/PWEB/STATIC/dstrct_NW.pdf",
+        "supports": "서울 서북권 생활권계획의 연신내·불광 중심지 및 응암·신사 역세권 생활권 구분을 확인함. 미래 개발 완료는 주장하지 않음."
+      },
+      {
+        "url": "https://ep.go.kr/stat/wt/wt20/wt203020.do?articleNo=220&attachNo=218&mode=download",
+        "supports": "진관동 은평뉴타운, 북한산과 불광천 등 은평구의 지역 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): eunpyeong: 진관동 아파트와 연신내·녹번 주택가의 분포. 주택 연식 표현은 제외함."
+      }
+    ],
+    "jongno": [
+      {
+        "url": "https://hanok.seoul.go.kr/front/kor/town/town03.do",
+        "supports": "인사동길의 공예·고미술 상점과 문화시설, 북촌 및 고궁 주변과의 공간 관계를 확인함."
+      },
+      {
+        "url": "https://www.jongno.go.kr/chTown.do?menuNo=9381",
+        "supports": "종로구 관광 안내의 인사동·북촌과 한옥 관련 공간을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): jongno: 평창 단독주택, 창신 다세대와 고궁 주변 한옥의 분포. 연식 표현은 제외함."
+      },
+      {
+        "url": "https://www.dlenc.co.kr/acpt/constructionView.do?cd_acpt=01&cd_mnu=KU155&cl_biz=01&currentPage=1&dt_from=&dt_to=&projectcode=070645&searchkind=&searchword=&sort=&ynTopList=Y&yn_const_complete=&yn_dt_prev=&yn_foreign=&yn_rpst=",
+        "supports": "시공사 공식 준공 프로젝트: 광화문 D타워의 종로구 청진동 소재와 업무/상업 용도. 사무공간 구분은 이 사실에 연결한 현장 확인 안내이며, 현장 작업 실적을 주장하지 않음."
+      }
+    ],
+    "jung-gu": [
+      {
+        "url": "https://www.junggu.seoul.kr/content.do?cmsid=14063",
+        "supports": "명동·충무로 상권, 남대문·중부·평화시장, 소공·북창 기업·은행 업무, 을지로 기계·공구 판매, 신당·중림 주거지와 간선도로·이면골목의 구성을 확인함."
+      }
+    ],
+    "jungnang": [
+      {
+        "url": "https://ecatalog.jungnang.seoul.kr/src/viewer/download.php?host=main&no=1&site=20161021_084358",
+        "supports": "중랑구 공식 백서의 상봉2동 소개에서 상봉역, 전통시장·대형마트·상가와 단독·연립·아파트 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): jungnang: 면목·상봉·중화 다세대·연립주택과 상봉 주거의 분포. 연식·재개발 진행 표현은 제외함."
+      }
+    ],
+    "ilsan": [
+      {
+        "url": "https://www.goyang.go.kr/gynuri/street/list7.do",
+        "supports": "고양시 호수누리길의 일산문화공원·라페스타·호수공원·웨스턴돔 연결과 보행 문화·상업 공간을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): ilsan: 아파트 단지와 단독주택 단지의 구성."
+      }
+    ],
+    "bundang": [
+      {
+        "url": "https://www.seongnam.go.kr/tour/tu-pm0501006?curPage=1",
+        "supports": "성남시 특화거리 안내의 정자동 카페거리와 가로 상점 구성을 확인함. 판교 업무지구를 분당신도시의 시설로 확장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): bundang: 분당 아파트 단지와 주변 주택가의 분포."
+      },
+      {
+        "url": "https://www.seongnam.go.kr/contents/down/History/HistoryOfSeongnamCity_2.pdf",
+        "supports": "성남시사에 기록된 정자동 분당벤처타운과 야탑동 분당테크노파크 조성 사실. 현재 입주기업 이름·수치·최대 표현은 사용하지 않음. 역 주변 상업공간은 기존 프로필의 상권 자료와 연결."
+      }
+    ],
+    "unjeong": [
+      {
+        "url": "https://www.paju.go.kr/webcontent/ckeditor/2024/2/2/0fedbb97-d917-4947-871c-51b7df4707e2.pdf",
+        "supports": "운정3지구 계획의 주거·상업·업무·문화 용도 배치를 확인함. 계획된 개별 시설의 준공·운영 여부는 주장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): unjeong: 운정신도시 아파트 단지와 주변 주택가의 분포."
+      }
+    ],
+    "dasan": [
+      {
+        "url": "https://buy.gh.or.kr/land/svc/announce/land_announce_view.jsp?MenuId=SVC_ANN&annSeq=1299",
+        "supports": "경기주택도시공사 공급자료에서 다산 진건·지금지구의 상업용지 구분을 확인함. 미공급 용지에 시설이 완공되었다고 주장하지 않음."
+      },
+      {
+        "url": "https://gh.or.kr/gh/announcement-of-salerental001.do?articleNo=52982&attachNo=58855&mode=download",
+        "supports": "다산 진건·지금지구의 공동주택 위치와 주거 구성을 확인함. 현재 분양·임대 조건은 인용하지 않음."
+      }
+    ],
+    "byeollae": [
+      {
+        "url": "https://www.nyj.go.kr/www/contents.do?key=2761",
+        "supports": "별내동 일반현황의 별빛마을·별사랑마을 아파트와 식송·덕송·카페거리 등 동네 구성을 확인함."
+      },
+      {
+        "url": "https://www.nyj.go.kr/culture/viewTnResrceU.do?cpn=35&key=294&resrceNo=349",
+        "supports": "남양주시 문화관광 안내에서 별내 카페거리의 두물로 일대 위치를 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): byeollae: 별내신도시의 아파트 단지와 단독주택 단지 구성."
+      }
+    ],
+    "gimpo-hangang": [
+      {
+        "url": "https://www.gimpo.go.kr/culture/selectTourCntntsWebView.do?ctgry=9&key=6839&tourNo=1914",
+        "supports": "김포시 문화관광 안내에서 금빛수로·수변공원·라베니체 상가 및 쇼핑·문화 편의시설의 구성을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gimpo-hangang: 한강신도시 아파트 단지와 주변 주택가의 분포."
+      }
+    ],
+    "misa": [
+      {
+        "url": "https://www.hanam.go.kr/jumin/contents.do?key=11350",
+        "supports": "미사1동 일반현황에서 미사역·중심상업지역·중앙호수공원과 공동주택·오피스텔·이주자택지를 확인함."
+      },
+      {
+        "url": "https://www.hanam.go.kr/sosik/selectBbsNttView.do?bbsNo=1164&integrDeptCode=&key=10048&nttNo=497994&pageIndex=27&searchCnd=all&searchCtgry=&searchKrwd=&selectPageUnit=",
+        "supports": "미사 자족용지에 지식산업센터가 개발되어 있는 사실만 확인함. 기사 속 호텔 유치 계획과 수요·공실 수치는 사용하지 않음."
+      }
+    ],
+    "jungdong-bucheon": [
+      {
+        "url": "https://wonmi.bucheon.go.kr/site/homepage/menu/viewMenu?menuid=170001002005",
+        "supports": "중1동의 아파트·오피스텔·시청·상업시설과 시청역·신중동역, 중4동의 학교·공원, 상2동의 아파트·다세대 구성을 확인함."
+      }
+    ],
+    "geomdan": [
+      {
+        "url": "https://land.ih.co.kr/open_content/sub/geomdan/business.jsp",
+        "supports": "인천도시공사 사업개요의 공동주택·상업업무용지·공원 배치와 입주 구역을 확인함. 전체 사업의 완료는 주장하지 않음."
+      },
+      {
+        "url": "https://newsletter.ih.co.kr/main/land/landDetail.do?landDiv=1110&land_seq=4",
+        "supports": "계양천을 중심으로 한 상업·주거 생활권의 토지이용 구성을 확인함. 계획 시설의 운영 여부는 주장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): geomdan: 검단신도시 아파트와 주변 주택가의 분포."
+      }
+    ],
+    "wirye": [
+      {
+        "url": "https://www.hanam.go.kr/sosik/selectBbsNttView.do?bbsNo=1204&integrDeptCode=&key=12169&nttNo=140233&pageIndex=44&searchCnd=all&searchCtgry=&searchKrwd=&selectPageUnit=",
+        "supports": "하남시 공식 소식지에서 트랜짓몰·위례광장·휴먼링 보행로·창곡천 수변공원의 구성을 확인함. 트램 개통 여부는 주장하지 않음."
+      },
+      {
+        "url": "https://www.hanam.go.kr/sosik/selectBbsNttView.do?bbsNo=1204&integrDeptCode=&key=12169&nttNo=376542&pageIndex=35&searchCnd=all&searchCtgry=&searchKrwd=&selectPageUnit=",
+        "supports": "송파·성남·하남에 걸친 위례와 트랜짓몰의 생활 공간을 확인함."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): wirye: 성남·하남·송파에 걸친 아파트 단지와 주거시설 구성."
+      }
+    ],
+    "gwanggyo": [
+      {
+        "url": "https://gnews.gg.go.kr/briefing/brief_gongbo_view.do?BS_CODE=S017&number=66549",
+        "supports": "기존 광교테크노밸리의 소재와 연구·업무 기능을 확인함. 기사 속 바이오허브 개발계획은 완료 시설로 표현하지 않음."
+      },
+      {
+        "url": "https://www.suwon.go.kr/webcontent/ckeditor/2025/7/10/5da5eb80-d9a3-465e-93c8-fc83afd8d0bc.pdf",
+        "supports": "수원시 관광자료에서 광교 카페거리의 카페·음식점과 광교호수공원 주변 복합 쇼핑 공간을 확인함."
+      },
+      {
+        "url": "https://www.gh.or.kr/gh/press-release.do?article.offset=2000&articleLimit=10&articleNo=55686&mode=view",
+        "supports": "광교 공동주택·근린생활시설 입주 및 수원·용인의 공동 사업 구성을 확인함."
+      },
+      {
+        "url": "https://buy.gh.or.kr/land/svc/announce/land_announce_html.jsp?strFile=00432_201111300936241.jsp",
+        "supports": "광교의 업무복합·중심상업·공동주택 등 토지이용 구성을 확인함. 개별 공급용지의 현재 준공 상태는 주장하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): gwanggyo: 수원·용인 경계의 아파트와 주상복합 구성."
+      }
+    ],
+    "itaewon": [
+      {
+        "url": "https://opengov.seoul.go.kr/og/com/download.php?dname=%EA%B4%80%EA%B4%91%ED%8A%B9%EA%B5%AC+%EC%A7%80%EC%A0%95+%EB%B0%8F+%EA%B4%80%EB%A6%AC%ED%98%84%ED%99%A9%282016%EB%85%84%29.pdf&uri=%2Fsites%2Fdefault%2Ffiles%2Fpublic_new%2F201604%2F67055.pdf",
+        "supports": "서울시 관광특구 관리자료에서 이태원동·한남동 일부의 특구 범위와 세계음식·쇼핑 기능을 확인함. 방문객 수와 군부대 관련 현황은 사용하지 않음."
+      },
+      {
+        "url": "https://github.com/JOYUNHO-cmd/wwwneutiulcom/blob/92efecb6feed9cd625daa3b91fa564356c6b9a6b/lib/regionResidentialStory.mjs",
+        "supports": "기존 사이트 주거 자료(공식 자료의 독립 확인과 구분): itaewon: 이태원·한남·보광의 경사진 골목과 다세대·단독주택 구성. 주택 연식은 주장하지 않음."
+      }
+    ]
+  }
+}

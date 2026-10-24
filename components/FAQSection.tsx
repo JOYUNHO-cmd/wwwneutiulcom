@@ -4,24 +4,28 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 import { m } from 'motion/react';
 import { FAQ_DATA } from '../lib/faqData';
 import { trackEvent } from '../lib/analytics';
+import HomeDesktopFAQ from './home/HomeDesktopFAQ';
+import './home/homeFaqDesktop.css';
 
 interface FAQSectionProps {
   // If set, the bottom trust badge's "무료 상담 신청" button calls this
   // number directly instead of linking to /contact — used on service
   // landing pages, where a direct call is the more natural next step.
   ctaPhone?: string;
+  // Home alone uses a two-column FAQ at 1280px and wider.
+  desktopLayout?: boolean;
 }
 
 // Self-contained "안심 Q&A" section — originally lived inline in Home.tsx;
 // extracted so it can also render on every ServiceLanding page without
 // duplicating ~250 lines of accordion/dropdown markup and its state.
-const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
+const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone, desktopLayout = false }) => {
   const [activeFAQTab, setActiveFAQTab] = useState<string | null>(null);
   const [openFAQIdx, setOpenFAQIdx] = useState<string | null>(null);
   const [faqDropdownOpen, setFaqDropdownOpen] = useState(false);
 
   return (
-    <section id="faq" className="py-20 md:py-28 bg-linear-to-br/srgb from-[#ebf7f4] via-[#f7fbf9] to-[#e6f4f1] relative overflow-hidden border-b border-slate-100/80">
+    <section id="faq" className={`${desktopLayout ? 'home-faq-desktop-layout ' : ''}py-20 md:py-28 bg-linear-to-br/srgb from-[#ebf7f4] via-[#f7fbf9] to-[#e6f4f1] relative overflow-hidden border-b border-slate-100/80`}>
       {/* Premium subtle dot pattern overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#22ba8b_0.8px,transparent_0.8px)] bg-size-[24px_24px] mask-[radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-[0.06] pointer-events-none" />
 
@@ -29,7 +33,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
       <div className="absolute top-1/4 right-[-10%] w-[600px] h-[600px] bg-emerald-400/12 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-[-10%] w-[600px] h-[600px] bg-teal-400/12 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className={`${desktopLayout ? 'home-faq-container ' : ''}max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10`}>
         <div className="text-center mb-10 md:mb-14">
           <h2 className="text-[18px] min-[360px]:text-[20px] min-[400px]:text-[22px] sm:text-[32px] md:text-[36.4px] font-black text-slate-900 mb-3.5 leading-tight tracking-tight whitespace-nowrap">
             가장 많이 질문하시는 <span className="bg-linear-to-r/srgb from-emerald-600 via-teal-600 to-emerald-500 bg-clip-text text-transparent underline decoration-emerald-300 decoration-wavy underline-offset-8">안심 Q&A</span>
@@ -39,8 +43,10 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
           </p>
         </div>
 
+        {desktopLayout && <HomeDesktopFAQ />}
+
         {/* Mobile FAQ Dropdown Selector */}
-        <div className="block md:hidden relative mb-8 z-30">
+        <div className={`${desktopLayout ? 'home-faq-legacy ' : ''}block md:hidden relative mb-8 z-30`}>
           <button
             onClick={() => setFaqDropdownOpen(!faqDropdownOpen)}
             aria-expanded={faqDropdownOpen}
@@ -130,7 +136,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
         </div>
 
         {/* Desktop Category Navigation Bar (Single Line Segmented Control) */}
-        <div className="hidden md:flex items-center justify-center mb-10">
+        <div className={`${desktopLayout ? 'home-faq-legacy ' : ''}hidden md:flex items-center justify-center mb-10`}>
           <div className="inline-flex items-center p-1.5 bg-slate-100/90 backdrop-blur-md border border-slate-200/90 rounded-full shadow-inner max-w-full overflow-x-auto scrollbar-none gap-1">
             <button
               onClick={() => {
@@ -166,7 +172,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
 
         {/* Interactive FAQ Accordion List */}
         {activeFAQTab === null && (
-          <div className="max-w-2xl mx-auto text-center py-10 md:py-14 px-6 rounded-2xl md:rounded-3xl border-2 border-dashed border-emerald-300/70 bg-white/60">
+          <div className={`${desktopLayout ? 'home-faq-legacy ' : ''}max-w-2xl mx-auto text-center py-10 md:py-14 px-6 rounded-2xl md:rounded-3xl border-2 border-dashed border-emerald-300/70 bg-white/60`}>
             <p className="text-slate-600 font-bold text-sm md:text-base mb-5 break-keep">
               위에서 궁금하신 카테고리를 선택하시면 질문을 확인하실 수 있어요.
             </p>
@@ -192,7 +198,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
           </div>
         )}
         {/* Keep every answer in initial HTML, while preserving the category chooser. */}
-        <div hidden={activeFAQTab === null} className="space-y-4 max-w-3xl mx-auto">
+        <div hidden={activeFAQTab === null} className={`${desktopLayout ? 'home-faq-legacy ' : ''}space-y-4 max-w-3xl mx-auto`}>
           {FAQ_DATA
             .flatMap((cat) => cat.qas.map((qa, index) => {
               const uniqueKey = `${cat.category}-${index}`;
@@ -268,7 +274,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ ctaPhone }) => {
         </div>
 
         {/* Bottom Trust Badge */}
-        <div className="text-center mt-12 md:mt-16 p-6 sm:p-8 bg-linear-to-r/srgb from-[#04a875] via-[#03855c] to-[#026344] text-white rounded-3xl max-w-2xl mx-auto shadow-xl shadow-emerald-950/20 border border-emerald-400/30 relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className={`${desktopLayout ? 'home-faq-cta ' : ''}text-center mt-12 md:mt-16 p-6 sm:p-8 bg-linear-to-r/srgb from-[#04a875] via-[#03855c] to-[#026344] text-white rounded-3xl max-w-2xl mx-auto shadow-xl shadow-emerald-950/20 border border-emerald-400/30 relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-4`}>
           <div className="text-center sm:text-left">
             <p className="text-sm sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] font-extrabold text-white leading-snug break-keep">
               💡 찾으시는 답변이 없으신가요?

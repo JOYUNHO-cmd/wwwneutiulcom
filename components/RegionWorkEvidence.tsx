@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { getRegionWorkEvidence } from '../lib/regionWorkEvidence.mjs';
+import SentenceFlow from './SentenceFlow';
 
 interface RegionWorkEvidenceProps {
   serviceId: string;
@@ -26,8 +27,8 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
       <h2 id={headingId} className="scroll-mt-28 text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep">
         {regionName} {serviceLabel}, 실제 작업 기록
       </h2>
-      <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 break-keep">
-        직접 진행한 {serviceLabel} 사례입니다. 작업 범위를 확인하고, 사진을 눌러 전체 현장 기록을 살펴보세요.
+      <p className="reading-copy mb-7">
+        <SentenceFlow text={`직접 진행한 ${serviceLabel} 사례입니다. 작업 범위를 확인하고, 사진을 눌러 전체 현장 기록을 살펴보세요.`} />
       </p>
       <div className={`grid ${isSingle ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'} items-start gap-3 sm:gap-5`}>
         {records.map((record) => {
@@ -36,7 +37,7 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
             !visibleLabels.has(fact.label) || (!isSingle && fact.label === '주요 작업'),
           );
           return (
-          <article key={record.slug} className={`min-w-0 rounded-xl sm:rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs ${isSingle ? 'md:grid md:grid-cols-2' : ''}`}>
+          <article key={record.slug} className={`reading-record ${isSingle ? 'reading-record-single' : ''} min-w-0 rounded-xl sm:rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs ${isSingle ? 'md:grid md:grid-cols-2' : ''}`}>
             <Link
               to={record.sourceUrl}
               aria-label={`${record.heading} — 사진·전체 작업 기록 보기`}
@@ -60,16 +61,16 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
             </Link>
             <div className="min-w-0">
               <div className={isSingle ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}>
-                <h3 className={`${isSingle ? 'text-lg sm:text-xl' : 'text-[13px] sm:text-base'} font-bold text-slate-900 leading-snug break-keep [overflow-wrap:anywhere]`}>
-                  <Link to={record.sourceUrl} className={`${isSingle ? '' : 'line-clamp-3 min-h-[4.125em]'} hover:text-primary focus-visible:outline-primary`}>
+                <h3 className={`${isSingle ? 'text-lg sm:text-xl' : 'text-[16px] sm:text-base'} font-bold text-slate-900 leading-relaxed break-keep [overflow-wrap:anywhere]`}>
+                  <Link to={record.sourceUrl} className="hover:text-primary focus-visible:outline-primary">
                     {record.cardTitle || record.heading}
                   </Link>
                 </h3>
-                <dl aria-label="작업 핵심 정보" className="mt-4 space-y-3">
+                <dl aria-label="작업 핵심 정보" className="mt-5 space-y-5">
                   {visibleFacts.map((fact) => (
                     <div key={fact.label}>
-                      <dt className="mb-1 text-xs sm:text-sm font-bold text-slate-800">{fact.label}</dt>
-                      <dd className={`${isSingle ? 'text-sm sm:text-base' : 'text-[13px] sm:text-sm'} ${!isSingle && fact.label === '주요 작업' ? 'line-clamp-2' : ''} leading-relaxed text-slate-600 break-keep [overflow-wrap:anywhere]`}>{fact.value}</dd>
+                      <dt className="mb-2 text-sm font-bold text-slate-800">{fact.label}</dt>
+                      <dd className="reading-copy reading-card-copy"><SentenceFlow text={fact.value} /></dd>
                     </div>
                   ))}
                 </dl>
@@ -84,17 +85,17 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
                 </span>
               </summary>
               <div className={isSingle ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}>
-                <dl className="space-y-3">
+                <dl className="space-y-5">
                   {additionalFacts.map((fact) => (
                     <div key={fact.label}>
-                      <dt className="mb-1 text-xs sm:text-sm font-bold text-slate-800">{fact.label}</dt>
-                      <dd className="text-[13px] sm:text-sm leading-relaxed text-slate-600 break-keep [overflow-wrap:anywhere]">{fact.value}</dd>
+                      <dt className="mb-2 text-sm font-bold text-slate-800">{fact.label}</dt>
+                      <dd className="reading-copy reading-card-copy"><SentenceFlow text={fact.value} /></dd>
                     </div>
                   ))}
                 </dl>
                 {record.summaryNote && (
-                  <p className="mt-4 rounded-lg bg-slate-50 p-2.5 text-[13px] sm:text-sm leading-relaxed text-slate-600 break-keep [overflow-wrap:anywhere]">
-                    {record.summaryNote}
+                  <p className="reading-copy reading-card-copy reading-note mt-5 bg-slate-50 p-3">
+                    <SentenceFlow text={record.summaryNote} />
                   </p>
                 )}
                 <Link to={record.sourceUrl} className="mt-4 inline-flex min-h-11 items-center gap-1 text-xs sm:text-sm font-bold text-primary underline underline-offset-4 hover:text-primaryDark">
