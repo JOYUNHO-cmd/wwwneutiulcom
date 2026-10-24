@@ -4,7 +4,7 @@ import { getRegionHeroReading } from '../lib/regionHeroReading.mjs';
 
 interface RegionHeroIntroProps {
   text: string;
-  region: { id: string; story: string };
+  region: { id: string; name: string; story: string; dongs: string[] };
   serviceId: string;
 }
 

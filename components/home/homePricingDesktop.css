@@ -1,0 +1,41 @@
+/* Keep the existing single-column presentation unchanged below desktop. */
+@media (min-width: 1280px) {
+  .home-pricing-shell {
+    max-width: 1280px;
+    padding-inline: 32px;
+  }
+
+  .home-pricing-card {
+    max-width: none;
+    padding: 0 36px;
+  }
+
+  .home-pricing-card-heading {
+    padding-top: 36px;
+    padding-bottom: 4px;
+  }
+
+  .home-pricing-topics {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 64px;
+  }
+
+  .home-pricing-topic {
+    min-width: 0;
+    position: relative;
+    padding-block: 32px;
+  }
+
+  .home-pricing-topic:nth-child(2) {
+    border-top: 0;
+  }
+
+  .home-pricing-topic:nth-child(even)::before {
+    content: '';
+    position: absolute;
+    inset-block: 32px;
+    left: -32px;
+    border-left: 1px solid #e2e8f0;
+  }
+}

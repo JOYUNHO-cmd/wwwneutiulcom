@@ -2,62 +2,55 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { REGIONS, getRegion } from '../lib/regionData.mjs';
 import { REGION_LANDING_SERVICES, buildRegionServiceContent } from '../lib/regionServiceContent.mjs';
-import { REGION_HERO_CONTEXT } from '../lib/regionHeroContext.mjs';
+import { getRegionHeroContextParts } from '../lib/regionHeroServiceContext.mjs';
 import { buildRegionHeroIntro } from '../lib/regionHeroCopy.mjs';
 import { getRegionHeroReading } from '../lib/regionHeroReading.mjs';
 
-test('all regional heroes retain every original character and separate context from service guidance', t => {
+test('every hero renders its complete context and consultation guidance in order', t => {
   let checked = 0;
   for (const serviceId of REGION_LANDING_SERVICES) {
     for (const region of REGIONS) {
       const { heroIntro, serviceLabel } = buildRegionServiceContent(region, serviceId);
       const { contextParts, guidance } = getRegionHeroReading(heroIntro, region, serviceId);
       const where = `${serviceId}/${region.id}`;
-      assert.equal(contextParts.join('') + guidance, heroIntro, `${where}: original copy, whitespace or order changed`);
+      assert.equal(contextParts.join('') + guidance, heroIntro, `${where}: text, whitespace or order lost`);
+      assert.equal(contextParts.length, 2, `${where}: local facts and work checks remain separate on mobile`);
+      assert.ok(contextParts[0].startsWith(`${region.name} ${serviceLabel} — `), where);
       assert.ok(contextParts.every(part => typeof part === 'string' && part.length > 0), where);
-      assert.ok(guidance.length > 0, `${where}: service guidance must remain present`);
-      const residential = serviceId === 'trash-house' || serviceId === 'lonely-death';
-      const originalContext = residential ? REGION_HERO_CONTEXT[region.id] : `${region.story} `;
-      assert.equal(contextParts.join(''), `${region.name} ${serviceLabel} — ${originalContext}`, where);
-      if (!residential) {
-        assert.ok(contextParts.length >= 2 && contextParts.length <= 3, `${where}: reviewed story needs one or two clause boundaries`);
+      assert.ok(guidance.length > 0, `${where}: consultation guidance must remain present`);
+      if (!['trash-house', 'lonely-death'].includes(serviceId)) {
+        assert.equal(guidance, '청소가 필요한 공간과 원하시는 일정을 알려주세요. 현장 상태에 맞춰 작업 범위와 견적을 안내해 드립니다.');
       }
       checked++;
     }
   }
-  assert.equal(checked, REGION_LANDING_SERVICES.length * REGIONS.length);
-  t.diagnostic(`${checked} hero introductions preserve all characters; title, metadata and copy sources are untouched`);
+  assert.equal(checked, 1456);
+  t.diagnostic(`${checked} hero introductions retain every character for either screen size`);
 });
 
-test('Suwon separates its two reviewed clauses without replacing punctuation or spaces', () => {
+test('Suwon begins with region plus service and separates work checks from local facts', () => {
   const region = getRegion('suwon');
   const text = buildRegionServiceContent(region, 'office').heroIntro;
-  assert.deepEqual(getRegionHeroReading(text, region, 'office'), {
-    contextParts: [
-      '수원시 사무실청소 — 조선시대 축성된 수원화성이 남아 있는 역사도시이자 ',
-      '삼성디지털시티와 광교테크노밸리가 자리한 첨단산업도시로, ',
-      '구도심 상권과 신도심 사옥의 관리 수요가 함께 발생합니다. ',
-    ],
-    guidance: '그만큼 사무실청소가 필요한 현장을 꾸준히 만나 왔습니다. 현장 여건을 먼저 확인한 뒤 작업 범위를 정합니다.',
-  });
+  const reading = getRegionHeroReading(text, region, 'office');
+  const [fact, connection] = getRegionHeroContextParts(region, 'office');
+  assert.deepEqual(reading.contextParts, [`수원시 사무실청소 — ${fact}`, connection]);
+  assert.equal(reading.guidance, '청소가 필요한 공간과 원하시는 일정을 알려주세요. 현장 상태에 맞춰 작업 범위와 견적을 안내해 드립니다.');
 });
 
-test('Seongnam keeps the Bundang and Wirye enumeration together and breaks only after the connecting clause', () => {
+test('place names and enumerations are not split by arbitrary commas or character count', () => {
   const region = getRegion('seongnam');
-  const text = buildRegionServiceContent(region, 'office').heroIntro;
-  const { contextParts } = getRegionHeroReading(text, region, 'office');
-  assert.deepEqual(contextParts, [
-    '성남시 사무실청소 — 구시가지인 수정·중원구와 1기 신도시 분당, 최근 개발된 위례신도시까지 개발 시기가 전혀 다른 지역들이 한 도시 안에 공존해, ',
-    '노후 건물 리모델링 청소부터 신축 단지 입주청소까지 폭넓은 수요를 다룹니다. ',
-  ]);
+  const { heroIntro } = buildRegionServiceContent(region, 'move-in');
+  const result = getRegionHeroReading(heroIntro, region, 'move-in');
+  assert.equal(result.contextParts[0], `성남시 입주청소 — ${getRegionHeroContextParts(region, 'move-in')[0]}`);
+  assert.equal(result.contextParts.join('') + result.guidance, heroIntro);
 });
 
-test('residential services keep their existing complete context and service-specific conditions', () => {
+test('residential services keep their complete distinct consultation conditions', () => {
   for (const [regionId, serviceId] of [['ansan', 'trash-house'], ['guro', 'lonely-death']]) {
     const region = getRegion(regionId);
-    const { heroIntro, serviceLabel } = buildRegionServiceContent(region, serviceId);
+    const { heroIntro } = buildRegionServiceContent(region, serviceId);
     const { contextParts, guidance } = getRegionHeroReading(heroIntro, region, serviceId);
-    assert.deepEqual(contextParts, [`${region.name} ${serviceLabel} — ${REGION_HERO_CONTEXT[regionId]}`]);
+    assert.equal(contextParts.length, 2);
     assert.equal(contextParts.join('') + guidance, heroIntro);
     if (serviceId === 'trash-house') {
       assert.ok(guidance.includes('쌓인 물건의 양과 오염 정도, 반출 동선을 먼저 확인한 뒤'));
@@ -67,7 +60,7 @@ test('residential services keep their existing complete context and service-spec
   }
 });
 
-test('unreviewed enumeration, numbers and long clauses are never divided by commas or character count', () => {
+test('unreviewed enumeration, numbers and clauses keep the existing exact-text fallback', () => {
   const region = {
     id: 'unreviewed', name: '검증 지역', dongs: ['검증동'],
     story: '면적은 3,500㎡, 인원은 3~4명, 작업 시간은 1.5시간이며 원래 기록과 조건을 그대로 유지합니다.',
