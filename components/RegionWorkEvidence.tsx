@@ -18,22 +18,29 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
   if (records.length === 0) return null;
 
   const headingId = `region-work-evidence-${serviceId}-${regionId}`;
+  const isSingle = records.length === 1;
+  const visibleLabels = new Set(['현장', '주요 작업', '인원·시간']);
 
   return (
     <section aria-labelledby={headingId} className={className}>
       <h2 id={headingId} className="scroll-mt-28 text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep">
-        {regionName} 현장으로 확인하는 느티울의 시공 경험
+        {regionName} {serviceLabel}, 실제 작업 기록
       </h2>
       <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6 break-keep">
-        직접 진행한 {serviceLabel} 사례입니다. 작업 요약을 펼쳐 보거나 사진을 눌러 전체 후기를 확인하세요.
+        직접 진행한 {serviceLabel} 사례입니다. 작업 범위를 확인하고, 사진을 눌러 전체 현장 기록을 살펴보세요.
       </p>
-      <div className="grid grid-cols-2 lg:grid-cols-3 items-start gap-3 sm:gap-5">
-        {records.map((record) => (
-          <article key={record.slug} className="min-w-0 rounded-xl sm:rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs">
+      <div className={`grid ${isSingle ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'} items-start gap-3 sm:gap-5`}>
+        {records.map((record) => {
+          const visibleFacts = record.summaryFacts.filter((fact) => visibleLabels.has(fact.label));
+          const additionalFacts = record.summaryFacts.filter((fact) =>
+            !visibleLabels.has(fact.label) || (!isSingle && fact.label === '주요 작업'),
+          );
+          return (
+          <article key={record.slug} className={`min-w-0 rounded-xl sm:rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs ${isSingle ? 'md:grid md:grid-cols-2' : ''}`}>
             <Link
               to={record.sourceUrl}
               aria-label={`${record.heading} 전체 후기 보기`}
-              className="group/photo relative block bg-slate-100 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+              className="group/photo relative block self-start bg-slate-100 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
             >
               <img
                 src={record.thumbnail}
@@ -48,22 +55,30 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
                 <ArrowUpRight size={16} />
               </span>
             </Link>
-            <div className="p-3 sm:p-4">
-              <h3 className="text-[13px] sm:text-base font-bold text-slate-900 leading-snug break-keep [overflow-wrap:anywhere]">
-                <Link to={record.sourceUrl} className="line-clamp-3 min-h-[4.125em] hover:text-primary focus-visible:outline-primary">
-                  {record.cardTitle || record.heading}
-                </Link>
-              </h3>
-            </div>
+            <div className="min-w-0">
+              <div className={isSingle ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}>
+                <h3 className={`${isSingle ? 'text-lg sm:text-xl' : 'text-[13px] sm:text-base'} font-bold text-slate-900 leading-snug break-keep [overflow-wrap:anywhere]`}>
+                  <Link to={record.sourceUrl} className={`${isSingle ? '' : 'line-clamp-3 min-h-[4.125em]'} hover:text-primary focus-visible:outline-primary`}>
+                    {record.cardTitle || record.heading}
+                  </Link>
+                </h3>
+                <dl aria-label="작업 핵심 정보" className="mt-4 space-y-3">
+                  {visibleFacts.map((fact) => (
+                    <div key={fact.label}>
+                      <dt className="mb-1 text-xs sm:text-sm font-bold text-slate-800">{fact.label}</dt>
+                      <dd className={`${isSingle ? 'text-sm sm:text-base' : 'text-[13px] sm:text-sm'} ${!isSingle && fact.label === '주요 작업' ? 'line-clamp-2' : ''} leading-relaxed text-slate-600 break-keep [overflow-wrap:anywhere]`}>{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             <details className="group border-t border-slate-100">
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-1 bg-emerald-50/70 px-3 py-3 text-xs sm:text-sm font-bold text-emerald-800 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
-                <span className="group-open:hidden">작업 요약 보기</span>
-                <span className="hidden group-open:inline">작업 요약 접기</span>
+                  <span>작업 과정·참고사항</span>
                 <ChevronDown size={16} aria-hidden="true" className="shrink-0 transition-transform duration-200 group-open:rotate-180" />
               </summary>
-              <div className="p-3 sm:p-4">
+              <div className={isSingle ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}>
                 <dl className="space-y-3">
-                  {record.summaryFacts.map((fact) => (
+                  {additionalFacts.map((fact) => (
                     <div key={fact.label}>
                       <dt className="mb-1 text-xs sm:text-sm font-bold text-slate-800">{fact.label}</dt>
                       <dd className="text-[13px] sm:text-sm leading-relaxed text-slate-600 break-keep [overflow-wrap:anywhere]">{fact.value}</dd>
@@ -80,8 +95,10 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
                 </Link>
               </div>
             </details>
+            </div>
           </article>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
