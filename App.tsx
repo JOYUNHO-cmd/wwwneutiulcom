@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, Suspense, lazy } from 'react';
-import { BrowserRouter, MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, LazyMotion, m } from 'motion/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -7,7 +7,6 @@ import MobileStickyBar from './components/MobileStickyBar';
 import FloatingContactButtons from './components/FloatingContactButtons';
 import SEO from './components/SEO';
 import ChunkErrorBoundary from './components/ChunkErrorBoundary';
-import { normalizePathname } from './lib/pathUtils';
 // Home stays a static import: it's the only route entry-server.tsx ever
 // renders (SSR only ever matches '/'), and React Router doesn't mount the
 // element of a non-matching <Route>, so lazy-loading every other page below
@@ -25,7 +24,6 @@ import { SiteProvider } from './context/SiteContext';
 const loadMotionFeatures = () => import('./lib/motionFeatures').then((mod) => mod.default);
 
 const About = lazy(() => import('./pages/About'));
-const Services = lazy(() => import('./pages/Services'));
 const ServiceLanding = lazy(() => import('./pages/ServiceLanding'));
 const RegionServiceLanding = lazy(() => import('./pages/RegionServiceLanding'));
 const RegionCaseDetail = lazy(() => import('./pages/RegionCaseDetail'));
@@ -76,7 +74,7 @@ const AnimatedRoutes: React.FC = () => {
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Services />} />
+              <Route path="/services" element={<Navigate to="/" replace />} />
               <Route path="/services/:serviceId" element={<ServiceLanding />} />
               <Route path="/services/:serviceId/:regionId" element={<RegionServiceLanding />} />
               <Route path="/services/:serviceId/:regionId/:caseId" element={<RegionCaseDetail />} />
@@ -97,7 +95,6 @@ const AnimatedRoutes: React.FC = () => {
 const Layout = ({ children }: { children?: React.ReactNode }) => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
-  const isServices = normalizePathname(location.pathname) === '/services';
 
   return (
     <>
@@ -106,7 +103,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
       <main className="grow min-h-svh flex flex-col">
         {children}
       </main>
-      {!isAdmin && !isServices && <Footer />}
+      {!isAdmin && <Footer />}
       {!isAdmin && <FloatingContactButtons />}
       {!isAdmin && <MobileStickyBar />}
     </>

@@ -12,7 +12,8 @@ import {
 const baseline = JSON.parse(readFileSync(new URL('./fixtures/home-desktop-layout-baseline.json', import.meta.url), 'utf8'));
 const load = createLoader();
 const allQuestions = baseline.faq.data.flatMap(category => category.qas);
-const questionButtons = document => document.querySelectorAll('button[aria-expanded][aria-controls]');
+const questionButtons = document => document.querySelectorAll('button[aria-expanded][aria-controls*="answer-"]');
+const expandedQuestions = document => questionButtons(document).filter(button => button.getAttribute('aria-expanded') === 'true');
 const byId = (document, id) => document.querySelectorAll('[id]').find(node => node.getAttribute('id') === id);
 const visibleQuestions = document => questionButtons(document).filter(button => {
   for (let node = button; node; node = node.parentNode) if (node.hasAttribute?.('hidden')) return false;
@@ -70,7 +71,8 @@ test('home opt-in preserves the complete mobile FAQ and each desktop question wi
   const desktop = document.querySelector('.home-faq-desktop');
   assert.ok(desktop);
   assertQuestions(desktop, document, allQuestions);
-  assert.equal(visibleQuestions(desktop).length, baseline.faq.data[0].qas.length);
+  assert.equal(desktop.querySelector('button[aria-pressed="true"]').textContent, '전체 보기');
+  assert.deepEqual(visibleQuestions(desktop).map(questionText), allQuestions.slice(0, 4).map(qa => normalize(qa.q)));
   const ids = document.querySelectorAll('[id]').map(node => node.getAttribute('id'));
   assert.equal(new Set(ids).size, ids.length, 'The two views must not share answer or question IDs');
   for (const control of document.querySelectorAll('[aria-controls], [aria-labelledby]')) {
@@ -93,31 +95,77 @@ test('desktop FAQ category selection and answer toggles use the full original co
     buttonElement(tree, category.categoryName).props.onClick();
     tree = harness.render();
     let document = parse(renderTree(tree));
+    if (category.category === 'all') {
+      assert.equal(visibleQuestions(document).length, 4);
+      elements(tree).find(node => node.props['data-faq-disclosure'] === 'more').props.onClick();
+      tree = harness.render();
+      document = parse(renderTree(tree));
+    }
     assert.deepEqual(visibleQuestions(document).map(questionText), category.qas.map(qa => normalize(qa.q)));
     assert.equal(document.querySelectorAll('button[aria-pressed="true"]').length, 1);
     assert.equal(document.querySelector('button[aria-pressed="true"]').textContent, category.categoryName);
-    assert.equal(document.querySelectorAll('button[aria-expanded="true"]').length, 0, 'Changing category closes the previous answer');
+    assert.equal(expandedQuestions(document).length, 0, 'Changing category closes the previous answer');
     const firstQuestion = category.qas[0];
     const first = elements(tree).find(node => node.type === 'button' && node.props['aria-expanded'] !== undefined && normalize(elementText(node)) === `Q${normalize(firstQuestion.q)}`);
     first.props.onClick();
     tree = harness.render();
     document = parse(renderTree(tree));
-    const expanded = document.querySelectorAll('button[aria-expanded="true"]');
+    const expanded = expandedQuestions(document);
     assert.equal(expanded.length, 1);
     assert.equal(questionText(expanded[0]), normalize(firstQuestion.q));
     const answer = byId(document, expanded[0].getAttribute('aria-controls'));
     assert.equal(answer.hasAttribute('hidden'), false);
     assert.equal(normalize(answer.textContent).replace(/^A\s*/, ''), normalize(firstQuestion.a));
     // Click the current handler, so the test covers closing as well as opening.
-    elements(tree).find(node => node.type === 'button' && node.props['aria-expanded'] === true).props.onClick();
+    elements(tree).find(node => node.type === 'button' && node.props['aria-expanded'] === true && node.props.id?.includes('-question-')).props.onClick();
     tree = harness.render();
     document = parse(renderTree(tree));
-    assert.equal(document.querySelectorAll('button[aria-expanded="true"]').length, 0);
+    assert.equal(expandedQuestions(document).length, 0);
     assert.equal(byId(document, answer.getAttribute('id')).hasAttribute('hidden'), true);
     // Leave an answer open to check the next category really resets it.
     elements(tree).find(node => node.type === 'button' && node.props['aria-controls'] === answer.getAttribute('id')).props.onClick();
     tree = harness.render();
   }
+});
+
+test('desktop more control reveals all original questions and resets when returning to all', () => {
+  const harness = createHookHarness(files.desktopFaq);
+  let tree = harness.render();
+  const more = () => elements(tree).find(node => node.props['data-faq-disclosure'] === 'more');
+  const question = index => elements(tree).filter(node => node.type === 'button' && node.props.id?.includes('-question-'))[index];
+  assert.equal(more().props['aria-expanded'], false);
+  question(0).props.onClick();
+  tree = harness.render();
+  more().props.onClick();
+  tree = harness.render();
+  let document = parse(renderTree(tree));
+  assert.deepEqual(visibleQuestions(document).map(questionText), allQuestions.map(qa => normalize(qa.q)));
+  assert.equal(more().props['aria-expanded'], true);
+  const disclosureTarget = more().props['aria-controls'];
+  assert.equal(byId(document, disclosureTarget).hasAttribute('hidden'), false);
+  more().props.onClick();
+  tree = harness.render();
+  document = parse(renderTree(tree));
+  assert.equal(visibleQuestions(document).length, 4);
+  assert.equal(expandedQuestions(document).length, 1, 'Collapsing more must preserve an open answer among the first four');
+  more().props.onClick();
+  tree = harness.render();
+  question(4).props.onClick();
+  tree = harness.render();
+  more().props.onClick();
+  tree = harness.render();
+  document = parse(renderTree(tree));
+  assert.equal(expandedQuestions(document).length, 0, 'Collapsing more closes a now-hidden answer');
+  assert.equal(byId(document, disclosureTarget).hasAttribute('hidden'), true);
+  more().props.onClick();
+  tree = harness.render();
+  buttonElement(tree, '작업 과정 & 범위').props.onClick();
+  tree = harness.render();
+  assert.equal(more(), undefined);
+  buttonElement(tree, '전체 보기').props.onClick();
+  tree = harness.render();
+  assert.equal(visibleQuestions(parse(renderTree(tree))).length, 4);
+  assert.equal(more().props['aria-expanded'], false);
 });
 
 test('mobile FAQ retains the chooser, dropdown selection and single-answer interaction', () => {

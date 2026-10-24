@@ -16,7 +16,7 @@ test('canonical and entity URLs use the production origin without tracking param
 });
 
 test('unknown service, region and route are noindex; valid routes remain indexable', () => {
-  for (const path of ['/missing', '/services/missing', '/services/office/missing', '/services/office/gangnam/extra', '/admin']) {
+  for (const path of ['/missing', '/services', '/services/missing', '/services/office/missing', '/services/office/gangnam/extra', '/admin']) {
     assert.equal(meta(path).shouldNoindex, true, path);
   }
   for (const path of ['/', '/about', '/services/office', '/services/office/gangnam']) {

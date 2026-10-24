@@ -9,6 +9,7 @@ test('AI reading index links all existing services using standard Markdown links
   assert.match(docs['llms.txt'], /^# 느티울종합청소\n/);
   const urls = [...docs['llms.txt'].matchAll(/\]\((https:\/\/[^)]+)\)/g)].map(x => x[1]);
   for (const service of SERVICES) assert.ok(urls.includes(`https://www.neutiul.com/services/${service.id}`));
+  assert.ok(!urls.includes('https://www.neutiul.com/services'), 'Do not advertise the retired service directory');
   assert.match(docs['llms.txt'], /별도 지점이나 해당 지역의 시공 실적을 뜻하지 않습니다/);
   for (const { q, a } of FAQ_DATA.flatMap(cat => cat.qas)) {
     assert.ok(docs['llms-full.txt'].includes(q));
