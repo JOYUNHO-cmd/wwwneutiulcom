@@ -100,7 +100,7 @@ test('work evidence uses only the exact service and region records, preserving l
   }
 });
 
-test('each case renders a linked photo card with an independent, initially closed native summary that remains in server HTML', () => {
+test('each case exposes its key facts and keeps conditions in an independent, initially closed native disclosure in server HTML', () => {
   const Component = loadEvidenceComponent();
   const groups = new Map(getAllRegionCases().map(({ serviceId, regionId }) => [`${serviceId}/${regionId}`, { serviceId, regionId }]));
   let collapsedCases = 0;
@@ -112,7 +112,7 @@ test('each case renders a linked photo card with an independent, initially close
       React.createElement(Component, { serviceId, regionId, regionName: region.name, serviceLabel: service.title })));
     const document = parse(html);
     assert.equal(document.querySelectorAll('article').length, expected.length, `${serviceId}/${regionId}`);
-    assert.equal(document.querySelectorAll('details').length, expected.length, 'every card, including the first two, starts with a collapsed summary');
+    assert.equal(document.querySelectorAll('details').length, expected.length, 'every card retains its initially closed conditions');
     assert.equal(document.querySelectorAll('img').length, expected.length, 'every case must retain its own photograph');
     collapsedCases += document.querySelectorAll('details').length;
     const text = normalize(document.textContent);
@@ -124,7 +124,7 @@ test('each case renders a linked photo card with an independent, initially close
       const summary = details.querySelector('summary');
       assert.ok(summary);
       assert.equal(details.childNodes.find(node => node.nodeType === 1), summary, 'native summary must be the first element in details');
-      assert.ok(normalize(summary.textContent).includes('작업 요약 보기'), 'the native disclosure must explain that it opens the work summary');
+      assert.ok(normalize(summary.textContent).includes('작업 과정·참고사항'), 'the native disclosure must identify the complete work description and conditions');
       assert.equal(summary.querySelectorAll('a, button, input, select, textarea, details').length, 0, 'the disclosure target must not contain another interactive control');
       for (let node = details.parentNode; node && node !== article; node = node.parentNode) {
         assert.notEqual(node.tagName, 'A', 'a detail link must not wrap the disclosure target');
@@ -147,10 +147,19 @@ test('each case renders a linked photo card with an independent, initially close
         assert.equal(decodeURIComponent(link.getAttribute('href')), record.sourceUrl, 'card links may not cross into another case');
         assert.equal(link.querySelectorAll('summary, details').length, 0);
       }
+      const coreFacts = article.querySelector('dl[aria-label="작업 핵심 정보"]');
+      assert.ok(coreFacts, `${record.sourceUrl} must expose its work scope without requiring a disclosure`);
+      for (let node = coreFacts.parentNode; node && node !== article; node = node.parentNode) {
+        assert.notEqual(node.tagName, 'DETAILS', 'key facts must be visible while conditions are collapsed');
+      }
+      const visibleLabels = ['현장', '주요 작업', '인원·시간'];
+      assert.deepEqual(coreFacts.querySelectorAll('dt').map(node => normalize(node.textContent)), record.summaryFacts.filter(fact => visibleLabels.includes(fact.label)).map(fact => fact.label), `${record.sourceUrl} must show only recorded key facts, including crew/time only when known`);
+      assert.deepEqual(details.querySelectorAll('dt').map(node => normalize(node.textContent)), record.summaryFacts.filter(fact => !visibleLabels.includes(fact.label) || (expected.length > 1 && fact.label === '주요 작업')).map(fact => fact.label));
       const summaryText = normalize(details.textContent);
       for (const fact of record.summaryFacts) {
-        assert.ok(summaryText.includes(normalize(fact.label)), `${record.sourceUrl} lost summary label`);
-        assert.ok(summaryText.includes(normalize(fact.value)), `${record.sourceUrl} lost summary information from SSR`);
+        const factText = visibleLabels.includes(fact.label) ? normalize(coreFacts.textContent) : summaryText;
+        assert.ok(factText.includes(normalize(fact.label)), `${record.sourceUrl} lost summary label`);
+        assert.ok(factText.includes(normalize(fact.value)), `${record.sourceUrl} lost summary information from SSR`);
       }
       if (record.summaryNote) assert.ok(summaryText.includes(normalize(record.summaryNote)), `${record.sourceUrl} lost its limitation`);
       const reviewed = Object.hasOwn(REGION_WORK_SUMMARIES, `${serviceId}/${regionId}/${record.slug}`);
@@ -169,6 +178,48 @@ test('each case renders a linked photo card with an independent, initially close
   const noEvidence = renderToStaticMarkup(React.createElement(MemoryRouter, null,
     React.createElement(EmptyComponent, { serviceId: 'interior', regionId: 'gwacheon', regionName: '과천시', serviceLabel: '인테리어청소' })));
   assert.equal(noEvidence, '', 'an empty case result must not fabricate a detailed field-case block');
+});
+
+test('one case uses the full mobile width while multiple cases retain two mobile and three desktop columns', () => {
+  const base = getRegionWorkEvidence('office', 'suwon')[0];
+  for (const count of [1, 3]) {
+    const records = Array.from({ length: count }, (_, index) => ({
+      ...base,
+      slug: `layout-case-${index}`,
+      sourceUrl: `/services/office/suwon/layout-case-${index}`,
+    }));
+    const Component = loadEvidenceComponent(() => records);
+    const document = parse(renderToStaticMarkup(React.createElement(MemoryRouter, null,
+      React.createElement(Component, { serviceId: 'office', regionId: 'suwon', regionName: '수원시', serviceLabel: '사무실청소' }))));
+    assert.equal(normalize(document.querySelector('h2').textContent), '수원시 사무실청소, 실제 작업 기록');
+    const articles = document.querySelectorAll('article');
+    assert.equal(articles.length, count);
+    const gridClasses = articles[0].parentNode.classNames.split(/\s+/);
+    if (count === 1) {
+      assert.ok(gridClasses.includes('grid-cols-1'), 'a single case must not leave an empty mobile column');
+      assert.ok(!gridClasses.includes('grid-cols-2'));
+      assert.ok(articles[0].classNames.includes('md:grid-cols-2'), 'the single desktop card pairs its photo with the readable facts');
+    } else {
+      assert.ok(gridClasses.includes('grid-cols-2'));
+      assert.ok(gridClasses.includes('lg:grid-cols-3'));
+    }
+    for (const article of articles) {
+      const facts = article.querySelector('dl[aria-label="작업 핵심 정보"]');
+      const workLabel = facts.querySelectorAll('dt').find(node => normalize(node.textContent) === '주요 작업');
+      const workValue = workLabel.parentNode.querySelector('dd');
+      assert.equal(normalize(workValue.textContent), normalize(base.summaryFacts.find(fact => fact.label === '주요 작업').value), 'even a visually shortened multi-card summary retains the entire work scope in HTML');
+      assert.equal(workValue.classNames.includes('line-clamp-2'), count > 1, 'only compact multi-card work descriptions may use a two-line preview');
+      const detailedWorkLabel = article.querySelector('details').querySelectorAll('dt').find(node => normalize(node.textContent) === '주요 작업');
+      if (count > 1) {
+        assert.ok(detailedWorkLabel, 'a shortened preview must expose the complete work scope when expanded');
+        const detailedWorkValue = detailedWorkLabel.parentNode.querySelector('dd');
+        assert.equal(normalize(detailedWorkValue.textContent), normalize(workValue.textContent));
+        assert.doesNotMatch(detailedWorkValue.classNames, /line-clamp|truncate|overflow-hidden/, 'the expanded work scope must not remain visually shortened');
+      } else {
+        assert.equal(detailedWorkLabel, undefined, 'the single card already shows its full work scope and need not repeat it');
+      }
+    }
+  }
 });
 
 test('new cases without a reviewed summary preserve full closing conditions and notes in the collapsed card', () => {
