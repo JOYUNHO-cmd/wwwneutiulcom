@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import NotFound from './NotFound';
-import { MapPin, CheckCircle2, HelpCircle, Award, ChevronDown, ZoomIn } from 'lucide-react';
+import { MapPin, CheckCircle2, HelpCircle, Award, ChevronDown } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { getRegion } from '../lib/regionData.mjs';
 import { buildRegionServiceContent, REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
@@ -14,6 +14,7 @@ import ServiceBeforeAfterMarquee from '../components/ServiceBeforeAfterMarquee';
 import ReviewsSection from '../components/ReviewsSection';
 import CeoMessageSection from '../components/CeoMessageSection';
 import CertificateLightbox from '../components/CertificateLightbox';
+import CertificateZoomIcon from '../components/CertificateZoomIcon';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import ServiceCaseBlogSection from '../components/ServiceCaseBlogSection';
@@ -190,7 +191,7 @@ const RegionServiceLanding: React.FC = () => {
                 }}
                 aria-label={`${cert.title} 자격증 크게 보기`}
                 aria-haspopup="dialog"
-                className="group relative mb-3 block w-full overflow-hidden rounded-lg border border-gray-100 text-center hover:border-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="certificate-zoom-trigger group relative mb-3 block w-full overflow-hidden rounded-lg border border-gray-100 text-center hover:border-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 <img
                   src={cert.image}
@@ -198,8 +199,8 @@ const RegionServiceLanding: React.FC = () => {
                   className="w-full aspect-square object-cover"
                   loading="lazy"
                 />
-                <span className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 inline-flex items-center gap-1.5 rounded-full bg-white px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-bold text-slate-800 whitespace-nowrap shadow-md ring-1 ring-black/10 group-hover:bg-emerald-50">
-                  <ZoomIn size={17} className="hidden sm:block shrink-0" aria-hidden="true" />
+                <span className="absolute top-1 right-0.5 sm:top-3 sm:right-3 inline-flex items-center gap-0.5 min-[360px]:gap-1 sm:gap-1.5 rounded-full bg-white px-0.5 min-[360px]:px-1 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-bold text-emerald-900 whitespace-nowrap shadow-md ring-1 ring-emerald-200 group-hover:bg-emerald-50">
+                  <CertificateZoomIcon />
                   크게 보기
                 </span>
               </button>

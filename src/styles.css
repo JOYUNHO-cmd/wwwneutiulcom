@@ -558,6 +558,23 @@ html {
 }
 .region-reading .reading-unit { white-space: nowrap; }
 .region-reading .reading-sentence { display: inline; }
+
+/* One brief greeting when the magnifier enters view; the label stays still. */
+.certificate-zoom-icon { transform-origin: 65% 65%; }
+@keyframes certificate-zoom-hello {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: translateY(-2px) rotate(-12deg); }
+  65% { transform: rotate(7deg); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .certificate-zoom-icon[data-seen="true"] { animation: certificate-zoom-hello 1.6s ease-in-out 1; }
+  .certificate-zoom-trigger:hover .certificate-zoom-icon,
+  .certificate-zoom-trigger:focus-visible .certificate-zoom-icon {
+    transform: rotate(-8deg);
+    transition: transform 180ms ease-out;
+  }
+}
+
 @media (max-width: 767px) {
   .region-reading .reading-sentence { display: block; }
   .region-reading .reading-sentence + .reading-sentence { margin-top: 0.6em; }
