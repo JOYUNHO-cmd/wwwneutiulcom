@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
+import { runInNewContext } from 'node:vm';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { parse } from 'node-html-parser';
@@ -53,6 +54,32 @@ test('sentence boundaries keep decimal numbers and quoted punctuation inside the
     '준비됐나요? ',
     '네, 3~4명이 방문합니다.',
   ]);
+});
+
+test('browsers without Intl.Segmenter or Intl load the actual module and retain the complete original copy', () => {
+  const { outputText } = ts.transpileModule(readFileSync(new URL('../lib/readingText.mjs', import.meta.url), 'utf8'), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+  });
+  const fixtures = [
+    '',
+    ' \t\r\n  ',
+    '  “청소는 1.5~2시간 걸렸습니다.”  다음 확인은 100% 무료입니다!\n3~4명이 방문합니다. ',
+    '<script>문구 & 조건</script>도 원문입니다.\u00a0별도 보수 조건은 유지합니다.',
+  ];
+  for (const setup of ['delete Intl.Segmenter;', 'delete globalThis.Intl;']) {
+    const module = { exports: {} };
+    runInNewContext(`${setup}\n${outputText}`, { module, exports: module.exports });
+    const fallback = module.exports;
+    for (const text of fixtures) {
+      assert.deepEqual(Array.from(fallback.readingSentences(text)), text ? [text] : [], setup);
+      assert.equal(Array.from(fallback.readingUnits(text), part => part.text).join(''), text, setup);
+    }
+    assert.deepEqual(
+      Array.from(fallback.readingUnits('3~4명 · 1.5시간 · 100%'), part => part.keepTogether ? part.text : null).filter(Boolean),
+      ['3~4명', '1.5시간', '100%'],
+      `${setup}: numeric units must still work without the sentence API`,
+    );
+  }
 });
 
 test('recorded numbers stay with their complete units and range endpoints without consuming neighbouring prose', () => {
