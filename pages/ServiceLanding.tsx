@@ -570,8 +570,8 @@ const ServiceLanding: React.FC = () => {
               <span className="block sm:inline">{service.title}</span>{" "}
               <span className="block sm:inline text-emerald-700">작업 범위 및 정밀 프로세스</span>
             </h3>
-            <p className="text-slate-600 text-[13px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] mt-3 font-medium leading-relaxed max-w-2xl mx-auto break-keep">
-              <span className="whitespace-pre-line">{service.description}</span>
+            <p className="service-process-description text-slate-600 text-[13px] sm:text-base sm:leading-[1.5rem] md:text-lg md:leading-[1.75rem] lg:leading-[1.9] mt-3 font-medium leading-relaxed max-w-2xl lg:max-w-4xl mx-auto break-keep lg:text-left">
+              <span className="whitespace-pre-line lg:whitespace-normal">{service.description}</span>
             </p>
           </div>
 

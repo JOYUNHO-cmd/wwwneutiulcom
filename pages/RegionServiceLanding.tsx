@@ -13,6 +13,7 @@ import { josa } from '../lib/korean.mjs';
 import ServiceBeforeAfterMarquee from '../components/ServiceBeforeAfterMarquee';
 import ReviewsSection from '../components/ReviewsSection';
 import CeoMessageSection from '../components/CeoMessageSection';
+import CertificateLightbox from '../components/CertificateLightbox';
 import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/PortfolioSplitCard';
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import ServiceCaseBlogSection from '../components/ServiceCaseBlogSection';
@@ -34,6 +35,7 @@ const RegionServiceLanding: React.FC = () => {
   const { serviceId, regionId } = useParams<{ serviceId: string; regionId: string }>();
   const { config } = useSite();
   const [openItem, setOpenItem] = useState<PortfolioGalleryItem | null>(null);
+  const [openCertificate, setOpenCertificate] = useState<(typeof certifications)[number] | null>(null);
 
   const region = regionId ? getRegion(regionId) : null;
   const isEnabled = serviceId ? REGION_LANDING_SERVICES.includes(serviceId) : false;
@@ -177,24 +179,37 @@ const RegionServiceLanding: React.FC = () => {
           말이 아닌 자격증으로 증명합니다
         </h2>
         <p className="text-gray-500 mb-5 break-keep">대표와 전담팀이 취득한 6개 공인 자격증입니다.</p>
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+        <div className="grid grid-cols-3 gap-3 md:gap-6">
           {certifications.map((cert) => (
             <div key={cert.id} className="text-center">
-              <img
-                src={cert.image}
-                alt={`${cert.title} 자격증`}
-                className="w-full aspect-square object-cover rounded-lg border border-gray-100 mb-1.5"
-                loading="lazy"
-              />
-              <p className="text-[11px] sm:text-xs font-bold text-slate-700 truncate">{cert.title}</p>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.currentTarget.focus({ preventScroll: true });
+                  setOpenCertificate(cert);
+                }}
+                aria-label={`${cert.title} 자격증 크게 보기`}
+                aria-haspopup="dialog"
+                className="mb-1.5 block w-full overflow-hidden rounded-lg border border-gray-100 text-center hover:border-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                <img
+                  src={cert.image}
+                  alt={`${cert.title} 자격증`}
+                  className="w-full aspect-square object-cover"
+                  loading="lazy"
+                />
+                <span className="block bg-emerald-50 px-1 py-2 text-xs sm:text-sm font-bold text-emerald-800">크게 보기</span>
+              </button>
+              <p className="text-xs sm:text-base leading-relaxed font-bold text-slate-700 break-keep">{cert.title}</p>
             </div>
           ))}
         </div>
+        {openCertificate && <CertificateLightbox certificate={openCertificate} onClose={() => setOpenCertificate(null)} />}
       </section>
 
       {hasRelatedWork && <section data-section="related-work" aria-labelledby="related-work-title" className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <h2 id="related-work-title" className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-keep">더 살펴볼 {content.serviceLabel} 시공 사례</h2>
-        <p className="reading-copy mb-8"><SentenceFlow text="여러 지역에서 진행한 작업과 관련 공간의 기록입니다. 각 사진과 글의 현장명·작업 종류를 확인해 주세요." /></p>
+        <p className="reading-copy reading-wide mb-8"><SentenceFlow text="여러 지역에서 진행한 작업과 관련 공간의 기록입니다. 각 사진과 글의 현장명·작업 종류를 확인해 주세요." /></p>
         {otherItems.length > 0 && <div className="mb-8">
           <h3 className="text-lg font-bold text-slate-900">여러 지역의 {content.serviceLabel} 사진</h3>
           <ServiceBeforeAfterMarquee key={serviceId + ':' + regionId} serviceId={serviceId || ''} items={otherItems} compact />

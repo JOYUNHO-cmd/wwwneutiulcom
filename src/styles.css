@@ -539,6 +539,7 @@ html {
   font-size: 1.125rem;
   line-height: 1.95;
 }
+.region-reading .reading-wide { max-width: none; }
 .region-reading .reading-context {
   border-left: 3px solid #a7f3d0;
   padding: 0.25rem 0 0.25rem 1.125rem;
