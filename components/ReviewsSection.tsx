@@ -29,7 +29,7 @@ const ReviewsSection: React.FC = () => {
             </m.div>
           ))}
         </div>
-        <h2 className="text-sm md:text-4xl md:leading-[2.5rem] font-black text-slate-900 leading-tight mb-3 md:mb-5 whitespace-nowrap">
+        <h2 className="text-[clamp(18px,5.5vw,24px)] md:text-4xl md:leading-[2.5rem] font-black text-slate-900 leading-tight mb-3 md:mb-5 whitespace-nowrap">
           직접 이용해보신 고객님들의 후기
         </h2>
         <p className="text-slate-500 text-sm md:text-lg md:leading-[1.75rem] leading-relaxed break-keep">

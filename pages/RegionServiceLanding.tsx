@@ -201,7 +201,10 @@ const RegionServiceLanding: React.FC = () => {
         <ServiceCaseBlogSection serviceId={serviceId || ''} compact className="mb-8" />
         {relatedRegionItems.length > 0 && <div data-section="related-local-photos">
           <h3 className="text-lg font-bold text-slate-900 mb-3">{region.name} 관련 매장·백화점 청소 사진</h3>
-          <p className="text-sm text-slate-600 leading-relaxed mb-5">사무실 외 상업공간에서 진행한 작업입니다. 사진을 누르면 크게 볼 수 있습니다.</p>
+          <p className="text-[clamp(15px,4.4vw,0.875rem)] sm:text-sm text-slate-600 leading-relaxed mb-5 break-keep">
+            <span className="block sm:inline">사무실 외 상업공간에서 진행한 작업입니다.</span>{' '}
+            <span className="block sm:inline">사진을 누르면 크게 볼 수 있습니다.</span>
+          </p>
           {renderPhotos(relatedRegionItems)}
         </div>}
       </section>}
