@@ -19,7 +19,7 @@ import { buildMeta } from '../lib/seoData.mjs';
 const require = createRequire(import.meta.url);
 const portfolio = JSON.parse(readFileSync(new URL('../lib/portfolioManifest.json', import.meta.url), 'utf8'));
 const normalize = value => String(value || '').replace(/\s+/g, ' ').trim();
-const thumb = filename => `/images/portfolio-gallery/thumbs/${filename}`;
+const photo = filename => `/images/portfolio-gallery/${filename}`;
 const imageSources = node => (node?.querySelectorAll('img') || []).map(image => image.getAttribute('src'));
 
 // Render the real landing, local evidence, photo cards, blog cards and 404.
@@ -110,7 +110,7 @@ test('all regional pages lead with exact local work and keep guidance, reviews, 
       if (primaryPhotos.length === 0) assert.equal(localPhotos, null, `${where}: an empty photo heading must not be rendered`);
       else {
         assert.ok(localPhotos, `${where}: matching local service photos must remain`);
-        assert.deepEqual(imageSources(localPhotos).sort(), primaryPhotos.flatMap(item => [thumb(item.before), thumb(item.after)]).sort(), `${where}: top photos must retain their service and region`);
+        assert.deepEqual(imageSources(localPhotos).sort(), primaryPhotos.flatMap(item => [photo(item.before), photo(item.after)]).sort(), `${where}: top photos must retain their service and region`);
         for (const item of primaryPhotos.filter(item => item.detailHref)) {
           assert.ok(localPhotos.querySelectorAll('a[href]').some(link => decodeURIComponent(link.getAttribute('href')) === item.detailHref), `${where}: photo detail link lost`);
         }
@@ -128,7 +128,7 @@ test('all regional pages lead with exact local work and keep guidance, reviews, 
       const supportingSection = related?.querySelector('[data-section="related-local-photos"]');
       if (supportingPhotos.length > 0) {
         assert.ok(supportingSection, `${where}: related local photos must remain available`);
-        assert.deepEqual(imageSources(supportingSection).sort(), supportingPhotos.flatMap(item => [thumb(item.before), thumb(item.after)]).sort(), `${where}: supporting local photos lost`);
+        assert.deepEqual(imageSources(supportingSection).sort(), supportingPhotos.flatMap(item => [photo(item.before), photo(item.after)]).sort(), `${where}: supporting local photos lost`);
         for (const item of supportingPhotos.filter(item => item.detailHref)) assert.ok(supportingSection.querySelectorAll('a[href]').some(link => decodeURIComponent(link.getAttribute('href')) === item.detailHref), `${where}: supporting photo detail link lost`);
       } else assert.ok(!supportingSection, `${where}: do not render an empty supporting-photo section`);
       for (const blog of blogs) assert.ok(related.querySelectorAll('a[href]').some(link => link.getAttribute('href') === blog.url), `${where}: related blog URL lost`);
@@ -152,15 +152,15 @@ test('office photos stay near the local records while regional store photos move
   const document = createRenderer([office, store, wrongRegion, wrongService])('office', 'cheongna');
   const top = document.querySelector('[data-section="local-work-photos"]');
   const related = document.querySelector('[data-section="related-work"]');
-  assert.deepEqual(imageSources(top).sort(), [thumb(office.before), thumb(office.after)].sort());
-  for (const source of [thumb(store.before), thumb(store.after)]) assert.ok(imageSources(related).includes(source), 'regional store photos must remain available as supporting material');
-  for (const item of [wrongRegion, wrongService]) assert.ok(!imageSources(document).includes(thumb(item.before)), 'neighbouring regions and other services must not become local office proof');
+  assert.deepEqual(imageSources(top).sort(), [photo(office.before), photo(office.after)].sort());
+  for (const source of [photo(store.before), photo(store.after)]) assert.ok(imageSources(related).includes(source), 'regional store photos must remain available as supporting material');
+  for (const item of [wrongRegion, wrongService]) assert.ok(!imageSources(document).includes(photo(item.before)), 'neighbouring regions and other services must not become local office proof');
 
   const seocho = createRenderer()('office', 'seocho');
   const departmentStore = getRegionPortfolioItems('office', getRegion('seocho'), portfolio).find(item => item.id === 'gangnam-store-department-042');
   assert.ok(departmentStore);
-  assert.ok(!imageSources(seocho.querySelector('[data-section="local-work-photos"]')).includes(thumb(departmentStore.before)));
-  assert.ok(imageSources(seocho.querySelector('[data-section="related-work"]')).includes(thumb(departmentStore.before)), 'the verified Seocho branch photo must not be lost or appear as an office job');
+  assert.ok(!imageSources(seocho.querySelector('[data-section="local-work-photos"]')).includes(photo(departmentStore.before)));
+  assert.ok(imageSources(seocho.querySelector('[data-section="related-work"]')).includes(photo(departmentStore.before)), 'the verified Seocho branch photo must not be lost or appear as an office job');
 });
 
 test('unknown service and region routes stay missing pages without local-work or contact sections', () => {

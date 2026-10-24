@@ -65,7 +65,7 @@ const RegionServiceLanding: React.FC = () => {
     <div className={`grid items-start gap-3 sm:gap-5 ${items.length === 1 ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'}`}>
       {items.map(item => (
         <div key={item.id} className="min-w-0">
-          <PortfolioSplitCard item={item} onClick={() => setOpenItem(item)} detailHref={item.detailHref} />
+          <PortfolioSplitCard item={item} onClick={() => setOpenItem(item)} detailHref={item.detailHref} useOriginal />
           {item.description && <p className="mt-3 text-sm leading-relaxed text-gray-600 break-keep">{item.description}</p>}
         </div>
       ))}
@@ -145,9 +145,13 @@ const RegionServiceLanding: React.FC = () => {
         </div>
         <p className="text-sm sm:text-base text-gray-600 leading-relaxed break-keep mb-5">{content.intro}</p>
         <details className="group rounded-xl border border-slate-200 bg-white">
-          <summary className="flex items-center justify-between gap-3 list-none cursor-pointer min-h-12 p-4 text-sm sm:text-base font-bold text-slate-800 [&::-webkit-details-marker]:hidden">
-            <span>{content.serviceLabel}{josa(content.serviceLabel, '이', '가')} 필요한 상황</span>
-            <ChevronDown size={18} className="shrink-0 group-open:rotate-180" aria-hidden="true" />
+          <summary className="flex items-center justify-between gap-3 list-none cursor-pointer min-h-12 p-4 text-sm sm:text-base font-bold text-slate-800 hover:bg-emerald-50/50 focus-visible:outline-primary [&::-webkit-details-marker]:hidden">
+            <span className="min-w-0 flex-1 break-keep">{content.serviceLabel}{josa(content.serviceLabel, '이', '가')} 필요한 상황</span>
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1.5 text-xs font-bold text-emerald-800">
+              <span className="group-open:hidden">내용 펼치기</span>
+              <span className="hidden group-open:inline">내용 접기</span>
+              <ChevronDown size={16} className="shrink-0 group-open:rotate-180" aria-hidden="true" />
+            </span>
           </summary>
         <ul className="grid sm:grid-cols-2 gap-3 p-4 pt-0">
           {content.situations.map((s, i) => (
@@ -197,7 +201,10 @@ const RegionServiceLanding: React.FC = () => {
         <ServiceCaseBlogSection serviceId={serviceId || ''} compact className="mb-8" />
         {relatedRegionItems.length > 0 && <div data-section="related-local-photos">
           <h3 className="text-lg font-bold text-slate-900 mb-3">{region.name} 관련 매장·백화점 청소 사진</h3>
-          <p className="text-sm text-slate-600 leading-relaxed mb-5">사무실 외 상업공간에서 진행한 작업입니다. 사진을 누르면 크게 볼 수 있습니다.</p>
+          <p className="text-[clamp(15px,4.4vw,0.875rem)] sm:text-sm text-slate-600 leading-relaxed mb-5 break-keep">
+            <span className="block sm:inline">사무실 외 상업공간에서 진행한 작업입니다.</span>{' '}
+            <span className="block sm:inline">사진을 누르면 크게 볼 수 있습니다.</span>
+          </p>
           {renderPhotos(relatedRegionItems)}
         </div>}
       </section>}
