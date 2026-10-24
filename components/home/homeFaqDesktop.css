@@ -1,0 +1,30 @@
+/* The existing FAQ remains the only visible layout below 1280px. Both
+   layouts render deterministically so SSR and hydration never use width. */
+.home-faq-desktop {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .home-faq-desktop-layout .home-faq-container {
+    max-width: 1280px;
+    padding-inline: 32px;
+  }
+
+  .home-faq-desktop-layout .home-faq-legacy {
+    display: none;
+  }
+
+  .home-faq-desktop-layout .home-faq-desktop {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    align-items: start;
+    gap: 40px;
+  }
+
+  .home-faq-desktop-layout .home-faq-cta {
+    max-width: none;
+    margin-top: 32px;
+    margin-left: 320px;
+    margin-right: 0;
+  }
+}

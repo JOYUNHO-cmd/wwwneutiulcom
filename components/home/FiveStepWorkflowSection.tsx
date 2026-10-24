@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Leaf, Trees } from 'lucide-react';
 import { m } from 'motion/react';
+import './homeWorkflowDesktop.css';
 
 const stepImage1 = '/images/visit-notification.webp';
 const stepImage1Mobile = '/images/visit-notification-mobile.webp';
@@ -13,9 +14,68 @@ const stepImage4Mobile = '/images/eco-neutralization-mobile.webp';
 const stepImage5 = '/images/confirmation-aftercare.webp';
 const stepImage5Mobile = '/images/confirmation-aftercare-mobile.webp';
 
+const workflowSteps = [
+  { img: stepImage1, mobileImg: stepImage1Mobile, step: 'STEP 01', label: '정시 방문', width: 900, height: 675 },
+  { img: stepImage2, mobileImg: stepImage2Mobile, step: 'STEP 02', label: '정확한 진단', width: 900, height: 675 },
+  { img: stepImage3, mobileImg: stepImage3Mobile, step: 'STEP 03', label: '체계적인 청소 순서', width: 900, height: 637 },
+  { img: stepImage4, mobileImg: stepImage4Mobile, step: 'STEP 04', label: '친환경 중화 청소', width: 900, height: 600 },
+  { img: stepImage5, mobileImg: stepImage5Mobile, step: 'STEP 05', label: '만족 후 정산', secondLabel: '기한 없는 사후관리', width: 900, height: 600 },
+];
+
 const FiveStepWorkflowSection: React.FC = () => {
+  const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1280px)');
+    let frame: number | null = null;
+
+    const readCurrentStep = () => {
+      frame = null;
+      let nextStep = 0;
+      stepRefs.current.forEach((step, index) => {
+        if (step && step.getBoundingClientRect().top <= 160) nextStep = index;
+      });
+      setActiveStep(nextStep);
+    };
+    const queueCurrentStep = () => {
+      if (frame === null) frame = window.requestAnimationFrame(readCurrentStep);
+    };
+    const stopTracking = () => {
+      window.removeEventListener('scroll', queueCurrentStep);
+      window.removeEventListener('resize', queueCurrentStep);
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      frame = null;
+    };
+    const updateTracking = () => {
+      stopTracking();
+      if (!desktop.matches) return;
+      window.addEventListener('scroll', queueCurrentStep, { passive: true });
+      window.addEventListener('resize', queueCurrentStep);
+      queueCurrentStep();
+    };
+
+    updateTracking();
+    desktop.addEventListener('change', updateTracking);
+    return () => {
+      stopTracking();
+      desktop.removeEventListener('change', updateTracking);
+    };
+  }, []);
+
+  const goToStep = (event: React.MouseEvent<HTMLAnchorElement>, index: number) => {
+    const target = stepRefs.current[index];
+    if (!target) return;
+    event.preventDefault();
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({
+      block: 'start',
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    });
+  };
+
   return (
-    <section className="py-20 md:py-28 bg-linear-to-b/srgb from-emerald-50/20 via-white to-emerald-50/30 border-b border-slate-100/80 relative overflow-hidden">
+    <section className="home-workflow-section py-20 md:py-28 bg-linear-to-b/srgb from-emerald-50/20 via-white to-emerald-50/30 border-b border-slate-100/80 relative overflow-hidden">
       {/* Natural & Eco-friendly Decorative Background Elements */}
       <div className="absolute top-10 -left-16 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-20 -right-20 w-80 h-80 bg-emerald-400/5 rounded-full blur-3xl pointer-events-none" />
@@ -62,8 +122,8 @@ const FiveStepWorkflowSection: React.FC = () => {
         }
       `}} />
 
-      <div className="max-w-3xl lg:max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="text-center mb-10 md:mb-16">
+      <div className="home-workflow-layout max-w-3xl lg:max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="home-workflow-heading text-center mb-10 md:mb-16">
           <h2 className="text-[22px] sm:text-2xl sm:leading-[2rem] md:text-4xl md:leading-[2.5rem] font-extrabold text-slate-900 mb-3 md:mb-4 leading-tight break-keep">
             고객님을 위한 5단계 진행 과정
           </h2>
@@ -73,15 +133,35 @@ const FiveStepWorkflowSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-col items-center max-w-3xl lg:max-w-4xl mx-auto w-full">
-          {[
-            { img: stepImage1, mobileImg: stepImage1Mobile, step: 'STEP 01', width: 900, height: 675 },
-            { img: stepImage2, mobileImg: stepImage2Mobile, step: 'STEP 02', width: 900, height: 675 },
-            { img: stepImage3, mobileImg: stepImage3Mobile, step: 'STEP 03', width: 900, height: 637 },
-            { img: stepImage4, mobileImg: stepImage4Mobile, step: 'STEP 04', width: 900, height: 600 },
-            { img: stepImage5, mobileImg: stepImage5Mobile, step: 'STEP 05', width: 900, height: 600 },
-          ].map((item, idx, arr) => (
-            <div key={idx} className="w-full flex flex-col items-center">
+        <nav className="home-workflow-nav" aria-label="5단계 진행 과정">
+          <ol>
+            {workflowSteps.map((item, index) => (
+              <li key={item.step}>
+                <a
+                  href={`#home-workflow-step-${String(index + 1).padStart(2, '0')}`}
+                  aria-current={activeStep === index ? 'step' : undefined}
+                  onClick={(event) => goToStep(event, index)}
+                >
+                  <span className="home-workflow-nav-number">{item.step}</span>{' '}
+                  <span className="home-workflow-nav-label">
+                    <span>{item.label}</span>
+                    {item.secondLabel && <>{' '}<span>{item.secondLabel}</span></>}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <div className="home-workflow-list flex flex-col items-center max-w-3xl lg:max-w-4xl mx-auto w-full">
+          {workflowSteps.map((item, idx, arr) => (
+            <div
+              key={idx}
+              ref={(element) => { stepRefs.current[idx] = element; }}
+              id={`home-workflow-step-${String(idx + 1).padStart(2, '0')}`}
+              tabIndex={-1}
+              className="home-workflow-step w-full flex flex-col items-center"
+            >
               <m.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}

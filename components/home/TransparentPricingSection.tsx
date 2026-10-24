@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Banknote } from 'lucide-react';
 import { trackEvent } from '../../lib/analytics';
+import './homePricingDesktop.css';
 
 const TransparentPricingSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-linear-to-b/srgb from-emerald-50/40 via-white to-emerald-50/30 relative overflow-hidden border-b border-slate-100">
+    <section data-home-layout="pricing" className="py-16 md:py-24 bg-linear-to-b/srgb from-emerald-50/40 via-white to-emerald-50/30 relative overflow-hidden border-b border-slate-100">
       <div className="absolute top-16 -left-20 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-16 -right-20 w-80 h-80 bg-teal-400/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="max-w-5xl mx-auto px-4 md:px-8 relative z-10">
+      <div className="home-pricing-shell max-w-5xl mx-auto px-4 md:px-8 relative z-10">
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primaryDark text-xs md:text-sm font-bold mb-3 md:mb-4">
             <Banknote size={14} />
@@ -24,13 +25,14 @@ const TransparentPricingSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto bg-white rounded-2xl md:rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 px-5 py-2 md:px-10 md:py-4">
-          <h2 className="text-sm md:text-2xl font-black text-slate-900 text-center pt-6 md:pt-8 whitespace-nowrap">
+        <div className="home-pricing-card max-w-2xl mx-auto bg-white rounded-2xl md:rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 px-5 py-2 md:px-10 md:py-4">
+          <h2 className="home-pricing-card-heading text-sm md:text-2xl font-black text-slate-900 text-center pt-6 md:pt-8 whitespace-nowrap">
             정확한 견적의 기준, <span className="text-primaryDark">투입 인원</span>입니다
           </h2>
 
+          <div className="home-pricing-topics">
           {/* Labor cost comparison */}
-          <div className="py-6 md:py-8">
+          <div className="home-pricing-topic py-6 md:py-8">
             <h3 className="flex items-center gap-2 font-black text-slate-900 text-base md:text-xl mb-4 md:mb-5">
               <span className="w-1.5 h-5 md:h-6 rounded-full bg-primary" />
               인건비, 왜 다른가요?
@@ -54,7 +56,7 @@ const TransparentPricingSection: React.FC = () => {
           </div>
 
           {/* How headcount is determined */}
-          <div className="py-6 md:py-8 border-t border-slate-100">
+          <div className="home-pricing-topic py-6 md:py-8 border-t border-slate-100">
             <h3 className="flex items-center gap-2 font-black text-slate-900 text-base md:text-xl mb-3 md:mb-4">
               <span className="w-1.5 h-5 md:h-6 rounded-full bg-primary" />
               투입 인원, 어떻게 정하나요?
@@ -71,7 +73,7 @@ const TransparentPricingSection: React.FC = () => {
           </div>
 
           {/* Why flat per-pyeong pricing is unreliable */}
-          <div className="py-6 md:py-8 border-t border-slate-100">
+          <div className="home-pricing-topic py-6 md:py-8 border-t border-slate-100">
             <h3 className="flex items-center gap-2 font-black text-slate-900 text-base md:text-xl mb-3 md:mb-4">
               <span className="w-1.5 h-5 md:h-6 rounded-full bg-primary" />
               '평당 얼마'가 위험한 이유
@@ -99,7 +101,7 @@ const TransparentPricingSection: React.FC = () => {
           </div>
 
           {/* No-surprise-fee promise */}
-          <div className="py-6 md:py-8 border-t border-slate-100">
+          <div className="home-pricing-topic py-6 md:py-8 border-t border-slate-100">
             <h3 className="flex items-center gap-2 font-black text-slate-900 text-base md:text-xl mb-3 md:mb-4">
               <span className="w-1.5 h-5 md:h-6 rounded-full bg-primary" />
               추가 요금이 생기면 어떻게 하나요?
@@ -109,6 +111,7 @@ const TransparentPricingSection: React.FC = () => {
               <span className="block md:inline">먼저 안내드리고 동의 받은 후에 진행합니다.</span>{' '}
               <strong className="block md:inline mt-3 md:mt-0 text-primaryDark">사전 협의 없는 추가 청구는 없습니다!</strong>
             </p>
+          </div>
           </div>
         </div>
 
