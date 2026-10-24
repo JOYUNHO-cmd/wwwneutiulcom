@@ -93,6 +93,10 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'interior-269': '/services/interior/geumcheon/금천가산동카페인테리어청소',
   'interior-268': '/services/interior/seodaemun/서대문신촌카페인테리어청소',
   'floor-tile-161': '/services/floor/jongno/종로안국동식당포세린타일바닥청소',
+  'new-construction-236': '/services/new-construction/gangnam/강남역삼동식당준공청소',
+  'hwaseong-hood-421': '/services/hood/hwaseong/화성돈까스집후드청소',
+  'uijeongbu-new-construction-226': '/services/new-construction/uijeongbu/의정부병원준공청소',
+  'bucheon-new-construction-213': '/services/new-construction/bucheon/부천세차장준공청소',
   'ansan-government-017': '/services/government-school/ansan/안산학교바닥왁스청소',
 };
 
@@ -120,7 +124,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 173);
+  assert.equal(cases.length, 182);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -457,6 +461,15 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['government-school', 'seocho', '서초주민센터계단실창문청소', '서초 관공서청소'],
     ['new-construction', 'gwanggyo', '광교상가매장준공청소', '광교 준공청소'],
     ['new-construction', 'anyang', '안양상가매장준공청소', '안양 준공청소'],
+    ['new-construction', 'gangnam', '강남역삼동식당준공청소', '강남 준공청소'],
+    ['restaurant', 'goyang', '고양뷔페식당주방청소', '고양 주방청소'],
+    ['hood', 'hwaseong', '화성돈까스집후드청소', '화성 후드청소'],
+    ['new-construction', 'uijeongbu', '의정부병원준공청소', '의정부 준공청소'],
+    ['floor', 'goyang', '고양피부과바닥청소', '고양 바닥청소'],
+    ['interior', 'wirye', '위례아파트인테리어청소', '위례 인테리어청소'],
+    ['interior', 'seocho', '서초아파트인테리어청소', '서초 인테리어청소'],
+    ['new-construction', 'bucheon', '부천세차장준공청소', '부천 준공청소'],
+    ['floor', 'gangseo', '강서병원타일바닥청소', '강서 바닥청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);

@@ -225,6 +225,13 @@
   },
   {
     "serviceId": "restaurant",
+    "regionId": "goyang",
+    "heading": "고양 주방청소 현장 후기 | 바닥 찌든 때와 후드 기름때가 남은 뷔페 식당 주방청소",
+    "thumbnail": "/images/regional/goyang-restaurant-buffet-08.webp",
+    "url": "/services/restaurant/goyang/고양뷔페식당주방청소"
+  },
+  {
+    "serviceId": "restaurant",
     "regionId": "michuhol",
     "heading": "미추홀 주방청소 현장 후기 | 집기가 쌓이고 바닥 얼룩이 남은 식당 홀·주방 청소",
     "thumbnail": "/images/regional/michuhol-restaurant-hall-12.webp",
@@ -313,6 +320,13 @@
     "heading": "광교 중식당 준공청소, 확인된 장면만 기록한 현장",
     "thumbnail": "/images/regional/gwanggyo-restaurant-10-after-safe.webp",
     "url": "/services/restaurant/gwanggyo/광교중식당준공청소"
+  },
+  {
+    "serviceId": "hood",
+    "regionId": "hwaseong",
+    "heading": "화성 후드청소 현장 후기 | 기름때가 흘러내린 돈까스집 후드와 벽 타일 청소",
+    "thumbnail": "/images/regional/hwaseong-hood-cutlet-09.webp",
+    "url": "/services/hood/hwaseong/화성돈까스집후드청소"
   },
   {
     "serviceId": "hood",
@@ -421,6 +435,13 @@
   },
   {
     "serviceId": "floor",
+    "regionId": "goyang",
+    "heading": "고양 바닥청소 현장 후기 | 대형 타일 바닥을 세척한 피부과 바닥청소",
+    "thumbnail": "/images/regional/goyang-floor-clinic-08.webp",
+    "url": "/services/floor/goyang/고양피부과바닥청소"
+  },
+  {
+    "serviceId": "floor",
     "regionId": "yeongdeungpo",
     "heading": "영등포 바닥청소 현장 후기 | 화강석 계단에 스며든 기름 얼룩을 흡착제로 빼낸 신길동 건물 계단 청소",
     "thumbnail": "/images/regional/yeongdeungpo-floor-oil-stairs-02.webp",
@@ -456,6 +477,13 @@
   },
   {
     "serviceId": "floor",
+    "regionId": "gangseo",
+    "heading": "강서 바닥청소 현장 후기 | 줄눈과 타일에 때가 쌓인 병원 바닥청소",
+    "thumbnail": "/images/regional/gangseo-floor-clinic-06.webp",
+    "url": "/services/floor/gangseo/강서병원타일바닥청소"
+  },
+  {
+    "serviceId": "floor",
     "regionId": "gangnam",
     "heading": "강남구 논현동 바닥본드제거",
     "thumbnail": "/images/regional/gangnam-floor-02.webp",
@@ -488,6 +516,13 @@
     "heading": "시흥시 빵 제조공장청소",
     "thumbnail": "/images/regional/siheung-factory-04.webp",
     "url": "/services/factory/siheung/시흥빵공장청소"
+  },
+  {
+    "serviceId": "interior",
+    "regionId": "wirye",
+    "heading": "위례 인테리어청소 현장 후기 | 보양재와 자재가 남은 아파트 인테리어청소",
+    "thumbnail": "/images/regional/wirye-interior-apartment-10.webp",
+    "url": "/services/interior/wirye/위례아파트인테리어청소"
   },
   {
     "serviceId": "interior",
@@ -708,10 +743,31 @@
   },
   {
     "serviceId": "interior",
+    "regionId": "seocho",
+    "heading": "서초 인테리어청소 현장 후기 | 보호 필름과 분진이 남은 아파트 인테리어청소",
+    "thumbnail": "/images/regional/seocho-interior-apartment-10.webp",
+    "url": "/services/interior/seocho/서초아파트인테리어청소"
+  },
+  {
+    "serviceId": "interior",
     "regionId": "hanam",
     "heading": "하남시 미사 통건물 시트지제거청소",
     "thumbnail": "/images/regional/hanam-interior-06.webp",
     "url": "/services/interior/hanam/하남미사통건물시트지제거청소"
+  },
+  {
+    "serviceId": "new-construction",
+    "regionId": "bucheon",
+    "heading": "부천 준공청소 현장 후기 | 공사 먼지가 남은 신축 세차장 준공청소",
+    "thumbnail": "/images/regional/bucheon-new-construction-carwash-12.webp",
+    "url": "/services/new-construction/bucheon/부천세차장준공청소"
+  },
+  {
+    "serviceId": "new-construction",
+    "regionId": "uijeongbu",
+    "heading": "의정부 준공청소 현장 후기 | 보호 필름과 분진이 남은 병원 준공청소",
+    "thumbnail": "/images/regional/uijeongbu-new-construction-clinic-08.webp",
+    "url": "/services/new-construction/uijeongbu/의정부병원준공청소"
   },
   {
     "serviceId": "new-construction",
@@ -817,6 +873,13 @@
     "heading": "강남 준공청소 현장 후기 | 공사 분진과 자재가 남은 신사동 헤드스파 매장 준공청소",
     "thumbnail": "/images/regional/gangnam-new-construction-headspa-12.webp",
     "url": "/services/new-construction/gangnam/강남신사동헤드스파준공청소"
+  },
+  {
+    "serviceId": "new-construction",
+    "regionId": "gangnam",
+    "heading": "강남 준공청소 현장 후기 | 공사 먼지와 자재가 남은 역삼동 식당 준공청소",
+    "thumbnail": "/images/regional/gangnam-new-construction-foodcourt-09.webp",
+    "url": "/services/new-construction/gangnam/강남역삼동식당준공청소"
   },
   {
     "serviceId": "new-construction",
