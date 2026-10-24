@@ -559,23 +559,40 @@ html {
 .region-reading .reading-unit { white-space: nowrap; }
 .region-reading .reading-sentence { display: inline; }
 
-/* One brief greeting when the magnifier enters view; the label stays still. */
-.certificate-zoom-icon { transform-origin: 65% 65%; }
+/* A brief, friendly movement; no continuous distraction or enclosing badge. */
+.certificate-zoom-icon {
+  transform-origin: 65% 65%;
+  filter: drop-shadow(0 2px 2px rgb(6 78 59 / 0.28));
+}
 @keyframes certificate-zoom-hello {
   0%, 100% { transform: rotate(0); }
-  30% { transform: translateY(-2px) rotate(-12deg); }
-  65% { transform: rotate(7deg); }
+  35% { transform: translateY(-2px) rotate(-10deg) scale(1.04); }
+  70% { transform: translateY(-1px) rotate(5deg); }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .certificate-zoom-icon[data-seen="true"] { animation: certificate-zoom-hello 1.6s ease-in-out 1; }
+  .certificate-zoom-icon[data-seen="true"] { animation: certificate-zoom-hello 1.8s ease-in-out 2; }
   .certificate-zoom-trigger:hover .certificate-zoom-icon,
   .certificate-zoom-trigger:focus-visible .certificate-zoom-icon {
-    transform: rotate(-8deg);
-    transition: transform 180ms ease-out;
+    transform: translateY(-2px) rotate(-8deg) scale(1.06);
+    transition: transform 220ms ease-out;
   }
 }
 
 @media (max-width: 767px) {
+  .region-reading .reading-hero { line-height: 1.85; }
+  .region-reading .reading-hero-part { display: block; }
+  .region-reading .reading-hero-part + .reading-hero-part { margin-top: 0.45em; }
+  .region-reading .reading-hero-guidance {
+    display: block;
+    margin-top: 1.125em;
+    padding-left: 0.8em;
+    border-left: 3px solid #6ee7b7;
+    color: #1e293b;
+  }
+  .region-reading .reading-blog-title {
+    font-size: 15px;
+    line-height: 1.65;
+  }
   .region-reading .reading-sentence { display: block; }
   .region-reading .reading-sentence + .reading-sentence { margin-top: 0.6em; }
 }

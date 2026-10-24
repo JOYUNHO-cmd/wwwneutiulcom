@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 
 const CertificateZoomIcon: React.FC = () => {
   const iconRef = useRef<SVGSVGElement>(null);
   const [seen, setSeen] = useState(false);
+  const gradientId = useId();
 
   useEffect(() => {
     const icon = iconRef.current;
@@ -18,14 +19,28 @@ const CertificateZoomIcon: React.FC = () => {
   }, []);
 
   return (
-    <svg ref={iconRef} viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false"
+    <svg ref={iconRef} viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false"
       data-seen={seen ? 'true' : undefined}
-      className="certificate-zoom-icon h-[14px] w-[14px] min-[360px]:size-5 sm:size-7 shrink-0">
-      <path d="m20 20 7 7" stroke="#047857" strokeWidth="6" strokeLinecap="round" />
-      <path d="m22 21 5 5" stroke="#34d399" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="13" cy="13" r="9" fill="#d1fae5" stroke="#059669" strokeWidth="2.5" />
-      <path d="M7.5 10a6 6 0 0 1 5-3" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M13 9.5v7M9.5 13h7" stroke="#047857" strokeWidth="2.2" strokeLinecap="round" />
+      className="certificate-zoom-icon size-9 sm:size-12 shrink-0">
+      <defs>
+        <linearGradient id={`${gradientId}-frame`} x1="12" y1="8" x2="43" y2="45" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6ee7b7" />
+          <stop offset="0.45" stopColor="#10b981" />
+          <stop offset="1" stopColor="#047857" />
+        </linearGradient>
+        <linearGradient id={`${gradientId}-glass`} x1="17" y1="12" x2="38" y2="41" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#ecfdf5" />
+          <stop offset="1" stopColor="#a7f3d0" />
+        </linearGradient>
+      </defs>
+      <path d="m39 39 15 15" stroke="#064e3b" strokeWidth="13" strokeLinecap="round" />
+      <path d="m39 38 15 15" stroke={`url(#${gradientId}-frame)`} strokeWidth="10" strokeLinecap="round" />
+      <path d="m43 40 10 10" stroke="#6ee7b7" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="26" cy="26" r="20" fill="#065f46" />
+      <circle cx="26" cy="25" r="19" fill={`url(#${gradientId}-frame)`} />
+      <circle cx="26" cy="25" r="14.5" fill={`url(#${gradientId}-glass)`} stroke="#047857" strokeWidth="1.2" />
+      <path d="M15.5 21a11 11 0 0 1 8-6.5" stroke="white" strokeOpacity="0.9" strokeWidth="3" strokeLinecap="round" />
+      <path d="M26 20v10M21 25h10" stroke="#047857" strokeWidth="3.5" strokeLinecap="round" />
     </svg>
   );
 };

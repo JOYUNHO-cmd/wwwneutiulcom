@@ -19,6 +19,7 @@ import PortfolioSplitCard, { PortfolioGalleryItem } from '../components/Portfoli
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import ServiceCaseBlogSection from '../components/ServiceCaseBlogSection';
 import SentenceFlow from '../components/SentenceFlow';
+import RegionHeroIntro from '../components/RegionHeroIntro';
 import portfolioManifest from '../lib/portfolioManifest.json';
 
 const allPortfolioItems = portfolioManifest as PortfolioGalleryItem[];
@@ -92,9 +93,7 @@ const RegionServiceLanding: React.FC = () => {
         <h1 className="text-3xl sm:text-4xl sm:leading-[2.5rem] font-black text-slate-900 mb-4 leading-tight text-center sm:text-left">
           {region.name} {content.serviceLabel}
         </h1>
-        <p className="reading-copy reading-lead mt-6 text-left">
-          <SentenceFlow text={content.heroIntro} />
-        </p>
+        <RegionHeroIntro text={content.heroIntro} region={region} serviceId={serviceId || ''} />
         <div className="text-center sm:text-left">
           <a
             href={`tel:${cleanPhone}`}
@@ -199,9 +198,8 @@ const RegionServiceLanding: React.FC = () => {
                   className="w-full aspect-square object-cover"
                   loading="lazy"
                 />
-                <span className="absolute top-1 right-0.5 sm:top-3 sm:right-3 inline-flex items-center gap-0.5 min-[360px]:gap-1 sm:gap-1.5 rounded-full bg-white px-0.5 min-[360px]:px-1 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-bold text-emerald-900 whitespace-nowrap shadow-md ring-1 ring-emerald-200 group-hover:bg-emerald-50">
+                <span className="pointer-events-none absolute top-1 right-1 sm:top-2 sm:right-2 inline-flex" aria-hidden="true">
                   <CertificateZoomIcon />
-                  크게 보기
                 </span>
               </button>
               <p className="text-xs sm:text-base leading-relaxed font-bold text-slate-700 break-keep">{cert.title}</p>

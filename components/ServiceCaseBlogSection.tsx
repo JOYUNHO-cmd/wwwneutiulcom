@@ -90,7 +90,7 @@ const ServiceCaseBlogSection: React.FC<ServiceCaseBlogSectionProps> = ({ service
             </div>
 
             {/* Body - Only simple title */}
-            <div className="p-3.5 sm:p-5">
+            <div className={compact ? 'p-3 sm:p-5' : 'p-3.5 sm:p-5'}>
               <h5 className={compact ? 'reading-blog-title font-bold text-slate-900 group-hover:text-[#03C75A] transition-colors duration-200 break-keep' : 'text-[13px] sm:text-[16px] font-extrabold text-slate-900 group-hover:text-[#03C75A] transition-colors duration-200 line-clamp-2 leading-snug break-keep'}>
                 {blog.title}
               </h5>
