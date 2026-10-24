@@ -87,6 +87,12 @@ const VERIFIED_PORTFOLIO_CASE_LINKS = {
   'new-construction-235': '/services/new-construction/dongdaemun/동대문이문동김밥집준공청소',
   'seongsu-floor-tile-158': '/services/floor/seongsu/성수카페모자이크타일바닥청소',
   'floor-oil-poultice-102': '/services/floor/yeongdeungpo/영등포신길동계단기름얼룩청소',
+  'new-construction-222': '/services/new-construction/gangnam/강남신사동헤드스파준공청소',
+  'interior-255': '/services/interior/gangnam/강남논현동맥주집인테리어청소',
+  'seongsu-new-construction-220': '/services/new-construction/seongsu/성수동상가준공청소',
+  'interior-269': '/services/interior/geumcheon/금천가산동카페인테리어청소',
+  'interior-268': '/services/interior/seodaemun/서대문신촌카페인테리어청소',
+  'floor-tile-161': '/services/floor/jongno/종로안국동식당포세린타일바닥청소',
   'ansan-government-017': '/services/government-school/ansan/안산학교바닥왁스청소',
 };
 
@@ -114,7 +120,7 @@ test('verified portfolio items resolve to their exact internal field-case URLs',
 test('all region cases flatten into unique crawlable URLs', () => {
   const cases = getAllRegionCases();
   const urls = cases.map((entry) => entry.url);
-  assert.equal(cases.length, 163);
+  assert.equal(cases.length, 173);
   // 16 = the 14 services that already had cases + trash-house, which took
   // over the 의정부 쓰레기집 case from special, + lonely-death.
   assert.equal(new Set(cases.map((entry) => entry.serviceId)).size, 16);
@@ -441,6 +447,16 @@ test('new fire, flood, construction, interior and lonely-death cases follow the 
     ['floor', 'seongsu', '성수카페모자이크타일바닥청소', '성수 바닥청소'],
     ['interior', 'yongin', '용인기흥빵집인테리어청소', '용인 인테리어청소'],
     ['floor', 'yeongdeungpo', '영등포신길동계단기름얼룩청소', '영등포 바닥청소'],
+    ['new-construction', 'gangnam', '강남신사동헤드스파준공청소', '강남 준공청소'],
+    ['interior', 'gangnam', '강남논현동맥주집인테리어청소', '강남 인테리어청소'],
+    ['new-construction', 'seongsu', '성수동상가준공청소', '성수 준공청소'],
+    ['interior', 'geumcheon', '금천가산동카페인테리어청소', '금천 인테리어청소'],
+    ['new-construction', 'yongsan', '용산한남동식당준공청소', '용산 준공청소'],
+    ['interior', 'seodaemun', '서대문신촌카페인테리어청소', '서대문 인테리어청소'],
+    ['floor', 'jongno', '종로안국동식당포세린타일바닥청소', '종로 바닥청소'],
+    ['government-school', 'seocho', '서초주민센터계단실창문청소', '서초 관공서청소'],
+    ['new-construction', 'gwanggyo', '광교상가매장준공청소', '광교 준공청소'],
+    ['new-construction', 'anyang', '안양상가매장준공청소', '안양 준공청소'],
   ];
   for (const [serviceId, regionId, slug, lead] of expected) {
     const regionCase = getRegionCase(serviceId, regionId, slug);
