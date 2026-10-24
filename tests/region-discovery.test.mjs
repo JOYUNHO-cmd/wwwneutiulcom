@@ -35,6 +35,9 @@ function loadComponent(filename, { params = {}, photos = [] } = {}) {
     if (specifier === '../components/ServiceCaseBlogSection') return {
       __esModule: true, default: () => React.createElement('section', { 'data-testid': 'service-case-blog' }),
     };
+    if (specifier === '../components/SentenceFlow' || specifier === './SentenceFlow') return {
+      __esModule: true, default: loadComponent('components/SentenceFlow.tsx'),
+    };
     if (specifier.startsWith('../lib/')) return require(specifier);
     if (specifier.startsWith('.')) return { __esModule: true, default: () => null };
     return require(specifier);
