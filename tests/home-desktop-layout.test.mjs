@@ -150,28 +150,37 @@ test('mobile FAQ retains the chooser, dropdown selection and single-answer inter
   assert.equal(document.querySelectorAll('button[aria-expanded="true"]').length, 0, 'Category selection must close both dropdown and answer');
 });
 
-test('step shortcuts move focus and respect reduced-motion preference', () => {
+test('step shortcuts center the image card, keep tall cards below the header and respect reduced motion', () => {
   const originalWindow = globalThis.window;
   try {
     for (const reducedMotion of [false, true]) {
-      globalThis.window = { matchMedia: query => ({ matches: query === '(prefers-reduced-motion: reduce)' && reducedMotion }) };
-      const harness = createHookHarness(files.workflow);
-      const tree = harness.render();
-      const calls = [];
-      const targets = elements(tree).filter(node => typeof node.props.ref === 'function' && node.props.id);
-      targets.forEach(node => node.props.ref({
-        focus: options => calls.push([node.props.id, 'focus', options]),
-        scrollIntoView: options => calls.push([node.props.id, 'scroll', options]),
-      }));
-      const links = elements(tree).filter(node => node.type === 'a' && node.props.href?.startsWith('#'));
-      for (const link of links) {
-        let prevented = false;
-        link.props.onClick({ preventDefault: () => { prevented = true; } });
-        assert.ok(prevented);
-        assert.deepEqual(calls.splice(0), [
-          [link.props.href.slice(1), 'focus', { preventScroll: true }],
-          [link.props.href.slice(1), 'scroll', { block: 'start', behavior: reducedMotion ? 'instant' : 'smooth' }],
-        ]);
+      for (const viewport of [{ height: 1100, scrollTop: 675 }, { height: 650, scrollTop: 850 }]) {
+        const calls = [];
+        globalThis.window = {
+          innerHeight: viewport.height,
+          scrollY: 300,
+          scrollTo: options => calls.push(['scroll', options]),
+          matchMedia: query => ({ matches: query === '(prefers-reduced-motion: reduce)' && reducedMotion }),
+        };
+        const harness = createHookHarness(files.workflow);
+        const tree = harness.render();
+        const targets = elements(tree).filter(node => typeof node.props.ref === 'function' && node.props.id);
+        targets.forEach(node => node.props.ref({
+          focus: options => calls.push([node.props.id, 'focus', options]),
+          getBoundingClientRect: () => ({ top: 700 }),
+          firstElementChild: { offsetHeight: 600 },
+          offsetHeight: 800, // Includes the connector, which must not affect centering.
+        }));
+        const links = elements(tree).filter(node => node.type === 'a' && node.props.href?.startsWith('#'));
+        for (const link of links) {
+          let prevented = false;
+          link.props.onClick({ preventDefault: () => { prevented = true; } });
+          assert.ok(prevented);
+          assert.deepEqual(calls.splice(0), [
+            [link.props.href.slice(1), 'focus', { preventScroll: true }],
+            ['scroll', { top: viewport.scrollTop, behavior: reducedMotion ? 'instant' : 'smooth' }],
+          ]);
+        }
       }
     }
   } finally {
