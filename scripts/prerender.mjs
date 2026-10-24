@@ -36,7 +36,7 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const DIST_DIR = path.join(ROOT_DIR, 'dist');
 const SSR_ENTRY = path.join(ROOT_DIR, 'dist-ssr', 'entry-server.js');
 const PRODUCTION_ORIGIN = 'https://www.neutiul.com';
-const STATIC_ROUTES = ['/', '/about', '/services', '/portfolio', '/contact', '/privacy'];
+const STATIC_ROUTES = ['/', '/about', '/portfolio', '/contact', '/privacy'];
 
 // Routes that get a real file on disk (so Vercel's SPA rewrite never falls
 // back to serving '/'s file for them — that was making /admin briefly

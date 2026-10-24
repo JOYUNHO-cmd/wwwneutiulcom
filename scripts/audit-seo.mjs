@@ -42,7 +42,7 @@ const caseCount = Object.values(REGION_CASES).reduce(
     serviceTotal + Object.values(byRegion).reduce((regionTotal, cases) => regionTotal + cases.length, 0),
   0,
 );
-const expectedCount = 6 + SERVICES.length + REGIONS.length * REGION_LANDING_SERVICES.length + caseCount;
+const expectedCount = 5 + SERVICES.length + REGIONS.length * REGION_LANDING_SERVICES.length + caseCount;
 check(urls.length === expectedCount, 'sitemap-count', '/sitemap.xml', `${urls.length}/${expectedCount}`);
 check(new Set(urls).size === urls.length, 'duplicate-sitemap-url', '/sitemap.xml');
 const routes = new Set(urls.map(url => new URL(url).pathname.replace(/\/$/, '') || '/'));

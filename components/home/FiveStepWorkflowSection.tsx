@@ -22,6 +22,14 @@ const workflowSteps = [
   { img: stepImage5, mobileImg: stepImage5Mobile, step: 'STEP 05', label: '만족 후 정산', secondLabel: '기한 없는 사후관리', width: 900, height: 600 },
 ];
 
+const getStepViewportTop = (step: HTMLDivElement) => {
+  // Measure the stable card layout, excluding its animation and the connector.
+  const card = step.firstElementChild as HTMLElement | null;
+  const cardHeight = card?.offsetHeight ?? step.offsetHeight;
+  const headerSpace = 150;
+  return headerSpace + Math.max(0, (window.innerHeight - headerSpace - cardHeight) / 2);
+};
+
 const FiveStepWorkflowSection: React.FC = () => {
   const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [activeStep, setActiveStep] = useState(0);
@@ -33,8 +41,14 @@ const FiveStepWorkflowSection: React.FC = () => {
     const readCurrentStep = () => {
       frame = null;
       let nextStep = 0;
+      let nearestDistance = Infinity;
       stepRefs.current.forEach((step, index) => {
-        if (step && step.getBoundingClientRect().top <= 160) nextStep = index;
+        if (!step) return;
+        const distance = Math.abs(step.getBoundingClientRect().top - getStepViewportTop(step));
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nextStep = index;
+        }
       });
       setActiveStep(nextStep);
     };
@@ -68,8 +82,8 @@ const FiveStepWorkflowSection: React.FC = () => {
     if (!target) return;
     event.preventDefault();
     target.focus({ preventScroll: true });
-    target.scrollIntoView({
-      block: 'start',
+    window.scrollTo({
+      top: window.scrollY + target.getBoundingClientRect().top - getStepViewportTop(target),
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
     });
   };
