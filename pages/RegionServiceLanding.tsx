@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import NotFound from './NotFound';
-import { MapPin, CheckCircle2, HelpCircle, Award, ChevronDown } from 'lucide-react';
+import { MapPin, CheckCircle2, HelpCircle, Award, ChevronDown, ZoomIn } from 'lucide-react';
 import { useSite } from '../context/SiteContext';
 import { getRegion } from '../lib/regionData.mjs';
 import { buildRegionServiceContent, REGION_LANDING_SERVICES } from '../lib/regionServiceContent.mjs';
@@ -179,7 +179,7 @@ const RegionServiceLanding: React.FC = () => {
           말이 아닌 자격증으로 증명합니다
         </h2>
         <p className="text-gray-500 mb-5 break-keep">대표와 전담팀이 취득한 6개 공인 자격증입니다.</p>
-        <div className="grid grid-cols-3 gap-3 md:gap-6">
+        <div className="grid grid-cols-3 gap-x-3 gap-y-6 md:gap-6">
           {certifications.map((cert) => (
             <div key={cert.id} className="text-center">
               <button
@@ -190,7 +190,7 @@ const RegionServiceLanding: React.FC = () => {
                 }}
                 aria-label={`${cert.title} 자격증 크게 보기`}
                 aria-haspopup="dialog"
-                className="mb-1.5 block w-full overflow-hidden rounded-lg border border-gray-100 text-center hover:border-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                className="group relative mb-3 block w-full overflow-hidden rounded-lg border border-gray-100 text-center hover:border-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 <img
                   src={cert.image}
@@ -198,7 +198,10 @@ const RegionServiceLanding: React.FC = () => {
                   className="w-full aspect-square object-cover"
                   loading="lazy"
                 />
-                <span className="block bg-emerald-50 px-1 py-2 text-xs sm:text-sm font-bold text-emerald-800">크게 보기</span>
+                <span className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 inline-flex items-center gap-1.5 rounded-full bg-white px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-bold text-slate-800 whitespace-nowrap shadow-md ring-1 ring-black/10 group-hover:bg-emerald-50">
+                  <ZoomIn size={17} className="hidden sm:block shrink-0" aria-hidden="true" />
+                  크게 보기
+                </span>
               </button>
               <p className="text-xs sm:text-base leading-relaxed font-bold text-slate-700 break-keep">{cert.title}</p>
             </div>
