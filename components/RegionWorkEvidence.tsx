@@ -75,9 +75,13 @@ const RegionWorkEvidence: React.FC<RegionWorkEvidenceProps> = ({
                 </dl>
               </div>
             <details className="group border-t border-slate-100">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-1 bg-emerald-50/70 px-3 py-3 text-xs sm:text-sm font-bold text-emerald-800 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary [&::-webkit-details-marker]:hidden">
+              <summary className={`flex min-h-11 cursor-pointer list-none justify-between gap-2 ${isSingle ? 'items-center' : 'flex-col items-start sm:flex-row sm:items-center'} bg-emerald-50/70 px-3 py-3 text-xs sm:text-sm font-bold text-emerald-800 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary [&::-webkit-details-marker]:hidden`}>
                   <span>작업 과정·참고사항</span>
-                <ChevronDown size={16} aria-hidden="true" className="shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-200 bg-white px-2 py-1 text-[11px] sm:text-xs">
+                  <span className="group-open:hidden">내용 펼치기</span>
+                  <span className="hidden group-open:inline">내용 접기</span>
+                  <ChevronDown size={14} aria-hidden="true" className="shrink-0 transition-transform duration-200 group-open:rotate-180" />
+                </span>
               </summary>
               <div className={isSingle ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}>
                 <dl className="space-y-3">
